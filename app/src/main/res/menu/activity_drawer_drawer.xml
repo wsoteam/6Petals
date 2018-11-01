@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_en"
+            android:title="English" />
+
+        <item
+            android:id="@+id/nav_es"
+            android:title="Español" />
+        <item
+            android:id="@+id/nav_de"
+            android:title="Deutsch" />
+        <item
+            android:id="@+id/nav_nl"
+            android:title="Nederladsky" />
+        <item
+            android:id="@+id/nav_ar"
+            android:title="العربية" />
+
+        <item
+            android:id="@+id/nav_it"
+            android:title="Italiano" />
+        <item
+            android:id="@+id/nav_fr"
+            android:title="Français" />
+        <item
+            android:id="@+id/nav_ru"
+            android:title="Русский" />
+
+    </group>
+
+</menu>

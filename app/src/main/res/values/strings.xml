@@ -1,0 +1,113 @@
+<resources>
+    <string name="app_name">Как Похудеть за неделю! Диета - это просто! </string>
+    <string name="check_your_connect">Check your internet</string>
+
+    <string name="admob_interstitial" translatable="false">ca-app-pub-3050564412171997/5945782205</string>
+    <string name="admob_banner" translatable="false">ca-app-pub-3050564412171997/5103473829</string>
+    <string name="admob_award" translatable="false">ca-app-pub-3050564412171997/4889189478</string>
+    <string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3050564412171997/6423885238</string>
+
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Как Похудеть за неделю! Диета - это просто! </string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="body_gdpr">Continuing to use this application, you accept our privacy policy</string>
+    <string name="title_gdpr">Hello!</string>
+    <string name="open_gdpr">Open Privacy Policy text</string>
+    <string name="yes_gdpr">Continue using the app</string>
+    <string name="url_gdpr" translatable="false">https://www.freeprivacypolicy.com/privacy/view/272200879b5cf29dd1b4fcd0f0299409</string>
+
+    <string name="settings">Настройки</string>
+    <string name="rate_us">Оцените нас</string>
+    <string name="share">Поделиться с друзьями</string>
+    <string name="accompanying_text">Все работает в реальной жизни! Попробуй и ты!</string>
+
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="mono_diets">Моно диеты</string>
+    <string name="description_mono_diets">Список самых эффективных диет, полное описание каждой из них</string>
+    <string name="calculating">Расчеты</string>
+    <string name="title_calculating">Расчет идеального веса</string>
+    <string name="subtitle_list_calculating">Список калькуляторов</string>
+
+    <!--Types of body-->
+    <string name="astentic">Список калькуляторов</string>
+    <string name="normostentic">Список калькуляторов</string>
+    <string name="hyperstentic">Список калькуляторов</string>
+
+
+    <!--Calculating Brok-->
+    <string name="description_brok">
+        П. Брока включил в свои расчеты данные о возрастной категории, к которой относится исследуемый,
+        а также сведения о длине его тела и конституционном типе сложения.</string>
+    <string name="brok">Метод Поля Брока</string>
+    <string name="tall">Ваш рост в сантиметрах</string>
+    <string name="girth">Обхват запяться в сантиметрах</string>
+    <string name="your_age">Ваш возраст</string>
+    <string name="sex">Ваш пол</string>
+    <string name="sex_male">Мужской</string>
+    <string name="sex_female">Женский</string>
+    <string name="calculate_btn">Рассчитать</string>
+    <string name="fill_all_fields">Для расчета заполните все поля</string>
+    <string name="check_your_data">Проверьте введенные данные</string>
+    <string name="unknown_error">Проверьте введенные данные</string>
+
+    <!--Calculating Lorenc-->
+    <string name="lorenc_method">Метод Лоренца</string>
+    <string name="description_of_lorenc">Если ваш вес отличается несколькими килограммами от оптимального,
+        определённого по формуле, но вы чувствуете себя комфортно, не стоит беспокоиться.</string>
+    <string name="height_lorenc">Ваш рост в сантиметрах</string>
+    <string name="lorenc_calculate">Рассчитать</string>
+    <string name="recommended_weight">Ваш рекомендуемый вес</string>
+    <string name="ok">Ok</string>
+
+
+    <string name="diary">Дневник</string>
+    <string name="diary_description">Ежедневный учет и запись веса, ОГ, ОТ и ОБ</string>
+    <string name="recipies">Рецепты</string>
+    <string name="recipies_description">Отоборные рецепты которые помогут вам похудеть не в ущерб вкусу вашей еды</string>
+    <string name="analyzer">Анализатор</string>
+    <string name="description_analyzer">Анализатор калорийности вашей еды</string>
+    <string name="empty_message">Здесь пока пусто, но наша команда ежедневно трудиться, чтобы создавать для Вас полезный и экслюзивный функционал. Когда мы закончим разработку этого раздела мы обязательно оповестим Вас. Спасибо за терпение!)</string>
+    <string name="imt">ИМТ</string>
+    <string name="description_imt">Индекс массы тела следует применять с осторожностью, исключительно для ориентировочной оценки — например, попытка оценить с его помощью телосложение профессиональных спортсменов может дать неверный результат (высокое значение индекса в этом случае объясняется развитой мускулатурой)</string>
+    <string name="your_weight_in_kilo">Ваш вес в килограммах</string>
+    <string name="p_s">P.S. Вы всегда можете помочь нам и посмотреть рекламный ролик.
+        Каждый Ваш просмотр помогает нам и ускоряет процесс разработки.
+        Так же Вы просто можете вернуться назад при помощи кнопки "Back"</string>
+    <string name="name_of_app">Диеты 6 лепестков</string>
+
+
+    <string-array name="titles_of_calculating_list">
+        <item>Метод Поля Брока</item>
+        <item>\"Мечта Лоренца\"</item>
+        <item>Калькулятор ИМТ</item>
+    </string-array>
+
+    <string-array name="descriptions_of_calculating_list">
+        <item>Формула для определения идеального веса была разработана в 1871 году французским хирургом и антропологом Полем Брока.
+            Формула подходит для людей выше 155 и ниже 185 сантиметров среднего телосложения.</item>
+        <item>Существует изрядное количество формул для определения идеального веса.
+            Алгоритмы расчётов отличаются сложностью и набором необходимых исходных данных.
+            Способ Лоренца — один из самых известных и простейших.
+            Чтобы его использовать, достаточно знать только рост.</item>
+        <item>С помощью индекса массы тела вы можете проверить соответствие
+            между массой вашего тела и вашим ростом и узнать,
+            имеется ли у вас избыточный вес, или же, наоборот,
+            не страдаете ли вы недостатком веса.</item>
+    </string-array>
+    
+    
+    <string-array name="body_types">
+        <item>Выраженный дефицит массы</item>
+        <item>Недостаточная масса</item>
+        <item>Нормальная масса</item>
+        <item>Избыточная масса</item>
+        <item>Ожирение 1-ой степени</item>
+        <item>Ожирение 2-ой степени</item>
+        <item>Ожирение 3-ой степени</item>
+    </string-array>
+</resources>
