@@ -2,6 +2,7 @@ package com.wsoteam.diet.BranchOfMonoDiets;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
