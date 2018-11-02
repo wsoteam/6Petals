@@ -16,7 +16,7 @@ import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.wsoteam.diet.R;
 
-public class ActivityEmpty extends AppCompatActivity {
+public class  ActivityEmpty extends AppCompatActivity {
     private Animation movingFromRight;
     private FloatingActionButton floatingActionButton;
     private RewardedVideoAd mRewardedVideoAd;

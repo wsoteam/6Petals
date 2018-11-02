@@ -49,6 +49,7 @@
             android:name=".OtherActivity.ActivityEmpty"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".BranchOfCalculating.ActivityCalculatorIMT" />
+        <activity android:name=".OtherActivity.ActivityRecipes"/>
     </application>
 
 </manifest>
