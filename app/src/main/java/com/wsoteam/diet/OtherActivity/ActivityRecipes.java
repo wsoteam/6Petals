@@ -32,7 +32,7 @@ public class ActivityRecipes extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
-
+                                                    // где файдишь эрвэху в коде (findViewById)
         listOfRecipes = (ArrayList<ItemRecipes>) new ListOfRecipes().getListRecipes();
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.setAdapter(new RecipeAdapter(listOfRecipes));
@@ -69,7 +69,7 @@ public class ActivityRecipes extends AppCompatActivity {
 
 
         public RecipeAdapter(ArrayList<ItemRecipes> titles) {
-            this.listOfRecipes = titles;
+            /*this.*/listOfRecipes = titles; // нахрена ключ слово this? это не ошибка но оно требуется когда у двух переменных одинаковые имена
         }
 
 

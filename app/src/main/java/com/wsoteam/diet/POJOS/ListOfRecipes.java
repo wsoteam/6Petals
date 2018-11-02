@@ -1,5 +1,6 @@
 package com.wsoteam.diet.POJOS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListOfRecipes {
@@ -8,6 +9,7 @@ private String name;
 private List<ItemRecipes> listRecipes;
 
     public ListOfRecipes(){
+        listRecipes = new ArrayList<>(); // ты лошара, не было этой строки, работал с нулевым объектом
         String url = "https://i2.wp.com/yaturistka.ru/uploads/images/7/7/a/d/announce_big_7.png";
         String body = "Существуют две основные трактовки понятия «текст»: имманентная (расширенная, философски нагруженная) и репрезентативная (более частная). Имманентный подход подразумевает отношение к тексту как к автономной реальности, нацеленность на выявление его внутренней структуры. Репрезентативный — рассмотрение текста как особой формы представления знаний о внешней тексту действительности.";
         this.name = "Test";
