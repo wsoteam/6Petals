@@ -1,4 +1,4 @@
-package com.wsoteam.diet.OtherActivity;
+package com.wsoteam.diet.BranchOfRecipes;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,14 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
-import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.POJOS.ItemRecipes;
 import com.wsoteam.diet.POJOS.ListOfRecipes;
-import com.wsoteam.diet.POJOS.POJO;
 import com.wsoteam.diet.R;
 
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ActivityRecipes extends AppCompatActivity {
@@ -32,7 +31,8 @@ public class ActivityRecipes extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
-                                                    // где файдишь эрвэху в коде (findViewById)
+
+        rvList = (RecyclerView) findViewById(R.id.rvRecipesList);                                // где файдишь эрвэху в коде (findViewById)
         listOfRecipes = (ArrayList<ItemRecipes>) new ListOfRecipes().getListRecipes();
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.setAdapter(new RecipeAdapter(listOfRecipes));
@@ -53,14 +53,14 @@ public class ActivityRecipes extends AppCompatActivity {
         public void bind(ItemRecipes title) {
             tvItemRecipe.setText(title.getName());
             //Picasso.with(ActivityMonoDiet.this).load(title.getUrl_title()).into(ivItem);
-            //Glide.with(ActivityRecipes.this).load(title.getUrl()).into(ivItemRecipe);
+            Glide.with(ActivityRecipes.this).load(title.getUrl()).into(ivItemRecipe);
         }
 
         @Override
         public void onClick(View v) {
-//            Intent intent = new Intent(ActivityRecipes.this, ActivityViewerOfBodyItem.class);
-//            //intent.putExtra(Config.ID_OF_RECIPE, listOfRecipes.get(getAdapterPosition()));
-//            startActivity(intent);
+            Intent intent = new Intent(ActivityRecipes.this, ActivityViewerOfBodyRecipe.class);
+            intent.putExtra(Config.ID_OF_RECIPE, listOfRecipes.get(getAdapterPosition()));
+            startActivity(intent);
         }
     }
 

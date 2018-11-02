@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
-import com.wsoteam.diet.OtherActivity.ActivityRecipes;
+import com.wsoteam.diet.BranchOfRecipes.ActivityRecipes;
 import com.wsoteam.diet.R;
 
 public class MainActivity extends AppCompatActivity {

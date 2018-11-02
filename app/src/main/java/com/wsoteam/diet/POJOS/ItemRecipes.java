@@ -1,6 +1,8 @@
 package com.wsoteam.diet.POJOS;
 
-public class ItemRecipes {
+import java.io.Serializable;
+
+public class ItemRecipes implements Serializable {
 
     private String name;
     private String url;
