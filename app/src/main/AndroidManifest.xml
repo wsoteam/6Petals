@@ -53,6 +53,9 @@
             android:name=".BranchOfRecipes.ActivityRecipes"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".BranchOfRecipes.ActivityViewerOfBodyRecipe"/>
+        <activity
+            android:name=".BranchOfRecipes.ActivityGroupsOfRecipes"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

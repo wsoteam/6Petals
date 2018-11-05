@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +33,10 @@ public class ActivityRecipes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
 
-        rvList = (RecyclerView) findViewById(R.id.rvRecipesList);                                // где файдишь эрвэху в коде (findViewById)
-        listOfRecipes = (ArrayList<ItemRecipes>) new ListOfRecipes().getListRecipes();
+        ListOfRecipes li = (ListOfRecipes) getIntent().getSerializableExtra(Config.ID_OF_RECIPE_GROUPS);
+        listOfRecipes = (ArrayList<ItemRecipes>) li.getListRecipes();
+
+        rvList = (RecyclerView) findViewById(R.id.rvRecipesList);
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.setAdapter(new RecipeAdapter(listOfRecipes));
     }
@@ -41,26 +44,29 @@ public class ActivityRecipes extends AppCompatActivity {
 
     private class RecipeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvItemRecipe;
+        TextView tvItemBodyRecipe;
         ImageView ivItemRecipe;
 
         public RecipeHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_of_recipe_list, viewGroup, false));
             itemView.setOnClickListener(this);
             tvItemRecipe = itemView.findViewById(R.id.tv_itemRecipe);
+            tvItemBodyRecipe = itemView.findViewById(R.id.tv_bodyRecipe);
             ivItemRecipe = itemView.findViewById(R.id.iv_itemRecipe);
         }
 
         public void bind(ItemRecipes title) {
             tvItemRecipe.setText(title.getName());
+            tvItemBodyRecipe.setText(Html.fromHtml(title.getBody()));
             //Picasso.with(ActivityMonoDiet.this).load(title.getUrl_title()).into(ivItem);
             Glide.with(ActivityRecipes.this).load(title.getUrl()).into(ivItemRecipe);
         }
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(ActivityRecipes.this, ActivityViewerOfBodyRecipe.class);
-            intent.putExtra(Config.ID_OF_RECIPE, listOfRecipes.get(getAdapterPosition()));
-            startActivity(intent);
+//            Intent intent = new Intent(ActivityRecipes.this, ActivityViewerOfBodyRecipe.class);
+//            intent.putExtra(Config.ID_OF_RECIPE, listOfRecipes.get(getAdapterPosition()));
+//            startActivity(intent);
         }
     }
 

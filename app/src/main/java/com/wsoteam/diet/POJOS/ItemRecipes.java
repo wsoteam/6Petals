@@ -8,6 +8,12 @@ public class ItemRecipes implements Serializable {
     private String url;
     private String body;
 
+
+    public ItemRecipes(){
+
+    }
+
+
     public ItemRecipes(String name, String url, String body){
         this.name = name;
         this.url = url;

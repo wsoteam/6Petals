@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         cvRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ActivityRecipes.class);
+                Intent intent = new Intent(MainActivity.this, ActivityGroupsOfRecipes.class);
                 startActivity(intent);
             }
         });

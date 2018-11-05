@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_itemRecipe"
+            android:id="@+id/tv_itemGroupsOfRecipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
@@ -32,24 +32,10 @@
             app:layout_constraintVertical_bias="0.489" />
 
         <ImageView
-            android:id="@+id/iv_itemRecipe"
+            android:id="@+id/iv_itemGroupeRecipe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top" />
-
-        <TextView
-            android:id="@+id/tv_bodyRecipe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.489" />
 
 
     </LinearLayout>
