@@ -54,47 +54,47 @@ public class TestFillDB {
         ListOfRecipes listOfRecipes1 = new ListOfRecipes("name0", "url", itemsRecipes);
 
         List<ItemRecipes> itemsRecipes2 = new ArrayList<>();
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
+        itemsRecipes2.add(itemRecipes);
+        itemsRecipes2.add(itemRecipes);
+        itemsRecipes2.add(itemRecipes);
+        itemsRecipes2.add(itemRecipes);
+        itemsRecipes2.add(itemRecipes);
+        itemsRecipes2.add(itemRecipes);
         ListOfRecipes listOfRecipes2 = new ListOfRecipes("name1", "url", itemsRecipes2);
 
         List<ItemRecipes> itemsRecipes3 = new ArrayList<>();
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
+        itemsRecipes3.add(itemRecipes);
+        itemsRecipes3.add(itemRecipes);
+        itemsRecipes3.add(itemRecipes);
+        itemsRecipes3.add(itemRecipes);
+        itemsRecipes3.add(itemRecipes);
+        itemsRecipes3.add(itemRecipes);
+        itemsRecipes3.add(itemRecipes);
         ListOfRecipes listOfRecipes3 = new ListOfRecipes("name2", "url", itemsRecipes3);
 
         List<ItemRecipes> itemsRecipes4 = new ArrayList<>();
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
+        itemsRecipes4.add(itemRecipes);
+        itemsRecipes4.add(itemRecipes);
+        itemsRecipes4.add(itemRecipes);
+        itemsRecipes4.add(itemRecipes);
         ListOfRecipes listOfRecipes4 = new ListOfRecipes("name3", "url", itemsRecipes4);
 
         List<ItemRecipes> itemsRecipes5 = new ArrayList<>();
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
+        itemsRecipes5.add(itemRecipes);
+        itemsRecipes5.add(itemRecipes);
+        itemsRecipes5.add(itemRecipes);
+        itemsRecipes5.add(itemRecipes);
+        itemsRecipes5.add(itemRecipes);
+        itemsRecipes5.add(itemRecipes);
+        itemsRecipes5.add(itemRecipes);
         ListOfRecipes listOfRecipes5 = new ListOfRecipes("name4", "url", itemsRecipes5);
 
         List<ItemRecipes> itemsRecipes6 = new ArrayList<>();
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
-        itemsRecipes.add(itemRecipes);
+        itemsRecipes6.add(itemRecipes);
+        itemsRecipes6.add(itemRecipes);
+        itemsRecipes6.add(itemRecipes);
+        itemsRecipes6.add(itemRecipes);
+        itemsRecipes6.add(itemRecipes);
         ListOfRecipes listOfRecipes6 = new ListOfRecipes("name5", "url", itemsRecipes6);
 
 

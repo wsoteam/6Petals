@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wsoteam.diet.Config;
+import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.ListOfGroupsRecipes;
 import com.wsoteam.diet.POJOS.ListOfRecipes;
 import com.wsoteam.diet.R;
@@ -31,7 +32,12 @@ public class ActivityGroupsOfRecipes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
 
-        listOfGroupsRecipes = (ArrayList<ListOfRecipes>) new ListOfGroupsRecipes().getListOfGroupsRecipes();
+        listOfGroupsRecipes = (ArrayList<ListOfRecipes>) ObjectHolder.
+                getGlobalObject().
+                getListOfGroupsRecipes().
+                getListOfGroupsRecipes(); // это тип синглетона, он базу выгружает на сплэшАктивити и держит в памяти,
+                // так вроде в книжке было, тип норм практика. По аналогии сделай в следующем активити. Мертвый код удаляй,
+                //  вивер по рецепту тебе же вроде не нужен
         rvList = (RecyclerView) findViewById(R.id.rvRecipesList);
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.setAdapter(new RecipeGroupAdapter(listOfGroupsRecipes));

@@ -55,7 +55,7 @@ public class ActivityMonoDiet extends AppCompatActivity {
         adView = findViewById(R.id.bannerMainActivity);
         listOfPOJOS = (ArrayList<POJO>) ObjectHolder.getGlobalObject().getListOfPOJO().getListOFPOJO();
 
-        TestFillDB.fiilDB(ObjectHolder.getGlobalObject().getListOfPOJO());
+        //TestFillDB.fiilDB(ObjectHolder.getGlobalObject().getListOfPOJO());
 
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.setAdapter(new ItemAdapter(listOfPOJOS));
