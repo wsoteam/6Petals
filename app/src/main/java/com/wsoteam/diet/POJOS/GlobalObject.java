@@ -7,15 +7,25 @@ public class GlobalObject implements Serializable {
     private ListOfGroupsFood listOfGroupsFood;
     private ListOfPOJO listOfPOJO;
     private DescriptionOfDiet descriptionOfDiet;
+    private ListOfGroupsRecipes listOfGroupsRecipes;
 
     public GlobalObject() {
     }
 
-    public GlobalObject(String name, ListOfGroupsFood listOfGroupsFood, ListOfPOJO listOfPOJO, DescriptionOfDiet descriptionOfDiet) {
+    public GlobalObject(String name, ListOfGroupsFood listOfGroupsFood, ListOfPOJO listOfPOJO, DescriptionOfDiet descriptionOfDiet, ListOfGroupsRecipes listOfGroupsRecipes) {
         this.name = name;
         this.listOfGroupsFood = listOfGroupsFood;
         this.listOfPOJO = listOfPOJO;
         this.descriptionOfDiet = descriptionOfDiet;
+        this.listOfGroupsRecipes = listOfGroupsRecipes;
+    }
+
+    public ListOfGroupsRecipes getListOfGroupsRecipes() {
+        return listOfGroupsRecipes;
+    }
+
+    public void setListOfGroupsRecipes(ListOfGroupsRecipes listOfGroupsRecipes) {
+        this.listOfGroupsRecipes = listOfGroupsRecipes;
     }
 
     public String getName() {

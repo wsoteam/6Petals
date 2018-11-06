@@ -10,11 +10,11 @@ public class ListOfGroupsRecipes implements Serializable {
     private List<ListOfRecipes> listOfGroupsRecipes;
 
     public ListOfGroupsRecipes() {
-        this.listOfGroupsRecipes = new ArrayList<>();
-        this.name = "test";
-        for (int i = 0; i < 10; i++){
-            this.listOfGroupsRecipes.add(new ListOfRecipes());
-        }
+    }
+
+    public ListOfGroupsRecipes(String name, List<ListOfRecipes> listOfGroupsRecipes) {
+        this.name = name;
+        this.listOfGroupsRecipes = listOfGroupsRecipes;
     }
 
     public String getName() {
@@ -32,5 +32,4 @@ public class ListOfGroupsRecipes implements Serializable {
     public void setListOfGroupsRecipes(List<ListOfRecipes> listOfGroupsRecipes) {
         this.listOfGroupsRecipes = listOfGroupsRecipes;
     }
-
 }

@@ -9,12 +9,11 @@ public class ItemRecipes implements Serializable {
     private String body;
 
 
-    public ItemRecipes(){
+    public ItemRecipes() {
 
     }
 
-
-    public ItemRecipes(String name, String url, String body){
+    public ItemRecipes(String name, String url, String body) {
         this.name = name;
         this.url = url;
         this.body = body;

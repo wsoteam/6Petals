@@ -26,6 +26,7 @@ import com.wsoteam.diet.Config;
 import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.POJO;
 import com.wsoteam.diet.R;
+import com.wsoteam.diet.TestFillDB;
 
 import java.util.ArrayList;
 
@@ -53,6 +54,9 @@ public class ActivityMonoDiet extends AppCompatActivity {
         rvList = findViewById(R.id.rvMonoDiets);
         adView = findViewById(R.id.bannerMainActivity);
         listOfPOJOS = (ArrayList<POJO>) ObjectHolder.getGlobalObject().getListOfPOJO().getListOFPOJO();
+
+        TestFillDB.fiilDB(ObjectHolder.getGlobalObject().getListOfPOJO());
+
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.setAdapter(new ItemAdapter(listOfPOJOS));
 
