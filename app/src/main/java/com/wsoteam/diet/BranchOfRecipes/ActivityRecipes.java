@@ -1,6 +1,5 @@
 package com.wsoteam.diet.BranchOfRecipes;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +14,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wsoteam.diet.Config;
+import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.ItemRecipes;
-import com.wsoteam.diet.POJOS.ListOfRecipes;
 import com.wsoteam.diet.R;
 
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ActivityRecipes extends AppCompatActivity {
@@ -33,8 +31,11 @@ public class ActivityRecipes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
 
-        ListOfRecipes li = (ListOfRecipes) getIntent().getSerializableExtra(Config.ID_OF_RECIPE_GROUPS);
-        listOfRecipes = (ArrayList<ItemRecipes>) li.getListRecipes();
+        listOfRecipes = (ArrayList<ItemRecipes>) ObjectHolder.
+                getGlobalObject().
+                getListOfGroupsRecipes().
+                getListOfGroupsRecipes().get((int)getIntent().getSerializableExtra(Config.ID_OF_RECIPE_GROUPS)).getListRecipes();
+
 
         rvList = (RecyclerView) findViewById(R.id.rvRecipesList);
         rvList.setLayoutManager(new LinearLayoutManager(this));
@@ -64,9 +65,7 @@ public class ActivityRecipes extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-//            Intent intent = new Intent(ActivityRecipes.this, ActivityViewerOfBodyRecipe.class);
-//            intent.putExtra(Config.ID_OF_RECIPE, listOfRecipes.get(getAdapterPosition()));
-//            startActivity(intent);
+
         }
     }
 

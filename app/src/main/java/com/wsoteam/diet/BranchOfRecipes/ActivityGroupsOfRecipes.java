@@ -63,7 +63,7 @@ public class ActivityGroupsOfRecipes extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(ActivityGroupsOfRecipes.this, ActivityRecipes.class);
-            intent.putExtra(Config.ID_OF_RECIPE_GROUPS, listOfGroupsRecipes.get(getAdapterPosition()));
+            intent.putExtra(Config.ID_OF_RECIPE_GROUPS, getAdapterPosition());
             startActivity(intent);
         }
     }
