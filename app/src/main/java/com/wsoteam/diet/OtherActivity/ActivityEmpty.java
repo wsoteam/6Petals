@@ -82,7 +82,7 @@ public class  ActivityEmpty extends AppCompatActivity {
 
     private void loadAd() {
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+        mRewardedVideoAd.loadAd(getResources().getString(R.string.admob_award),
                 new AdRequest.Builder().build());
     }
 }
