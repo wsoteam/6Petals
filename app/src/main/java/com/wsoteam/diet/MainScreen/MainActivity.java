@@ -19,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
@@ -28,25 +31,26 @@ public class MainActivity extends AppCompatActivity {
     private CardView cvMonoDiets, cvCalculating, cvDiary, cvRecipes, cvAnalyzator;
     private ImageView ivDiets, ivCalculating, ivDiary, ivRecipes, ivAnalyzator;
     private AnimatedVectorDrawable animatedVectorDrawable;
+    private RewardedVideoAd mRewardedVideoAd;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top_menu, menu);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-             animatedVectorDrawable = (AnimatedVectorDrawable) menu.getItem(0).getIcon();
+            animatedVectorDrawable = (AnimatedVectorDrawable) menu.getItem(0).getIcon();
             final Handler mainHandler = new Handler(Looper.getMainLooper());
-                animatedVectorDrawable.registerAnimationCallback(new Animatable2.AnimationCallback() {
-                    @Override
-                    public void onAnimationEnd(Drawable drawable) {
-                        mainHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                animatedVectorDrawable.start();
-                            }
-                        });
+            animatedVectorDrawable.registerAnimationCallback(new Animatable2.AnimationCallback() {
+                @Override
+                public void onAnimationEnd(Drawable drawable) {
+                    mainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            animatedVectorDrawable.start();
+                        }
+                    });
 
-                    }
-                });
+                }
+            });
             animatedVectorDrawable.start();
         }
         return true;
@@ -54,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.ad_point:
+                if (mRewardedVideoAd.isLoaded()) {
+                    mRewardedVideoAd.show();
+                    loadAd();
+                }
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -81,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
         Glide.with(this).load(R.drawable.background_calculate).into(ivCalculating);
         Glide.with(this).load(R.drawable.background_diary).into(ivDiary);
         Glide.with(this).load(R.drawable.background_recipes).into(ivRecipes);
+
+        loadAd();
 
 
         cvCalculating.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +134,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void loadAd() {
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+                new AdRequest.Builder().build());
     }
 
 }
