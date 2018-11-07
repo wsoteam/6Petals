@@ -6,6 +6,8 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -32,11 +34,17 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.top_menu, menu);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
              animatedVectorDrawable = (AnimatedVectorDrawable) menu.getItem(0).getIcon();
+            final Handler mainHandler = new Handler(Looper.getMainLooper());
                 animatedVectorDrawable.registerAnimationCallback(new Animatable2.AnimationCallback() {
                     @Override
                     public void onAnimationEnd(Drawable drawable) {
-                        animatedVectorDrawable.start();
-                        super.onAnimationEnd(drawable);
+                        mainHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                animatedVectorDrawable.start();
+                            }
+                        });
+
                     }
                 });
             animatedVectorDrawable.start();
