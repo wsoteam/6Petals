@@ -12,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
 import com.wsoteam.diet.R;
 
 public class ActivityListOfCalculating extends AppCompatActivity {
@@ -20,17 +24,38 @@ public class ActivityListOfCalculating extends AppCompatActivity {
     private String[] listOfTitles;
     private String[] listOfDescriptions;
     private final int NUMBER_OF_BROK = 0, NUMBER_OF_LORENC = 1, NUMBER_OF_IMT = 2;
+    private InterstitialAd interstitialAd;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(interstitialAd.isLoaded()){
+            interstitialAd.show();
+        }
+    }
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fillDataForList();
-        /*ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.title_calculating));
-        actionBar.setSubtitle(getString(R.string.subtitle_list_calculating));*/
         setContentView(R.layout.activity_list_of_calculating);
         rvListOfCalculating = findViewById(R.id.rvListOfCalculating);
         rvListOfCalculating.setLayoutManager(new LinearLayoutManager(this));
         rvListOfCalculating.setAdapter(new CalculatingAdapter(listOfTitles, listOfDescriptions));
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+
+        interstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                interstitialAd.show();
+                interstitialAd = new InterstitialAd(ActivityListOfCalculating.this);
+                interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+                interstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        });
 
     }
 

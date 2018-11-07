@@ -13,6 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.ItemRecipes;
@@ -25,6 +29,15 @@ public class ActivityRecipes extends AppCompatActivity {
 
     private static RecyclerView rvList;
     private static ArrayList<ItemRecipes> listOfRecipes;
+    InterstitialAd interstitialAd;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(interstitialAd.isLoaded()){
+            interstitialAd.show();
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +53,21 @@ public class ActivityRecipes extends AppCompatActivity {
         rvList = (RecyclerView) findViewById(R.id.rvRecipesList);
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.setAdapter(new RecipeAdapter(listOfRecipes));
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+
+        interstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                interstitialAd.show();
+                interstitialAd = new InterstitialAd(ActivityRecipes.this);
+                interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+                interstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        });
     }
 
 

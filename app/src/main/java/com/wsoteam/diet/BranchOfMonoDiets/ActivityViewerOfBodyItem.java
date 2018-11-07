@@ -7,6 +7,7 @@ import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -47,6 +48,18 @@ public class ActivityViewerOfBodyItem extends AppCompatActivity {
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
+
+        interstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                interstitialAd.show();
+                interstitialAd = new InterstitialAd(ActivityViewerOfBodyItem.this);
+                interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+                interstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        });
+
 
 
         POJO itemOb = (POJO) getIntent().getSerializableExtra(Config.ID_OF_ITEM);

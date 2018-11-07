@@ -12,6 +12,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
 import com.wsoteam.diet.R;
 
 public class ActivityCalculatorBrok extends AppCompatActivity {
@@ -21,6 +25,15 @@ public class ActivityCalculatorBrok extends AppCompatActivity {
     int growth, girth, age, femaleDownFlag = 14, femaleUpFlag = 18, maleDownFlag = 17, maleUpFlag = 20, minNumber = 0;
     double idealWeight;
     boolean ast = false, normo = false, hyper = false;
+    InterstitialAd interstitialAd;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(interstitialAd.isLoaded()){
+            interstitialAd.show();
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +56,21 @@ public class ActivityCalculatorBrok extends AppCompatActivity {
                         createAlertDialog(idealWeight);
                     }
                 }
+            }
+        });
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+
+        interstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                interstitialAd.show();
+                interstitialAd = new InterstitialAd(ActivityCalculatorBrok.this);
+                interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+                interstitialAd.loadAd(new AdRequest.Builder().build());
             }
         });
     }

@@ -11,11 +11,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
 import com.wsoteam.diet.R;
 
 public class ActivityCalculatorLorenc extends AppCompatActivity {
     EditText edtLorencHeight;
     Button btnCalculate;
+    InterstitialAd interstitialAd;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(interstitialAd.isLoaded()){
+            interstitialAd.show();
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +46,21 @@ public class ActivityCalculatorLorenc extends AppCompatActivity {
                     Toast.makeText(ActivityCalculatorLorenc.this, R.string.check_your_data, Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+
+        interstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                interstitialAd.show();
+                interstitialAd = new InterstitialAd(ActivityCalculatorLorenc.this);
+                interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+                interstitialAd.loadAd(new AdRequest.Builder().build());
             }
         });
     }

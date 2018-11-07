@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -35,7 +36,7 @@ public class ActivityMonoDiet extends AppCompatActivity {
     private static RecyclerView rvList;
     private static ArrayList<POJO> listOfPOJOS;
     private static AdView adView;
-    private static InterstitialAd interstitialAd;
+    InterstitialAd interstitialAd;
 
     private FloatingActionButton fab;
 
@@ -43,9 +44,9 @@ public class ActivityMonoDiet extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
-        rvList = null;
-        listOfPOJOS = null;
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        }
     }
 
     @Override
@@ -68,6 +69,17 @@ public class ActivityMonoDiet extends AppCompatActivity {
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
+
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                interstitialAd.show();
+                interstitialAd = new InterstitialAd(ActivityMonoDiet.this);
+                interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+                interstitialAd.loadAd(new AdRequest.Builder().build());
+                super.onAdLoaded();
+            }
+        });
 
 
         fab = findViewById(R.id.fab);
