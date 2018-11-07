@@ -33,11 +33,9 @@ public class ActivitySplash extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        tvSubtitle = findViewById(R.id.tvSubtitleSplashScreen);
         tvTitle = findViewById(R.id.tvTitleSplashScreen);
         ivLoading = findViewById(R.id.ivLoadingIcon);
         tvTitle.setTypeface(Typeface.createFromAsset(getAssets(), "main_font.ttf"));
-        tvSubtitle.setTypeface(Typeface.createFromAsset(getAssets(), "main_font.ttf"));
         animationRotate = AnimationUtils.loadAnimation(this, R.anim.animation_rotate);
         ivLoading.startAnimation(animationRotate);
 
