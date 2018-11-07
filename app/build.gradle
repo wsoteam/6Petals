@@ -28,6 +28,10 @@ android {
 repositories {
     jcenter()
 }
+ext {
+    supportLibrary = "27.0.2"
+}
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -46,7 +50,7 @@ dependencies {
     implementation 'com.android.installreferrer:installreferrer:1.0'
     implementation 'com.startapp:inapp-sdk:3.8.4'
     implementation 'com.google.android.gms:play-services-ads:11.8.0'
-
+    implementation "com.android.support:design:${supportLibrary}"
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 }
