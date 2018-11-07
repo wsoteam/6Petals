@@ -22,9 +22,11 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
+import com.wsoteam.diet.BranchOfRecipes.ActivityRecipes;
 import com.wsoteam.diet.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         cvRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ActivityEmpty.class);
+                Intent intent = new Intent(MainActivity.this, ActivityGroupsOfRecipes.class);
                 startActivity(intent);
             }
         });
