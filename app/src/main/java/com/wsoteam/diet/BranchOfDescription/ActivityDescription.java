@@ -2,9 +2,6 @@ package com.wsoteam.diet.BranchOfDescription;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -12,20 +9,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.Toast;
+
 
 
 import com.wsoteam.diet.R;
 
-import java.util.ArrayList;
 
 public class ActivityDescription extends AppCompatActivity {
 
@@ -49,7 +38,6 @@ public class ActivityDescription extends AppCompatActivity {
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-//        private String tabTitles[] = new String[]{"Tab1", "Tab2", "Tab3"};
         private String tabTitles[] = getResources().getStringArray(R.array.tab_title);
         final int PAGE_COUNT = tabTitles.length;
         private Context context;
@@ -75,6 +63,8 @@ public class ActivityDescription extends AppCompatActivity {
                 case 2: return FragmentViewText.newInstance(getString(R.string.tab_exit));
 
                 case 3: return FragmentViewText.newInstance(getString(R.string.tab_contraindications));
+
+                case 4: return new FragmentSetting();
 
                 default: return FragmentViewText.newInstance("Error");
 
