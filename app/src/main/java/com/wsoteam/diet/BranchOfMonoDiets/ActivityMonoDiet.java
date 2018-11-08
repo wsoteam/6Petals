@@ -70,16 +70,7 @@ public class ActivityMonoDiet extends AppCompatActivity {
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
 
-        interstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                interstitialAd.show();
-                interstitialAd = new InterstitialAd(ActivityMonoDiet.this);
-                interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
-                interstitialAd.loadAd(new AdRequest.Builder().build());
-                super.onAdLoaded();
-            }
-        });
+
 
 
         fab = findViewById(R.id.fab);

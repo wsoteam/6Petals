@@ -61,16 +61,7 @@ public class ActivityCalculatorIMT extends AppCompatActivity {
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
 
-        interstitialAd.setAdListener(new AdListener(){
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                interstitialAd.show();
-                interstitialAd = new InterstitialAd(ActivityCalculatorIMT.this);
-                interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
-                interstitialAd.loadAd(new AdRequest.Builder().build());
-            }
-        });
+
 
     }
 
