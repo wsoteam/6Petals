@@ -63,18 +63,21 @@ public class ActivityGroupsOfRecipes extends AppCompatActivity {
     }
 
     private class RecipeGroupHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tvTitleGropeRecipe;
+        TextView tvTitleGropeRecipe, tvSubtitle;
         ImageView ivImgRecipe;
 
         public RecipeGroupHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_groups_of_recipe, viewGroup, false));
             itemView.setOnClickListener(this);
             tvTitleGropeRecipe = itemView.findViewById(R.id.tv_itemGroupsOfRecipe);
+            tvSubtitle = itemView.findViewById(R.id.tv_itemOfGroupRecipeSubtitle);
             ivImgRecipe = itemView.findViewById(R.id.iv_itemGroupeRecipe);
         }
 
         public void bind(ListOfRecipes title) {
-            tvTitleGropeRecipe.setText(title.getName());
+            String[] arrTitles = title.getName().split("-");
+            tvTitleGropeRecipe.setText(arrTitles[0]);
+            tvSubtitle.setText(arrTitles[1]);
             //Picasso.with(ActivityMonoDiet.this).load(title.getUrl_title()).into(ivItem);
             Glide.with(ActivityGroupsOfRecipes.this).load(title.getUrlGroup()).into(ivImgRecipe);
         }
