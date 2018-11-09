@@ -55,6 +55,9 @@
         <activity
             android:name=".BranchOfRecipes.ActivityGroupsOfRecipes"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".BranchOfDiary.ActivityAddData"/>
+
     </application>
 
 </manifest>
