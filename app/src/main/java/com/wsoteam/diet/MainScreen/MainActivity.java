@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.wsoteam.diet.BranchOfDiary.ActitityMainActivityOfData;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         cvDiary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ActivityEmpty.class);
+                Intent intent = new Intent(MainActivity.this, ActitityMainActivityOfData.class);
                 startActivity(intent);
             }
         });
