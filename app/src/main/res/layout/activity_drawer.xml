@@ -8,8 +8,10 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+
+
     <include
-        layout="@layout/activity_mono_diet"
+        layout="@layout/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

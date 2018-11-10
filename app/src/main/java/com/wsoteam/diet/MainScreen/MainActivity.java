@@ -12,8 +12,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ivDiets, ivCalculating, ivDiary, ivRecipes, ivAnalyzator;
     private AnimatedVectorDrawable animatedVectorDrawable;
     private RewardedVideoAd mRewardedVideoAd;
+    Toolbar toolbar;
 
     private DrawerLayout mDrawerLayout;
 
@@ -80,9 +83,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_drawer);
 
-        mDrawerLayout = findViewById(R.id.drawer_layout_main);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_set_privacy);
+
+
+        mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view_g);
         navigationView.setNavigationItemSelectedListener(

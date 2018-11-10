@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.wsoteam.diet.OtherActivity.ActivitySplash"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +38,8 @@
             android:name=".BranchOfCalculating.ActivityListOfCalculating"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MainScreen.MainActivity" />
+            android:name=".MainScreen.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".BranchOfCalculating.ActivityCalculatorBrok"
             android:theme="@style/AppTheme.NoActionBar" />
