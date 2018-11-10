@@ -8,7 +8,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ivDiets, ivCalculating, ivDiary, ivRecipes, ivAnalyzator;
     private AnimatedVectorDrawable animatedVectorDrawable;
     private RewardedVideoAd mRewardedVideoAd;
+
+    private DrawerLayout mDrawerLayout;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,6 +81,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mDrawerLayout = findViewById(R.id.drawer_layout_main);
+
+        NavigationView navigationView = findViewById(R.id.nav_view_g);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // set item as selected to persist highlight
+                item.setChecked(true);
+//                 close drawer when item is tapped
+                mDrawerLayout.closeDrawers();
+
+                // Add code here to update the UI based on the item selected
+                // For example, swap UI fragments here
+
+                return true;
+            }
+        });
+
         setTitle("Главное меню");
 
 

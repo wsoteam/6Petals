@@ -16,7 +16,7 @@ import com.wsoteam.diet.R;
 public class FragmentSetting extends Fragment {
 
     CardView cvRate, cvPrivacy, cvShare;
-    
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
