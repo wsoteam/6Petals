@@ -12,11 +12,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 
-
+import com.wsoteam.diet.Config;
 import com.wsoteam.diet.R;
 
 
 public class ActivityDescription extends AppCompatActivity {
+
+    ViewPager viewPager;
+    TabLayout tabLayout;
 
 
     @Override
@@ -24,14 +27,21 @@ public class ActivityDescription extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description);
 
+
+
         // Получаем ViewPager и устанавливаем в него адаптер
-        ViewPager viewPager = findViewById(R.id.viewpager2);
+        viewPager = findViewById(R.id.viewpager2);
         viewPager.setAdapter(
                 new SectionsPagerAdapter(getSupportFragmentManager(), ActivityDescription.this));
 
         // Передаём ViewPager в TabLayout
-        TabLayout tabLayout = findViewById(R.id.sliding_tabs2);
+        tabLayout = findViewById(R.id.sliding_tabs2);
         tabLayout.setupWithViewPager(viewPager);
+
+        //открываем на нужной вкладке
+        int position = (int)getIntent().getSerializableExtra(Config.ID_OF_SELECT_MENU);
+        selectPage(position);
+
 
     }
 
@@ -76,5 +86,11 @@ public class ActivityDescription extends AppCompatActivity {
             // генерируем заголовок в зависимости от позиции
             return tabTitles[position];
         }
+    }
+
+    void selectPage(int pageIndex)
+    {
+        viewPager.setCurrentItem(pageIndex);
+        tabLayout.setupWithViewPager(viewPager);
     }
 }

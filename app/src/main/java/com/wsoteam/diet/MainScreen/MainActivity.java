@@ -11,17 +11,16 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
@@ -29,13 +28,14 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
+import com.wsoteam.diet.Config;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
-import com.wsoteam.diet.BranchOfRecipes.ActivityRecipes;
 import com.wsoteam.diet.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
     private CardView cvMonoDiets, cvCalculating, cvDiary, cvRecipes, cvAnalyzator;
     private ImageView ivDiets, ivCalculating, ivDiary, ivRecipes, ivAnalyzator;
     private AnimatedVectorDrawable animatedVectorDrawable;
@@ -88,14 +88,23 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_set_privacy);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,drawerLayout,toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_g);
+        navigationView.setNavigationItemSelectedListener(this);
 
-        mDrawerLayout = findViewById(R.id.drawer_layout);
-
-        NavigationView navigationView = findViewById(R.id.nav_view_g);
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setDisplayHomeAsUpEnabled(true);
+//        actionbar.setHomeAsUpIndicator(R.drawable.ic_set_privacy);
+//
+//
+//        mDrawerLayout = findViewById(R.id.drawer_layout);
+//
+//        NavigationView navigationView = findViewById(R.id.nav_view_g);
 //        navigationView.setNavigationItemSelectedListener(
 //                new NavigationView.OnNavigationItemSelectedListener() {
 //            @Override
@@ -181,4 +190,40 @@ public class MainActivity extends AppCompatActivity {
                 new AdRequest.Builder().build());
     }
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+
+    }
+
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+        Intent intent = new Intent(MainActivity.this, ActivityDescription.class);
+
+        switch (id) {
+            case R.id.menu_nav_core :  intent.putExtra(Config.ID_OF_SELECT_MENU, 0); break;
+            case R.id.menu_nav_faq :  intent.putExtra(Config.ID_OF_SELECT_MENU, 1); break;
+            case R.id.menu_nav_exit :  intent.putExtra(Config.ID_OF_SELECT_MENU, 2); break;
+            case R.id.menu_nav_contraindications :  intent.putExtra(Config.ID_OF_SELECT_MENU, 3); break;
+            case R.id.menu_nav_setting :  intent.putExtra(Config.ID_OF_SELECT_MENU, 4); break;
+            default: intent.putExtra(Config.ID_OF_SELECT_MENU, 0);
+        }
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+
+        startActivity(intent);
+        return true;
+    }
 }

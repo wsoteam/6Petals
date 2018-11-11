@@ -3,34 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group >
         <item
-            android:id="@+id/nav_en"
-            android:title="English" />
-
+            android:id="@+id/menu_nav_core"
+            android:title="Суть диеты"/>
         <item
-            android:id="@+id/nav_es"
-            android:title="Español" />
+            android:id="@+id/menu_nav_faq"
+            android:title="F.A.Q."/>
         <item
-            android:id="@+id/nav_de"
-            android:title="Deutsch" />
+            android:id="@+id/menu_nav_exit"
+            android:title="Выход из Диеты"/>
         <item
-            android:id="@+id/nav_nl"
-            android:title="Nederladsky" />
-        <item
-            android:id="@+id/nav_ar"
-            android:title="العربية" />
-
-        <item
-            android:id="@+id/nav_it"
-            android:title="Italiano" />
-        <item
-            android:id="@+id/nav_fr"
-            android:title="Français" />
-        <item
-            android:id="@+id/nav_ru"
-            android:title="Русский" />
-
+            android:id="@+id/menu_nav_contraindications"
+            android:title="Противопоказания"/>
     </group>
+
+    <item android:title="Остальное:">
+        <menu>
+            <item
+                android:id="@+id/menu_nav_setting"
+                android:title="Настройки" />
+
+        </menu>
+    </item>
 
 </menu>

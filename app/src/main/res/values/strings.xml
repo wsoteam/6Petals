@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Как Похудеть за неделю! Диета - это просто! </string>
     <string name="check_your_connect">Check your internet</string>
-    
+
+    <string name="menu_drawer_settings">Настройки</string>
+    <string name="nav_title">Диета - это просто!</string>
 
     <string-array name="tab_title">
         <item>Суть диеты</item>
@@ -47,16 +49,16 @@
 
     <string name="tab_body_text_1">test</string>
 
-    <!--<string name="admob_interstitial" translatable="false">ca-app-pub-3050564412171997/5945782205</string>-->
-    <!--<string name="admob_banner" translatable="false">ca-app-pub-3050564412171997/5103473829</string>-->
-    <!--<string name="admob_award" translatable="false">ca-app-pub-3050564412171997/4889189478</string>-->
-    <!--<string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3050564412171997/6423885238</string>-->
+    <string name="admob_interstitial" translatable="false">ca-app-pub-3050564412171997/5945782205</string>
+    <string name="admob_banner" translatable="false">ca-app-pub-3050564412171997/5103473829</string>
+    <string name="admob_award" translatable="false">ca-app-pub-3050564412171997/4889189478</string>
+    <string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3050564412171997/6423885238</string>
 
     <!--Admob ID for test-->
-    <string name="admob_interstitial" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="admob_banner" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="admob_award" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
-    <string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <!--<string name="admob_interstitial" translatable="false">ca-app-pub-3940256099942544/1033173712</string>-->
+    <!--<string name="admob_banner" translatable="false">ca-app-pub-3940256099942544/6300978111</string>-->
+    <!--<string name="admob_award" translatable="false">ca-app-pub-3940256099942544/5224354917</string>-->
+    <!--<string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3940256099942544/6300978111</string>-->
     <!--Admob ID for test-->
 
     <string name="title_activity_drawer">DrawerActivity</string>
