@@ -39,7 +39,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainScreen.MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".BranchOfCalculating.ActivityCalculatorBrok"
             android:theme="@style/AppTheme.NoActionBar" />

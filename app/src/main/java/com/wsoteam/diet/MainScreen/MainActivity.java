@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_set_privacy);
@@ -95,21 +96,21 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view_g);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                // set item as selected to persist highlight
-                item.setChecked(true);
-//                 close drawer when item is tapped
-                mDrawerLayout.closeDrawers();
-
-                // Add code here to update the UI based on the item selected
-                // For example, swap UI fragments here
-
-                return true;
-            }
-        });
+//        navigationView.setNavigationItemSelectedListener(
+//                new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                // set item as selected to persist highlight
+//                item.setChecked(true);
+////                 close drawer when item is tapped
+//                mDrawerLayout.closeDrawers();
+//
+//                // Add code here to update the UI based on the item selected
+//                // For example, swap UI fragments here
+//
+//                return true;
+//            }
+//        });
 
         setTitle("Главное меню");
 
