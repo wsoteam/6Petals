@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity
     private RewardedVideoAd mRewardedVideoAd;
     Toolbar toolbar;
 
-    private DrawerLayout mDrawerLayout;
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top_menu, menu);
@@ -98,29 +96,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_g);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        ActionBar actionbar = getSupportActionBar();
-//        actionbar.setDisplayHomeAsUpEnabled(true);
-//        actionbar.setHomeAsUpIndicator(R.drawable.ic_set_privacy);
-//
-//
-//        mDrawerLayout = findViewById(R.id.drawer_layout);
-//
-//        NavigationView navigationView = findViewById(R.id.nav_view_g);
-//        navigationView.setNavigationItemSelectedListener(
-//                new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                // set item as selected to persist highlight
-//                item.setChecked(true);
-////                 close drawer when item is tapped
-//                mDrawerLayout.closeDrawers();
-//
-//                // Add code here to update the UI based on the item selected
-//                // For example, swap UI fragments here
-//
-//                return true;
-//            }
-//        });
 
         setTitle("Главное меню");
 
