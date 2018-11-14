@@ -132,23 +132,28 @@ public class ActitityMainActivityOfData extends AppCompatActivity {
     }
 
     private void bubbleSort() {
-        DiaryData[] arrayForWrite = new DiaryData[diaryDataArrayList.size()];
+        if (diaryDataArrayList.size() > 1) {
+            DiaryData[] arrayForWrite = new DiaryData[diaryDataArrayList.size()];
 
-        int lenght = arrayForWrite.length;
-        for (int i = 0; i < lenght; i++) {
-            for (int j = 0; j < lenght - i - 1; j++) {
-                if (arrayForWrite[j].getOwnId() < arrayForWrite[j + 1].getOwnId()) {
-                    DiaryData temp = arrayForWrite[j];
-                    arrayForWrite[j] = arrayForWrite[j + 1];
-                    arrayForWrite[j + 1] = temp;
+            for (int i = 0; i < diaryDataArrayList.size(); i++) {
+                arrayForWrite[i] = diaryDataArrayList.get(i);
+            }
+
+            int lenght = arrayForWrite.length;
+            for (int i = 0; i < lenght - 1; i++) {
+                for (int j = 0; j < lenght - i - 1; j++) {
+                    if (arrayForWrite[j].getOwnId() < arrayForWrite[j + 1].getOwnId()) {
+                        DiaryData temp = arrayForWrite[j];
+                        arrayForWrite[j] = arrayForWrite[j + 1];
+                        arrayForWrite[j + 1] = temp;
+                    }
                 }
             }
+            diaryDataArrayList = new ArrayList<>();
+            for (int i = 0; i < arrayForWrite.length; i++) {
+                diaryDataArrayList.add(arrayForWrite[i]);
+            }
         }
-        diaryDataArrayList = new ArrayList<>();
-        for (int i = 0; i < arrayForWrite.length; i++) {
-            diaryDataArrayList.add(arrayForWrite[i]);
-        }
-
 
     }
 
