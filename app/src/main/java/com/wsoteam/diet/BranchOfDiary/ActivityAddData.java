@@ -30,7 +30,6 @@ public class ActivityAddData extends AppCompatActivity {
         edtChest = findViewById(R.id.edtInputDataDiaryChest);
         edtWaist = findViewById(R.id.edtInputDataDiaryWaist);
         edtHips = findViewById(R.id.edtInputDataDiaryHips);
-        edtNote = findViewById(R.id.edtInputDataDiaryNote);
         datePicker = findViewById(R.id.datePicker);
         diaryData = new DiaryData();
 
@@ -102,7 +101,7 @@ public class ActivityAddData extends AppCompatActivity {
         if (!edtHips.getText().toString().equals("")) {
             diaryData.setHips(Integer.parseInt(edtHips.getText().toString()));
         }
-        diaryData.setNote(edtNote.getText().toString());
+        //diaryData.setNote(edtNote.getText().toString());
     }
 
     private boolean getDate() {

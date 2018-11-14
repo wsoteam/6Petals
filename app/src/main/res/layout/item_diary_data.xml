@@ -213,9 +213,8 @@
                 android:id="@+id/tvItemDiaryDataChestCountSub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:textSize="8sp"
-                android:text="1"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tvItemDiaryDataChestCount"
                 app:layout_constraintStart_toEndOf="@+id/tvItemDiaryDataChestCount" />
 
@@ -223,7 +222,6 @@
                 android:id="@+id/tvItemDiaryDataWaistCountSub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
                 android:textSize="8sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tvItemDiaryDataWaistCount"
@@ -233,7 +231,6 @@
                 android:id="@+id/tvItemDiaryDataHipsCountSub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
                 android:textSize="8sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tvItemDiaryDataHipsCount"
