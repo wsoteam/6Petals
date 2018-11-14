@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top_menu, menu);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             animatedVectorDrawable = (AnimatedVectorDrawable) menu.getItem(0).getIcon();
             final Handler mainHandler = new Handler(Looper.getMainLooper());
             animatedVectorDrawable.registerAnimationCallback(new Animatable2.AnimationCallback() {

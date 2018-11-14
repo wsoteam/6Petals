@@ -7,11 +7,11 @@ import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.squareup.picasso.Picasso;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.POJOS.POJO;
 import com.wsoteam.diet.R;
@@ -59,6 +59,6 @@ public class ActivityViewerOfBodyItem extends AppCompatActivity {
         tvTitle.setText(Html.fromHtml(itemOb.getName()));
 //        tvBody.setText(itemOb.getBodyOfText());
         tvBody.setText(Html.fromHtml(itemOb.getBodyOfText()));
-        Picasso.with(this).load(itemOb.getUrl_title()).into(imageView);
+        Glide.with(this).load(itemOb.getUrl_title()).into(imageView);
     }
 }
