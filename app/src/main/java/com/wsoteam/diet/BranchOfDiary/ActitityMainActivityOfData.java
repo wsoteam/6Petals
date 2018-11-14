@@ -30,17 +30,21 @@ public class ActitityMainActivityOfData extends AppCompatActivity {
     private ArrayList<DiaryData> diaryDataArrayList = new ArrayList<>();
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity_of_data_diary);
 
-        diaryDataArrayList = (ArrayList<DiaryData>) DiaryData.listAll(DiaryData.class);
-        bubbleSort();
 
         fabAddData = findViewById(R.id.fabAddDataListOfDiary);
         recyclerView = findViewById(R.id.rvListOfDiary);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new ItemAdapter(diaryDataArrayList));
+        updateUI();
 
 
         fabAddData.setOnClickListener(new View.OnClickListener() {
@@ -52,9 +56,15 @@ public class ActitityMainActivityOfData extends AppCompatActivity {
         });
     }
 
+    private void updateUI() {
+        diaryDataArrayList = (ArrayList<DiaryData>) DiaryData.listAll(DiaryData.class);
+        bubbleSort();
+        recyclerView.setAdapter(new ItemAdapter(diaryDataArrayList));
+    }
+
 
     private class ItemHolder extends RecyclerView.ViewHolder {
-        private TextView tvDay, tvMonth, tvWeight, tvSubWeight, tvChest, tvWaist, tvHips;
+        private TextView tvDay, tvMonth, tvWeight, tvSubWeight, tvChest, tvWaist, tvHips, tvSubChest, tvSubWaist, tvSubHips;
         private ImageView ivLeftColor;
 
         public ItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
@@ -67,6 +77,9 @@ public class ActitityMainActivityOfData extends AppCompatActivity {
             tvWaist = itemView.findViewById(R.id.tvItemDiaryDataWaistCount);
             tvHips = itemView.findViewById(R.id.tvItemDiaryDataHipsCount);
             ivLeftColor = itemView.findViewById(R.id.ivColorAboutWeight);
+            tvSubChest = itemView.findViewById(R.id.tvItemDiaryDataChestCountSub);
+            tvSubWaist = itemView.findViewById(R.id.tvItemDiaryDataWaistCountSub);
+            tvSubHips = itemView.findViewById(R.id.tvItemDiaryDataHipsCountSub);
         }
 
         public void bind(DiaryData currentDiaryData, DiaryData previousDiaryData) {
@@ -94,10 +107,58 @@ public class ActitityMainActivityOfData extends AppCompatActivity {
                 ivLeftColor.setColorFilter(getResources().getColor(R.color.yellow));
                 tvSubWeight.setText("--");
             } else {
+                if (previousDiaryData.getWeight() > currentDiaryData.getWeight()) {
+                    double difference = previousDiaryData.getWeight() - currentDiaryData.getWeight();
+                    ivLeftColor.setColorFilter(getResources().getColor(R.color.green));
+                    tvSubWeight.setText("-" + String.valueOf(difference));
+                    tvSubWeight.setTextColor(getResources().getColor(R.color.green));
+                } else {
+                    if (previousDiaryData.getWeight() == currentDiaryData.getWeight()) {
+                        ivLeftColor.setColorFilter(getResources().getColor(R.color.yellow));
+                        tvSubWeight.setText("0");
+                        tvSubWeight.setTextColor(getResources().getColor(R.color.yellow));
+                    } else {
+                        double difference = currentDiaryData.getWeight() - previousDiaryData.getWeight();
+                        ivLeftColor.setColorFilter(getResources().getColor(R.color.red));
+                        tvSubWeight.setText("+" + String.valueOf(difference));
+                        tvSubWeight.setTextColor(getResources().getColor(R.color.red));
+                    }
+                }
 
+                if (previousDiaryData.getChest() != 0) {
+                    toCompateTwoNumbers(tvSubChest, previousDiaryData.getChest(), currentDiaryData.getChest());
+                } else {
+                    tvSubChest.setText("");
+                }
+                if (previousDiaryData.getHips() != 0) {
+                    toCompateTwoNumbers(tvSubHips, previousDiaryData.getHips(), currentDiaryData.getHips());
+                } else {
+                    tvSubHips.setText("");
+                }
+                if (previousDiaryData.getWaist() != 0) {
+                    toCompateTwoNumbers(tvSubWaist, previousDiaryData.getWaist(), currentDiaryData.getWaist());
+                } else {
+                    tvSubWaist.setText("");
+                }
             }
 
 
+        }
+
+        private void toCompateTwoNumbers(TextView currentSubTextView, int previousNumber, int currentNumber) {
+            int different = 0;
+            if (previousNumber > currentNumber) {
+                different = previousNumber - currentNumber;
+                currentSubTextView.setTextColor(getResources().getColor(R.color.green));
+                currentSubTextView.setText("-" + String.valueOf(different));
+            } else if (previousNumber == currentNumber) {
+                currentSubTextView.setText("0");
+                currentSubTextView.setTextColor(getResources().getColor(R.color.yellow));
+            } else {
+                different = currentNumber - previousNumber;
+                currentSubTextView.setTextColor(getResources().getColor(R.color.red));
+                currentSubTextView.setText("+" + String.valueOf(different));
+            }
         }
 
     }

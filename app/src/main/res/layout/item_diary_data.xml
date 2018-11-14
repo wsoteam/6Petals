@@ -2,6 +2,7 @@
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -61,14 +62,12 @@
                 android:layout_marginBottom="24dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:text="80"
                 android:textColor="@color/black"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/imageView8"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,8 +77,8 @@
                 android:layout_height="wrap_content"
                 android:text="-20"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toTopOf="@+id/tvItemDiaryDataWeight"
-                app:layout_constraintStart_toEndOf="@+id/tvItemDiaryDataWeight" />
+                app:layout_constraintStart_toStartOf="@+id/tvItemDiaryDataWeight"
+                app:layout_constraintTop_toBottomOf="@+id/tvItemDiaryDataWeight" />
 
             <ImageView
                 android:id="@+id/ivColorAboutWeight"
@@ -127,12 +126,12 @@
                 android:layout_width="1dp"
                 android:layout_height="97dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginRight="100dp"
                 android:layout_marginTop="8dp"
                 android:background="?android:attr/listDivider"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvItemDiaryDataSubWeight"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
@@ -209,6 +208,36 @@
                 app:layout_constraintStart_toEndOf="@+id/tvLabelItemDiaryDataHips"
                 app:layout_constraintTop_toTopOf="@+id/tvLabelItemDiaryDataHips"
                 app:layout_constraintVertical_bias="0.7" />
+
+            <TextView
+                android:id="@+id/tvItemDiaryDataChestCountSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="8sp"
+                android:text="1"
+                app:layout_constraintBottom_toTopOf="@+id/tvItemDiaryDataChestCount"
+                app:layout_constraintStart_toEndOf="@+id/tvItemDiaryDataChestCount" />
+
+            <TextView
+                android:id="@+id/tvItemDiaryDataWaistCountSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tvItemDiaryDataWaistCount"
+                app:layout_constraintStart_toEndOf="@+id/tvItemDiaryDataWaistCount" />
+
+            <TextView
+                android:id="@+id/tvItemDiaryDataHipsCountSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tvItemDiaryDataHipsCount"
+                app:layout_constraintStart_toEndOf="@+id/tvItemDiaryDataHipsCount" />
 
 
         </android.support.constraint.ConstraintLayout>
