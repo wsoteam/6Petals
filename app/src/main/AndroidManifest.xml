@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <meta-data android:name="DATABASE" android:value="diet_database_d33ihar023y.db" />
+        <meta-data android:name="DATABASE" android:value="diet_database_d33i.db" />
         <meta-data android:name="VERSION" android:value="1" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.wsoteam.diet" />

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
@@ -47,7 +48,7 @@ public class ActitityListOfDiary extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         updateUI();
-        drawGraphs();
+        //drawGraphs();
 
 
         fabAddData.setOnClickListener(new View.OnClickListener() {
@@ -68,23 +69,30 @@ public class ActitityListOfDiary extends AppCompatActivity {
     }
 
     private void drawGraphs() {
+        graphView = new GraphView(this);
         graphView = findViewById(R.id.gvGraphOfWeight);
+        graphView.getViewport().setYAxisBoundsManual(true);
+        graphView.getViewport().setMaxY(150);
+        graphView.getViewport().setXAxisBoundsManual(true);
+        graphView.getViewport().setMaxX(diaryDataArrayList.size() + 1);
+
 
         DataPoint[] weightPoints = new DataPoint[diaryDataArrayList.size()];
         ArrayList<DataPoint> chestPointsNotSortedArray = new ArrayList<>();
         ArrayList<DataPoint> hipsPointsNotSortedArray = new ArrayList<>();
         ArrayList<DataPoint> waistPointsNotSortedArray = new ArrayList<>();
         for (int i = diaryDataArrayList.size() - 1, j = 0; i >= 0; i--, j++) {
-            int weight = (int) diaryDataArrayList.get(j).getWeight();
-            weightPoints[i] = new DataPoint(i, weight); // fill from end to start
-            if (diaryDataArrayList.get(j).getChest() != 0) {
+            int weight = (int) diaryDataArrayList.get(i).getWeight();
+            weightPoints[j] = new DataPoint(j, weight); // fill from end to start
+            if (diaryDataArrayList.get(i).getChest() != 0) {
                 double temp = diaryDataArrayList.get(i).getChest();
+                //Toast.makeText(this, String.valueOf(diaryDataArrayList.get(i).getChest()), Toast.LENGTH_SHORT).show();
                 chestPointsNotSortedArray.add(new DataPoint(j, temp));
             }
-            if (diaryDataArrayList.get(j).getHips() != 0) {
+            if (diaryDataArrayList.get(i).getHips() != 0) {
                 hipsPointsNotSortedArray.add(new DataPoint(j, diaryDataArrayList.get(i).getHips()));
             }
-            if (diaryDataArrayList.get(j).getWaist() != 0) {
+            if (diaryDataArrayList.get(i).getWaist() != 0) {
                 waistPointsNotSortedArray.add(new DataPoint(j, diaryDataArrayList.get(i).getWaist()));
             }
         }
@@ -109,7 +117,8 @@ public class ActitityListOfDiary extends AppCompatActivity {
             chestLine.setDrawDataPoints(true);
             chestLine.setColor(getResources().getColor(R.color.red));
             chestLine.setDataPointsRadius(12);
-            chestLine.setThickness(5);
+            chestLine.setThickness(10);
+            chestLine.setTitle("Грудь");
 
             graphView.addSeries(chestLine);
         }
@@ -120,7 +129,7 @@ public class ActitityListOfDiary extends AppCompatActivity {
             hipsLine.setDrawDataPoints(true);
             hipsLine.setColor(getResources().getColor(R.color.yellow));
             hipsLine.setDataPointsRadius(12);
-            hipsLine.setThickness(5);
+            hipsLine.setThickness(10);
 
             graphView.addSeries(hipsLine);
         }
@@ -130,7 +139,7 @@ public class ActitityListOfDiary extends AppCompatActivity {
             waistLine.setDrawDataPoints(true);
             waistLine.setColor(getResources().getColor(R.color.blue));
             waistLine.setDataPointsRadius(12);
-            waistLine.setThickness(5);
+            waistLine.setThickness(10);
 
             graphView.addSeries(waistLine);
         }
@@ -146,8 +155,10 @@ public class ActitityListOfDiary extends AppCompatActivity {
             graphView.addSeries(weightLine);
         }
 
-
-
+        /*graphView.getLegendRenderer().setVisible(true);
+        graphView.getLegendRenderer().setTextSize(25);
+        graphView.getLegendRenderer().setTextColor(getResources().getColor(R.color.white));
+        graphView.getLegendRenderer().setFixedPosition(150, 0);*/
 
 
     }
