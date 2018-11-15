@@ -65,8 +65,8 @@
 
         <activity android:name=".BranchOfDiary.ActivityAddData"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".BranchOfDiary.ActitityListOfDiary"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".BranchOfDiary.ActivityListOfDiary"
+            android:theme="@style/AppTheme2"/>
 
         <activity
             android:name=".BranchOfDescription.ActivityDescription"

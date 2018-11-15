@@ -21,4 +21,10 @@
     <color name="gray">#3c3c3c</color>
     <color name="yellow">#f9e72a</color>
 
+
+    <color name="uninated_nations_blue">#fa6b44</color>
+    <color name="frostbite">#de32aa</color>
+    <color name="light_green">#4fe76d</color>
+
+
 </resources>

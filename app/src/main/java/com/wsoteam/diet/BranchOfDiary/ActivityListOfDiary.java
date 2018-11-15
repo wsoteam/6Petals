@@ -13,10 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.wsoteam.diet.POJOForDB.DiaryData;
@@ -24,7 +22,7 @@ import com.wsoteam.diet.R;
 
 import java.util.ArrayList;
 
-public class ActitityListOfDiary extends AppCompatActivity {
+public class ActivityListOfDiary extends AppCompatActivity {
     private FloatingActionButton fabAddData;
     private RecyclerView recyclerView;
     private ArrayList<DiaryData> diaryDataArrayList = new ArrayList<>();
@@ -46,15 +44,21 @@ public class ActitityListOfDiary extends AppCompatActivity {
         fabAddData = findViewById(R.id.fabAddDataListOfDiary);
         recyclerView = findViewById(R.id.rvListOfDiary);
 
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         updateUI();
         drawGraphs();
+
+        if (diaryDataArrayList.size() == 0){
+            Intent intent = new Intent(ActivityListOfDiary.this, ActivityAddData.class);
+            startActivity(intent);
+        }
 
 
         fabAddData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ActitityListOfDiary.this, ActivityAddData.class);
+                Intent intent = new Intent(ActivityListOfDiary.this, ActivityAddData.class);
                 startActivity(intent);
             }
         });
@@ -69,9 +73,10 @@ public class ActitityListOfDiary extends AppCompatActivity {
     }
 
     private void drawGraphs() {
-        graphView = new GraphView(this);
-        graphView.removeAllSeries();
         graphView = findViewById(R.id.gvGraphOfWeight);
+        graphView.removeAllSeries();
+        graphView.getLegendRenderer().resetStyles();
+        graphView.getGridLabelRenderer().setHorizontalLabelsVisible(false);
         graphView.getViewport().setYAxisBoundsManual(true);
         graphView.getViewport().setMaxY(150);
         graphView.getViewport().setXAxisBoundsManual(true);
@@ -116,9 +121,9 @@ public class ActitityListOfDiary extends AppCompatActivity {
 
         if (chestPoints.length > 1) {
             LineGraphSeries<DataPoint> chestLine = new LineGraphSeries<>(chestPoints);
-            chestLine.setDrawDataPoints(true);
+            //chestLine.setDrawDataPoints(true);
             chestLine.setColor(getResources().getColor(R.color.red));
-            chestLine.setDataPointsRadius(12);
+            //chestLine.setDataPointsRadius(12);
             chestLine.setThickness(10);
             chestLine.setTitle("Грудь");
 
@@ -128,9 +133,9 @@ public class ActitityListOfDiary extends AppCompatActivity {
 
         if (hipsPoints.length > 1) {
             LineGraphSeries<DataPoint> hipsLine = new LineGraphSeries<>(hipsPoints);
-            hipsLine.setDrawDataPoints(true);
+            //hipsLine.setDrawDataPoints(true);
             hipsLine.setColor(getResources().getColor(R.color.yellow));
-            hipsLine.setDataPointsRadius(12);
+            //hipsLine.setDataPointsRadius(12);
             hipsLine.setThickness(10);
             hipsLine.setTitle("Бедра");
 
@@ -139,9 +144,9 @@ public class ActitityListOfDiary extends AppCompatActivity {
 
         if (waistPoints.length > 1) {
             LineGraphSeries<DataPoint> waistLine = new LineGraphSeries<>(waistPoints);
-            waistLine.setDrawDataPoints(true);
+            //waistLine.setDrawDataPoints(true);
             waistLine.setColor(getResources().getColor(R.color.blue));
-            waistLine.setDataPointsRadius(12);
+            //waistLine.setDataPointsRadius(12);
             waistLine.setThickness(10);
             waistLine.setTitle("Талия");
 
@@ -151,9 +156,9 @@ public class ActitityListOfDiary extends AppCompatActivity {
 
         if (weightPoints.length != 0) {
             LineGraphSeries<DataPoint> weightLine = new LineGraphSeries<>(weightPoints);
-            weightLine.setDrawDataPoints(true);
-            weightLine.setColor(getResources().getColor(R.color.green));
-            weightLine.setDataPointsRadius(12);
+            //weightLine.setDrawDataPoints(true);
+            weightLine.setColor(getResources().getColor(R.color.light_green));
+            //weightLine.setDataPointsRadius(12);
             weightLine.setThickness(10);
             weightLine.setTitle("Вес");
 
@@ -279,7 +284,7 @@ public class ActitityListOfDiary extends AppCompatActivity {
         @NonNull
         @Override
         public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(ActitityListOfDiary.this);
+            LayoutInflater layoutInflater = LayoutInflater.from(ActivityListOfDiary.this);
             return new ItemHolder(layoutInflater, parent);
         }
 
