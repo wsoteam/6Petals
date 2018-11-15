@@ -48,7 +48,7 @@ public class ActitityListOfDiary extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         updateUI();
-        //drawGraphs();
+        drawGraphs();
 
 
         fabAddData.setOnClickListener(new View.OnClickListener() {
@@ -70,11 +70,12 @@ public class ActitityListOfDiary extends AppCompatActivity {
 
     private void drawGraphs() {
         graphView = new GraphView(this);
+        graphView.removeAllSeries();
         graphView = findViewById(R.id.gvGraphOfWeight);
         graphView.getViewport().setYAxisBoundsManual(true);
         graphView.getViewport().setMaxY(150);
         graphView.getViewport().setXAxisBoundsManual(true);
-        graphView.getViewport().setMaxX(diaryDataArrayList.size() + 1);
+        graphView.getViewport().setMaxX(diaryDataArrayList.size());
 
 
         DataPoint[] weightPoints = new DataPoint[diaryDataArrayList.size()];
@@ -112,6 +113,7 @@ public class ActitityListOfDiary extends AppCompatActivity {
             waistPoints[i] = waistPointsNotSortedArray.get(i);
         }
 
+
         if (chestPoints.length > 1) {
             LineGraphSeries<DataPoint> chestLine = new LineGraphSeries<>(chestPoints);
             chestLine.setDrawDataPoints(true);
@@ -130,6 +132,7 @@ public class ActitityListOfDiary extends AppCompatActivity {
             hipsLine.setColor(getResources().getColor(R.color.yellow));
             hipsLine.setDataPointsRadius(12);
             hipsLine.setThickness(10);
+            hipsLine.setTitle("Бедра");
 
             graphView.addSeries(hipsLine);
         }
@@ -140,6 +143,7 @@ public class ActitityListOfDiary extends AppCompatActivity {
             waistLine.setColor(getResources().getColor(R.color.blue));
             waistLine.setDataPointsRadius(12);
             waistLine.setThickness(10);
+            waistLine.setTitle("Талия");
 
             graphView.addSeries(waistLine);
         }
@@ -151,14 +155,15 @@ public class ActitityListOfDiary extends AppCompatActivity {
             weightLine.setColor(getResources().getColor(R.color.green));
             weightLine.setDataPointsRadius(12);
             weightLine.setThickness(10);
+            weightLine.setTitle("Вес");
 
             graphView.addSeries(weightLine);
         }
 
-        /*graphView.getLegendRenderer().setVisible(true);
+        graphView.getLegendRenderer().setVisible(true);
         graphView.getLegendRenderer().setTextSize(25);
         graphView.getLegendRenderer().setTextColor(getResources().getColor(R.color.white));
-        graphView.getLegendRenderer().setFixedPosition(150, 0);*/
+        graphView.getLegendRenderer().setFixedPosition(50, 0);
 
 
     }
