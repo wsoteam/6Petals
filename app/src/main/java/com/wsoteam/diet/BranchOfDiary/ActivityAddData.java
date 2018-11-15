@@ -20,6 +20,7 @@ public class ActivityAddData extends AppCompatActivity {
     private DiaryData diaryData;
     private DatePicker datePicker;
     private int maxDay, maxMonth, maxYear;
+    private boolean isReadyToClose = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class ActivityAddData extends AppCompatActivity {
                     getWeight();
                     getOtherData();
                     saveInToDB();
-                    finish();
+                    if(isReadyToClose) finish();
                 }
             }
         });
@@ -124,6 +125,7 @@ public class ActivityAddData extends AppCompatActivity {
             Toast.makeText(this, "Введите пожалуйста Ваш вес", Toast.LENGTH_SHORT).show();
         } else {
             diaryData.setWeight(Double.parseDouble(edtWeight.getText().toString()));
+            isReadyToClose = true;
         }
     }
 }

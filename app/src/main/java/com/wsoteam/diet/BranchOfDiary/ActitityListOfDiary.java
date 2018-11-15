@@ -14,43 +14,46 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
-import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
-import com.wsoteam.diet.Config;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.wsoteam.diet.POJOForDB.DiaryData;
-import com.wsoteam.diet.POJOS.POJO;
 import com.wsoteam.diet.R;
 
 import java.util.ArrayList;
 
-public class ActitityMainActivityOfData extends AppCompatActivity {
+public class ActitityListOfDiary extends AppCompatActivity {
     private FloatingActionButton fabAddData;
     private RecyclerView recyclerView;
     private ArrayList<DiaryData> diaryDataArrayList = new ArrayList<>();
+    private GraphView graphView;
 
     @Override
     protected void onResume() {
         super.onResume();
         updateUI();
+        drawGraphs();
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_activity_of_data_diary);
+        setContentView(R.layout.activity_list_of_diary);
 
 
         fabAddData = findViewById(R.id.fabAddDataListOfDiary);
         recyclerView = findViewById(R.id.rvListOfDiary);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         updateUI();
+        drawGraphs();
 
 
         fabAddData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ActitityMainActivityOfData.this, ActivityAddData.class);
+                Intent intent = new Intent(ActitityListOfDiary.this, ActivityAddData.class);
                 startActivity(intent);
             }
         });
@@ -60,6 +63,93 @@ public class ActitityMainActivityOfData extends AppCompatActivity {
         diaryDataArrayList = (ArrayList<DiaryData>) DiaryData.listAll(DiaryData.class);
         bubbleSort();
         recyclerView.setAdapter(new ItemAdapter(diaryDataArrayList));
+
+
+    }
+
+    private void drawGraphs() {
+        graphView = findViewById(R.id.gvGraphOfWeight);
+
+        DataPoint[] weightPoints = new DataPoint[diaryDataArrayList.size()];
+        ArrayList<DataPoint> chestPointsNotSortedArray = new ArrayList<>();
+        ArrayList<DataPoint> hipsPointsNotSortedArray = new ArrayList<>();
+        ArrayList<DataPoint> waistPointsNotSortedArray = new ArrayList<>();
+        for (int i = diaryDataArrayList.size() - 1, j = 0; i >= 0; i--, j++) {
+            int weight = (int) diaryDataArrayList.get(j).getWeight();
+            weightPoints[i] = new DataPoint(i, weight); // fill from end to start
+            if (diaryDataArrayList.get(j).getChest() != 0) {
+                double temp = diaryDataArrayList.get(i).getChest();
+                chestPointsNotSortedArray.add(new DataPoint(j, temp));
+            }
+            if (diaryDataArrayList.get(j).getHips() != 0) {
+                hipsPointsNotSortedArray.add(new DataPoint(j, diaryDataArrayList.get(i).getHips()));
+            }
+            if (diaryDataArrayList.get(j).getWaist() != 0) {
+                waistPointsNotSortedArray.add(new DataPoint(j, diaryDataArrayList.get(i).getWaist()));
+            }
+        }
+        String test = "";
+
+        DataPoint[] chestPoints = new DataPoint[chestPointsNotSortedArray.size()];
+        for (int i = 0; i < chestPoints.length; i++) {
+            chestPoints[i] = chestPointsNotSortedArray.get(i);
+
+        }
+        DataPoint[] hipsPoints = new DataPoint[hipsPointsNotSortedArray.size()];
+        for (int i = 0; i < hipsPoints.length; i++) {
+            hipsPoints[i] = hipsPointsNotSortedArray.get(i);
+        }
+        DataPoint[] waistPoints = new DataPoint[waistPointsNotSortedArray.size()];
+        for (int i = 0; i < waistPoints.length; i++) {
+            waistPoints[i] = waistPointsNotSortedArray.get(i);
+        }
+
+        if (chestPoints.length > 1) {
+            LineGraphSeries<DataPoint> chestLine = new LineGraphSeries<>(chestPoints);
+            chestLine.setDrawDataPoints(true);
+            chestLine.setColor(getResources().getColor(R.color.red));
+            chestLine.setDataPointsRadius(12);
+            chestLine.setThickness(5);
+
+            graphView.addSeries(chestLine);
+        }
+
+
+        if (hipsPoints.length > 1) {
+            LineGraphSeries<DataPoint> hipsLine = new LineGraphSeries<>(hipsPoints);
+            hipsLine.setDrawDataPoints(true);
+            hipsLine.setColor(getResources().getColor(R.color.yellow));
+            hipsLine.setDataPointsRadius(12);
+            hipsLine.setThickness(5);
+
+            graphView.addSeries(hipsLine);
+        }
+
+        if (waistPoints.length > 1) {
+            LineGraphSeries<DataPoint> waistLine = new LineGraphSeries<>(waistPoints);
+            waistLine.setDrawDataPoints(true);
+            waistLine.setColor(getResources().getColor(R.color.blue));
+            waistLine.setDataPointsRadius(12);
+            waistLine.setThickness(5);
+
+            graphView.addSeries(waistLine);
+        }
+
+
+        if (weightPoints.length != 0) {
+            LineGraphSeries<DataPoint> weightLine = new LineGraphSeries<>(weightPoints);
+            weightLine.setDrawDataPoints(true);
+            weightLine.setColor(getResources().getColor(R.color.green));
+            weightLine.setDataPointsRadius(12);
+            weightLine.setThickness(10);
+
+            graphView.addSeries(weightLine);
+        }
+
+
+
+
+
     }
 
 
@@ -173,7 +263,7 @@ public class ActitityMainActivityOfData extends AppCompatActivity {
         @NonNull
         @Override
         public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(ActitityMainActivityOfData.this);
+            LayoutInflater layoutInflater = LayoutInflater.from(ActitityListOfDiary.this);
             return new ItemHolder(layoutInflater, parent);
         }
 
