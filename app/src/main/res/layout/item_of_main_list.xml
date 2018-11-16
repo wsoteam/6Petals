@@ -26,7 +26,8 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="1.0"
+            android:src="@drawable/icon_of_symbol_for_loading"/>
 
         <TextView
             android:id="@+id/tv_item"

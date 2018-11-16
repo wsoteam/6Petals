@@ -9,6 +9,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.wsoteam.diet.POJOForDB.DiaryData;
 import com.wsoteam.diet.R;
 
@@ -21,6 +23,15 @@ public class ActivityAddData extends AppCompatActivity {
     private DatePicker datePicker;
     private int maxDay, maxMonth, maxYear;
     private boolean isReadyToClose = false;
+    InterstitialAd interstitialAd;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,10 +57,19 @@ public class ActivityAddData extends AppCompatActivity {
                     getWeight();
                     getOtherData();
                     saveInToDB();
-                    if(isReadyToClose) finish();
+                    if (isReadyToClose) {
+                        if (interstitialAd.isLoaded()) {
+                            interstitialAd.show();
+                        }
+                        finish();
+                    }
                 }
             }
         });
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
 
     }
 

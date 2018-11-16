@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -27,6 +29,15 @@ public class ActivityListOfDiary extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<DiaryData> diaryDataArrayList = new ArrayList<>();
     private GraphView graphView;
+    InterstitialAd interstitialAd;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        }
+    }
 
     @Override
     protected void onResume() {
@@ -62,6 +73,10 @@ public class ActivityListOfDiary extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
     private void updateUI() {

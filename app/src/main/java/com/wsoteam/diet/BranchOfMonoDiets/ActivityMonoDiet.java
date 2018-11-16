@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,9 +38,6 @@ public class ActivityMonoDiet extends AppCompatActivity {
     private static ArrayList<POJO> listOfPOJOS;
     private static AdView adView;
     InterstitialAd interstitialAd;
-
-    private FloatingActionButton fab;
-
 
     @Override
     public void onBackPressed() {
@@ -70,18 +68,6 @@ public class ActivityMonoDiet extends AppCompatActivity {
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
 
-
-
-
-        fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ActivityMonoDiet.this, ActivitySettings.class);
-                startActivity(intent);
-
-            }
-        });
 
     }
 

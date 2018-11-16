@@ -47,22 +47,26 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top_menu, menu);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            animatedVectorDrawable = (AnimatedVectorDrawable) menu.getItem(0).getIcon();
-            final Handler mainHandler = new Handler(Looper.getMainLooper());
-            animatedVectorDrawable.registerAnimationCallback(new Animatable2.AnimationCallback() {
-                @Override
-                public void onAnimationEnd(Drawable drawable) {
-                    mainHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            animatedVectorDrawable.start();
-                        }
-                    });
+        try {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                animatedVectorDrawable = (AnimatedVectorDrawable) menu.getItem(0).getIcon();
+                final Handler mainHandler = new Handler(Looper.getMainLooper());
+                animatedVectorDrawable.registerAnimationCallback(new Animatable2.AnimationCallback() {
+                    @Override
+                    public void onAnimationEnd(Drawable drawable) {
+                        mainHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                animatedVectorDrawable.start();
+                            }
+                        });
 
-                }
-            });
-            animatedVectorDrawable.start();
+                    }
+                });
+                animatedVectorDrawable.start();
+            }
+        } catch (Exception e) {
+
         }
         return true;
     }
