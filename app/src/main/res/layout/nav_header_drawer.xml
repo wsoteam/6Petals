@@ -14,18 +14,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/blur_head" />
+            android:src="@drawable/head_left_navigation_view" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:padding="5dp"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom"
             android:text="@string/nav_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:background="@drawable/gradient_filter_for_text_top"
+
+            android:drawablePadding="10dp"
             android:textStyle="bold" />
 
     </FrameLayout>

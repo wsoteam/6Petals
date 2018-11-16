@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,drawerLayout,toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -178,20 +179,35 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        boolean isOpenMarket = false;
 
         int id = item.getItemId();
         Intent intent = new Intent(MainActivity.this, ActivityDescription.class);
 
         switch (id) {
-            case R.id.menu_nav_core :  intent.putExtra(Config.ID_OF_SELECT_MENU, 0); break;
-            case R.id.menu_nav_faq :  intent.putExtra(Config.ID_OF_SELECT_MENU, 1); break;
-            case R.id.menu_nav_exit :  intent.putExtra(Config.ID_OF_SELECT_MENU, 2); break;
-            case R.id.menu_nav_contraindications :  intent.putExtra(Config.ID_OF_SELECT_MENU, 3); break;
-            case R.id.menu_nav_setting :  intent.putExtra(Config.ID_OF_SELECT_MENU, 4); break;
-            default: intent.putExtra(Config.ID_OF_SELECT_MENU, 0);
+            case R.id.menu_nav_core:
+                intent.putExtra(Config.ID_OF_SELECT_MENU, 0);
+                break;
+            case R.id.menu_nav_faq:
+                intent.putExtra(Config.ID_OF_SELECT_MENU, 1);
+                break;
+            case R.id.menu_nav_exit:
+                intent.putExtra(Config.ID_OF_SELECT_MENU, 2);
+                break;
+            case R.id.menu_nav_contraindications:
+                intent.putExtra(Config.ID_OF_SELECT_MENU, 3);
+                break;
+            case R.id.menu_nav_setting:
+                intent.putExtra(Config.ID_OF_SELECT_MENU, 4);
+                break;
+            case R.id.menu_nav_more:
+                Intent intentForViewMoreApps = new Intent(Intent.ACTION_VIEW);
+                intentForViewMoreApps.setData(Uri.parse("market://details?id=onepic.bkgcom.com.ex"));
+                startActivity(intentForViewMoreApps);
+                isOpenMarket = true;
+                break;
         }
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -199,7 +215,9 @@ public class MainActivity extends AppCompatActivity
             drawerLayout.closeDrawer(GravityCompat.START);
         }
 
-        startActivity(intent);
+        if (!isOpenMarket) {
+            startActivity(intent);
+        }
         return true;
     }
 }
