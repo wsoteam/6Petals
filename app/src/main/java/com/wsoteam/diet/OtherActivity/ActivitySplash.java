@@ -21,6 +21,7 @@ import com.wsoteam.diet.MainScreen.MainActivity;
 import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.GlobalObject;
 import com.wsoteam.diet.R;
+import com.wsoteam.diet.TestFillDB;
 
 public class ActivitySplash extends AppCompatActivity {
     TextView tvTitle, tvSubtitle;

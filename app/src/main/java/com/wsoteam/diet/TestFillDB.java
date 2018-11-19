@@ -17,12 +17,49 @@ import java.util.List;
 
 public class TestFillDB {
 
-    public static void fiilDB(ListOfPOJO listOfPOJO) {
+    public static void fiilDB(ListOfPOJO listOfPOJO, ListOfGroupsRecipes listOfGroupsRecipes) {
         DescriptionOfDiet descriptionOfDiet = new DescriptionOfDiet("name", "main", "faq",
                 "exit", "contradictions");
 
 
-        ItemOfGlobalBase itemOfGlobalBase = new ItemOfGlobalBase("name", "des", "com",
+        ArrayList<Integer> countOfItems = new ArrayList<>();
+        countOfItems.add(31);
+        countOfItems.add(48);
+        countOfItems.add(83);
+        countOfItems.add(50);
+        countOfItems.add(296);
+        countOfItems.add(61);
+        countOfItems.add(350);
+        countOfItems.add(261);
+        countOfItems.add(68);
+        countOfItems.add(233);
+        countOfItems.add(42);
+        countOfItems.add(162);
+        countOfItems.add(294);
+        countOfItems.add(199);
+        countOfItems.add(83);
+        countOfItems.add(422);
+        countOfItems.add(85);
+        countOfItems.add(80);
+        countOfItems.add(449);
+        countOfItems.add(87);
+        countOfItems.add(102);
+        countOfItems.add(76);
+        countOfItems.add(168);
+        countOfItems.add(269);
+        countOfItems.add(473);
+        countOfItems.add(123);
+        countOfItems.add(106);
+        countOfItems.add(186);
+        countOfItems.add(48);
+        countOfItems.add(23);
+        countOfItems.add(157);
+
+
+
+
+
+        /*ItemOfGlobalBase itemOfGlobalBase = new ItemOfGlobalBase("name", "des", "com",
                 "prop", "cal", "prot",
                 "fat", "car", "url");
 
@@ -39,11 +76,12 @@ public class TestFillDB {
         groupOfFoods.add(groupOfFood);
         groupOfFoods.add(groupOfFood);
         groupOfFoods.add(groupOfFood);
-        groupOfFoods.add(groupOfFood);
+        groupOfFoods.add(groupOfFood);*/
 
-        ListOfGroupsFood groupOfFoodListOfGroupsFood = new ListOfGroupsFood("name", groupOfFoods);
+        ListOfGroupsFood groupOfFoodListOfGroupsFood = new ListOfGroupsFood("name",
+                fillAllCellForItemsFromGlobalBase(countOfItems));
 
-        ItemRecipes itemRecipes = new ItemRecipes("name", "url", "body");
+        /*ItemRecipes itemRecipes = new ItemRecipes("name", "url", "body");
 
         List<ItemRecipes> itemsRecipes = new ArrayList<>();
         itemsRecipes.add(itemRecipes);
@@ -107,9 +145,7 @@ public class TestFillDB {
         listOfRecipes.add(listOfRecipes5);
         listOfRecipes.add(listOfRecipes6);
 
-        ListOfGroupsRecipes listOfGroupsRecipes = new ListOfGroupsRecipes("name", listOfRecipes);
-
-
+        ListOfGroupsRecipes listOfGroupsRecipes = new ListOfGroupsRecipes("name", listOfRecipes);*/
 
 
         GlobalObject globalObject = new GlobalObject("GB", groupOfFoodListOfGroupsFood,
@@ -119,5 +155,21 @@ public class TestFillDB {
         DatabaseReference myRef = database.getReference(Config.NAME_OF_ENTITY_FOR_DB);
 
         myRef.setValue(globalObject);
+    }
+
+    private static List<GroupOfFood> fillAllCellForItemsFromGlobalBase(ArrayList<Integer> count) {
+        List<GroupOfFood> listOfGroupsFood = new ArrayList<>();
+        ItemOfGlobalBase item = new ItemOfGlobalBase("name", "des", "com",
+                "prop", "cal", "prot",
+                "fat", "car", "url");
+        for (int i = 0; i < count.size(); i++) {
+            List<ItemOfGlobalBase> listOfItems = new ArrayList<>();
+            for (int j = 0; j < count.get(i); j++) {
+                listOfItems.add(item);
+            }
+            GroupOfFood groupOfFood = new GroupOfFood("name", listOfItems, "url");
+            listOfGroupsFood.add(groupOfFood);
+        }
+        return listOfGroupsFood;
     }
 }
