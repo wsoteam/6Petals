@@ -28,6 +28,9 @@
             android:id="@+id/menu_nav_more"
             android:title="Полезность"
             android:icon="@drawable/nav_left_gym"/>
+        <item
+            android:id="@+id/menu_nav_notification"
+            android:title="Заглушка" />
     </group>
 
 </menu>
