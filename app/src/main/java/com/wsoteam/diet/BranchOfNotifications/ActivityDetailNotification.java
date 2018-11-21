@@ -134,7 +134,6 @@ public class ActivityDetailNotification extends AppCompatActivity {
 
     private void saveObject() {
         try {
-
             String[] date = edtDate.getText().toString().split("\\.");
             String[] time = edtTime.getText().toString().split(":");
             objectForNotification.setText(edtText.getText().toString());
@@ -144,7 +143,21 @@ public class ActivityDetailNotification extends AppCompatActivity {
             objectForNotification.setMinute(Integer.parseInt(time[1]));
             objectForNotification.setHour(Integer.parseInt(time[0]));
             objectForNotification.setRepeat(edtRepeat.getText().toString());
-            objectForNotification.save();
+
+            if (idOfSelectedItem == -1) {
+                objectForNotification.save();
+                finish();
+            } else {
+                ObjectForNotification.deleteAll(ObjectForNotification.class);
+                notificationArrayList.remove(idOfSelectedItem);
+                objectForNotification.save();
+                ObjectForNotification temp;
+                for (int i = 0; i < notificationArrayList.size(); i++) {
+                    notificationArrayList.get(i).save();
+                }
+                finish();
+            }
+
 
         } catch (Exception e) {
             Toast.makeText(this, "Что-то пошло не так, попробуйте позже", Toast.LENGTH_SHORT).show();
