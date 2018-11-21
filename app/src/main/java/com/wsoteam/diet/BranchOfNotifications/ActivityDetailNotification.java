@@ -7,33 +7,39 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.wsoteam.diet.POJOForDB.ObjectForNotification;
 import com.wsoteam.diet.R;
 import com.wsoteam.diet.Services.AlarmManagerBR;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class ActivityDetailNotification extends AppCompatActivity {
     private EditText edtText, edtDate, edtTime, edtRepeat;
     private Button btnSave;
+    private ObjectForNotification objectForNotification;
+    final static String TAG_OF_ACTIVITY = "ActivityDetailNotification";
+    private int idOfSelectedItem = 0;
+    private ArrayList<ObjectForNotification> notificationArrayList;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_notification);
-
-        Date date = new Date();
 
         edtText = findViewById(R.id.edtActivityDetailNotificationTextOfNotification);
         edtDate = findViewById(R.id.edtActivityDetailNotificationDateOfNotification);
@@ -53,6 +59,35 @@ public class ActivityDetailNotification extends AppCompatActivity {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
+        idOfSelectedItem = getIntent().getIntExtra(TAG_OF_ACTIVITY, 0);
+
+
+        if (idOfSelectedItem == -1) {
+            objectForNotification = new ObjectForNotification();
+
+            edtDate.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
+                    + "." + String.valueOf(cal.get(Calendar.MONTH))
+                    + "." + String.valueOf(cal.get(Calendar.YEAR)));
+
+            //TODO write 0 until one number
+
+            edtTime.setText(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(cal.get(Calendar.MINUTE)));
+
+            edtRepeat.setText("Однократно");
+
+
+        } else {
+            notificationArrayList = (ArrayList<ObjectForNotification>) ObjectForNotification.listAll(ObjectForNotification.class);
+            objectForNotification = notificationArrayList.get(idOfSelectedItem);
+
+            edtRepeat.setText(objectForNotification.getRepeat());
+            edtTime.setText(String.valueOf(objectForNotification.getHour()) + ":" + String.valueOf(objectForNotification.getMinute()));
+            edtDate.setText(String.valueOf(objectForNotification.getDay()) + "."
+                    + String.valueOf(objectForNotification.getMonth()) + "."
+                    + String.valueOf(objectForNotification.getYear()));
+            edtText.setText(objectForNotification.getText());
+        }
+
         edtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,18 +102,78 @@ public class ActivityDetailNotification extends AppCompatActivity {
             }
         });
 
+        edtRepeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createRepeatCountAlertDialog();
+            }
+        });
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ActivityDetailNotification.this, "LOL", Toast.LENGTH_SHORT).show();
-                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                /*AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 Intent intent = new Intent(ActivityDetailNotification.this, AlarmManagerBR.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(ActivityDetailNotification.this,
                         1, intent, 0);
-                alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 1000, pendingIntent);
+                alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 1000, pendingIntent);*/
+                if (edtText.getText().toString().equals("") || edtText.getText().toString().equals(" ")) {
+                    Toast.makeText(ActivityDetailNotification.this, "Вы забыли про текст напоминания", Toast.LENGTH_SHORT).show();
+                } else {
+                    saveObject();
+                }
+            }
+        });
+
+
+    }
+
+    private void loadSavedNotificationObject() {
+
+    }
+
+    private void saveObject() {
+        try {
+
+            String[] date = edtDate.getText().toString().split("\\.");
+            String[] time = edtTime.getText().toString().split(":");
+            objectForNotification.setText(edtText.getText().toString());
+            objectForNotification.setDay(Integer.parseInt(date[0]));
+            objectForNotification.setMonth(Integer.parseInt(date[1]));
+            objectForNotification.setYear(Integer.parseInt(date[2]));
+            objectForNotification.setMinute(Integer.parseInt(time[1]));
+            objectForNotification.setHour(Integer.parseInt(time[0]));
+            objectForNotification.setRepeat(edtRepeat.getText().toString());
+            objectForNotification.save();
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Что-то пошло не так, попробуйте позже", Toast.LENGTH_SHORT).show();
+            Log.e("Error", "Unknown error");
+        }
+    }
+
+    private void createRepeatCountAlertDialog() {
+        final RadioGroup rgRepeatCount;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        final View view = View.inflate(this, R.layout.alert_dialog_repeat_count, null);
+        rgRepeatCount = view.findViewById(R.id.rgRepeatCount);
+        builder.setView(view);
+
+        builder.setPositiveButton("ок", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                RadioButton checkedRadioButton = view.findViewById(rgRepeatCount.getCheckedRadioButtonId());
+                edtRepeat.setText(checkedRadioButton.getText());
+            }
+        });
+        builder.setNegativeButton("отмена", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
             }
         });
+        builder.show();
     }
 
     private void createTimeAlertDialog() {

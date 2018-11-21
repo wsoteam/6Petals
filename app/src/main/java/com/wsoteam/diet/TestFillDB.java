@@ -59,7 +59,7 @@ public class TestFillDB {
 
 
 
-        /*ItemOfGlobalBase itemOfGlobalBase = new ItemOfGlobalBase("name", "des", "com",
+        ItemOfGlobalBase itemOfGlobalBase = new ItemOfGlobalBase("name", "des", "com",
                 "prop", "cal", "prot",
                 "fat", "car", "url");
 
@@ -76,10 +76,10 @@ public class TestFillDB {
         groupOfFoods.add(groupOfFood);
         groupOfFoods.add(groupOfFood);
         groupOfFoods.add(groupOfFood);
-        groupOfFoods.add(groupOfFood);*/
+        groupOfFoods.add(groupOfFood);
 
         ListOfGroupsFood groupOfFoodListOfGroupsFood = new ListOfGroupsFood("name",
-                fillAllCellForItemsFromGlobalBase(countOfItems));
+                groupOfFoods);
 
         /*ItemRecipes itemRecipes = new ItemRecipes("name", "url", "body");
 

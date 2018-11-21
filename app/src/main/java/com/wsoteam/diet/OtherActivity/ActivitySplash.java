@@ -49,8 +49,10 @@ public class ActivitySplash extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ObjectHolder objectHolder = new ObjectHolder();
                 objectHolder.bindObjectWithHolder(dataSnapshot.getValue(GlobalObject.class));
+                //ivLoading.clearAnimation();
                 Intent intent = new Intent(ActivitySplash.this, MainActivity.class);
                 startActivity(intent);
+                //TestFillDB.fiilDB(ObjectHolder.getGlobalObject().getListOfPOJO(), ObjectHolder.getGlobalObject().getListOfGroupsRecipes());
                 finish();
             }
 

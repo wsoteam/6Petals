@@ -29,7 +29,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.wsoteam.diet.BranchOfDiary.ActivityListOfDiary;
 import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
-import com.wsoteam.diet.BranchOfNotifications.ActivityDetailNotification;
+import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
@@ -214,7 +214,8 @@ public class MainActivity extends AppCompatActivity
                 isOpenMarket = true;
                 break;
             case R.id.menu_nav_notification:
-                intent = new Intent(MainActivity.this, ActivityDetailNotification.class);
+                //intent = new Intent(MainActivity.this, ActivityDetailNotification.class);
+                intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
                 break;
         }
 

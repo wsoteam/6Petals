@@ -67,7 +67,6 @@ public class ActivityCalculatorBrok extends AppCompatActivity {
     }
 
     private void calculate() {
-        //TODO not work
         if (age <= 40) {
             if (growth <= 165) {
                 idealWeight = ((growth - 100) * 0.9 - ((growth - 100) * 0.1)) * checkTypeOfBody();
