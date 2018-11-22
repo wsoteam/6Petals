@@ -3,6 +3,7 @@ package com.wsoteam.diet.POJOForDB;
 import com.orm.SugarRecord;
 
 public class ObjectForNotification extends SugarRecord {
+    private long ownId;
     private int minute;
     private int hour;
     private int day;
@@ -14,7 +15,8 @@ public class ObjectForNotification extends SugarRecord {
     public ObjectForNotification() {
     }
 
-    public ObjectForNotification(int minute, int hour, int day, int month, int year, String text, String repeat) {
+    public ObjectForNotification(long ownId, int minute, int hour, int day, int month, int year, String text, String repeat) {
+        this.ownId = ownId;
         this.minute = minute;
         this.hour = hour;
         this.day = day;
@@ -78,5 +80,13 @@ public class ObjectForNotification extends SugarRecord {
 
     public void setRepeat(String repeat) {
         this.repeat = repeat;
+    }
+
+    public long getOwnId() {
+        return ownId;
+    }
+
+    public void setOwnId(long ownId) {
+        this.ownId = ownId;
     }
 }
