@@ -14,24 +14,24 @@ import com.wsoteam.diet.R;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class AlarmManagerBR extends BroadcastReceiver {
-    public static String TAG = "AlarmManagerBR";
+    public static String TAG_FOR_TEXT = "AlarmManagerBR_TAG_FOR_TEXT";
+    public static String TAG_FOR_ID = "AlarmManagerBR_TAG_FOR_ID";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("LOL", "dorou");
         Toast.makeText(context, "LOL", Toast.LENGTH_SHORT).show();
-        createNotification(context);
+        createNotification(context, intent.getStringExtra(TAG_FOR_TEXT), intent.getLongExtra(TAG_FOR_ID, 0));
     }
 
-    private void createNotification(Context context){
+    private void createNotification(Context context, String textOfNotification, long id){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.notification_flasher)
-                .setContentTitle("Dorou")
-                .setContentText("lol kek lol kek")
+                .setContentTitle(textOfNotification)
                 /*.setVibrate(new long[] {1000, 1000, 1000, 1000, 1000})*/;
         Notification notification = builder.build();
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(1, notification);
+        notificationManager.notify((int) id, notification);
     }
 }

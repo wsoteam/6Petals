@@ -129,6 +129,14 @@
         Каждый Ваш просмотр помогает нам и ускоряет процесс разработки.
         Так же Вы просто можете вернуться назад при помощи кнопки "Back"</string>
     <string name="name_of_app">Диеты 6 лепестков</string>
+    <string name="repeat_none">Однократно</string>
+    <string name="repeat_hour">Каждый час</string>
+    <string name="repeat_two_hours">Каждые два часа</string>
+    <string name="repeat_three_hours">Каждые три часа</string>
+    <string name="repeat_four_hours">Каждые четыре часа</string>
+    <string name="repeat_day">Каждый день</string>
+    <string name="repeat_weak">Каждую неделю</string>
+    <string name="repeat_month">Каждый месяц</string>
 
 
     <string-array name="titles_of_calculating_list">

@@ -23,49 +23,49 @@
             android:id="@+id/rbRepeatCountNullRepeat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Однократно" />
+            android:text="@string/repeat_none" />
 
         <RadioButton
             android:id="@+id/rbRepeatCountEveryHour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Каждый час" />
+            android:text="@string/repeat_hour" />
 
         <RadioButton
             android:id="@+id/rbRepeatCountEveryTwoHours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Каждые два часа" />
+            android:text="@string/repeat_two_hours" />
 
         <RadioButton
             android:id="@+id/rbRepeatCountEveryThreeHour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Каждые три часа" />
+            android:text="@string/repeat_three_hours" />
 
         <RadioButton
             android:id="@+id/rbRepeatCountEveryFourHour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Каждые четыре часа" />
+            android:text="@string/repeat_four_hours" />
 
         <RadioButton
             android:id="@+id/rbRepeatCountEveryDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Каждый день" />
+            android:text="@string/repeat_day" />
 
         <RadioButton
             android:id="@+id/rbRepeatCountEveryWeek"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Каждую неделю" />
+            android:text="@string/repeat_weak" />
 
         <RadioButton
             android:id="@+id/rbRepeatCountEveryMonth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Каждый месяц" />
+            android:text="@string/repeat_month" />
 
 
     </RadioGroup>

@@ -59,6 +59,13 @@ public class ActivityDetailNotification extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(ActivityDetailNotification.this,
                 (int) tempId, intent, 0);
         pendingIntent.cancel();
+        notificationArrayList = (ArrayList<ObjectForNotification>) ObjectForNotification.listAll(ObjectForNotification.class);
+        notificationArrayList.remove(idOfSelectedItem);
+        ObjectForNotification.deleteAll(ObjectForNotification.class);
+        for (int i = 0; i < notificationArrayList.size(); i++) {
+            notificationArrayList.get(i).save();
+        }
+        finish();
         return super.onOptionsItemSelected(item);
     }
 
@@ -102,7 +109,7 @@ public class ActivityDetailNotification extends AppCompatActivity {
 
             edtTime.setText(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(cal.get(Calendar.MINUTE)));
 
-            edtRepeat.setText("Однократно");
+            edtRepeat.setText(getString(R.string.repeat_none));
 
 
         } else {
@@ -156,17 +163,7 @@ public class ActivityDetailNotification extends AppCompatActivity {
 
     private void saveObject() {
         try {
-            String[] date = edtDate.getText().toString().split("\\.");
-            String[] time = edtTime.getText().toString().split(":");
-            objectForNotification.setText(edtText.getText().toString());
-            objectForNotification.setDay(Integer.parseInt(date[0]));
-            objectForNotification.setMonth(Integer.parseInt(date[1]));
-            objectForNotification.setYear(Integer.parseInt(date[2]));
-            objectForNotification.setMinute(Integer.parseInt(time[1]));
-            objectForNotification.setHour(Integer.parseInt(time[0]));
-            objectForNotification.setRepeat(edtRepeat.getText().toString());
-            objectForNotification.setOwnId(tempId);
-
+            fillObjectFromFields();
             if (idOfSelectedItem == -1) {
                 objectForNotification.save();
 
@@ -181,11 +178,23 @@ public class ActivityDetailNotification extends AppCompatActivity {
                 finish();
             }
             createAlarmSchedule(objectForNotification);
-
         } catch (Exception e) {
             Toast.makeText(this, "Что-то пошло не так, попробуйте позже", Toast.LENGTH_SHORT).show();
             Log.e("Error", "Unknown error");
         }
+    }
+
+    private void fillObjectFromFields() {
+        String[] date = edtDate.getText().toString().split("\\.");
+        String[] time = edtTime.getText().toString().split(":");
+        objectForNotification.setText(edtText.getText().toString());
+        objectForNotification.setDay(Integer.parseInt(date[0]));
+        objectForNotification.setMonth(Integer.parseInt(date[1]));
+        objectForNotification.setYear(Integer.parseInt(date[2]));
+        objectForNotification.setMinute(Integer.parseInt(time[1]));
+        objectForNotification.setHour(Integer.parseInt(time[0]));
+        objectForNotification.setRepeat(edtRepeat.getText().toString());
+        objectForNotification.setOwnId(tempId);
     }
 
 
@@ -203,10 +212,36 @@ public class ActivityDetailNotification extends AppCompatActivity {
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(ActivityDetailNotification.this, AlarmManagerBR.class);
-        intent.putStringArrayListExtra()
+        intent.putExtra(AlarmManagerBR.TAG_FOR_TEXT, objectForNotification.getText());
+        intent.putExtra(AlarmManagerBR.TAG_FOR_ID, objectForNotification.getOwnId());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(ActivityDetailNotification.this,
                 (int) objectForNotification.getOwnId(), intent, 0);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000, pendingIntent);
+
+        if (objectForNotification.getRepeat().equals(getString(R.string.repeat_none))) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
+        if (objectForNotification.getRepeat().equals(getString(R.string.repeat_hour))) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 3600000, pendingIntent);
+        }
+        if (objectForNotification.getRepeat().equals(getString(R.string.repeat_two_hours))) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 7200000, pendingIntent);
+        }
+        if (objectForNotification.getRepeat().equals(getString(R.string.repeat_three_hours))) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 10800000, pendingIntent);
+        }
+        if (objectForNotification.getRepeat().equals(getString(R.string.repeat_four_hours))) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 14400000, pendingIntent);
+        }
+        if (objectForNotification.getRepeat().equals(getString(R.string.repeat_day))) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 86400000, pendingIntent);
+        }
+        if (objectForNotification.getRepeat().equals(getString(R.string.repeat_weak))) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 604800000, pendingIntent);
+        }
+        if (objectForNotification.getRepeat().equals(getString(R.string.repeat_month))) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 108000000, pendingIntent);
+        }
+
     }
 
     private void createRepeatCountAlertDialog() {
