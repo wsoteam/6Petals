@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        setTitle("Главное меню");
+        setTitle(getString(R.string.main_menu));
 
 
         cvMonoDiets = findViewById(R.id.cvMAMonoDiets);

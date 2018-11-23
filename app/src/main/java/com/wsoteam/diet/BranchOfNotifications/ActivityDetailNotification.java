@@ -158,6 +158,28 @@ public class ActivityDetailNotification extends AppCompatActivity {
         });
 
 
+        /*Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_1));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_2));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_3));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_4));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_5));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_6));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_7));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_8));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_9));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_10));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_11));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_12));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_13));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_14));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_15));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_16));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_17));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_18));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_19));
+        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_20));*/
+
+
     }
 
 

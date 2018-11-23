@@ -137,6 +137,8 @@
     <string name="repeat_day">Каждый день</string>
     <string name="repeat_weak">Каждую неделю</string>
     <string name="repeat_month">Каждый месяц</string>
+    <string name="my_reminders">Мои напоминания</string>
+    <string name="main_menu">Главное меню</string>
 
 
     <string-array name="titles_of_calculating_list">
@@ -168,4 +170,29 @@
         <item>Ожирение 2-ой степени</item>
         <item>Ожирение 3-ой степени</item>
     </string-array>
+
+
+    <integer-array name="ids_of_notifications_icons">
+        <item>2131230872</item>
+        <item>2131230883</item>
+        <item>2131230885</item>
+        <item>2131230886</item>
+        <item>2131230887</item>
+        <item>2131230888</item>
+        <item>2131230889</item>
+        <item>2131230890</item>
+        <item>2131230891</item>
+        <item>2131230873</item>
+        <item>2131230874</item>
+        <item>2131230875</item>
+        <item>2131230876</item>
+        <item>2131230877</item>
+        <item>2131230878</item>
+        <item>2131230879</item>
+        <item>2131230880</item>
+        <item>2131230881</item>
+        <item>2131230882</item>
+        <item>2131230884</item>
+    </integer-array>
+
 </resources>
