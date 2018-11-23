@@ -14,22 +14,29 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.wsoteam.diet.POJOForDB.ObjectForNotification;
 import com.wsoteam.diet.R;
 import com.wsoteam.diet.Services.AlarmManagerBR;
@@ -40,12 +47,14 @@ import java.util.GregorianCalendar;
 
 public class ActivityDetailNotification extends AppCompatActivity {
     private EditText edtText, edtDate, edtTime, edtRepeat;
+    private ImageView ivChoiseIconForNotification;
     private Button btnSave;
     private ObjectForNotification objectForNotification;
     final static String TAG_OF_ACTIVITY = "ActivityDetailNotification";
     private int idOfSelectedItem = 0;
     private ArrayList<ObjectForNotification> notificationArrayList;
     private long tempId;
+    private AlertDialog choiseIconAlertDialog;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,6 +89,7 @@ public class ActivityDetailNotification extends AppCompatActivity {
         edtTime = findViewById(R.id.edtActivityDetailNotificationTimeOfNotification);
         edtRepeat = findViewById(R.id.edtActivityDetailNotificationRepeatOfNotification);
         btnSave = findViewById(R.id.btnActivityDetailNotificationSaveNotification);
+        ivChoiseIconForNotification = findViewById(R.id.ivActivityDetailNotificationIconOfNotification);
 
         final Calendar calendar = new GregorianCalendar();
 
@@ -108,10 +118,7 @@ public class ActivityDetailNotification extends AppCompatActivity {
             //TODO write 0 until one number
 
             edtTime.setText(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(cal.get(Calendar.MINUTE)));
-
             edtRepeat.setText(getString(R.string.repeat_none));
-
-
         } else {
             notificationArrayList = (ArrayList<ObjectForNotification>) ObjectForNotification.listAll(ObjectForNotification.class);
             objectForNotification = notificationArrayList.get(idOfSelectedItem);
@@ -146,6 +153,13 @@ public class ActivityDetailNotification extends AppCompatActivity {
             }
         });
 
+        ivChoiseIconForNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createIconChoiseAlertDialog();
+            }
+        });
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,29 +170,17 @@ public class ActivityDetailNotification extends AppCompatActivity {
                 }
             }
         });
+    }
 
-
-        /*Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_1));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_2));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_3));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_4));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_5));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_6));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_7));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_8));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_9));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_10));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_11));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_12));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_13));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_14));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_15));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_16));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_17));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_18));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_19));
-        Log.wtf("LOL", String.valueOf(R.drawable.list_of_choise_notification_icon_20));*/
-
+    private void createIconChoiseAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        choiseIconAlertDialog = builder.create();
+        View view = View.inflate(ActivityDetailNotification.this, R.layout.alert_dialog_list_of_icons, null);
+        RecyclerView rvListOfIcons = view.findViewById(R.id.rvAlertDialogListOfIcons);
+        rvListOfIcons.setLayoutManager(new GridLayoutManager(ActivityDetailNotification.this, 5));
+        rvListOfIcons.setAdapter(new IconAdapter(getResources().getIntArray(R.array.ids_of_notifications_icons)));
+        choiseIconAlertDialog.setView(view);
+        choiseIconAlertDialog.show();
 
     }
 
@@ -329,5 +331,50 @@ public class ActivityDetailNotification extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+
+    private class IconHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private ImageView ivIcon;
+        public IconHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
+            super(layoutInflater.inflate(R.layout.item_of_list_icon_choise, viewGroup, false));
+            ivIcon = itemView.findViewById(R.id.ivItemOfListIconChoise);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            choiseIconAlertDialog.cancel();
+        }
+
+        public void bind(int idsOfIcon) {
+            Glide.with(ActivityDetailNotification.this).load(idsOfIcon).into(ivIcon);
+        }
+    }
+
+    private class IconAdapter extends RecyclerView.Adapter<IconHolder>{
+        int [] idsOfIcons;
+
+        public IconAdapter(int[] idsOfIcons) {
+            this.idsOfIcons = idsOfIcons;
+        }
+
+        @NonNull
+        @Override
+        public IconHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(ActivityDetailNotification.this);
+            return new IconHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull IconHolder holder, int position) {
+            holder.bind(idsOfIcons[position]);
+        }
+
+        @Override
+        public int getItemCount() {
+            return idsOfIcons.length;
+        }
     }
 }
