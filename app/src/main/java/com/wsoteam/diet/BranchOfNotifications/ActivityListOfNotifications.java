@@ -78,6 +78,13 @@ public class ActivityListOfNotifications extends AppCompatActivity {
         recyclerView.setAdapter(itemAdapter);
     }
 
+    private String writeWithNull(String raw) {
+        if (raw.length() == 1) {
+            raw = "0" + raw;
+        }
+        return raw;
+    }
+
     private class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvTitle, tvSubTitle;
         private ImageView ivIcon;
@@ -102,11 +109,11 @@ public class ActivityListOfNotifications extends AppCompatActivity {
         public void bind(ObjectForNotification objectForNotification) {
             tvTitle.setText(objectForNotification.getText());
             tvSubTitle.setText(objectForNotification.getRepeat()
-                    + " в " + String.valueOf(objectForNotification.getHour())
-                    + ":" + String.valueOf(objectForNotification.getMinute())
-                    + ", начиная с  " + String.valueOf(objectForNotification.getDay())
-                    + "." + String.valueOf(objectForNotification.getMonth()
-                    + "." + String.valueOf(objectForNotification.getYear())));
+                    + " в " + writeWithNull(String.valueOf(objectForNotification.getHour()))
+                    + ":" + writeWithNull(String.valueOf(objectForNotification.getMinute()))
+                    + ", начиная с  " + writeWithNull(String.valueOf(objectForNotification.getDay()))
+                    + "." + writeWithNull(String.valueOf(objectForNotification.getMonth())
+                    + "." + writeWithNull(String.valueOf(objectForNotification.getYear()))));
             Glide.with(ActivityListOfNotifications.this).load(objectForNotification.getIdROfIcon()).into(ivIcon);
 
         }

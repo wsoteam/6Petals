@@ -57,30 +57,6 @@ public class ActivityDetailNotification extends AppCompatActivity {
     private AlertDialog choiseIconAlertDialog;
 
 
-    //TODO check first create of notifacation
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.notification_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(ActivityDetailNotification.this, AlarmManagerBR.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(ActivityDetailNotification.this,
-                (int) tempId, intent, 0);
-        pendingIntent.cancel();
-        notificationArrayList = (ArrayList<ObjectForNotification>) ObjectForNotification.listAll(ObjectForNotification.class);
-        notificationArrayList.remove(idOfSelectedItem);
-        ObjectForNotification.deleteAll(ObjectForNotification.class);
-        for (int i = 0; i < notificationArrayList.size(); i++) {
-            notificationArrayList.get(i).save();
-        }
-        finish();
-        return super.onOptionsItemSelected(item);
-    }
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,11 +90,11 @@ public class ActivityDetailNotification extends AppCompatActivity {
             objectForNotification = new ObjectForNotification();
 
             tempId = cal.getTimeInMillis();
-            //TODO write 0 until one number
-            edtDate.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
-                    + "." + String.valueOf(cal.get(Calendar.MONTH))
-                    + "." + String.valueOf(cal.get(Calendar.YEAR)));
-            edtTime.setText(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(cal.get(Calendar.MINUTE)));
+            edtDate.setText(writeWithNull(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)))
+                    + "." + writeWithNull(String.valueOf(cal.get(Calendar.MONTH)))
+                    + "." + writeWithNull(String.valueOf(cal.get(Calendar.YEAR))));
+            edtTime.setText(writeWithNull(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)))
+                    + ":" + writeWithNull(String.valueOf(cal.get(Calendar.MINUTE))));
             edtRepeat.setText(getString(R.string.repeat_none));
         } else {
             notificationArrayList = (ArrayList<ObjectForNotification>) ObjectForNotification.listAll(ObjectForNotification.class);
@@ -126,10 +102,11 @@ public class ActivityDetailNotification extends AppCompatActivity {
 
             tempId = objectForNotification.getOwnId();
             edtRepeat.setText(objectForNotification.getRepeat());
-            edtTime.setText(String.valueOf(objectForNotification.getHour()) + ":" + String.valueOf(objectForNotification.getMinute()));
-            edtDate.setText(String.valueOf(objectForNotification.getDay()) + "."
-                    + String.valueOf(objectForNotification.getMonth()) + "."
-                    + String.valueOf(objectForNotification.getYear()));
+            edtTime.setText(writeWithNull(String.valueOf(objectForNotification.getHour()))
+                    + ":" + writeWithNull(String.valueOf(objectForNotification.getMinute())));
+            edtDate.setText(writeWithNull(String.valueOf(objectForNotification.getDay())) + "."
+                    + writeWithNull(String.valueOf(objectForNotification.getMonth())) + "."
+                    + writeWithNull(String.valueOf(objectForNotification.getYear())));
             edtText.setText(objectForNotification.getText());
             Glide.with(this).load(objectForNotification.getIdROfIcon()).into(ivChoiseIconForNotification);
             idROfSelectedIcon = objectForNotification.getIdROfIcon();
@@ -173,6 +150,13 @@ public class ActivityDetailNotification extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String writeWithNull(String raw) {
+        if (raw.length() == 1) {
+            raw = "0" + raw;
+        }
+        return raw;
     }
 
     private void createIconChoiseAlertDialog() {
@@ -303,7 +287,8 @@ public class ActivityDetailNotification extends AppCompatActivity {
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                edtTime.setText(String.valueOf(timePicker.getCurrentHour()) + ":" + String.valueOf(timePicker.getCurrentMinute()));
+                edtTime.setText(writeWithNull(String.valueOf(timePicker.getCurrentHour())) + ":"
+                        + writeWithNull(String.valueOf(timePicker.getCurrentMinute())));
             }
         });
         builder.setNeutralButton("отмена", new DialogInterface.OnClickListener() {
@@ -322,9 +307,9 @@ public class ActivityDetailNotification extends AppCompatActivity {
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                edtDate.setText(String.valueOf(datePicker.getDayOfMonth()) + "."
-                        + String.valueOf(datePicker.getMonth() + 1) + "."
-                        + String.valueOf(datePicker.getYear()));
+                edtDate.setText(writeWithNull(String.valueOf(datePicker.getDayOfMonth())) + "."
+                        + writeWithNull(String.valueOf(datePicker.getMonth() + 1)) + "."
+                        + writeWithNull(String.valueOf(datePicker.getYear())));
             }
         });
         builder.setNeutralButton("отмена", new DialogInterface.OnClickListener() {

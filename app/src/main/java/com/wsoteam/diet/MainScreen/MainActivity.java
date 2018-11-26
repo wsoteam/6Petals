@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
@@ -90,6 +91,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
+
+        int temp = 01;
+        Toast.makeText(this, String.valueOf(temp), Toast.LENGTH_SHORT).show();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
