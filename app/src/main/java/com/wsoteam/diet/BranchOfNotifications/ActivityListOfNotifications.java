@@ -11,9 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.wsoteam.diet.POJOForDB.ObjectForNotification;
 import com.wsoteam.diet.R;
 
@@ -58,12 +60,14 @@ public class ActivityListOfNotifications extends AppCompatActivity {
 
     private class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvTitle, tvSubTitle;
+        private ImageView ivIcon;
 
         public ItemViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_of_list_activity_list_of_notification, viewGroup, false));
 
             tvTitle = itemView.findViewById(R.id.tvItemOfListNotificationTitle);
             tvSubTitle = itemView.findViewById(R.id.tvItemOfListNotificationSubTitle);
+            ivIcon = itemView.findViewById(R.id.ivListOfNotificationIcon);
 
             itemView.setOnClickListener(this);
         }
@@ -83,6 +87,7 @@ public class ActivityListOfNotifications extends AppCompatActivity {
                     + ", начиная с  " + String.valueOf(objectForNotification.getDay())
                     + "." + String.valueOf(objectForNotification.getMonth()
                     + "." + String.valueOf(objectForNotification.getYear())));
+            Glide.with(ActivityListOfNotifications.this).load(objectForNotification.getIdROfIcon()).into(ivIcon);
 
         }
     }

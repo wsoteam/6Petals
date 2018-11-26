@@ -51,11 +51,13 @@ public class ActivityDetailNotification extends AppCompatActivity {
     private Button btnSave;
     private ObjectForNotification objectForNotification;
     final static String TAG_OF_ACTIVITY = "ActivityDetailNotification";
-    private int idOfSelectedItem = 0;
+    private int idOfSelectedItem = 0, idROfSelectedIcon = R.drawable.list_of_choise_notification_icon_1;
     private ArrayList<ObjectForNotification> notificationArrayList;
     private long tempId;
     private AlertDialog choiseIconAlertDialog;
 
+
+    //TODO check first create of notifacation
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.notification_menu, menu);
@@ -106,17 +108,16 @@ public class ActivityDetailNotification extends AppCompatActivity {
         idOfSelectedItem = getIntent().getIntExtra(TAG_OF_ACTIVITY, 0);
 
 
+        //-1 - new object(create), else - open early saved object
+
         if (idOfSelectedItem == -1) {
             objectForNotification = new ObjectForNotification();
 
             tempId = cal.getTimeInMillis();
-
+            //TODO write 0 until one number
             edtDate.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
                     + "." + String.valueOf(cal.get(Calendar.MONTH))
                     + "." + String.valueOf(cal.get(Calendar.YEAR)));
-
-            //TODO write 0 until one number
-
             edtTime.setText(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(cal.get(Calendar.MINUTE)));
             edtRepeat.setText(getString(R.string.repeat_none));
         } else {
@@ -130,6 +131,8 @@ public class ActivityDetailNotification extends AppCompatActivity {
                     + String.valueOf(objectForNotification.getMonth()) + "."
                     + String.valueOf(objectForNotification.getYear()));
             edtText.setText(objectForNotification.getText());
+            Glide.with(this).load(objectForNotification.getIdROfIcon()).into(ivChoiseIconForNotification);
+            idROfSelectedIcon = objectForNotification.getIdROfIcon();
         }
 
         edtDate.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +193,6 @@ public class ActivityDetailNotification extends AppCompatActivity {
             fillObjectFromFields();
             if (idOfSelectedItem == -1) {
                 objectForNotification.save();
-
                 finish();
             } else {
                 ObjectForNotification.deleteAll(ObjectForNotification.class);
@@ -204,7 +206,7 @@ public class ActivityDetailNotification extends AppCompatActivity {
             createAlarmSchedule(objectForNotification);
         } catch (Exception e) {
             Toast.makeText(this, "Что-то пошло не так, попробуйте позже", Toast.LENGTH_SHORT).show();
-            Log.e("Error", "Unknown error");
+            Log.e("Error", e.getLocalizedMessage());
         }
     }
 
@@ -219,6 +221,7 @@ public class ActivityDetailNotification extends AppCompatActivity {
         objectForNotification.setHour(Integer.parseInt(time[0]));
         objectForNotification.setRepeat(edtRepeat.getText().toString());
         objectForNotification.setOwnId(tempId);
+        objectForNotification.setIdROfIcon(idROfSelectedIcon);
     }
 
 
@@ -334,8 +337,10 @@ public class ActivityDetailNotification extends AppCompatActivity {
     }
 
 
-    private class IconHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    private class IconHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView ivIcon;
+        private int idOfCurrentIcon;
+
         public IconHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_of_list_icon_choise, viewGroup, false));
             ivIcon = itemView.findViewById(R.id.ivItemOfListIconChoise);
@@ -345,16 +350,19 @@ public class ActivityDetailNotification extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
+            Glide.with(ActivityDetailNotification.this).load(idOfCurrentIcon).into(ivChoiseIconForNotification);
+            idROfSelectedIcon = idOfCurrentIcon;
             choiseIconAlertDialog.cancel();
         }
 
         public void bind(int idsOfIcon) {
+            idOfCurrentIcon = idsOfIcon;
             Glide.with(ActivityDetailNotification.this).load(idsOfIcon).into(ivIcon);
         }
     }
 
-    private class IconAdapter extends RecyclerView.Adapter<IconHolder>{
-        int [] idsOfIcons;
+    private class IconAdapter extends RecyclerView.Adapter<IconHolder> {
+        int[] idsOfIcons;
 
         public IconAdapter(int[] idsOfIcons) {
             this.idsOfIcons = idsOfIcons;

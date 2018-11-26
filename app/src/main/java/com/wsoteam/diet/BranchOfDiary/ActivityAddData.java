@@ -25,6 +25,8 @@ public class ActivityAddData extends AppCompatActivity {
     private boolean isReadyToClose = false;
     InterstitialAd interstitialAd;
 
+    //TODO add main icon and split input form on four square
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

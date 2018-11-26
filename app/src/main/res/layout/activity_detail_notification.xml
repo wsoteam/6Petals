@@ -30,7 +30,7 @@
         android:layout_marginTop="8dp"
         android:text="Текст напоминания"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     <TextView
         android:id="@+id/textView17"
@@ -117,8 +117,8 @@
 
     <ImageView
         android:id="@+id/ivActivityDetailNotificationIconOfNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -141,6 +141,20 @@
         app:layout_constraintStart_toEndOf="@+id/ivActivityDetailNotificationIconOfNotification"
         app:layout_constraintTop_toTopOf="@+id/ivActivityDetailNotificationIconOfNotification"
         app:srcCompat="@drawable/down_arrow" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/activity_detail_notification_main_image" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -24,7 +24,7 @@
             android:value="diet_database_diary_items.db" />
         <meta-data
             android:name="VERSION"
-            android:value="1" />
+            android:value="4" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
@@ -79,7 +79,8 @@
         <activity
             android:name=".BranchOfDescription.ActivityDescription"
             android:theme="@style/AppTheme2" />
-        <activity android:name=".BranchOfNotifications.ActivityDetailNotification" />
+        <activity android:name=".BranchOfNotifications.ActivityDetailNotification"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".BranchOfNotifications.ActivityListOfNotifications"/>
 

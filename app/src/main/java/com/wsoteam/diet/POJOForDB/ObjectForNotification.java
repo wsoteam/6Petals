@@ -11,11 +11,12 @@ public class ObjectForNotification extends SugarRecord {
     private int year;
     private String text;
     private String repeat;
+    private int idROfIcon;
 
     public ObjectForNotification() {
     }
 
-    public ObjectForNotification(long ownId, int minute, int hour, int day, int month, int year, String text, String repeat) {
+    public ObjectForNotification(long ownId, int minute, int hour, int day, int month, int year, String text, String repeat, int idROfIcon) {
         this.ownId = ownId;
         this.minute = minute;
         this.hour = hour;
@@ -24,6 +25,7 @@ public class ObjectForNotification extends SugarRecord {
         this.year = year;
         this.text = text;
         this.repeat = repeat;
+        this.idROfIcon = idROfIcon;
     }
 
     public int getMinute() {
@@ -88,5 +90,13 @@ public class ObjectForNotification extends SugarRecord {
 
     public void setOwnId(long ownId) {
         this.ownId = ownId;
+    }
+
+    public int getIdROfIcon() {
+        return idROfIcon;
+    }
+
+    public void setIdROfIcon(int idROfIcon) {
+        this.idROfIcon = idROfIcon;
     }
 }
