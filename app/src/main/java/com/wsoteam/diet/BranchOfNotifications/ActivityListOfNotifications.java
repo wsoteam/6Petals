@@ -1,5 +1,6 @@
 package com.wsoteam.diet.BranchOfNotifications;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.wsoteam.diet.POJOForDB.ObjectForNotification;
 import com.wsoteam.diet.R;
+import com.wsoteam.diet.Services.AlarmManagerBR;
 
 import java.util.ArrayList;
 
@@ -25,6 +28,9 @@ public class ActivityListOfNotifications extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FloatingActionButton fabCreateNewNotification;
     private ArrayList<ObjectForNotification> notificationArrayList;
+    private ItemAdapter itemAdapter;
+
+    //TODO change ui in every item
 
     @Override
     protected void onResume() {
@@ -43,6 +49,19 @@ public class ActivityListOfNotifications extends AppCompatActivity {
 
         updateUI();
 
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                itemAdapter.removeItem(viewHolder.getAdapterPosition());
+            }
+        };
+        new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
+
         fabCreateNewNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +74,8 @@ public class ActivityListOfNotifications extends AppCompatActivity {
 
     private void updateUI() {
         notificationArrayList = (ArrayList<ObjectForNotification>) ObjectForNotification.listAll(ObjectForNotification.class);
-        recyclerView.setAdapter(new ItemAdapter(notificationArrayList));
+        itemAdapter = new ItemAdapter(notificationArrayList);
+        recyclerView.setAdapter(itemAdapter);
     }
 
     private class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -114,6 +134,20 @@ public class ActivityListOfNotifications extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return notificationArrayList.size();
+        }
+
+        public void removeItem(int adapterPosition) {
+            Intent intent = new Intent(ActivityListOfNotifications.this, AlarmManagerBR.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(ActivityListOfNotifications.this,
+                    (int) notificationArrayList.get(adapterPosition).getOwnId(), intent, 0);
+            pendingIntent.cancel();
+
+            notificationArrayList.remove(adapterPosition);
+            ObjectForNotification.deleteAll(ObjectForNotification.class);
+            for (int i = 0; i < notificationArrayList.size(); i++) {
+                notificationArrayList.get(i).save();
+            }
+            notifyItemRemoved(adapterPosition);
         }
     }
 }
