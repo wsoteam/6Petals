@@ -22,6 +22,7 @@ public class ActivityCalculatorSPK extends AppCompatActivity {
     private EditText edtHeight, edtAge, edtWeight;
     private Button btnLevelLoad, btnCalculate;
     private RadioGroup rgFemaleOrMale;
+    private TextView tvTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +34,9 @@ public class ActivityCalculatorSPK extends AppCompatActivity {
         btnLevelLoad = findViewById(R.id.btnSpkChoiseLevel);
         btnCalculate = findViewById(R.id.btnSpkCalculate);
         rgFemaleOrMale = findViewById(R.id.rgFemaleOrMaleSpk);
+        tvTitle = findViewById(R.id.tvTitleOfSPK);
 
+        tvTitle.setText(getResources().getStringArray(R.array.titles_of_calculating_list)[3]);
 
         btnLevelLoad.setOnClickListener(new View.OnClickListener() {
             @Override

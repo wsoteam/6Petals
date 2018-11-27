@@ -157,6 +157,7 @@
     <string name="spk_check_your_height">Проверьте введенный рост</string>
     <string name="spk_check_weight">Проверьте введенный вес</string>
     <string name="spk_kcal">ккал</string>
+    <string name="description_of_SPK">Для комфортного похудения, для избежания срывов и нанесения вреда здоровью снижать калораж рациона ниже 1200 нельзя, поэтому в случае, если Ваш нижний предел оказался ниже 1200, надо необходимые калории сжигать за счёт физических нагрузок.</string>
 
 
     <string-array name="titles_of_calculating_list">

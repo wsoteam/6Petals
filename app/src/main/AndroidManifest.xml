@@ -92,7 +92,8 @@
 
         <activity android:name=".OtherActivity.ActivityAboutSetingsNotifications"/>
 
-        <activity android:name=".BranchOfCalculating.ActivityCalculatorSPK"/>
+        <activity android:name=".BranchOfCalculating.ActivityCalculatorSPK"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <receiver
             android:name=".Services.AlarmManagerBR"
