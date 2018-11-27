@@ -155,6 +155,8 @@
     <string name="spk_choise_your_gender">Выберите Ваш пол</string>
     <string name="spk_check_your_age">Проверьте Ваш возраст</string>
     <string name="spk_check_your_height">Проверьте введенный рост</string>
+    <string name="spk_check_weight">Проверьте введенный вес</string>
+    <string name="spk_kcal">ккал</string>
 
 
     <string-array name="titles_of_calculating_list">
