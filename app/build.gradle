@@ -6,8 +6,8 @@ android {
         applicationId "com.wild.diet"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 6
-        versionName "1.5"
+        versionCode 7
+        versionName "1.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -57,6 +57,7 @@ dependencies {
     compile 'com.github.satyan:sugar:1.4'
     implementation 'com.jjoe64:graphview:4.2.2'
     implementation 'com.android.support:multidex:1.0.3'
+    compile 'com.firebase:firebase-jobdispatcher:0.5.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

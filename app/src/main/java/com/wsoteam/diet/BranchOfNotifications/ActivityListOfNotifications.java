@@ -30,8 +30,6 @@ public class ActivityListOfNotifications extends AppCompatActivity {
     private ArrayList<ObjectForNotification> notificationArrayList;
     private ItemAdapter itemAdapter;
 
-    //TODO change ui in every item
-
     @Override
     protected void onResume() {
         super.onResume();

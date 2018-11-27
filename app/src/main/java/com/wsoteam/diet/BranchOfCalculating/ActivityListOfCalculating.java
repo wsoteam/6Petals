@@ -23,7 +23,7 @@ public class ActivityListOfCalculating extends AppCompatActivity {
     private RecyclerView rvListOfCalculating;
     private String[] listOfTitles;
     private String[] listOfDescriptions;
-    private final int NUMBER_OF_BROK = 0, NUMBER_OF_LORENC = 1, NUMBER_OF_IMT = 2;
+    private final int NUMBER_OF_BROK = 0, NUMBER_OF_LORENC = 1, NUMBER_OF_IMT = 2, NUMBER_OF_SPK = 3;
     private InterstitialAd interstitialAd;
 
     @Override
@@ -82,6 +82,10 @@ public class ActivityListOfCalculating extends AppCompatActivity {
                 case NUMBER_OF_IMT:
                     Intent intentIMT = new Intent(ActivityListOfCalculating.this, ActivityCalculatorIMT.class);
                     startActivity(intentIMT);
+                    break;
+                case NUMBER_OF_SPK:
+                    Intent intentSPK = new Intent(ActivityListOfCalculating.this, ActivityCalculatorSPK.class);
+                    startActivity(intentSPK);
                     break;
             }
 

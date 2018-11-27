@@ -11,7 +11,7 @@ import android.view.View;
 import com.wsoteam.diet.R;
 
 public class ActivitySettings extends AppCompatActivity {
-    CardView cvRate, cvPrivacy, cvShare;
+    CardView cvRate, cvPrivacy, cvShare, cvNotification;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -21,6 +21,7 @@ public class ActivitySettings extends AppCompatActivity {
         cvPrivacy = findViewById(R.id.cvPrivacy);
         cvRate = findViewById(R.id.cvRate);
         cvShare = findViewById(R.id.cvShare);
+        cvNotification = findViewById(R.id.cvOpenAutoLaunch);
 
         cvPrivacy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +41,14 @@ public class ActivitySettings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 shareUrlOfApp();
+            }
+        });
+
+        cvNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ActivitySettings.this, ActivityAboutSetingsNotifications.class);
+                startActivity(intent);
             }
         });
 

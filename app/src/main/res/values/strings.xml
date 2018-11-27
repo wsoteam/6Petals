@@ -49,16 +49,16 @@
 
     <string name="tab_body_text_1">test</string>
 
-    <string name="admob_interstitial" translatable="false">ca-app-pub-3050564412171997/5945782205</string>
+    <!--<string name="admob_interstitial" translatable="false">ca-app-pub-3050564412171997/5945782205</string>
     <string name="admob_banner" translatable="false">ca-app-pub-3050564412171997/5103473829</string>
     <string name="admob_award" translatable="false">ca-app-pub-3050564412171997/4889189478</string>
-    <string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3050564412171997/6423885238</string>
+    <string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3050564412171997/6423885238</string>-->
 
 
-    <!--<string name="admob_interstitial" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="admob_interstitial" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
     <string name="admob_banner" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="admob_award" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
-    <string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3940256099942544/6300978111</string>-->
+    <string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
 
 
     <string name="title_activity_drawer">DrawerActivity</string>
@@ -129,6 +129,8 @@
         Каждый Ваш просмотр помогает нам и ускоряет процесс разработки.
         Так же Вы просто можете вернуться назад при помощи кнопки "Back"</string>
     <string name="name_of_app">Диеты 6 лепестков</string>
+
+    <!--Repeat count-->
     <string name="repeat_none">Однократно</string>
     <string name="repeat_hour">Каждый час</string>
     <string name="repeat_two_hours">Каждые два часа</string>
@@ -137,14 +139,29 @@
     <string name="repeat_day">Каждый день</string>
     <string name="repeat_weak">Каждую неделю</string>
     <string name="repeat_month">Каждый месяц</string>
+
+
     <string name="my_reminders">Мои напоминания</string>
     <string name="main_menu">Главное меню</string>
+
+    <!--Load levels-->
+    <string name="level_none">Минимальные нагрузки (сидячая работа)</string>
+    <string name="level_easy">Легкие упражнения 1-3 раза в неделю</string>
+    <string name="level_medium">Тренировки 4-5 раз в неделю (или работа средней тяжести)</string>
+    <string name="level_hard">Интенсивные тренировки 4-5 раз в неделю</string>
+    <string name="level_up_hard">Ежедневные тренировки</string>
+    <string name="level_super">Ежедневные интенсивные тренировки или тренировки 2 раза в день</string>
+    <string name="level_up_super">Тяжелая физическая работа или интенсивные тренировки 2 раза в день</string>
+    <string name="spk_choise_your_gender">Выберите Ваш пол</string>
+    <string name="spk_check_your_age">Проверьте Ваш возраст</string>
+    <string name="spk_check_your_height">Проверьте введенный рост</string>
 
 
     <string-array name="titles_of_calculating_list">
         <item>Метод Поля Брока</item>
         <item>\"Мечта Лоренца\"</item>
         <item>Калькулятор ИМТ</item>
+        <item>Калькулятор СПК</item>
     </string-array>
 
     <string-array name="descriptions_of_calculating_list">
@@ -158,6 +175,7 @@
             между массой вашего тела и вашим ростом и узнать,
             имеется ли у вас избыточный вес, или же, наоборот,
             не страдаете ли вы недостатком веса.</item>
+        <item>С помощью калькулятора СПК можно определить ваш суточный лимит калорий, коридор калорий для похудения, оптимальное соотношение суточного потребления белков, жиров и углеводов (БЖУ)</item>
     </string-array>
 
 

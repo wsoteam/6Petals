@@ -11,21 +11,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wsoteam.diet.OtherActivity.ActivityAboutSetingsNotifications;
+import com.wsoteam.diet.OtherActivity.ActivitySettings;
 import com.wsoteam.diet.R;
 
 public class FragmentSetting extends Fragment {
 
-    CardView cvRate, cvPrivacy, cvShare;
+    CardView cvRate, cvPrivacy, cvShare, cvNotification;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_setting,container,false);
+        View view = inflater.inflate(R.layout.activity_settings,container,false);
 
-        cvRate = view.findViewById(R.id.cvRateFragmentSetting);
-        cvPrivacy = view.findViewById(R.id.cvPrivacyFragmentSetting);
-        cvShare = view.findViewById(R.id.cvShareFragmentSetting);
+        cvPrivacy = view.findViewById(R.id.cvPrivacy);
+        cvRate = view.findViewById(R.id.cvRate);
+        cvShare = view.findViewById(R.id.cvShare);
+        cvNotification = view.findViewById(R.id.cvOpenAutoLaunch);
 
 
         cvRate.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +60,14 @@ public class FragmentSetting extends Fragment {
                         + "\n"
                         + "https://play.google.com/store/apps/details?id="
                         + getActivity().getPackageName());
+                startActivity(intent);
+            }
+        });
+
+        cvNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ActivityAboutSetingsNotifications.class);
                 startActivity(intent);
             }
         });

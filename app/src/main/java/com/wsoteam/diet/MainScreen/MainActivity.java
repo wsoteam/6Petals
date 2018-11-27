@@ -1,5 +1,8 @@
 package com.wsoteam.diet.MainScreen;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -12,6 +15,8 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -33,10 +38,12 @@ import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
 import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.Config;
+import com.wsoteam.diet.Manifest;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity
                 if (mRewardedVideoAd.isLoaded()) {
                     mRewardedVideoAd.show();
                     loadAd();
+
                 }
                 break;
         }
@@ -92,8 +100,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_drawer);
 
 
-        int temp = 01;
-        Toast.makeText(this, String.valueOf(temp), Toast.LENGTH_SHORT).show();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -129,6 +135,10 @@ public class MainActivity extends AppCompatActivity
         Glide.with(this).load(R.drawable.background_recipes).into(ivRecipes);
 
         loadAd();
+
+
+
+        //YandexMetrica.reportEvent("Открыта реклама с анимационной кнопки");
 
 
         cvCalculating.setOnClickListener(new View.OnClickListener() {

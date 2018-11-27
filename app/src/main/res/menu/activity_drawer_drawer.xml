@@ -30,7 +30,8 @@
             android:icon="@drawable/nav_left_gym"/>
         <item
             android:id="@+id/menu_nav_notification"
-            android:title="Заглушка" />
+            android:title="Заглушка"
+            android:icon="@drawable/nav_left_notifications"/>
     </group>
 
 </menu>
