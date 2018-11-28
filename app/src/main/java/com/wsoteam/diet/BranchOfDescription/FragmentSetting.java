@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.wsoteam.diet.OtherActivity.ActivityAboutSetingsNotifications;
 import com.wsoteam.diet.OtherActivity.ActivitySettings;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 public class FragmentSetting extends Fragment {
 
@@ -29,6 +30,7 @@ public class FragmentSetting extends Fragment {
         cvRate = view.findViewById(R.id.cvRate);
         cvShare = view.findViewById(R.id.cvShare);
         cvNotification = view.findViewById(R.id.cvOpenAutoLaunch);
+        cvNotification.setVisibility(View.GONE);
 
 
         cvRate.setOnClickListener(new View.OnClickListener() {
@@ -64,14 +66,15 @@ public class FragmentSetting extends Fragment {
             }
         });
 
-        cvNotification.setOnClickListener(new View.OnClickListener() {
+       /* cvNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ActivityAboutSetingsNotifications.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
+        YandexMetrica.reportEvent("Открыт фрагмент: Настройки");
         return view;
     }
 

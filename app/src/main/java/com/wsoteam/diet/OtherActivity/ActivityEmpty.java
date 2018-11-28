@@ -15,6 +15,7 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 public class  ActivityEmpty extends AppCompatActivity {
     private Animation movingFromRight;
@@ -72,12 +73,14 @@ public class  ActivityEmpty extends AppCompatActivity {
                 if(mRewardedVideoAd.isLoaded()) {
                     mRewardedVideoAd.show();
                     loadAd();
+                    YandexMetrica.reportEvent("Открыта видео-реклама: Письмо разработчиков");
                 }else {
                     Toast.makeText(ActivityEmpty.this, "Ролик прогружается, нужно немного подождать)", Toast.LENGTH_SHORT).show();
 
                 }
             }
         });
+        YandexMetrica.reportEvent("Открыт экран: Письмо разработчиков");
     }
 
     private void loadAd() {
