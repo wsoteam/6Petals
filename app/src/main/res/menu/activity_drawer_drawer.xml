@@ -28,10 +28,10 @@
             android:id="@+id/menu_nav_more"
             android:title="Полезность"
             android:icon="@drawable/nav_left_gym"/>
-        <!--<item
+        <item
             android:id="@+id/menu_nav_notification"
             android:title="Заглушка"
-            android:icon="@drawable/nav_left_notifications"/>-->
+            android:icon="@drawable/nav_left_notifications"/>
     </group>
 
 </menu>

@@ -227,10 +227,10 @@ public class MainActivity extends AppCompatActivity
                 YandexMetrica.reportEvent("Переход на тренировки");
                 isOpenMarket = true;
                 break;
-            /*case R.id.menu_nav_notification:
+            case R.id.menu_nav_notification:
                 //intent = new Intent(MainActivity.this, ActivityDetailNotification.class);
                 intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
-                break;*/
+                break;
         }
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

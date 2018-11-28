@@ -57,7 +57,7 @@ dependencies {
     compile 'com.github.satyan:sugar:1.4'
     implementation 'com.jjoe64:graphview:4.2.2'
     implementation 'com.android.support:multidex:1.0.3'
-    compile 'com.firebase:firebase-jobdispatcher:0.5.2'
+    implementation 'com.github.euzee:serviceManager:1.0.3'
 }
 
 apply plugin: 'com.google.gms.google-services'
