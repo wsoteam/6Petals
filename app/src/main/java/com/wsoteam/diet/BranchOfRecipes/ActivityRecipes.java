@@ -21,6 +21,7 @@ import com.wsoteam.diet.Config;
 import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.ItemRecipes;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class ActivityRecipes extends AppCompatActivity {
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
 
+        YandexMetrica.reportEvent("Открыт экран: Список рецептов на день");
 
     }
 

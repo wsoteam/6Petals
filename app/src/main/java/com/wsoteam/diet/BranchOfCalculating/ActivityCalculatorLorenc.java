@@ -13,14 +13,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 public class ActivityCalculatorLorenc extends AppCompatActivity {
     EditText edtLorencHeight;
     Button btnCalculate;
     InterstitialAd interstitialAd;
+    AdView adBanner;
 
     @Override
     public void onBackPressed() {
@@ -36,6 +39,7 @@ public class ActivityCalculatorLorenc extends AppCompatActivity {
         setContentView(R.layout.activity_calculator_lorenc);
         edtLorencHeight = findViewById(R.id.edtLorencHeight);
         btnCalculate = findViewById(R.id.btnLorencCalculate);
+        adBanner = findViewById(R.id.bnrCalculatorLorenc);
 
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,9 +53,12 @@ public class ActivityCalculatorLorenc extends AppCompatActivity {
             }
         });
 
+        adBanner.loadAd(new AdRequest.Builder().build());
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
+
+        YandexMetrica.reportEvent("Открыт экран: Калькулятор Брока");
 
 
     }

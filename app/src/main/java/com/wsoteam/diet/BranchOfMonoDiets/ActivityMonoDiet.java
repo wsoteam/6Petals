@@ -30,6 +30,7 @@ import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.POJO;
 import com.wsoteam.diet.R;
 import com.wsoteam.diet.TestFillDB;
+import com.yandex.metrica.YandexMetrica;
 
 import java.util.ArrayList;
 
@@ -67,6 +68,8 @@ public class ActivityMonoDiet extends AppCompatActivity {
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
+
+        YandexMetrica.reportEvent("Открыт экран: Список моно диет");
 
 
     }

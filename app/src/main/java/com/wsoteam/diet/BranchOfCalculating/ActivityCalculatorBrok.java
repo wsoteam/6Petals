@@ -14,9 +14,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 public class ActivityCalculatorBrok extends AppCompatActivity {
     private EditText edtBrokGrowth, edtBrokGirth, edtBrokAge;
@@ -26,6 +28,7 @@ public class ActivityCalculatorBrok extends AppCompatActivity {
     double idealWeight;
     boolean ast = false, normo = false, hyper = false;
     InterstitialAd interstitialAd;
+    private AdView adBanner;
 
     @Override
     public void onBackPressed() {
@@ -46,6 +49,7 @@ public class ActivityCalculatorBrok extends AppCompatActivity {
         rbFemale = findViewById(R.id.rdBrokFemale);
         rbMale = findViewById(R.id.rdBrokMale);
         btnCalculate = findViewById(R.id.btnBrokCalculate);
+        adBanner = findViewById(R.id.bnrCalculatorBrok);
 
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +63,12 @@ public class ActivityCalculatorBrok extends AppCompatActivity {
             }
         });
 
+        adBanner.loadAd(new AdRequest.Builder().build());
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
+
+        YandexMetrica.reportEvent("Открыт экран: Калькулятор Брока");
 
 
     }

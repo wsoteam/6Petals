@@ -15,7 +15,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 
 public class ActivityCalculatorSPK extends AppCompatActivity {
@@ -23,6 +27,16 @@ public class ActivityCalculatorSPK extends AppCompatActivity {
     private Button btnLevelLoad, btnCalculate;
     private RadioGroup rgFemaleOrMale;
     private TextView tvTitle;
+    private AdView adBanner;
+    private InterstitialAd interstitialAd;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(interstitialAd.isLoaded()){
+            interstitialAd.show();
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +49,7 @@ public class ActivityCalculatorSPK extends AppCompatActivity {
         btnCalculate = findViewById(R.id.btnSpkCalculate);
         rgFemaleOrMale = findViewById(R.id.rgFemaleOrMaleSpk);
         tvTitle = findViewById(R.id.tvTitleOfSPK);
+        adBanner = findViewById(R.id.bnrSPK);
 
         tvTitle.setText(getResources().getStringArray(R.array.titles_of_calculating_list)[3]);
 
@@ -53,6 +68,13 @@ public class ActivityCalculatorSPK extends AppCompatActivity {
                 }
             }
         });
+
+        adBanner.loadAd(new AdRequest.Builder().build());
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+
+        YandexMetrica.reportEvent("Открыт экран: Калькулятор СПК");
     }
 
     private boolean checkInputData() {

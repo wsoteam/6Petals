@@ -13,9 +13,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 public class ActivityCalculatorIMT extends AppCompatActivity {
 
@@ -25,6 +27,7 @@ public class ActivityCalculatorIMT extends AppCompatActivity {
     String bodyType;
     String[] bodyTypes;
     InterstitialAd interstitialAd;
+    private AdView adBanner;
 
     @Override
     public void onBackPressed() {
@@ -43,6 +46,7 @@ public class ActivityCalculatorIMT extends AppCompatActivity {
         btnCalculate = findViewById(R.id.btnIMTCalculate);
         edtHeight = findViewById(R.id.edtIMTHeight);
         edtWeight = findViewById(R.id.edtIMTWeight);
+        adBanner = findViewById(R.id.bnrCalculatorIMT);
 
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,11 +61,12 @@ public class ActivityCalculatorIMT extends AppCompatActivity {
             }
         });
 
+        adBanner.loadAd(new AdRequest.Builder().build());
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
 
-
+        YandexMetrica.reportEvent("Открыт экран: Калькулятор ИМТ");
 
     }
 

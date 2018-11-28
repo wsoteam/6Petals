@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
+        YandexMetrica.reportEvent("Открыт экран: Стартовый экран");
     }
 
     private void loadAd() {

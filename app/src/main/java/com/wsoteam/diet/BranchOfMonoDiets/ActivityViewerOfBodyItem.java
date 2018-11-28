@@ -15,6 +15,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.POJOS.POJO;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 public class ActivityViewerOfBodyItem extends AppCompatActivity {
     TextView tvTitle, tvBody;
@@ -49,15 +50,14 @@ public class ActivityViewerOfBodyItem extends AppCompatActivity {
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
 
+        YandexMetrica.reportEvent("Открыт экран: Детализация моно диеты");
+
 
 
 
 
         POJO itemOb = (POJO) getIntent().getSerializableExtra(Config.ID_OF_ITEM);
-
-//        tvTitle.setText(itemOb.getName());
         tvTitle.setText(Html.fromHtml(itemOb.getName()));
-//        tvBody.setText(itemOb.getBodyOfText());
         tvBody.setText(Html.fromHtml(itemOb.getBodyOfText()));
         Glide.with(this).load(itemOb.getUrl_title()).into(imageView);
     }

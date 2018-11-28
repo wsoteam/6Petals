@@ -23,6 +23,7 @@ import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.ListOfGroupsRecipes;
 import com.wsoteam.diet.POJOS.ListOfRecipes;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 import java.util.ArrayList;
 
@@ -59,7 +60,7 @@ public class ActivityGroupsOfRecipes extends AppCompatActivity {
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
 
-
+        YandexMetrica.reportEvent("Открыт экран: Список рецептов");
     }
 
     private class RecipeGroupHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

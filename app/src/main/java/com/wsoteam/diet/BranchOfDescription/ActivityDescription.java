@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 
 public class ActivityDescription extends AppCompatActivity {
@@ -41,6 +42,8 @@ public class ActivityDescription extends AppCompatActivity {
         //открываем на нужной вкладке
         int position = (int)getIntent().getSerializableExtra(Config.ID_OF_SELECT_MENU);
         selectPage(position);
+
+        YandexMetrica.reportEvent("Открыт экран: Описание");
 
 
     }
