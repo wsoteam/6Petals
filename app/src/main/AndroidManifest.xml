@@ -95,6 +95,8 @@
         <activity android:name=".BranchOfCalculating.ActivityCalculatorSPK"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".BranchOfNews.ListOfNews"/>
+
         <receiver
             android:name=".Services.AlarmManagerBR"
             android:enabled="true"
