@@ -35,6 +35,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.wsoteam.diet.BranchOfDiary.ActivityListOfDiary;
 import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
+import com.wsoteam.diet.BranchOfNews.ActivityListOfNews;
 import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.Config;
@@ -232,7 +233,7 @@ public class MainActivity extends AppCompatActivity
                 intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
                 break;
             case R.id.menu_nav_news:
-                intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
+                intent = new Intent(MainActivity.this, ActivityListOfNews.class);
                 break;
         }
 

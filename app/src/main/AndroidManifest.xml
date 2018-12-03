@@ -95,7 +95,13 @@
         <activity android:name=".BranchOfCalculating.ActivityCalculatorSPK"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".BranchOfNews.ListOfNews"/>
+        <activity android:name=".BranchOfNews.ActivityListOfNews"/>
+
+
+        <activity
+            android:name="com.vk.sdk.VKServiceActivity"
+            android:label="ServiceActivity"
+            android:theme="@style/VK.Transparent" />
 
         <receiver
             android:name=".Services.AlarmManagerBR"
