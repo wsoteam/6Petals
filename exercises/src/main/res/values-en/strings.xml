@@ -1,0 +1,36 @@
+<resources>
+
+    <string name="body_gdpr">Continuing to use this application, you accept our privacy policy</string>
+    <string name="title_gdpr">Hello!</string>
+    <string name="open_gdpr">Open Privacy Policy text</string>
+    <string name="yes_gdpr">Continue using the app</string>
+    <string name="url_gdpr" translatable="false">https://www.freeprivacypolicy.com/privacy/view/272200879b5cf29dd1b4fcd0f0299409</string>
+
+
+    <string name="app_name">Lose weight in 30 days</string>
+    <string name="home">Домой</string>
+    <string name="ex">Упражнения</string>
+    <string name="favorites">Фавориты</string>
+    <string name="articles">Статьи</string>
+
+    <string name="basic_muscle">Основные мышцы:</string>
+    <string name="additional_muscle">Дополнительные:</string>
+    <string name="complexity">Сложность выполнения:</string>
+    <string name="weight">Вес и количество повторений:</string>
+    <string name="detail">Описание упражнения:</string>
+    <string name="main_chips">Основные фишки:</string>
+    <string name="here_is_nothing">Здесь пока ничего нет</string>
+    <string name="count_of_programm">Количество программ - </string>
+    <string name="add_favorite">Программа добавлена в фавориты</string>
+    <string name="check_connection">Проверьте свое подключение к интернету</string>
+    <string name="titleAlertDialog">Здравствуйте</string>
+    <string name="bodyAlertDialog">Как успехи в тренировках мотивируют человека заниматься дальше, так положительные оценки и отзывы наших пользователей мотивируют нас создавать качественные приложения! </string>
+    <string name="laterButtonAlert">Позже</string>
+    <string name="neverButtonAlert">Никогда</string>
+    <string name="evaluateButtonAlert">Оценить</string>
+    <string name="Grade">Оценить</string>
+    <string name="Late">Позже</string>
+    <string name="Never">Никогда!</string>
+
+
+</resources>

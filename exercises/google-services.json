@@ -1,0 +1,228 @@
+{
+  "project_info": {
+    "project_number": "584294646007",
+    "firebase_url": "https://workout-f67d0.firebaseio.com",
+    "project_id": "workout-f67d0",
+    "storage_bucket": "workout-f67d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584294646007:android:8a47f0fead99897d",
+        "android_client_info": {
+          "package_name": "onepic.bkcom.com.twentyonetrening"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584294646007-nlteiff2aabpru3d2iir3dtovrh5ul04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaUBMwYkE6AwRNFKk0G_BAJ6G3kU23j1Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584294646007:android:01ab943fda468917",
+        "android_client_info": {
+          "package_name": "onepic.bkgcom.com.HomeFitness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584294646007-nlteiff2aabpru3d2iir3dtovrh5ul04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaUBMwYkE6AwRNFKk0G_BAJ6G3kU23j1Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584294646007:android:d6ddf13b31bbe24c",
+        "android_client_info": {
+          "package_name": "onepic.bkgcom.com.WeightLossWorkout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584294646007-nlteiff2aabpru3d2iir3dtovrh5ul04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaUBMwYkE6AwRNFKk0G_BAJ6G3kU23j1Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584294646007:android:cd6574d51d97631f",
+        "android_client_info": {
+          "package_name": "onepic.bkgcom.com.ex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584294646007-nlteiff2aabpru3d2iir3dtovrh5ul04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaUBMwYkE6AwRNFKk0G_BAJ6G3kU23j1Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584294646007:android:63a53326e491b66a",
+        "android_client_info": {
+          "package_name": "onepic.bkgcom.com.loss"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584294646007-nlteiff2aabpru3d2iir3dtovrh5ul04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaUBMwYkE6AwRNFKk0G_BAJ6G3kU23j1Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584294646007:android:ca8263f61b9d554d",
+        "android_client_info": {
+          "package_name": "onepic.bkgcom.com.rtrening30"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584294646007-nlteiff2aabpru3d2iir3dtovrh5ul04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaUBMwYkE6AwRNFKk0G_BAJ6G3kU23j1Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584294646007:android:21709c3e55711290",
+        "android_client_info": {
+          "package_name": "onepic.bkgcom.com.rtreningexercises"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584294646007-nlteiff2aabpru3d2iir3dtovrh5ul04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaUBMwYkE6AwRNFKk0G_BAJ6G3kU23j1Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
