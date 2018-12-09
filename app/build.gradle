@@ -63,7 +63,7 @@ dependencies {
     implementation 'com.github.euzee:serviceManager:1.0.3'
     implementation 'com.squareup.moshi:moshi:1.7.0'
     implementation 'com.vk:androidsdk:+'
-    implementation project(path:':exercises', configuration: 'default')
+
 }
 
 apply plugin: 'com.google.gms.google-services'

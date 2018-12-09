@@ -33,9 +33,13 @@
             android:title="Заглушка"
             android:icon="@drawable/nav_left_notifications"/>
         <item
-            android:id="@+id/menu_nav_news"
+        android:id="@+id/menu_nav_news"
+        android:title="Новости"
+        android:icon="@drawable/nav_left_notifications"/>
+        <item
+            android:id="@+id/menu_nav_exercises"
             android:title="Новости"
-            android:icon="@drawable/nav_left_notifications"/>
+            android:icon="@drawable/nav_left_gym"/>
     </group>
 
 </menu>

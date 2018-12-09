@@ -235,6 +235,18 @@ public class MainActivity extends AppCompatActivity
             case R.id.menu_nav_news:
                 intent = new Intent(MainActivity.this, ActivityListOfNews.class);
                 break;
+            case R.id.menu_nav_exercises:
+//                Intent call = new Intent("onepic.bkgcom.com.rtreningexercises.Activities.MainActivity");
+//                Intent call = new Intent(this, Class.forName("onepic.bkgcom.com.rtreningexercises.Activities.MainActivity"));
+                Intent call = null;
+                try {
+                   call = new Intent(this,
+                            Class.forName("onepic.bkgcom.com.rtreningexercises.Activities.MainActivity"));
+                    startActivity(call);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
         }
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
