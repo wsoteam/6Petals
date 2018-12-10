@@ -3,6 +3,7 @@ package com.wsoteam.diet.BranchOfNews;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -33,7 +34,10 @@ import com.wsoteam.diet.R;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class ActivityListOfNews extends AppCompatActivity {
 
@@ -127,15 +131,18 @@ public class ActivityListOfNews extends AppCompatActivity {
     }
 
     private class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView title;
+        TextView tvTitle, tvDate;
         ImageView imageView;
         CardView cardView;
+        FloatingActionButton fabShare;
 
         public ItemViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_of_news_list, viewGroup, false));
-            title = itemView.findViewById(R.id.tvFromItemOfList);
+            tvTitle = itemView.findViewById(R.id.tvFromItemOfList);
+            tvDate = itemView.findViewById(R.id.tvItemListOfNewsDate);
             imageView = itemView.findViewById(R.id.ivItemOfList);
             cardView = imageView.findViewById(R.id.cardFromItemOfList);
+            fabShare = itemView.findViewById(R.id.fabItemNewsList);
 
             itemView.setOnClickListener(this);
 
@@ -152,9 +159,9 @@ public class ActivityListOfNews extends AppCompatActivity {
         public void bind(Item item) {
             if (item.getAttachments().get(0).getType().equals("photo")) {
                 if (item.getText().length() > MAX_COUNT_OF_LETTERS) {
-                    title.setText(item.getText().substring(0, MAX_COUNT_OF_LETTERS) + " ...");
+                    tvTitle.setText(item.getText().substring(0, MAX_COUNT_OF_LETTERS) + " ...");
                 } else {
-                    title.setText(item.getText());
+                    tvTitle.setText(item.getText());
                 }
                 if (item.getAttachments().get(0).getPhoto().getPhoto1280() != null) {
                     Glide.with(ActivityListOfNews.this).load(item.getAttachments().get(0).getPhoto().getPhoto1280()).into(imageView);
@@ -166,8 +173,16 @@ public class ActivityListOfNews extends AppCompatActivity {
                     }
                 }
             } else {
-                title.setText("error");
+                tvTitle.setText("error");
             }
+            tvDate.setText(parseDate(item.getDate()));
+        }
+
+        private String parseDate(long count){
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(" HH:mm  dd MMMM", Locale.ENGLISH);
+            Date date = new Date(count * 1000);
+
+            return "Опубликовано -" + simpleDateFormat.format(date);
         }
     }
 
@@ -187,15 +202,6 @@ public class ActivityListOfNews extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-            /*if (position > VISIBLE_POSITION && fabUp.getVisibility() == View.GONE) {
-                fabUp.startAnimation(movingIn);
-                fabUp.setVisibility(View.VISIBLE);
-            } else {
-                if (position < INVISIBLE_POSITION && fabUp.getVisibility() == View.VISIBLE) {
-                    fabUp.startAnimation(movingOut);
-                    fabUp.setVisibility(View.GONE);
-                }
-            }*/
             holder.bind(items.get(position));
         }
 

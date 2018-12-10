@@ -24,7 +24,7 @@ public class ObjectHolder {
             try {
                 if (!response.getItems().get(i).getAttachments().get(0).getType().equals(TYPE_PHOTO)
                         || response.getItems().get(i).getMarkedAsAds() == 1
-                        || response.getItems().get(i).getAttachments().get(0).getPhoto().getPhoto1280() == null) {
+                        /*|| response.getItems().get(i).getAttachments().get(0).getPhoto().getPhoto1280() == null*/) {
                     response.getItems().remove(i);
                     Log.i("LOL", "remove - " + String.valueOf(i));
                 }
