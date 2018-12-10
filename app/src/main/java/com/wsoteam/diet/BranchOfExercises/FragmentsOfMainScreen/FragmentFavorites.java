@@ -17,14 +17,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.wsoteam.diet.BranchOfExercises.ActivitiesProgramm.ActivityWithTiles;
+import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
+import com.wsoteam.diet.POJOSExercises.ObjectLocalDatabase;
+import com.wsoteam.diet.POJOSExercises.Training;
+import com.wsoteam.diet.R;
 
 import java.util.ArrayList;
 
-import onepic.bkgcom.com.rtreningexercises.ActivitiesProgramm.ActivityWithTiles;
-import onepic.bkgcom.com.rtreningexercises.ObjectHolder;
-import onepic.bkgcom.com.rtreningexercises.POJOs.ObjectLocalDatabase;
-import onepic.bkgcom.com.rtreningexercises.POJOs.Training;
-import onepic.bkgcom.com.rtreningexercises.R;
+
 
 public class FragmentFavorites extends Fragment {
     private ImageView imageIfEmpty;
@@ -37,10 +38,10 @@ public class FragmentFavorites extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_favorites, container, false);
-        imageIfEmpty = view.findViewById(R.id.ivBackGroundFavorites);
-        textIfEmpty = view.findViewById(R.id.tvNotFoundEntity);
-        recyclerView = view.findViewById(R.id.rvFavorites);
+        final View view = inflater.inflate(R.layout.ex_fragment_favorites, container, false);
+        imageIfEmpty = view.findViewById(R.id.ex_ivBackGroundFavorites);
+        textIfEmpty = view.findViewById(R.id.ex_tvNotFoundEntity);
+        recyclerView = view.findViewById(R.id.ex_rvFavorites);
         trainings = new ArrayList<>();
 
 
@@ -84,10 +85,10 @@ public class FragmentFavorites extends Fragment {
 
 
         public FavoriteVH(LayoutInflater layoutInflater, ViewGroup parent) {
-            super(layoutInflater.inflate(R.layout.item_activity_training_list, parent, false));
+            super(layoutInflater.inflate(R.layout.ex_item_activity_training_list, parent, false));
 
-            tvTitleOfProgramm = itemView.findViewById(R.id.tvTrainingListName);
-            backgroundImage = itemView.findViewById(R.id.ivListOfTrainingBackground);
+            tvTitleOfProgramm = itemView.findViewById(R.id.ex_tvTrainingListName);
+            backgroundImage = itemView.findViewById(R.id.ex_ivListOfTrainingBackground);
             tvTitleOfProgramm.setTypeface(Typeface.createFromAsset(getActivity().getAssets()
                     , "asProgramMainScreen.ttf"));
 

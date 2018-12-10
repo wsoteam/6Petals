@@ -38,7 +38,7 @@
         android:icon="@drawable/nav_left_notifications"/>
         <item
             android:id="@+id/menu_nav_exercises"
-            android:title="Новости"
+            android:title="Упражнения"
             android:icon="@drawable/nav_left_gym"/>
     </group>
 

@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.check_connection, Toast.LENGTH_SHORT).show();
         }
 
-        final BottomNavigationView navigation = findViewById(R.id.navigation);
+        final BottomNavigationView navigation = findViewById(R.id.ex_navigation);
         mViewPager = findViewById(R.id.ex_vpMainActivity);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

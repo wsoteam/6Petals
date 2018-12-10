@@ -17,14 +17,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.startad.lib.SADView;
+import com.wsoteam.diet.BranchOfExercises.ActivitiesProgramm.ActivityListOfTraining;
+import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
+import com.wsoteam.diet.POJOSExercises.GlobalObject;
+import com.wsoteam.diet.POJOSExercises.Programm;
+import com.wsoteam.diet.R;
 
 import java.util.ArrayList;
 
-import onepic.bkgcom.com.rtreningexercises.ActivitiesProgramm.ActivityListOfTraining;
-import onepic.bkgcom.com.rtreningexercises.ObjectHolder;
-import onepic.bkgcom.com.rtreningexercises.POJOs.GlobalObject;
-import onepic.bkgcom.com.rtreningexercises.POJOs.Programm;
-import onepic.bkgcom.com.rtreningexercises.R;
+
 
 public class FragmentProgramms extends Fragment {
     private RecyclerView rvListOfProgramm;
@@ -37,8 +38,8 @@ public class FragmentProgramms extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_programms, container, false);
-        rvListOfProgramm = view.findViewById(R.id.rvListOfHomeFragment);
+        View view = inflater.inflate(R.layout.ex_fragment_programms, container, false);
+        rvListOfProgramm = view.findViewById(R.id.ex_rvListOfHomeFragment);
         sadView = new SADView(getActivity(), AD_ID);
 
         globalObject = ObjectHolder.getGlobalObject();
@@ -54,11 +55,11 @@ public class FragmentProgramms extends Fragment {
         FrameLayout frameLayout;
 
         public ProgrammViewHolder(LayoutInflater layoutInflater, ViewGroup parent) {
-            super(layoutInflater.inflate(R.layout.item_fragment_programms_main_screen, parent, false));
+            super(layoutInflater.inflate(R.layout.ex_item_fragment_programms_main_screen, parent, false));
 
-            tvTitleOfProgramm = itemView.findViewById(R.id.tvNameHomeList);
-            tvCountOfProgrammInside = itemView.findViewById(R.id.tvCountOfProgrammInside);
-            frameLayout = itemView.findViewById(R.id.flItemOfProgrammList);
+            tvTitleOfProgramm = itemView.findViewById(R.id.ex_tvNameHomeList);
+            tvCountOfProgrammInside = itemView.findViewById(R.id.ex_tvCountOfProgrammInside);
+            frameLayout = itemView.findViewById(R.id.ex_flItemOfProgrammList);
             tvTitleOfProgramm.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "asProgramMainScreen.ttf"));
             imageView = itemView.findViewById(R.id.ivBackgroundItemListOfProgrammMainScreen);
             itemView.setOnClickListener(this);

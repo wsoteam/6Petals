@@ -63,6 +63,7 @@ dependencies {
     implementation 'com.github.euzee:serviceManager:1.0.3'
     implementation 'com.squareup.moshi:moshi:1.7.0'
     implementation 'com.vk:androidsdk:+'
+    implementation files('StartADLib-1.0.1.jar')
 
 }
 

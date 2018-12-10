@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import onepic.bkgcom.com.rtreningexercises.R;
+import com.wsoteam.diet.R;
 
 
 public class FragmentSettings extends Fragment {
@@ -19,11 +19,11 @@ public class FragmentSettings extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.ex_fragment_settings, container, false);
 
-        cvPrivacy = view.findViewById(R.id.cvPrivacy);
-        cvRate = view.findViewById(R.id.cvRate);
-        cvShare = view.findViewById(R.id.cvShare);
+        cvPrivacy = view.findViewById(R.id.ex_cvPrivacy);
+        cvRate = view.findViewById(R.id.ex_cvRate);
+        cvShare = view.findViewById(R.id.ex_cvShare);
 
         cvPrivacy.setOnClickListener(new View.OnClickListener() {
             @Override

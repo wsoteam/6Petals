@@ -236,16 +236,11 @@ public class MainActivity extends AppCompatActivity
                 intent = new Intent(MainActivity.this, ActivityListOfNews.class);
                 break;
             case R.id.menu_nav_exercises:
-//                Intent call = new Intent("onepic.bkgcom.com.rtreningexercises.Activities.MainActivity");
-//                Intent call = new Intent(this, Class.forName("onepic.bkgcom.com.rtreningexercises.Activities.MainActivity"));
-                Intent call = null;
-                try {
-                   call = new Intent(this,
-                            Class.forName("onepic.bkgcom.com.rtreningexercises.Activities.MainActivity"));
-                    startActivity(call);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+                intent = new Intent(MainActivity.this, com.wsoteam.diet.BranchOfExercises.Activities.MainActivity.class);
+                break;
+
+
+
 
         }
 

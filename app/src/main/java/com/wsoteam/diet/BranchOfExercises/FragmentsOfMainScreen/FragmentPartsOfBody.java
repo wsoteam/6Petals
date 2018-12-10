@@ -16,14 +16,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.wsoteam.diet.BranchOfExercises.ActivitiesPartOfBody.ActivityListOfExGroups;
+import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
+import com.wsoteam.diet.POJOSExercises.AllPartOfBody;
+import com.wsoteam.diet.POJOSExercises.PartOfBody;
+import com.wsoteam.diet.R;
 
 import java.util.ArrayList;
 
-import onepic.bkgcom.com.rtreningexercises.ActivitiesPartOfBody.ActivityListOfExGroups;
-import onepic.bkgcom.com.rtreningexercises.ObjectHolder;
-import onepic.bkgcom.com.rtreningexercises.POJOs.AllPartOfBody;
-import onepic.bkgcom.com.rtreningexercises.POJOs.PartOfBody;
-import onepic.bkgcom.com.rtreningexercises.R;
+
 
 public class FragmentPartsOfBody extends Fragment {
 
@@ -42,8 +43,8 @@ public class FragmentPartsOfBody extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_exercises, container, false);
-        rvListOfEx = view.findViewById(R.id.rvListOfEx);
+        View view= inflater.inflate(R.layout.ex_fragment_exercises, container, false);
+        rvListOfEx = view.findViewById(R.id.ex_rvListOfEx);
         //allPartOfBody = (AllPartOfBody) getArguments().getSerializable(TAG_OF_FRAGMENT);
         allPartOfBody = ObjectHolder.getGlobalObject().getExercises();
         rvListOfEx.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -58,10 +59,10 @@ public class FragmentPartsOfBody extends Fragment {
         private ImageView ivBackground;
 
         public ExViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
-            super(layoutInflater.inflate(R.layout.item_fragment_part_of_body_list_main_screen, viewGroup, false));
-            tvNameOfPartOfBody = itemView.findViewById(R.id.tvNamePartOfBodyHomeList);
+            super(layoutInflater.inflate(R.layout.ex_item_fragment_part_of_body_list_main_screen, viewGroup, false));
+            tvNameOfPartOfBody = itemView.findViewById(R.id.ex_tvNamePartOfBodyHomeList);
             tvNameOfPartOfBody.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "asProgramMainScreen.ttf"));
-            ivBackground = itemView.findViewById(R.id.ivBackgroundItemListOfPartOfBodyMainScreen);
+            ivBackground = itemView.findViewById(R.id.ex_ivBackgroundItemListOfPartOfBodyMainScreen);
             itemView.setOnClickListener(this);
         }
 

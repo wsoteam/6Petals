@@ -13,13 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.wsoteam.diet.BranchOfExercises.ActivitiesArticles.ActivityDetailAcrticles;
+import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
+import com.wsoteam.diet.POJOSExercises.AllWholeArticles;
+import com.wsoteam.diet.POJOSExercises.WholeArticle;
+import com.wsoteam.diet.R;
+
 import java.util.ArrayList;
 
-import onepic.bkgcom.com.rtreningexercises.ActivitiesArticles.ActivityDetailAcrticles;
-import onepic.bkgcom.com.rtreningexercises.ObjectHolder;
-import onepic.bkgcom.com.rtreningexercises.POJOs.AllWholeArticles;
-import onepic.bkgcom.com.rtreningexercises.POJOs.WholeArticle;
-import onepic.bkgcom.com.rtreningexercises.R;
+
 
 public class FragmentsArticles extends Fragment {
     private static String TAG_OF_FRAGMENT = "FragmentsArticles";
@@ -38,10 +40,10 @@ public class FragmentsArticles extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_articles, container, false);
+        View view = inflater.inflate(R.layout.ex_fragment_articles, container, false);
         //allWholeArticles = (AllWholeArticles) getArguments().getSerializable(TAG_OF_FRAGMENT);
         allWholeArticles = ObjectHolder.getGlobalObject().getWholeArticles();
-        listOfArticlesRecyclerView = view.findViewById(R.id.rvListOfArticles);
+        listOfArticlesRecyclerView = view.findViewById(R.id.ex_rvListOfArticles);
         listOfArticlesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listOfArticlesRecyclerView.setAdapter(new ArticleAdapter((ArrayList<WholeArticle>) allWholeArticles.getWholeArticleList()));
 
@@ -52,8 +54,8 @@ public class FragmentsArticles extends Fragment {
         private TextView titleOfArticle;
 
         public ArticleVH(LayoutInflater layoutInflater, ViewGroup viewGroup) {
-            super(layoutInflater.inflate(R.layout.item_fragment_articles_list, viewGroup, false));
-            titleOfArticle = itemView.findViewById(R.id.tvTitleOfArticleItem);
+            super(layoutInflater.inflate(R.layout.ex_item_fragment_articles_list, viewGroup, false));
+            titleOfArticle = itemView.findViewById(R.id.ex_tvTitleOfArticleItem);
             titleOfArticle.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "asProgramMainScreen.ttf"));
             itemView.setOnClickListener(this);
         }
