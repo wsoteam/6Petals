@@ -1,5 +1,6 @@
 package com.wsoteam.diet.BranchOfNews;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.methods.VKApiGroups;
 import com.vk.sdk.api.methods.VKApiWall;
 import com.vk.sdk.api.model.VKList;
+import com.wsoteam.diet.Config;
 import com.wsoteam.diet.POJOSForVkResponse.Item;
 import com.wsoteam.diet.POJOSForVkResponse.Response;
 import com.wsoteam.diet.R;
@@ -52,7 +54,6 @@ public class ActivityListOfNews extends AppCompatActivity {
     private static final int COUNT_OF_ITEM_FROM_RESPONSE = 100;
     private boolean isMainUrl = true;
 
-    //amazingheapkotya
     private RecyclerView rvListOfNews;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton fabSwitchUrl;
@@ -66,6 +67,7 @@ public class ActivityListOfNews extends AppCompatActivity {
         rvListOfNews = findViewById(R.id.rvListOfNews);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         fabSwitchUrl = findViewById(R.id.fabSwitchUrl);
+        fabSwitchUrl.setVisibility(View.GONE);
         rvListOfNews.setLayoutManager(new LinearLayoutManager(this));
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -101,7 +103,8 @@ public class ActivityListOfNews extends AppCompatActivity {
 
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<Response> jsonAdapter = moshi.adapter(Response.class);
-        VKRequest vkRequest = new VKApiGroups().getById(VKParameters.from(VKApiConst.GROUP_ID, CURRENT_GROUP_ID, VKApiConst.ACCESS_TOKEN, ACCES_TOKEN));
+        VKRequest vkRequest = new VKApiGroups().getById(VKParameters.from(VKApiConst.GROUP_ID, CURRENT_GROUP_ID,
+                VKApiConst.ACCESS_TOKEN, ACCES_TOKEN));
         vkRequest.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onError(VKError error) {
@@ -159,6 +162,7 @@ public class ActivityListOfNews extends AppCompatActivity {
         ImageView imageView;
         CardView cardView;
         FloatingActionButton fabShare;
+        String urlOfImage = "";
 
         public ItemViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_of_news_list, viewGroup, false));
@@ -175,12 +179,13 @@ public class ActivityListOfNews extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            /*Intent intent = new Intent(getActivity(), ActivityDetail.class);
-            intent.putExtra(Config.KEY_OF_CLICK_ITEM, getAdapterPosition());
+            /*Intent intent = new Intent(ActivityListOfNews.this, ActivityDetailPhoto.class);
+            intent.putExtra(Config.KEY_OF_CLICK_ITEM_DETAIL_NEWS, getAdapterPosition());
             startActivity(intent);*/
         }
 
         public void bind(Item item) {
+
             if (item.getAttachments().get(0).getType().equals("photo")) {
                 if (item.getText().length() > MAX_COUNT_OF_LETTERS) {
                     tvTitle.setText(item.getText().substring(0, MAX_COUNT_OF_LETTERS) + " ...");
@@ -188,18 +193,27 @@ public class ActivityListOfNews extends AppCompatActivity {
                     tvTitle.setText(item.getText());
                 }
                 if (item.getAttachments().get(0).getPhoto().getPhoto1280() != null) {
-                    Glide.with(ActivityListOfNews.this).load(item.getAttachments().get(0).getPhoto().getPhoto1280()).into(imageView);
+                    urlOfImage = item.getAttachments().get(0).getPhoto().getPhoto1280();
+                    Glide.with(ActivityListOfNews.this).load(urlOfImage).into(imageView);
                 } else {
                     if (item.getAttachments().get(0).getPhoto().getPhoto807() != null) {
-                        Glide.with(ActivityListOfNews.this).load(item.getAttachments().get(0).getPhoto().getPhoto807()).into(imageView);
+                        urlOfImage = item.getAttachments().get(0).getPhoto().getPhoto807();
+                        Glide.with(ActivityListOfNews.this).load(urlOfImage).into(imageView);
                     } else {
-                        Glide.with(ActivityListOfNews.this).load(item.getAttachments().get(0).getPhoto().getPhoto604()).into(imageView);
+                        urlOfImage = item.getAttachments().get(0).getPhoto().getPhoto604();
+                        Glide.with(ActivityListOfNews.this).load(urlOfImage).into(imageView);
                     }
                 }
             } else {
                 tvTitle.setText("error");
             }
             tvDate.setText(parseDate(item.getDate()));
+            fabShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    sharePhoto();
+                }
+            });
         }
 
         private String parseDate(long count) {
@@ -207,6 +221,13 @@ public class ActivityListOfNews extends AppCompatActivity {
             Date date = new Date(count * 1000);
 
             return "Опубликовано -" + simpleDateFormat.format(date);
+        }
+
+        private void sharePhoto() {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, urlOfImage);
+            startActivity(intent);
         }
     }
 

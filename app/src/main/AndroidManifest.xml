@@ -98,6 +98,9 @@
         <activity android:name=".BranchOfNews.ActivityListOfNews"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".BranchOfNews.ActivityDetailPhoto"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
 
         <activity
             android:name="com.vk.sdk.VKServiceActivity"

@@ -8,6 +8,7 @@ public class Config {
     public static final String ADMOB_ID = "ca-app-pub-3050564412171997~8774716406";
     public static final String NAME_OF_ENTITY_FOR_DB = "GLOBAL_DATA_BASE";
     public static final String ID_OF_SELECT_MENU = "id_of_selected_menu_item";
+    public static final String KEY_OF_CLICK_ITEM_DETAIL_NEWS = "KEY_OF_CLICK_ITEM_DETAIL_NEWS";
 
 
 
