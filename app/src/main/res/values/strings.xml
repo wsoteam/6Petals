@@ -195,6 +195,26 @@
         <item>Ожирение 3-ой степени</item>
     </string-array>
 
+    <string-array name="names_items_of_main_screen">
+        <item>Монодиеты</item>
+        <item>Рецепты</item>
+        <item>Расчеты</item>
+        <item>Дневник</item>
+        <item>Лента</item>
+        <item>Задачи</item>
+        <item>Анализатор</item>
+    </string-array>
+
+    <string-array name="properties_items_of_main_screen">
+        <item>Эффективные монодиеты для быстрого похудения</item>
+        <item>Рецепты вкусных и полезных блюд</item>
+        <item>Калькуляторы для расчета БЖУ, ИМТ и другие</item>
+        <item>Контроль веса и других важных показателей</item>
+        <item>Рекомендации, полезные инфографики и лайфхаки</item>
+        <item>Менеджер задач с возможностью установки напоминаний</item>
+        <item>Анализатор калорийности продуктов</item>
+    </string-array>
+
 
     <integer-array name="ids_of_notifications_icons">
         <item>2131230873</item>
