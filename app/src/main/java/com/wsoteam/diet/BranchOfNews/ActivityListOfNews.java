@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.squareup.moshi.JsonAdapter;
@@ -44,12 +45,17 @@ public class ActivityListOfNews extends AppCompatActivity {
     private static final int VISIBLE_POSITION = 5;
     private static final int INVISIBLE_POSITION = 3;
     private static final int MAX_COUNT_OF_LETTERS = 50;
-    private static final String GROUP_ID = "amazingheapkotya";
+    private static String CURRENT_GROUP_ID = "amazingheapkotya";
+    private static final String MAIN_GROUP_ID = "amazingheapkotya";
+    private static final String GROUP_ID_TEST = "testdbforapp";
     private static String ACCES_TOKEN = "28da670228da670228da6702e528bd27cc228da28da67027325b00cc2cf21e0c7892592";
     private static final int COUNT_OF_ITEM_FROM_RESPONSE = 100;
+    private boolean isMainUrl = true;
 
+    //amazingheapkotya
     private RecyclerView rvListOfNews;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private FloatingActionButton fabSwitchUrl;
 
     private ItemAdapter itemAdapter;
 
@@ -59,6 +65,7 @@ public class ActivityListOfNews extends AppCompatActivity {
         setContentView(R.layout.activity_list_of_news);
         rvListOfNews = findViewById(R.id.rvListOfNews);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        fabSwitchUrl = findViewById(R.id.fabSwitchUrl);
         rvListOfNews.setLayoutManager(new LinearLayoutManager(this));
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -71,13 +78,30 @@ public class ActivityListOfNews extends AppCompatActivity {
 
         getResponseFromVK();
 
+        fabSwitchUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isMainUrl) {
+                    Toast.makeText(ActivityListOfNews.this, "Тестовая группа загружена", Toast.LENGTH_SHORT).show();
+                    CURRENT_GROUP_ID = GROUP_ID_TEST;
+                    getResponseFromVK();
+                    isMainUrl = false;
+                } else {
+                    Toast.makeText(ActivityListOfNews.this, "Рабочая группа загружена", Toast.LENGTH_SHORT).show();
+                    CURRENT_GROUP_ID = MAIN_GROUP_ID;
+                    getResponseFromVK();
+                    isMainUrl = true;
+                }
+            }
+        });
+
     }
 
     private void getResponseFromVK() {
 
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<Response> jsonAdapter = moshi.adapter(Response.class);
-        VKRequest vkRequest = new VKApiGroups().getById(VKParameters.from(VKApiConst.GROUP_ID, GROUP_ID, VKApiConst.ACCESS_TOKEN, ACCES_TOKEN));
+        VKRequest vkRequest = new VKApiGroups().getById(VKParameters.from(VKApiConst.GROUP_ID, CURRENT_GROUP_ID, VKApiConst.ACCESS_TOKEN, ACCES_TOKEN));
         vkRequest.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onError(VKError error) {
@@ -178,7 +202,7 @@ public class ActivityListOfNews extends AppCompatActivity {
             tvDate.setText(parseDate(item.getDate()));
         }
 
-        private String parseDate(long count){
+        private String parseDate(long count) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(" HH:mm  dd MMMM", Locale.ENGLISH);
             Date date = new Date(count * 1000);
 
