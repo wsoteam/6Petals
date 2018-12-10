@@ -12,9 +12,9 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.POJOSExercises.Ex;
+import com.wsoteam.diet.R;
 
-import onepic.bkgcom.com.rtreningexercises.POJOs.Ex;
-import onepic.bkgcom.com.rtreningexercises.R;
 
 public class ActivityExDetail extends AppCompatActivity {
 
@@ -28,8 +28,8 @@ public class ActivityExDetail extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ex_detail);
-        banner = findViewById(R.id.bannerMainActivity);
+        setContentView(R.layout.ex_activity_ex_detail);
+        banner = findViewById(R.id.ex_bannerMainActivity);
 
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(this.getResources().getString(R.string.inter));
@@ -40,16 +40,16 @@ public class ActivityExDetail extends AppCompatActivity {
 
         ex = (Ex) getIntent().getSerializableExtra(TAG);
 
-        imageViewBackHead = findViewById(R.id.ivDetailBack);
-        imageView = findViewById(R.id.ivDetailImage);
-        title = findViewById(R.id.tvTitleExDetail);
-        basic_muscle = findViewById(R.id.tvDetailBasicMuscle);
-        additional_muscle = findViewById(R.id.tvDetailAdditionalMuscle);
-        complexity = findViewById(R.id.tvDetailComplexity);
-        for_man = findViewById(R.id.tvDetailCountMan);
-        for_woman = findViewById(R.id.tvDetailCountWoman);
-        detail = findViewById(R.id.tvDetailText);
-        main_chips = findViewById(R.id.tvDetailChips);
+        imageViewBackHead = findViewById(R.id.EX_ivDetailBack);
+        imageView = findViewById(R.id.ex_ivDetailImage);
+        title = findViewById(R.id.ex_tvTitleExDetail);
+        basic_muscle = findViewById(R.id.ex_tvDetailBasicMuscle);
+        additional_muscle = findViewById(R.id.ex_tvDetailAdditionalMuscle);
+        complexity = findViewById(R.id.ex_tvDetailComplexity);
+        for_man = findViewById(R.id.ex_tvDetailCountMan);
+        for_woman = findViewById(R.id.ex_tvDetailCountWoman);
+        detail = findViewById(R.id.ex_tvDetailText);
+        main_chips = findViewById(R.id.ex_tvDetailChips);
 
         Glide.with(this).load(ex.getImg_url()).into(imageView);
         Glide.with(this).load(ex.getUrl_of_logo()).into(imageViewBackHead);

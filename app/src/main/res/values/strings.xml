@@ -219,4 +219,45 @@
         <item>2131230884</item>
     </integer-array>
 
+
+    <!--Exercises-->
+    <string name="navigation_settings">Настройки</string>
+    <string name="yandex_id" translatable="false">6a6b1d3c-0ce1-42e4-92d7-04885b2e4387</string>
+
+    <string name="body_gdpr">Продолжая использовать данное приложение Вы принимаете нашу политику конфиденциальности</string>
+    <string name="title_gdpr">Здравствуйте!</string>
+    <string name="open_gdpr">Открыть текст политики конфиденциальности</string>
+    <string name="yes_gdpr">Продолжить использование приложения</string>
+
+    <string name="home">Домой</string>
+    <string name="ex">Упражнения</string>
+    <string name="favorites">Фавориты</string>
+    <string name="articles">Статьи</string>
+
+    <string name="basic_muscle">Основные мышцы:</string>
+    <string name="additional_muscle">Дополнительные:</string>
+    <string name="complexity">Сложность выполнения:</string>
+    <string name="weight">Вес и количество повторений:</string>
+    <string name="detail">Описание упражнения:</string>
+    <string name="main_chips">Основные фишки:</string>
+    <string name="here_is_nothing">Здесь пока ничего нет</string>
+    <string name="count_of_programm">Количество программ - </string>
+    <string name="add_favorite">Программа добавлена в фавориты</string>
+    <string name="check_connection">Проверьте свое подключение к интернету</string>
+    <string name="titleAlertDialog">Здравствуйте</string>
+    <string name="bodyAlertDialog">Как успехи в тренировках мотивируют человека заниматься дальше, так положительные оценки и отзывы наших пользователей мотивируют нас создавать качественные приложения! </string>
+    <string name="laterButtonAlert">Позже</string>
+    <string name="neverButtonAlert">Никогда</string>
+    <string name="evaluateButtonAlert">Оценить</string>
+    <string name="Grade">Оценить</string>
+    <string name="Late">Позже</string>
+    <string name="Never">Никогда!</string>
+
+    <string name="admob_id" translatable="false">ca-app-pub-3050564412171997~7531876710</string>
+
+    <string name="ban1_id" translatable="false">ca-app-pub-3050564412171997/2183895854</string>
+    <string name="ban2_id" translatable="false">ca-app-pub-3050564412171997/4618487506</string>
+    <string name="ban3_id" translatable="false">ca-app-pub-3050564412171997/8366160829</string>
+    <string name="inter" translatable="false">ca-app-pub-3050564412171997/3129597274</string>
+
 </resources>

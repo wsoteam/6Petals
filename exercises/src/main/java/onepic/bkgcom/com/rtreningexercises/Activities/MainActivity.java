@@ -29,7 +29,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.startad.lib.SADView;
 
 import java.util.ArrayList;
 
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.ex_activity_main);
 
         MobileAds.initialize(this, getResources().getString(R.string.admob_id));
         AdRequest request = new AdRequest.Builder().build();

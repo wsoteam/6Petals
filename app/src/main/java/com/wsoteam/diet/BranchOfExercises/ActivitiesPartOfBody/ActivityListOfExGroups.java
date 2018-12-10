@@ -16,13 +16,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
+import com.wsoteam.diet.POJOSExercises.ExGroups;
+import com.wsoteam.diet.POJOSExercises.PartOfBody;
+import com.wsoteam.diet.R;
 
 import java.util.ArrayList;
 
-import onepic.bkgcom.com.rtreningexercises.ObjectHolder;
-import onepic.bkgcom.com.rtreningexercises.POJOs.ExGroups;
-import onepic.bkgcom.com.rtreningexercises.POJOs.PartOfBody;
-import onepic.bkgcom.com.rtreningexercises.R;
+
 
 public class ActivityListOfExGroups extends AppCompatActivity {
 
@@ -44,13 +45,13 @@ public class ActivityListOfExGroups extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_of_ex_groups);
+        setContentView(R.layout.ex_activity_list_of_ex_groups);
 
         selectedNumber = getIntent().getIntExtra(TAG, 0);
         partOfBody = ObjectHolder.getGlobalObject().getExercises().getPartOfBodyList().get(selectedNumber);
         //partOfBody = (PartOfBody) getIntent().getSerializableExtra(TAG);
 
-        recyclerView = findViewById(R.id.rvListOfExGroups);
+        recyclerView = findViewById(R.id.ex_rvListOfExGroups);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new ListOfGroupsAdapter((ArrayList<ExGroups>) partOfBody.getExGroupsList()));
 
@@ -68,12 +69,12 @@ public class ActivityListOfExGroups extends AppCompatActivity {
         ImageView imageView;
 
         public ListOfGroupsViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
-            super(layoutInflater.inflate(R.layout.item_activity_ex_groups, viewGroup, false));
-            tvCountOfExInside = itemView.findViewById(R.id.tvCountOfExItemActivityExGroups);
-            tvName = itemView.findViewById(R.id.tvNameItemActivityExGroups);
+            super(layoutInflater.inflate(R.layout.ex_item_activity_ex_groups, viewGroup, false));
+            tvCountOfExInside = itemView.findViewById(R.id.ex_tvCountOfExItemActivityExGroups);
+            tvName = itemView.findViewById(R.id.ex_tvNameItemActivityExGroups);
             tvName.setTypeface(Typeface.createFromAsset(ActivityListOfExGroups.this.getAssets()
                     , "asProgramMainScreen.ttf"));
-            imageView = itemView.findViewById(R.id.ivItemActivityExGroups);
+            imageView = itemView.findViewById(R.id.ex_ivItemActivityExGroups);
             itemView.setOnClickListener(this);
         }
 

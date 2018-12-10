@@ -17,14 +17,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
+import com.wsoteam.diet.POJOSExercises.ObjectLocalDatabase;
+import com.wsoteam.diet.POJOSExercises.Programm;
+import com.wsoteam.diet.POJOSExercises.Training;
+import com.wsoteam.diet.R;
 
 import java.util.ArrayList;
 
-import onepic.bkgcom.com.rtreningexercises.ObjectHolder;
-import onepic.bkgcom.com.rtreningexercises.POJOs.ObjectLocalDatabase;
-import onepic.bkgcom.com.rtreningexercises.POJOs.Programm;
-import onepic.bkgcom.com.rtreningexercises.POJOs.Training;
-import onepic.bkgcom.com.rtreningexercises.R;
+
 
 public class ActivityListOfTraining extends AppCompatActivity {
 
@@ -53,9 +54,9 @@ public class ActivityListOfTraining extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_training_list);
+        setContentView(R.layout.ex_activity_training_list);
         selectedNumber = getIntent().getIntExtra(TAG, 0);
-        recyclerView = findViewById(R.id.rvTrainingList);
+        recyclerView = findViewById(R.id.ex_rvTrainingList);
         fillRecycler();
 
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -81,11 +82,11 @@ public class ActivityListOfTraining extends AppCompatActivity {
         ImageView imageIsSave, backgroundImage;
 
         public TrainingViewHolder(LayoutInflater layoutInflater, ViewGroup parent) {
-            super(layoutInflater.inflate(R.layout.item_activity_training_list, parent, false));
+            super(layoutInflater.inflate(R.layout.ex_item_activity_training_list, parent, false));
 
-            tvTitleOfProgramm = itemView.findViewById(R.id.tvTrainingListName);
-            imageIsSave = itemView.findViewById(R.id.ivIsSaveProgrammList);
-            backgroundImage = itemView.findViewById(R.id.ivListOfTrainingBackground);
+            tvTitleOfProgramm = itemView.findViewById(R.id.ex_tvTrainingListName);
+            imageIsSave = itemView.findViewById(R.id.ex_ivIsSaveProgrammList);
+            backgroundImage = itemView.findViewById(R.id.ex_ivListOfTrainingBackground);
             tvTitleOfProgramm.setTypeface(Typeface.createFromAsset(ActivityListOfTraining.this.getAssets()
                     , "asProgramMainScreen.ttf"));
 

@@ -103,6 +103,26 @@
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
 
+        <activity android:name=".BranchOfExercises.Activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityListOfExGroups"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityListOfEx"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityExDetail"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".BranchOfExercises.ActivitiesProgramm.ActivityListOfTraining"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".BranchOfExercises.ActivitiesProgramm.ActivityWithTiles"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".BranchOfExercises.ActivitiesArticles.ActivityDetailAcrticles"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <receiver
             android:name=".Services.AlarmManagerBR"
             android:enabled="true"

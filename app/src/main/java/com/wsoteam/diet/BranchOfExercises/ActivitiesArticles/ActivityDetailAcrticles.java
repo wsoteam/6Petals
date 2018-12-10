@@ -16,13 +16,12 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
+import com.wsoteam.diet.POJOSExercises.Article;
+import com.wsoteam.diet.POJOSExercises.WholeArticle;
+import com.wsoteam.diet.R;
 
 import java.util.ArrayList;
-
-import onepic.bkgcom.com.rtreningexercises.ObjectHolder;
-import onepic.bkgcom.com.rtreningexercises.POJOs.Article;
-import onepic.bkgcom.com.rtreningexercises.POJOs.WholeArticle;
-import onepic.bkgcom.com.rtreningexercises.R;
 
 
 public class ActivityDetailAcrticles extends AppCompatActivity {
@@ -46,9 +45,9 @@ public class ActivityDetailAcrticles extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_aticles);
+        setContentView(R.layout.ex_activity_detail_aticles);
 
-        banner = findViewById(R.id.bannerFromArticle);
+        banner = findViewById(R.id.ex_bannerFromArticle);
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(this.getResources().getString(R.string.inter));
         //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
@@ -59,12 +58,12 @@ public class ActivityDetailAcrticles extends AppCompatActivity {
         selectedNumber = getIntent().getIntExtra(TAG, 0);
         wholeArticle = ObjectHolder.getGlobalObject().getWholeArticles().getWholeArticleList().get(selectedNumber);
 
-        collapsingTitle = findViewById(R.id.tvCollapsingTitleOfArticle);
-        collapsingImage = findViewById(R.id.ivCollapsingImageArticle);
+        collapsingTitle = findViewById(R.id.ex_tvCollapsingTitleOfArticle);
+        collapsingImage = findViewById(R.id.ex_ivCollapsingImageArticle);
         collapsingTitle.setText(wholeArticle.getTitle());
         Glide.with(this).load(wholeArticle.getImg_url()).into(collapsingImage);
 
-        recyclerView = findViewById(R.id.rvArticle);
+        recyclerView = findViewById(R.id.ex_rvArticle);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new PartOfArticleAdapter((ArrayList<Article>) wholeArticle.getArticleList()));
     }
@@ -74,9 +73,9 @@ public class ActivityDetailAcrticles extends AppCompatActivity {
         private ImageView imageOfOneItem;
 
         public PartOfArticleVH(LayoutInflater layoutInflater, ViewGroup viewGroup) {
-            super(layoutInflater.inflate(R.layout.item_activity_detail_arctiles_item, viewGroup, false));
-            textOfOneItem = itemView.findViewById(R.id.tvTextDetailOfArticle);
-            imageOfOneItem = itemView.findViewById(R.id.ivImageOfDetailArticle);
+            super(layoutInflater.inflate(R.layout.ex_item_activity_detail_arctiles_item, viewGroup, false));
+            textOfOneItem = itemView.findViewById(R.id.ex_tvTextDetailOfArticle);
+            imageOfOneItem = itemView.findViewById(R.id.ex_ivImageOfDetailArticle);
         }
 
         public void bind(Article article) {

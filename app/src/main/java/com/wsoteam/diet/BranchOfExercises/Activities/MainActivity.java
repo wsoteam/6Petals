@@ -29,18 +29,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentFavorites;
+import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentPartsOfBody;
+import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentProgramms;
+import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentSettings;
+import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentsArticles;
+import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
+import com.wsoteam.diet.Config;
+import com.wsoteam.diet.POJOSExercises.GlobalObject;
+import com.wsoteam.diet.R;
 
 import java.util.ArrayList;
 
-import onepic.bkgcom.com.rtreningexercises.Conf;
-import onepic.bkgcom.com.rtreningexercises.FragmentsOfMainScreen.FragmentFavorites;
-import onepic.bkgcom.com.rtreningexercises.FragmentsOfMainScreen.FragmentPartsOfBody;
-import onepic.bkgcom.com.rtreningexercises.FragmentsOfMainScreen.FragmentProgramms;
-import onepic.bkgcom.com.rtreningexercises.FragmentsOfMainScreen.FragmentSettings;
-import onepic.bkgcom.com.rtreningexercises.FragmentsOfMainScreen.FragmentsArticles;
-import onepic.bkgcom.com.rtreningexercises.ObjectHolder;
-import onepic.bkgcom.com.rtreningexercises.POJOs.GlobalObject;
-import onepic.bkgcom.com.rtreningexercises.R;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,12 +89,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.ex_activity_main);
 
         MobileAds.initialize(this, getResources().getString(R.string.admob_id));
         AdRequest request = new AdRequest.Builder().build();
 
-        loadingBar = findViewById(R.id.ivLoadingCircle);
+        loadingBar = findViewById(R.id.ex_ivLoadingCircle);
         animationRotate = AnimationUtils.loadAnimation(this, R.anim.animation_rotate);
         loadingBar.startAnimation(animationRotate);
 
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final BottomNavigationView navigation = findViewById(R.id.navigation);
-        mViewPager = findViewById(R.id.vpMainActivity);
+        mViewPager = findViewById(R.id.ex_vpMainActivity);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -126,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadDataFromFireBase() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference(Conf.NAME_OF_ENTITY_FOR_DB);
+        DatabaseReference myRef = database.getReference(Config.EXERCISES_NAME_OF_ENTITY_FOR_DB);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -184,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
     private void checkFirstRun() {
         if (countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) == 3) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            View view = getLayoutInflater().inflate(R.layout.grade_alert_dialog, null);
+            View view = getLayoutInflater().inflate(R.layout.ex_grade_alert_dialog, null);
             builder.setView(view);
             builder.setNeutralButton(R.string.Late, new DialogInterface.OnClickListener() {
                 @Override

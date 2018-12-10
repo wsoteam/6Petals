@@ -15,12 +15,11 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.POJOSExercises.*;
+import com.wsoteam.diet.R;
 
 import java.util.ArrayList;
 
-import onepic.bkgcom.com.rtreningexercises.POJOs.Ex;
-import onepic.bkgcom.com.rtreningexercises.POJOs.ExGroups;
-import onepic.bkgcom.com.rtreningexercises.R;
 
 public class ActivityListOfEx extends AppCompatActivity {
 
@@ -41,8 +40,8 @@ public class ActivityListOfEx extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_of_ex);
-        recyclerView = findViewById(R.id.rvListOfAllEx);
+        setContentView(R.layout.ex_activity_list_of_ex);
+        recyclerView = findViewById(R.id.ex_rvListOfAllEx);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         exGroups = (ExGroups) getIntent().getSerializableExtra(TAG);
         recyclerView.setAdapter(new ListOfExAdapter((ArrayList<Ex>) exGroups.getExList()));
@@ -61,12 +60,12 @@ public class ActivityListOfEx extends AppCompatActivity {
         TextView tvName, tvComplexity, tvBasicMuscle;
 
         public ListOfExViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
-            super(layoutInflater.inflate(R.layout.item_activity_list_of_ex, viewGroup, false));
-            tvName = itemView.findViewById(R.id.tvNameItemActivityEx);
+            super(layoutInflater.inflate(R.layout.ex_item_activity_list_of_ex, viewGroup, false));
+            tvName = itemView.findViewById(R.id.ex_tvNameItemActivityEx);
             tvName.setTypeface(Typeface.createFromAsset(ActivityListOfEx.this.getAssets()
                     , "asProgramMainScreen.ttf"));
-            tvComplexity = itemView.findViewById(R.id.tvComplexityOfExItemActivityEx);
-            tvBasicMuscle = itemView.findViewById(R.id.tvBasicMuscleExItem);
+            tvComplexity = itemView.findViewById(R.id.ex_tvComplexityOfExItemActivityEx);
+            tvBasicMuscle = itemView.findViewById(R.id.ex_tvBasicMuscleExItem);
 
             itemView.setOnClickListener(this);
         }

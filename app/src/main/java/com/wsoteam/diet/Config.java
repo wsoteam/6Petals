@@ -9,7 +9,7 @@ public class Config {
     public static final String NAME_OF_ENTITY_FOR_DB = "GLOBAL_DATA_BASE";
     public static final String ID_OF_SELECT_MENU = "id_of_selected_menu_item";
 
-
+    public static String EXERCISES_NAME_OF_ENTITY_FOR_DB = "WORKOUT";
 
     public static final String EN= "en";
     public static final String ES= "es";

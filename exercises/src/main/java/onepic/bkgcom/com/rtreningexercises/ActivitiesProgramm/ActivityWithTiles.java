@@ -70,7 +70,7 @@ public class ActivityWithTiles extends AppCompatActivity {
                 .get(numberOfSelectedItemOfList);
         AdRequest adRequest = new AdRequest.Builder().build();
         if (training.getTilesList().size() == 1) {
-            setContentView(R.layout.activity_with_tiles_if_list_empty);
+            setContentView(R.layout.ex_activity_with_tiles_if_list_empty);
         } else {
             setContentView(R.layout.activity_with_tiles);
             recyclerView = findViewById(R.id.rvTiles);

@@ -22,15 +22,16 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
+import com.wsoteam.diet.POJOSExercises.ArrayOfTiles;
+import com.wsoteam.diet.POJOSExercises.ObjectLocalDatabase;
+import com.wsoteam.diet.POJOSExercises.Tile;
+import com.wsoteam.diet.POJOSExercises.Training;
+import com.wsoteam.diet.R;
 
 import java.util.ArrayList;
 
-import onepic.bkgcom.com.rtreningexercises.ObjectHolder;
-import onepic.bkgcom.com.rtreningexercises.POJOs.ArrayOfTiles;
-import onepic.bkgcom.com.rtreningexercises.POJOs.ObjectLocalDatabase;
-import onepic.bkgcom.com.rtreningexercises.POJOs.Tile;
-import onepic.bkgcom.com.rtreningexercises.POJOs.Training;
-import onepic.bkgcom.com.rtreningexercises.R;
+
 
 public class ActivityWithTiles extends AppCompatActivity {
 
@@ -70,15 +71,15 @@ public class ActivityWithTiles extends AppCompatActivity {
                 .get(numberOfSelectedItemOfList);
         AdRequest adRequest = new AdRequest.Builder().build();
         if (training.getTilesList().size() == 1) {
-            setContentView(R.layout.activity_with_tiles_if_list_empty);
+            setContentView(R.layout.ex_activity_with_tiles_if_list_empty);
         } else {
-            setContentView(R.layout.activity_with_tiles);
-            recyclerView = findViewById(R.id.rvTiles);
+            setContentView(R.layout.ex_activity_with_tiles);
+            recyclerView = findViewById(R.id.ex_rvTiles);
             recyclerView.setLayoutManager(new LinearLayoutManager(getParent()));
             GroupTilesAdapter groupTilesAdapter = new GroupTilesAdapter((ArrayList<ArrayOfTiles>) training.getTilesList());
             groupTilesAdapter.setHasStableIds(true);
             recyclerView.setAdapter(groupTilesAdapter);
-            banner = findViewById(R.id.bannerFromActivityWithTiles);
+            banner = findViewById(R.id.ex_bannerFromActivityWithTiles);
             banner.loadAd(adRequest);
         }
 
@@ -90,9 +91,9 @@ public class ActivityWithTiles extends AppCompatActivity {
         mInterstitialAd.loadAd(adRequest);
 
 
-        titleCollapsing = findViewById(R.id.tvCollapsingTitle);
-        textCollapsing = findViewById(R.id.tvCollapsingText);
-        fab = findViewById(R.id.fab);
+        titleCollapsing = findViewById(R.id.ex_tvCollapsingTitle);
+        textCollapsing = findViewById(R.id.ex_tvCollapsingText);
+        fab = findViewById(R.id.ex_fab);
         titleCollapsing.setText(training.getTitle());
         textCollapsing.setText(Html.fromHtml(training.getText()));
 
@@ -105,7 +106,7 @@ public class ActivityWithTiles extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Animation animation = AnimationUtils.loadAnimation(ActivityWithTiles.this, R.anim.animation_moving_out);
+                Animation animation = AnimationUtils.loadAnimation(ActivityWithTiles.this, R.anim.ex_animation_moving_out);
                 ObjectLocalDatabase objectLocalDatabase =
                         new ObjectLocalDatabase(numberOfSelectedProgramm, numberOfSelectedItemOfList);
                 objectLocalDatabase.save();
@@ -124,9 +125,9 @@ public class ActivityWithTiles extends AppCompatActivity {
         TextView text;
 
         public ItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
-            super(layoutInflater.inflate(R.layout.item_activity_with_tiles, viewGroup, false));
-            topImage = itemView.findViewById(R.id.ivTile);
-            text = itemView.findViewById(R.id.tvNameTiles);
+            super(layoutInflater.inflate(R.layout.ex_item_activity_with_tiles, viewGroup, false));
+            topImage = itemView.findViewById(R.id.ex_ivTile);
+            text = itemView.findViewById(R.id.ex_tvNameTiles);
         }
 
         public void bind(Tile tile, int size) {
@@ -134,7 +135,7 @@ public class ActivityWithTiles extends AppCompatActivity {
             Glide.with(ActivityWithTiles.this)
                     .load(tile.getUrl_of_image())
                     .apply(new RequestOptions()
-                            .placeholder(R.drawable.ic_loading_tile))
+                            .placeholder(R.drawable.ex_ic_loading_tile))
                     .into(topImage);
 
         }
@@ -172,10 +173,10 @@ public class ActivityWithTiles extends AppCompatActivity {
         private TextView title;
 
         public GroupTilesVH(LayoutInflater layoutInflater, ViewGroup viewGroup) {
-            super(layoutInflater.inflate(R.layout.item_main_group_tile, viewGroup, false));
-            recyclerViewGroupTiles = itemView.findViewById(R.id.rvMainGroupTiles);
+            super(layoutInflater.inflate(R.layout.ex_item_main_group_tile, viewGroup, false));
+            recyclerViewGroupTiles = itemView.findViewById(R.id.ex_rvMainGroupTiles);
             recyclerViewGroupTiles.setLayoutManager(new LinearLayoutManager(ActivityWithTiles.this, LinearLayoutManager.HORIZONTAL, false));
-            title = itemView.findViewById(R.id.tvTitleOfGroupTiles);
+            title = itemView.findViewById(R.id.ex_tvTitleOfGroupTiles);
         }
 
         public void bind(ArrayOfTiles arrayOfTiles) {
