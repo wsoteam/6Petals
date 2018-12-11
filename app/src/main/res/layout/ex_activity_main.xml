@@ -18,7 +18,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/loading_circle"
+        android:src="@drawable/ex_loading_circle"
         app:layout_constraintBottom_toTopOf="@+id/ex_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -50,7 +50,6 @@ public class ActivityDetailAcrticles extends AppCompatActivity {
         banner = findViewById(R.id.ex_bannerFromArticle);
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(this.getResources().getString(R.string.inter));
-        //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd.loadAd(adRequest);
         banner.loadAd(adRequest);
