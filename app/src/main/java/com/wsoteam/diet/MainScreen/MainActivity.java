@@ -1,7 +1,6 @@
 package com.wsoteam.diet.MainScreen;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
@@ -21,7 +20,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +29,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
@@ -42,7 +39,6 @@ import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
 import com.wsoteam.diet.BranchOfDiary.ActivityListOfDiary;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
 import com.wsoteam.diet.BranchOfNews.ActivityListOfNews;
-import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
@@ -60,6 +56,8 @@ public class MainActivity extends AppCompatActivity
     private Integer[] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes,
             R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary, R.drawable.ic_main_menu_newsfeed,
             R.drawable.ic_main_menu_targets, R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_fitness};
+
+    private boolean isUA = false;
 
 
     @Override
@@ -107,6 +105,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+
 
         rvMainList = findViewById(R.id.rvMainScreen);
         rvMainList.setLayoutManager(new GridLayoutManager(this, 2));

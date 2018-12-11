@@ -101,6 +101,11 @@ public class ActivityListOfNews extends AppCompatActivity {
 
     }
 
+    private void openSpareScreen(){
+        Intent intent = new Intent(ActivityListOfNews.this, ActivityEmpty.class);
+        startActivity(intent);
+    }
+
 
     private void getResponseFromVK() {
 
@@ -114,6 +119,7 @@ public class ActivityListOfNews extends AppCompatActivity {
                 super.onError(error);
                 Log.e("LOL", "Error");
                 YandexMetrica.reportEvent("Open support, VK error");
+                openSpareScreen();
             }
 
             @Override
@@ -121,6 +127,7 @@ public class ActivityListOfNews extends AppCompatActivity {
                 super.attemptFailed(request, attemptNumber, totalAttempts);
                 Log.e("LOL", "attemptFailed");
                 YandexMetrica.reportEvent("Open support, attemptFailed");
+                openSpareScreen();
             }
 
             @Override
@@ -141,8 +148,13 @@ public class ActivityListOfNews extends AppCompatActivity {
                                 Response responseVk = jsonAdapter.fromJson(response.json.getString("response"));
                                 ObjectHolder objectHolder = new ObjectHolder();
                                 objectHolder.createObject(responseVk);
-                                updateUI();
-                                YandexMetrica.reportEvent("Открыта лента");
+                                if (ObjectHolder.getResponseVk().getItems().size() == 0){
+                                    openSpareScreen();
+                                    YandexMetrica.reportEvent("Украинский доступ, открыт резервный экран");
+                                }else {
+                                    updateUI();
+                                    YandexMetrica.reportEvent("Открыта лента");
+                                }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             } catch (JSONException e) {
