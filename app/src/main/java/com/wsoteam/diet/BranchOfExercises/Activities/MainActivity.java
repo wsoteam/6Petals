@@ -78,9 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_articles:
                     mViewPager.setCurrentItem(3);
                     return true;
-                case R.id.navigation_settings:
-                    mViewPager.setCurrentItem(4);
-                    return true;
             }
             return false;
         }
@@ -139,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
                 listOfFragments.add(new FragmentPartsOfBody());
                 listOfFragments.add(new FragmentFavorites());
                 listOfFragments.add(new FragmentsArticles());
-                listOfFragments.add(new FragmentSettings());
 
                 mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
                     @Override

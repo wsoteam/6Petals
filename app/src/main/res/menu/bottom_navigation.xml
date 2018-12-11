@@ -20,9 +20,6 @@
         android:id="@+id/navigation_articles"
         android:title="@string/articles"
         android:icon="@drawable/nav_icon_aticles"/>
-    <item
-        android:id="@+id/navigation_settings"
-        android:title="@string/navigation_settings"
-        android:icon="@drawable/nav_icon_settings"/>
+
 
 </menu>
