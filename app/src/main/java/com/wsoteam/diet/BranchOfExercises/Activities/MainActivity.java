@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 loadingBar.clearAnimation();
                 loadingBar.setVisibility(View.GONE);
                 additionOneToSharedPreference();
-                checkFirstRun();
+//                checkFirstRun();
                 //showGDPRIfFirstRun();
             }
 
