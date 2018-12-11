@@ -32,7 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentFavorites;
 import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentPartsOfBody;
 import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentProgramms;
-import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentSettings;
 import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentsArticles;
 import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
 import com.wsoteam.diet.Config;
