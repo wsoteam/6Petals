@@ -30,9 +30,11 @@ import com.vk.sdk.api.methods.VKApiGroups;
 import com.vk.sdk.api.methods.VKApiWall;
 import com.vk.sdk.api.model.VKList;
 import com.wsoteam.diet.Config;
+import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.POJOSForVkResponse.Item;
 import com.wsoteam.diet.POJOSForVkResponse.Response;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 import org.json.JSONException;
 
@@ -44,14 +46,13 @@ import java.util.Locale;
 
 public class ActivityListOfNews extends AppCompatActivity {
 
-    private static final int VISIBLE_POSITION = 5;
-    private static final int INVISIBLE_POSITION = 3;
-    private static final int MAX_COUNT_OF_LETTERS = 50;
-    private static String CURRENT_GROUP_ID = "amazingheapkotya";
-    private static final String MAIN_GROUP_ID = "amazingheapkotya";
-    private static final String GROUP_ID_TEST = "testdbforapp";
-    private static String ACCES_TOKEN = "28da670228da670228da6702e528bd27cc228da28da67027325b00cc2cf21e0c7892592";
-    private static final int COUNT_OF_ITEM_FROM_RESPONSE = 100;
+
+    private final int MAX_COUNT_OF_LETTERS = 50;
+    private String CURRENT_GROUP_ID = "amazingheapkotya";
+    private final String MAIN_GROUP_ID = "amazingheapkotya";
+    private final String GROUP_ID_TEST = "testdbforapp";
+    private String ACCES_TOKEN = "28da670228da670228da6702e528bd27cc228da28da67027325b00cc2cf21e0c7892592";
+    private final int COUNT_OF_ITEM_FROM_RESPONSE = 100;
     private boolean isMainUrl = true;
 
     private RecyclerView rvListOfNews;
@@ -70,6 +71,7 @@ public class ActivityListOfNews extends AppCompatActivity {
         fabSwitchUrl.setVisibility(View.GONE);
         rvListOfNews.setLayoutManager(new LinearLayoutManager(this));
         rvListOfNews.setHasFixedSize(false);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -99,6 +101,7 @@ public class ActivityListOfNews extends AppCompatActivity {
 
     }
 
+
     private void getResponseFromVK() {
 
         Moshi moshi = new Moshi.Builder().build();
@@ -110,12 +113,14 @@ public class ActivityListOfNews extends AppCompatActivity {
             public void onError(VKError error) {
                 super.onError(error);
                 Log.e("LOL", "Error");
+                YandexMetrica.reportEvent("Open support, VK error");
             }
 
             @Override
             public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
                 super.attemptFailed(request, attemptNumber, totalAttempts);
                 Log.e("LOL", "attemptFailed");
+                YandexMetrica.reportEvent("Open support, attemptFailed");
             }
 
             @Override
@@ -137,6 +142,7 @@ public class ActivityListOfNews extends AppCompatActivity {
                                 ObjectHolder objectHolder = new ObjectHolder();
                                 objectHolder.createObject(responseVk);
                                 updateUI();
+                                YandexMetrica.reportEvent("Открыта лента");
                             } catch (IOException e) {
                                 e.printStackTrace();
                             } catch (JSONException e) {

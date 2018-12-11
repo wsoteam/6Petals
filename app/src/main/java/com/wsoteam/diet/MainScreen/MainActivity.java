@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         animationChangeScale = AnimationUtils.loadAnimation(this, R.anim.anim_change_scale);
 
-        //loadAd();
+        loadAd();
 
         YandexMetrica.reportEvent("Открыт экран: Стартовый экран");
     }
@@ -179,13 +179,6 @@ public class MainActivity extends AppCompatActivity
                 YandexMetrica.reportEvent("Переход на тренировки");
                 isOpenMarket = true;
                 break;
-            case R.id.menu_nav_notification:
-                //intent = new Intent(MainActivity.this, ActivityDetailNotification.class);
-                intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
-                break;
-            case R.id.menu_nav_news:
-                intent = new Intent(MainActivity.this, ActivityListOfNews.class);
-                break;
         }
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -219,8 +212,8 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onClick(View view) {
+            cardView.startAnimation(animationChangeScale);
             Intent intent = new Intent();
-            //cardView.startAnimation(animationChangeScale);
             switch (getAdapterPosition()) {
                 case 0:
                     intent = new Intent(MainActivity.this, ActivityMonoDiet.class);

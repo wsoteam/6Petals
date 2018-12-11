@@ -36,7 +36,7 @@ public class ActivityGroupsOfRecipes extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(interstitialAd.isLoaded()){
+        if (interstitialAd.isLoaded()) {
             interstitialAd.show();
         }
     }
@@ -49,9 +49,7 @@ public class ActivityGroupsOfRecipes extends AppCompatActivity {
         listOfGroupsRecipes = (ArrayList<ListOfRecipes>) ObjectHolder.
                 getGlobalObject().
                 getListOfGroupsRecipes().
-                getListOfGroupsRecipes(); // это тип синглетона, он базу выгружает на сплэшАктивити и держит в памяти,
-                // так вроде в книжке было, тип норм практика. По аналогии сделай в следующем активити. Мертвый код удаляй,
-                //  вивер по рецепту тебе же вроде не нужен
+                getListOfGroupsRecipes();
         rvList = (RecyclerView) findViewById(R.id.rvRecipesList);
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.setAdapter(new RecipeGroupAdapter(listOfGroupsRecipes));
