@@ -203,6 +203,7 @@
         <item>Лента</item>
         <item>Задачи</item>
         <item>Анализатор</item>
+        <item>Упражнения</item>
     </string-array>
 
     <string-array name="properties_items_of_main_screen">
@@ -213,6 +214,7 @@
         <item>Рекомендации, полезные инфографики и лайфхаки</item>
         <item>Менеджер задач с возможностью установки напоминаний</item>
         <item>Анализатор калорийности продуктов</item>
+        <item>Самые эффективные комплексы упражнений для похудения</item>
     </string-array>
 
 

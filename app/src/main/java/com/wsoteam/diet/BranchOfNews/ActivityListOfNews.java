@@ -69,7 +69,7 @@ public class ActivityListOfNews extends AppCompatActivity {
         fabSwitchUrl = findViewById(R.id.fabSwitchUrl);
         fabSwitchUrl.setVisibility(View.GONE);
         rvListOfNews.setLayoutManager(new LinearLayoutManager(this));
-
+        rvListOfNews.setHasFixedSize(false);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -242,6 +242,7 @@ public class ActivityListOfNews extends AppCompatActivity {
         @Override
         public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(ActivityListOfNews.this);
+            Log.e("LOL", "Create");
             return new ItemViewHolder(layoutInflater, parent);
         }
 

@@ -17,14 +17,18 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,10 +37,15 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
+import com.wsoteam.diet.BranchOfDiary.ActivityListOfDiary;
+import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
 import com.wsoteam.diet.BranchOfNews.ActivityListOfNews;
 import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
+import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.Config;
+import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
@@ -46,14 +55,11 @@ public class MainActivity extends AppCompatActivity
     private RewardedVideoAd mRewardedVideoAd;
     private Toolbar toolbar;
     private RecyclerView rvMainList;
+    private Animation animationChangeScale;
 
-    private Integer [] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes,
+    private Integer[] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes,
             R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary, R.drawable.ic_main_menu_newsfeed,
-            R.drawable.ic_main_menu_targets, R.drawable.ic_main_menu_analyzer};
-
-    //private String[] names = new String[] {"Тест", "Тест", "Тест", "Тест", "Тест", "Тест", "Тест"};
-
-    //private String[] names = getResources().getStringArray(R.array.names_items_of_main_screen);
+            R.drawable.ic_main_menu_targets, R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_fitness};
 
 
     @Override
@@ -118,12 +124,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_g);
         navigationView.setNavigationItemSelectedListener(this);
+        animationChangeScale = AnimationUtils.loadAnimation(this, R.anim.anim_change_scale);
 
-
-        setTitle(getString(R.string.main_menu));
-
-
-        loadAd();
+        //loadAd();
 
         YandexMetrica.reportEvent("Открыт экран: Стартовый экран");
     }
@@ -199,6 +202,7 @@ public class MainActivity extends AppCompatActivity
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvTitle, tvProperties;
         private ImageView ivImage, ivIsOpen;
+        private CardView cardView;
 
         public ItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_list_main_menu, viewGroup, false));
@@ -207,13 +211,43 @@ public class MainActivity extends AppCompatActivity
             ivIsOpen = itemView.findViewById(R.id.ivIsOpen);
             tvTitle = itemView.findViewById(R.id.tvMainMenuTitle);
             tvProperties = itemView.findViewById(R.id.tvMainMenuProperties);
+            cardView = itemView.findViewById(R.id.cvParentView);
+
 
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-
+            Intent intent = new Intent();
+            //cardView.startAnimation(animationChangeScale);
+            switch (getAdapterPosition()) {
+                case 0:
+                    intent = new Intent(MainActivity.this, ActivityMonoDiet.class);
+                    break;
+                case 1:
+                    intent = new Intent(MainActivity.this, ActivityGroupsOfRecipes.class);
+                    break;
+                case 2:
+                    intent = new Intent(MainActivity.this, ActivityListOfCalculating.class);
+                    break;
+                case 3:
+                    intent = new Intent(MainActivity.this, ActivityListOfDiary.class);
+                    break;
+                case 4:
+                    intent = new Intent(MainActivity.this, ActivityListOfNews.class);
+                    break;
+                case 5:
+                    intent = new Intent(MainActivity.this, ActivityEmpty.class);
+                    break;
+                case 6:
+                    intent = new Intent(MainActivity.this, ActivityEmpty.class);
+                    break;
+                case 7:
+                    intent = new Intent(MainActivity.this, ActivityEmpty.class);
+                    break;
+            }
+            startActivity(intent);
         }
 
         public void bind(String name, Integer image, String properties) {
@@ -226,7 +260,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private class ItemAdapter extends RecyclerView.Adapter<ItemHolder>{
+    private class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
         String[] names, propeties;
         Integer[] images;
 
