@@ -1,7 +1,11 @@
 package com.wsoteam.diet.OtherActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,9 +29,9 @@ import com.wsoteam.diet.R;
 import com.wsoteam.diet.TestFillDB;
 
 public class ActivitySplash extends AppCompatActivity {
-    TextView tvTitle, tvSubtitle;
-    ImageView ivLoading;
-    Animation animationRotate;
+    private TextView tvTitle;
+    private ImageView ivLoading;
+    private Animation animationRotate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +44,11 @@ public class ActivitySplash extends AppCompatActivity {
         tvTitle.setTypeface(Typeface.createFromAsset(getAssets(), "main_font.ttf"));
         animationRotate = AnimationUtils.loadAnimation(this, R.anim.animation_rotate);
         ivLoading.startAnimation(animationRotate);
+        Intent intent = new Intent(ActivitySplash.this, MainActivity.class);
 
+        if (!hasConnection(this)) {
+            Toast.makeText(this, R.string.check_internet_connection, Toast.LENGTH_SHORT).show();
+        }
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(Config.NAME_OF_ENTITY_FOR_DB);
@@ -49,11 +58,10 @@ public class ActivitySplash extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ObjectHolder objectHolder = new ObjectHolder();
                 objectHolder.bindObjectWithHolder(dataSnapshot.getValue(GlobalObject.class));
-                //ivLoading.clearAnimation();
-                Intent intent = new Intent(ActivitySplash.this, MainActivity.class);
+                ivLoading.clearAnimation();
                 startActivity(intent);
-                //TestFillDB.fiilDB(ObjectHolder.getGlobalObject().getListOfPOJO(), ObjectHolder.getGlobalObject().getListOfGroupsRecipes());
                 finish();
+
             }
 
             @Override
@@ -61,7 +69,24 @@ public class ActivitySplash extends AppCompatActivity {
 
             }
         });
-
-
     }
+
+    public boolean hasConnection(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (wifiInfo != null && wifiInfo.isConnected()) {
+            return true;
+        }
+        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (wifiInfo != null && wifiInfo.isConnected()) {
+            return true;
+        }
+        wifiInfo = cm.getActiveNetworkInfo();
+        if (wifiInfo != null && wifiInfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }
+
+
 }

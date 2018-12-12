@@ -72,6 +72,7 @@ public class ActivityListOfNews extends AppCompatActivity {
         rvListOfNews.setLayoutManager(new LinearLayoutManager(this));
         rvListOfNews.setHasFixedSize(false);
 
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -101,7 +102,7 @@ public class ActivityListOfNews extends AppCompatActivity {
 
     }
 
-    private void openSpareScreen(){
+    private void openSpareScreen() {
         Intent intent = new Intent(ActivityListOfNews.this, ActivityEmpty.class);
         startActivity(intent);
     }
@@ -148,10 +149,10 @@ public class ActivityListOfNews extends AppCompatActivity {
                                 Response responseVk = jsonAdapter.fromJson(response.json.getString("response"));
                                 ObjectHolder objectHolder = new ObjectHolder();
                                 objectHolder.createObject(responseVk);
-                                if (ObjectHolder.getResponseVk().getItems().size() == 0){
+                                if (ObjectHolder.getResponseVk().getItems().size() == 0) {
                                     openSpareScreen();
                                     YandexMetrica.reportEvent("Украинский доступ, открыт резервный экран");
-                                }else {
+                                } else {
                                     updateUI();
                                     YandexMetrica.reportEvent("Открыта лента");
                                 }
@@ -244,7 +245,7 @@ public class ActivityListOfNews extends AppCompatActivity {
         private void sharePhoto() {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, urlOfImage);
+            intent.putExtra(Intent.EXTRA_TEXT, urlOfImage + "\n" + getResources().getString(R.string.accompany_text_for_share_image) + " http://bit.ly/awsdiets");
             startActivity(intent);
         }
     }

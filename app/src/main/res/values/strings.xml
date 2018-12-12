@@ -142,7 +142,7 @@
 
 
     <string name="my_reminders">Мои напоминания</string>
-    <string name="main_menu">Главное меню</string>
+    <string name="accompany_text_for_share_image">Это и еще куча всего интересного в одном классном приложении. \nСкачать:  \nAndroid - </string>
 
     <!--Load levels-->
     <string name="level_none">Минимальные нагрузки (сидячая работа)</string>
@@ -158,6 +158,8 @@
     <string name="spk_check_weight">Проверьте введенный вес</string>
     <string name="spk_kcal">ккал</string>
     <string name="description_of_SPK">Для комфортного похудения, для избежания срывов и нанесения вреда здоровью снижать калораж рациона ниже 1200 нельзя, поэтому в случае, если Ваш нижний предел оказался ниже 1200, надо необходимые калории сжигать за счёт физических нагрузок.</string>
+    <string name="main_menu">Главное меню</string>
+    <string name="check_internet_connection">Проверьте подключение к интернету</string>
 
 
     <!--VKAPI-->
@@ -217,28 +219,5 @@
         <item>Самые эффективные комплексы упражнений для похудения</item>
     </string-array>
 
-
-    <integer-array name="ids_of_notifications_icons">
-        <item>2131230873</item>
-        <item>2131230883</item>
-        <item>2131230885</item>
-        <item>2131230886</item>
-        <item>2131230887</item>
-        <item>2131230888</item>
-        <item>2131230889</item>
-        <item>2131230890</item>
-        <item>2131230891</item>
-        <item>2131230873</item>
-        <item>2131230874</item>
-        <item>2131230875</item>
-        <item>2131230876</item>
-        <item>2131230877</item>
-        <item>2131230878</item>
-        <item>2131230879</item>
-        <item>2131230880</item>
-        <item>2131230881</item>
-        <item>2131230882</item>
-        <item>2131230884</item>
-    </integer-array>
 
 </resources>

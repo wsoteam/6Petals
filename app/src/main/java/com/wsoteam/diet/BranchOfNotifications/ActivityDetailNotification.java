@@ -56,6 +56,27 @@ public class ActivityDetailNotification extends AppCompatActivity {
     private long tempId;
     private AlertDialog choiseIconAlertDialog;
 
+    private Integer[] urlOfIconsNotifications = new Integer[]{R.drawable.list_of_choise_notification_icon_1,
+            R.drawable.list_of_choise_notification_icon_2,
+            R.drawable.list_of_choise_notification_icon_3,
+            R.drawable.list_of_choise_notification_icon_4,
+            R.drawable.list_of_choise_notification_icon_5,
+            R.drawable.list_of_choise_notification_icon_6,
+            R.drawable.list_of_choise_notification_icon_7,
+            R.drawable.list_of_choise_notification_icon_8,
+            R.drawable.list_of_choise_notification_icon_9,
+            R.drawable.list_of_choise_notification_icon_10,
+            R.drawable.list_of_choise_notification_icon_11,
+            R.drawable.list_of_choise_notification_icon_12,
+            R.drawable.list_of_choise_notification_icon_13,
+            R.drawable.list_of_choise_notification_icon_14,
+            R.drawable.list_of_choise_notification_icon_15,
+            R.drawable.list_of_choise_notification_icon_16,
+            R.drawable.list_of_choise_notification_icon_17,
+            R.drawable.list_of_choise_notification_icon_18,
+            R.drawable.list_of_choise_notification_icon_19,
+            R.drawable.list_of_choise_notification_icon_20};
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -165,7 +186,7 @@ public class ActivityDetailNotification extends AppCompatActivity {
         View view = View.inflate(ActivityDetailNotification.this, R.layout.alert_dialog_list_of_icons, null);
         RecyclerView rvListOfIcons = view.findViewById(R.id.rvAlertDialogListOfIcons);
         rvListOfIcons.setLayoutManager(new GridLayoutManager(ActivityDetailNotification.this, 5));
-        rvListOfIcons.setAdapter(new IconAdapter(getResources().getIntArray(R.array.ids_of_notifications_icons)));
+        rvListOfIcons.setAdapter(new IconAdapter(urlOfIconsNotifications));
         choiseIconAlertDialog.setView(view);
         choiseIconAlertDialog.show();
 
@@ -177,7 +198,6 @@ public class ActivityDetailNotification extends AppCompatActivity {
             fillObjectFromFields();
             if (idOfSelectedItem == -1) {
                 objectForNotification.save();
-                finish();
             } else {
                 ObjectForNotification.deleteAll(ObjectForNotification.class);
                 notificationArrayList.remove(idOfSelectedItem);
@@ -185,9 +205,13 @@ public class ActivityDetailNotification extends AppCompatActivity {
                 for (int i = 0; i < notificationArrayList.size(); i++) {
                     notificationArrayList.get(i).save();
                 }
-                finish();
+                Intent intent = new Intent(ActivityDetailNotification.this, AlarmManagerBR.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(ActivityDetailNotification.this,
+                        (int) objectForNotification.getOwnId(), intent, 0);
+                pendingIntent.cancel();
             }
             createAlarmSchedule(objectForNotification);
+            finish();
         } catch (Exception e) {
             Toast.makeText(this, "Что-то пошло не так, попробуйте позже", Toast.LENGTH_SHORT).show();
             Log.e("Error", e.getLocalizedMessage());
@@ -347,9 +371,9 @@ public class ActivityDetailNotification extends AppCompatActivity {
     }
 
     private class IconAdapter extends RecyclerView.Adapter<IconHolder> {
-        int[] idsOfIcons;
+        Integer[] idsOfIcons;
 
-        public IconAdapter(int[] idsOfIcons) {
+        public IconAdapter(Integer[] idsOfIcons) {
             this.idsOfIcons = idsOfIcons;
         }
 

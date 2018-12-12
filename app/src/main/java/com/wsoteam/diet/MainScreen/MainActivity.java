@@ -39,6 +39,7 @@ import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
 import com.wsoteam.diet.BranchOfDiary.ActivityListOfDiary;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
 import com.wsoteam.diet.BranchOfNews.ActivityListOfNews;
+import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
@@ -56,8 +57,6 @@ public class MainActivity extends AppCompatActivity
     private Integer[] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes,
             R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary, R.drawable.ic_main_menu_newsfeed,
             R.drawable.ic_main_menu_targets, R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_fitness};
-
-    private boolean isUA = false;
 
 
     @Override
@@ -82,7 +81,6 @@ public class MainActivity extends AppCompatActivity
                 animatedVectorDrawable.start();
             }
         } catch (Exception e) {
-
         }
         return true;
     }
@@ -114,6 +112,7 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle(getString(R.string.main_menu));
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -230,7 +229,7 @@ public class MainActivity extends AppCompatActivity
                     intent = new Intent(MainActivity.this, ActivityListOfNews.class);
                     break;
                 case 5:
-                    intent = new Intent(MainActivity.this, ActivityEmpty.class);
+                    intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
                     break;
                 case 6:
                     intent = new Intent(MainActivity.this, ActivityEmpty.class);
