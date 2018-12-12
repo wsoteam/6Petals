@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -123,7 +125,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadDataFromFireBase() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setApplicationId(Config.WorkOutApplicationId) // Required for Analytics.
+                .setApiKey(Config.WorkOutApiKey) // Required for Auth.
+                .setDatabaseUrl(Config.WorkOutDatabaseUrl) // Required for RTDB.
+                .build();
+        FirebaseApp.initializeApp(this /* Context */, options, "secondary");
+
+        // Retrieve my other app.
+        FirebaseApp app = FirebaseApp.getInstance("secondary");
+// Get the database for the other app.
+        FirebaseDatabase database = FirebaseDatabase.getInstance(app);
+
+//        -----------------------------------------------------------------------------------------
+
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(Config.EXERCISES_NAME_OF_ENTITY_FOR_DB);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
