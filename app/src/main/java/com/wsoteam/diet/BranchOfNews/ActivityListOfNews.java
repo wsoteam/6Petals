@@ -204,7 +204,6 @@ public class ActivityListOfNews extends AppCompatActivity {
         }
 
         public void bind(Item item) {
-
             if (item.getAttachments().get(0).getType().equals("photo")) {
                 if (item.getText().length() > MAX_COUNT_OF_LETTERS) {
                     tvTitle.setText(item.getText().substring(0, MAX_COUNT_OF_LETTERS) + " ...");

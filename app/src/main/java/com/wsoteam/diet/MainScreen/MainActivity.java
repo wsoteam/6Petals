@@ -120,7 +120,6 @@ public class MainActivity extends AppCompatActivity
         if (getIntent().getStringExtra("MainActivity").equals(notAccessibleCountryCode)) {
             isAccessibleCountry = false;
         }
-        Toast.makeText(this, getIntent().getStringExtra("MainActivity"), Toast.LENGTH_SHORT).show();
 
         rvMainList = findViewById(R.id.rvMainScreen);
         rvMainList.setLayoutManager(new GridLayoutManager(this, 2));
@@ -267,7 +266,7 @@ public class MainActivity extends AppCompatActivity
             tvTitle.setText(name);
             tvProperties.setText(properties);
             Glide.with(MainActivity.this).load(image).into(ivImage);
-            if (getAdapterPosition() == 4 && isAccessibleCountry) {
+            if (getAdapterPosition() == 4 && isAccessibleCountry || getAdapterPosition() == 5) {
                 ivIsOpen.setVisibility(View.VISIBLE);
             }
         }

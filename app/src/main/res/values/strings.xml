@@ -142,7 +142,10 @@
 
 
     <string name="my_reminders">Мои напоминания</string>
-    <string name="accompany_text_for_share_image">Это и еще куча всего интересного в одном классном приложении. \nСкачать:  \nAndroid - </string>
+    <string name="accompany_text_for_share_image">Давно мечтали похудеть?
+        Самые полезные советы, диеты, тренировки в одном приложении.
+        \nСкачать:
+        \nAndroid - </string>
 
     <!--Load levels-->
     <string name="level_none">Минимальные нагрузки (сидячая работа)</string>
