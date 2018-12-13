@@ -5,6 +5,7 @@ import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +31,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
@@ -42,9 +45,17 @@ import com.wsoteam.diet.BranchOfNews.ActivityListOfNews;
 import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.Config;
+import com.wsoteam.diet.IPCheck.IPCheckApi;
+import com.wsoteam.diet.IPCheck.IPCheckObject;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -54,6 +65,8 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView rvMainList;
     private Animation animationChangeScale;
 
+    private boolean isAccessibleCountry = true;
+    private String notAccessibleCountryCode = "UA";
     private Integer[] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes,
             R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary, R.drawable.ic_main_menu_newsfeed,
             R.drawable.ic_main_menu_targets, R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_fitness};
@@ -104,6 +117,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
+        if (getIntent().getStringExtra("MainActivity").equals(notAccessibleCountryCode)) {
+            isAccessibleCountry = false;
+        }
+        Toast.makeText(this, getIntent().getStringExtra("MainActivity"), Toast.LENGTH_SHORT).show();
 
         rvMainList = findViewById(R.id.rvMainScreen);
         rvMainList.setLayoutManager(new GridLayoutManager(this, 2));
@@ -127,6 +144,7 @@ public class MainActivity extends AppCompatActivity
         loadAd();
 
         YandexMetrica.reportEvent("Открыт экран: Стартовый экран");
+
     }
 
     private void loadAd() {
@@ -203,7 +221,7 @@ public class MainActivity extends AppCompatActivity
             tvTitle = itemView.findViewById(R.id.tvMainMenuTitle);
             tvProperties = itemView.findViewById(R.id.tvMainMenuProperties);
             cardView = itemView.findViewById(R.id.cvParentView);
-
+            ivIsOpen.setVisibility(View.GONE);
 
             itemView.setOnClickListener(this);
         }
@@ -226,7 +244,11 @@ public class MainActivity extends AppCompatActivity
                     intent = new Intent(MainActivity.this, ActivityListOfDiary.class);
                     break;
                 case 4:
-                    intent = new Intent(MainActivity.this, ActivityListOfNews.class);
+                    if (isAccessibleCountry) {
+                        intent = new Intent(MainActivity.this, ActivityListOfNews.class);
+                    } else {
+                        intent = new Intent(MainActivity.this, ActivityEmpty.class);
+                    }
                     break;
                 case 5:
                     intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
@@ -245,8 +267,8 @@ public class MainActivity extends AppCompatActivity
             tvTitle.setText(name);
             tvProperties.setText(properties);
             Glide.with(MainActivity.this).load(image).into(ivImage);
-            if (getAdapterPosition() != 4) {
-                ivIsOpen.setVisibility(View.GONE);
+            if (getAdapterPosition() == 4 && isAccessibleCountry) {
+                ivIsOpen.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -278,4 +300,5 @@ public class MainActivity extends AppCompatActivity
             return names.length;
         }
     }
+
 }

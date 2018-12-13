@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,11 +23,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wsoteam.diet.Config;
+import com.wsoteam.diet.IPCheck.IPCheckApi;
+import com.wsoteam.diet.IPCheck.IPCheckObject;
 import com.wsoteam.diet.MainScreen.MainActivity;
 import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.GlobalObject;
 import com.wsoteam.diet.R;
 import com.wsoteam.diet.TestFillDB;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ActivitySplash extends AppCompatActivity {
     private TextView tvTitle;
@@ -44,7 +53,7 @@ public class ActivitySplash extends AppCompatActivity {
         tvTitle.setTypeface(Typeface.createFromAsset(getAssets(), "main_font.ttf"));
         animationRotate = AnimationUtils.loadAnimation(this, R.anim.animation_rotate);
         ivLoading.startAnimation(animationRotate);
-        Intent intent = new Intent(ActivitySplash.this, MainActivity.class);
+
 
         if (!hasConnection(this)) {
             Toast.makeText(this, R.string.check_internet_connection, Toast.LENGTH_SHORT).show();
@@ -58,9 +67,8 @@ public class ActivitySplash extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ObjectHolder objectHolder = new ObjectHolder();
                 objectHolder.bindObjectWithHolder(dataSnapshot.getValue(GlobalObject.class));
-                ivLoading.clearAnimation();
-                startActivity(intent);
-                finish();
+
+                checkCountryAndRunNextActivity();
 
             }
 
@@ -71,7 +79,7 @@ public class ActivitySplash extends AppCompatActivity {
         });
     }
 
-    public boolean hasConnection(Context context) {
+    private boolean hasConnection(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if (wifiInfo != null && wifiInfo.isConnected()) {
@@ -86,6 +94,33 @@ public class ActivitySplash extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private void checkCountryAndRunNextActivity(){
+        Intent intent = new Intent(ActivitySplash.this, MainActivity.class);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ip-api.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        IPCheckApi checkApi = retrofit.create(IPCheckApi.class);
+        Call<IPCheckObject> objectCall = checkApi.getResponse();
+        objectCall.enqueue(new Callback<IPCheckObject>() {
+            @Override
+            public void onResponse(Call<IPCheckObject> call, Response<IPCheckObject> response) {
+                intent.putExtra("MainActivity", response.body().getCountryCode());
+                ivLoading.clearAnimation();
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<IPCheckObject> call, Throwable t) {
+                intent.putExtra("MainActivity", "by");
+                ivLoading.clearAnimation();
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
 
