@@ -23,8 +23,7 @@ public class AlarmManagerBR extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Toast.makeText(context, "LOL", Toast.LENGTH_SHORT).show();
-        Log.d("LOL", "dorou");
+
         createNotification(context, intent.getStringExtra(TAG_FOR_TEXT), intent.getLongExtra(TAG_FOR_ID, 0));
     }
 
