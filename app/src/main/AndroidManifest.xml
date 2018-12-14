@@ -88,7 +88,8 @@
             android:name=".BranchOfNotifications.ActivityDetailNotification"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".BranchOfNotifications.ActivityListOfNotifications" />
+        <activity android:name=".BranchOfNotifications.ActivityListOfNotifications"
+            android:theme="@style/NotificationListActivity"/>
 
         <activity android:name=".OtherActivity.ActivityAboutSetingsNotifications"/>
 

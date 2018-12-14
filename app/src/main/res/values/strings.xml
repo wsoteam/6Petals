@@ -169,6 +169,7 @@
     <string name="Grade">Да!</string>
     <string name="Never">Нет</string>
     <string name="grade_text">Будем рады, если Вы оставите оценку или отзыв. Вам нравится наше приложение?</string>
+    <string name="manager_of_notifications">Менеджер задач</string>
 
 
     <!--VKAPI-->

@@ -45,7 +45,7 @@ public class ActivityListOfNotifications extends AppCompatActivity {
         fabCreateNewNotification = findViewById(R.id.fabActivityListOfNotificationCreate);
         recyclerView = findViewById(R.id.rvActivityListOfNotification);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        setTitle(getString(R.string.my_reminders));
+        //setTitle(getString(R.string.my_reminders));
 
         updateUI();
 
