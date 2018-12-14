@@ -1,6 +1,8 @@
 package com.wsoteam.diet.MainScreen;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
@@ -16,6 +18,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
@@ -65,6 +68,9 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView rvMainList;
     private Animation animationChangeScale;
 
+    private int COUNT_OF_RUN = 0;
+    private String TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG = "COUNT_OF_RUN";
+    private SharedPreferences countOfRun;
     private boolean isAccessibleCountry = true;
     private String notAccessibleCountryCode = "UA";
     private Integer[] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes,
@@ -144,6 +150,50 @@ public class MainActivity extends AppCompatActivity
 
         YandexMetrica.reportEvent("Открыт экран: Стартовый экран");
 
+        additionOneToSharedPreference();
+        checkFirstRun();
+
+    }
+
+    private void additionOneToSharedPreference() {
+        countOfRun = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = countOfRun.edit();
+        editor.putInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) + 1);
+        editor.commit();
+
+    }
+
+    private void checkFirstRun() {
+        if (countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) == 5) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View view = getLayoutInflater().inflate(R.layout.alert_dialog_grade, null);
+            builder.setView(view);
+            builder.setNeutralButton(R.string.Late, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    countOfRun = getPreferences(MODE_PRIVATE);
+                    SharedPreferences.Editor editor = countOfRun.edit();
+                    editor.putInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, 0);
+                    editor.commit();
+                }
+            });
+            builder.setPositiveButton(R.string.Grade, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("market://details?id=" + MainActivity.this.getPackageName()));
+                    startActivity(intent);
+                }
+            });
+            builder.setNegativeButton(R.string.Never, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            builder.show();
+        }
     }
 
     private void loadAd() {

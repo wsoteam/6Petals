@@ -164,6 +164,12 @@
     <string name="main_menu">Главное меню</string>
     <string name="check_internet_connection">Проверьте подключение к интернету</string>
 
+    <!--Grade Alert Dialog-->
+    <string name="Late">Пока не знаю</string>
+    <string name="Grade">Да!</string>
+    <string name="Never">Нет</string>
+    <string name="grade_text">Будем рады, если Вы оставите оценку или отзыв. Вам нравится наше приложение?</string>
+
 
     <!--VKAPI-->
     <integer name="com_vk_sdk_AppId">6766798</integer>
