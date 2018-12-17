@@ -175,11 +175,13 @@ public class MainActivity extends AppCompatActivity
                     SharedPreferences.Editor editor = countOfRun.edit();
                     editor.putInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, 0);
                     editor.commit();
+                    YandexMetrica.reportEvent("Оценка отложена");
                 }
             });
             builder.setPositiveButton(R.string.Grade, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    YandexMetrica.reportEvent("Переход в ГП для оценки");
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse("market://details?id=" + MainActivity.this.getPackageName()));
                     startActivity(intent);
@@ -188,7 +190,7 @@ public class MainActivity extends AppCompatActivity
             builder.setNegativeButton(R.string.Never, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    YandexMetrica.reportEvent("Отказ в оценке");
                 }
             });
 

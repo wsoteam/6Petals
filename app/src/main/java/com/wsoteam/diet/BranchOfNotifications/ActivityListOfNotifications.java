@@ -23,6 +23,7 @@ import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.POJOForDB.ObjectForNotification;
 import com.wsoteam.diet.R;
 import com.wsoteam.diet.Services.AlarmManagerBR;
+import com.yandex.metrica.YandexMetrica;
 
 import java.util.ArrayList;
 
@@ -65,11 +66,14 @@ public class ActivityListOfNotifications extends AppCompatActivity {
         fabCreateNewNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                YandexMetrica.reportEvent("Открыт экран: Детализация задачи - добавление");
                 Intent intent = new Intent(ActivityListOfNotifications.this, ActivityDetailNotification.class);
                 intent.putExtra(ActivityDetailNotification.TAG_OF_ACTIVITY, -1);
                 startActivity(intent);
             }
         });
+
+        YandexMetrica.reportEvent("Открыт экран: Задачи");
     }
 
     private void updateUI() {
@@ -101,6 +105,7 @@ public class ActivityListOfNotifications extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
+            YandexMetrica.reportEvent("Открыт экран: Детализация задачи - изменение");
             Intent intent = new Intent(ActivityListOfNotifications.this, ActivityDetailNotification.class);
             intent.putExtra(ActivityDetailNotification.TAG_OF_ACTIVITY, getAdapterPosition());
             startActivity(intent);

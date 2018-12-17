@@ -100,6 +100,7 @@ public class ActivityListOfNews extends AppCompatActivity {
             }
         });
 
+        YandexMetrica.reportEvent("Открыт экран: Лента");
     }
 
     private void openSpareScreen() {
@@ -229,6 +230,7 @@ public class ActivityListOfNews extends AppCompatActivity {
             fabShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    YandexMetrica.reportEvent("Действие лента - шара");
                     sharePhoto();
                 }
             });
