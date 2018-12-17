@@ -26,7 +26,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="DATABASE"
-            android:value="diet_database_diary_items.db" />
+            android:value="diet_database_diary_items2.db" />
         <meta-data
             android:name="VERSION"
             android:value="2" />
@@ -107,6 +107,26 @@
             android:name="com.vk.sdk.VKServiceActivity"
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
+
+        <activity android:name=".BranchOfExercises.Activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityListOfExGroups"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityListOfEx"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityExDetail"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".BranchOfExercises.ActivitiesProgramm.ActivityListOfTraining"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".BranchOfExercises.ActivitiesProgramm.ActivityWithTiles"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".BranchOfExercises.ActivitiesArticles.ActivityDetailAcrticles"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <receiver
             android:name=".Services.AlarmManagerBR"

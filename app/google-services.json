@@ -1,71 +1,27 @@
 {
   "project_info": {
-    "project_number": "600669133009",
-    "firebase_url": "https://upgradediets.firebaseio.com",
-    "project_id": "upgradediets",
-    "storage_bucket": "upgradediets.appspot.com"
+    "project_number": "588344798889",
+    "firebase_url": "https://diet-for-test.firebaseio.com",
+    "project_id": "diet-for-test",
+    "storage_bucket": "diet-for-test.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:600669133009:android:9e20405dfc5e7aea",
+        "mobilesdk_app_id": "1:588344798889:android:9e20405dfc5e7aea",
         "android_client_info": {
           "package_name": "com.wild.diet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "600669133009-7uvoqnk5lcb8sirbvb3aoh89au854l11.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.wild.diet",
-            "certificate_hash": "090267c15381903ca85fae6213459feed4e3b108"
-          }
-        },
-        {
-          "client_id": "600669133009-ll2r4kjk8aol5n88uv6vca4igaj040hl.apps.googleusercontent.com",
+          "client_id": "588344798889-cr28eaof07tfndusqa5a51bjfkqj9tla.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBXQHKzNKFi3p_9bTZIokP3iXaK664Ziik"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "600669133009-ll2r4kjk8aol5n88uv6vca4igaj040hl.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:600669133009:android:479ad0175f5294fb",
-        "android_client_info": {
-          "package_name": "com.wsoteam.diet"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "600669133009-ll2r4kjk8aol5n88uv6vca4igaj040hl.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBXQHKzNKFi3p_9bTZIokP3iXaK664Ziik"
+          "current_key": "AIzaSyDS15atgMhaM1AklHvC-3rUMKloZvqgSgA"
         }
       ],
       "services": {

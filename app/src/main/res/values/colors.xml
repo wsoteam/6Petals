@@ -26,9 +26,14 @@
     <color name="frostbite">#de32aa</color>
     <color name="light_green">#4fe76d</color>
 
-
     <color name="alfa">#00ffffff</color>
 
-
-
+    <!--Exercises-->
+    <color name="whiteColor">#ffffff</color>
+    <color name="dark">#6d050505</color>
+    <color name="darkWithoutAlfa">#ffffff</color>
+    <color name="darkWithoutAlfaJustMoreBlack">#262525</color>
+    <color name="darkWithoutAlfaMoreLight">#4b4a4a</color>
+    <color name="backgroundDelete">#b41c1c</color>
+    <color name="transparent">#00b41c1c</color>
 </resources>
