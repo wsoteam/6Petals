@@ -260,9 +260,6 @@
     <string name="laterButtonAlert">Позже</string>
     <string name="neverButtonAlert">Никогда</string>
     <string name="evaluateButtonAlert">Оценить</string>
-    <string name="Grade">Оценить</string>
-    <string name="Late">Позже</string>
-    <string name="Never">Никогда!</string>
 
     <string name="admob_id" translatable="false">ca-app-pub-3050564412171997~7531876710</string>
 

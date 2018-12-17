@@ -308,7 +308,7 @@ public class MainActivity extends AppCompatActivity
                     intent = new Intent(MainActivity.this, ActivityEmpty.class);
                     break;
                 case 7:
-                    intent = new Intent(MainActivity.this, ActivityEmpty.class);
+                    intent = new Intent(MainActivity.this, com.wsoteam.diet.BranchOfExercises.Activities.MainActivity.class);
                     break;
             }
             startActivity(intent);
@@ -318,7 +318,9 @@ public class MainActivity extends AppCompatActivity
             tvTitle.setText(name);
             tvProperties.setText(properties);
             Glide.with(MainActivity.this).load(image).into(ivImage);
-            if (getAdapterPosition() == 4 && isAccessibleCountry || getAdapterPosition() == 5) {
+            if (getAdapterPosition() == 4 && isAccessibleCountry
+                    || getAdapterPosition() == 5
+                    || getAdapterPosition() == 7) {
                 ivIsOpen.setVisibility(View.VISIBLE);
             }
         }

@@ -43,8 +43,6 @@ import com.wsoteam.diet.R;
 import java.util.ArrayList;
 
 
-
-
 public class MainActivity extends AppCompatActivity {
 
     private int COUNT_OF_RUN = 0;
