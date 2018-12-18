@@ -87,8 +87,6 @@ public class ActivityListOfTraining extends AppCompatActivity {
             tvTitleOfProgramm = itemView.findViewById(R.id.ex_tvTrainingListName);
             imageIsSave = itemView.findViewById(R.id.ex_ivIsSaveProgrammList);
             backgroundImage = itemView.findViewById(R.id.ex_ivListOfTrainingBackground);
-            tvTitleOfProgramm.setTypeface(Typeface.createFromAsset(ActivityListOfTraining.this.getAssets()
-                    , "asProgramMainScreen.ttf"));
 
             itemView.setOnClickListener(this);
         }

@@ -56,7 +56,6 @@ public class FragmentsArticles extends Fragment {
         public ArticleVH(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.ex_item_fragment_articles_list, viewGroup, false));
             titleOfArticle = itemView.findViewById(R.id.ex_tvTitleOfArticleItem);
-            titleOfArticle.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "asProgramMainScreen.ttf"));
             itemView.setOnClickListener(this);
         }
 

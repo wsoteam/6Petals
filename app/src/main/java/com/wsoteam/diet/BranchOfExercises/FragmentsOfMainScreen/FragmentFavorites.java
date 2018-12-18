@@ -26,7 +26,6 @@ import com.wsoteam.diet.R;
 import java.util.ArrayList;
 
 
-
 public class FragmentFavorites extends Fragment {
     private ImageView imageIfEmpty;
     private TextView textIfEmpty;

@@ -62,8 +62,6 @@ public class ActivityListOfEx extends AppCompatActivity {
         public ListOfExViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.ex_item_activity_list_of_ex, viewGroup, false));
             tvName = itemView.findViewById(R.id.ex_tvNameItemActivityEx);
-            tvName.setTypeface(Typeface.createFromAsset(ActivityListOfEx.this.getAssets()
-                    , "asProgramMainScreen.ttf"));
             tvComplexity = itemView.findViewById(R.id.ex_tvComplexityOfExItemActivityEx);
             tvBasicMuscle = itemView.findViewById(R.id.ex_tvBasicMuscleExItem);
 

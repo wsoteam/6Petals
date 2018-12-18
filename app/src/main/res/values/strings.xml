@@ -215,7 +215,7 @@
         <item>Лента</item>
         <item>Задачи</item>
         <item>Анализатор</item>
-        <item>Упражнения</item>
+        <item>Фитнес</item>
     </string-array>
 
     <string-array name="properties_items_of_main_screen">
@@ -251,7 +251,7 @@
     <string name="weight">Вес и количество повторений:</string>
     <string name="detail">Описание упражнения:</string>
     <string name="main_chips">Основные фишки:</string>
-    <string name="here_is_nothing">Здесь пока ничего нет</string>
+    <string name="here_is_nothing">Здесь пока пусто</string>
     <string name="count_of_programm">Количество программ - </string>
     <string name="add_favorite">Программа добавлена в фавориты</string>
     <string name="check_connection">Проверьте свое подключение к интернету</string>
@@ -261,11 +261,11 @@
     <string name="neverButtonAlert">Никогда</string>
     <string name="evaluateButtonAlert">Оценить</string>
 
-    <string name="admob_id" translatable="false">ca-app-pub-3050564412171997~7531876710</string>
+    <string name="admob_id" translatable="false">ca-app-pub-3050564412171997~8774716406</string>
 
-    <string name="ban1_id" translatable="false">ca-app-pub-3050564412171997/2183895854</string>
-    <string name="ban2_id" translatable="false">ca-app-pub-3050564412171997/4618487506</string>
-    <string name="ban3_id" translatable="false">ca-app-pub-3050564412171997/8366160829</string>
-    <string name="inter" translatable="false">ca-app-pub-3050564412171997/3129597274</string>
+    <string name="ban1_id" translatable="false">ca-app-pub-3050564412171997/5103473829</string>
+    <string name="ban2_id" translatable="false">ca-app-pub-3050564412171997/5103473829</string>
+    <string name="ban3_id" translatable="false">ca-app-pub-3050564412171997/5103473829</string>
+    <string name="inter" translatable="false">ca-app-pub-3050564412171997/5945782205</string>
 
 </resources>

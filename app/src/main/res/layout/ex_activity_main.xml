@@ -42,8 +42,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_goneMarginEnd="@dimen/cardview_default_radius"
-        app:itemIconTint="@color/colorAccent"
-        app:itemTextColor="@color/colorAccent"
+        app:itemIconTint="@color/purple"
+        app:itemTextColor="@color/purple"
         android:backgroundTint="@color/darkWithoutAlfa"
         app:menu="@menu/bottom_navigation" />
 

@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.startad.lib.SADView;
 import com.wsoteam.diet.BranchOfExercises.ActivitiesProgramm.ActivityListOfTraining;
 import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
 import com.wsoteam.diet.POJOSExercises.GlobalObject;
@@ -26,21 +25,15 @@ import com.wsoteam.diet.R;
 import java.util.ArrayList;
 
 
-
 public class FragmentProgramms extends Fragment {
     private RecyclerView rvListOfProgramm;
     private GlobalObject globalObject;
-
-    protected SADView sadView;
-    private String AD_ID = "5bd2e325cd3e9671008b4568";
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ex_fragment_programms, container, false);
         rvListOfProgramm = view.findViewById(R.id.ex_rvListOfHomeFragment);
-        sadView = new SADView(getActivity(), AD_ID);
 
         globalObject = ObjectHolder.getGlobalObject();
         rvListOfProgramm.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -60,7 +53,6 @@ public class FragmentProgramms extends Fragment {
             tvTitleOfProgramm = itemView.findViewById(R.id.ex_tvNameHomeList);
             tvCountOfProgrammInside = itemView.findViewById(R.id.ex_tvCountOfProgrammInside);
             frameLayout = itemView.findViewById(R.id.ex_flItemOfProgrammList);
-            tvTitleOfProgramm.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "asProgramMainScreen.ttf"));
             imageView = itemView.findViewById(R.id.ivBackgroundItemListOfProgrammMainScreen);
             itemView.setOnClickListener(this);
         }
@@ -68,19 +60,14 @@ public class FragmentProgramms extends Fragment {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), ActivityListOfTraining.class);
-            intent.putExtra(ActivityListOfTraining.TAG, getAdapterPosition() - 1);
+            intent.putExtra(ActivityListOfTraining.TAG, getAdapterPosition());
             startActivity(intent);
         }
 
-        public void bind(Programm programm, boolean isAd) {
-            if (isAd){
-                frameLayout.addView(sadView);
-                sadView.loadAd(SADView.LANGUAGE_RU);
-            }else {
-                Glide.with(getActivity()).load(programm.getImg_url()).into(imageView);
-                tvTitleOfProgramm.setText(programm.getTitle());
-                tvCountOfProgrammInside.setText(String.valueOf(programm.getTrainingList().size()));
-            }
+        public void bind(Programm programm) {
+            Glide.with(getActivity()).load(programm.getImg_url()).into(imageView);
+            tvTitleOfProgramm.setText(programm.getTitle());
+            tvCountOfProgrammInside.setText(String.valueOf(programm.getTrainingList().size()));
         }
     }
 
@@ -100,16 +87,12 @@ public class FragmentProgramms extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ProgrammViewHolder holder, int position) {
-            if (position == 0){
-                holder.bind(programmArrayList.get(position + 1), true);
-            }else {
-                holder.bind(programmArrayList.get(position - 1), false);
-            }
+            holder.bind(programmArrayList.get(position));
         }
 
         @Override
         public int getItemCount() {
-            return programmArrayList.size() + 1;
+            return programmArrayList.size();
         }
     }
 }

@@ -12,11 +12,6 @@ public class Config {
 
     public static String EXERCISES_NAME_OF_ENTITY_FOR_DB = "WORKOUT";
 
-//    Firebase workout
-    public static final String WorkOutApplicationId = "AIzaSyAVcr1U0xbS3Bf0DzWOt7tzdLpxB-nP1yw";
-    public static final String WorkOutApiKey = "1:584294646007:android:9e20405dfc5e7aea";
-    public static final String WorkOutDatabaseUrl = "https://workout-f67d0.firebaseio.com/";
-
     public static final String EN= "en";
     public static final String ES= "es";
     public static final String DE= "de";

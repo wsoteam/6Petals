@@ -72,8 +72,6 @@ public class ActivityListOfExGroups extends AppCompatActivity {
             super(layoutInflater.inflate(R.layout.ex_item_activity_ex_groups, viewGroup, false));
             tvCountOfExInside = itemView.findViewById(R.id.ex_tvCountOfExItemActivityExGroups);
             tvName = itemView.findViewById(R.id.ex_tvNameItemActivityExGroups);
-            tvName.setTypeface(Typeface.createFromAsset(ActivityListOfExGroups.this.getAssets()
-                    , "asProgramMainScreen.ttf"));
             imageView = itemView.findViewById(R.id.ex_ivItemActivityExGroups);
             itemView.setOnClickListener(this);
         }

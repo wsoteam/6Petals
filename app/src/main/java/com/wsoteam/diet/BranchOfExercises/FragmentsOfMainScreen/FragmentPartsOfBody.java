@@ -32,20 +32,11 @@ public class FragmentPartsOfBody extends Fragment {
     private RecyclerView rvListOfEx;
     private AllPartOfBody allPartOfBody;
 
-    /*public static FragmentPartsOfBody newInstance(AllPartOfBody allPartOfBody){
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(TAG_OF_FRAGMENT, allPartOfBody);
-        FragmentPartsOfBody fragmentPartsOfBody = new FragmentPartsOfBody();
-        fragmentPartsOfBody.setArguments(bundle);
-        return fragmentPartsOfBody;
-    }*/
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.ex_fragment_exercises, container, false);
         rvListOfEx = view.findViewById(R.id.ex_rvListOfEx);
-        //allPartOfBody = (AllPartOfBody) getArguments().getSerializable(TAG_OF_FRAGMENT);
         allPartOfBody = ObjectHolder.getGlobalObject().getExercises();
         rvListOfEx.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvListOfEx.setAdapter(new ExAdapter((ArrayList<PartOfBody>) allPartOfBody.getPartOfBodyList()));
@@ -61,7 +52,6 @@ public class FragmentPartsOfBody extends Fragment {
         public ExViewHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.ex_item_fragment_part_of_body_list_main_screen, viewGroup, false));
             tvNameOfPartOfBody = itemView.findViewById(R.id.ex_tvNamePartOfBodyHomeList);
-            tvNameOfPartOfBody.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "asProgramMainScreen.ttf"));
             ivBackground = itemView.findViewById(R.id.ex_ivBackgroundItemListOfPartOfBodyMainScreen);
             itemView.setOnClickListener(this);
         }

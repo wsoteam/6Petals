@@ -107,6 +107,8 @@
         app:layout_anchor="@id/ex_mainappbar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ex_ic_fab_save"
+        app:borderWidth="0dp"
+        android:backgroundTint="@color/purple"
         tools:ignore="VectorDrawableCompat" />
 
 

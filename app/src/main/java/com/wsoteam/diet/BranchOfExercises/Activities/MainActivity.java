@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -45,16 +46,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int COUNT_OF_RUN = 0;
-    private String TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG = "COUNT_OF_RUN";
-    private SharedPreferences countOfRun;
     private ImageView loadingBar;
     private Animation animationRotate;
 
-
-    private SharedPreferences numberOfRun;
-    private static final String TAG_COUNT_OF_RUN = "TAG_COUNT_OF_RUN";
-    private final int DEFAULT_COUNT_OF_RUNS = 0;
+    private final String WorkOutApplicationId = "AIzaSyAVcr1U0xbS3Bf0DzWOt7tzdLpxB-nP1yw";
+    private final String WorkOutApiKey = "1:584294646007:android:9e20405dfc5e7aea";
+    private final String WorkOutDatabaseUrl = "https://workout-f67d0.firebaseio.com/";
+    private boolean isLoadedEarly = false;
+    private final String firebaseAppName = "secondary";
 
 
     private ArrayList<Fragment> listOfFragments;
@@ -87,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex_activity_main);
 
-        MobileAds.initialize(this, getResources().getString(R.string.admob_id));
         AdRequest request = new AdRequest.Builder().build();
 
         loadingBar = findViewById(R.id.ex_ivLoadingCircle);
@@ -117,29 +115,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        //WorkWithFB.fill();
         loadDataFromFireBase();
 
     }
 
     private void loadDataFromFireBase() {
 
+        //check early load
+        for (int i = 0; i < FirebaseApp.getApps(this).size(); i++) {
+            if (FirebaseApp.getApps(this).get(i).getName().equals(firebaseAppName)) {
+                isLoadedEarly = true;
+            }
+        }
 
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setApplicationId(Config.WorkOutApplicationId) // Required for Analytics.
-                .setApiKey(Config.WorkOutApiKey) // Required for Auth.
-                .setDatabaseUrl(Config.WorkOutDatabaseUrl) // Required for RTDB.
-                .build();
-        FirebaseApp.initializeApp(this /* Context */, options, "secondary");
+        if (!isLoadedEarly) {
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setApplicationId(WorkOutApplicationId)
+                    .setApiKey(WorkOutApiKey)
+                    .setDatabaseUrl(WorkOutDatabaseUrl)
+                    .build();
+            FirebaseApp.initializeApp(this, options, firebaseAppName);
+        }
 
-        // Retrieve my other app.
-        FirebaseApp app = FirebaseApp.getInstance("secondary");
-// Get the database for the other app.
+        FirebaseApp app = FirebaseApp.getInstance(firebaseAppName);
         FirebaseDatabase database = FirebaseDatabase.getInstance(app);
 
-//        -----------------------------------------------------------------------------------------
-
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(Config.EXERCISES_NAME_OF_ENTITY_FOR_DB);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -165,9 +165,6 @@ public class MainActivity extends AppCompatActivity {
                 });
                 loadingBar.clearAnimation();
                 loadingBar.setVisibility(View.GONE);
-                additionOneToSharedPreference();
-//                checkFirstRun();
-                //showGDPRIfFirstRun();
             }
 
             @Override
@@ -192,82 +189,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
-    }
-
-    private void checkFirstRun() {
-        if (countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) == 3) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            View view = getLayoutInflater().inflate(R.layout.ex_grade_alert_dialog, null);
-            builder.setView(view);
-            builder.setNeutralButton(R.string.Late, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    countOfRun = getPreferences(MODE_PRIVATE);
-                    SharedPreferences.Editor editor = countOfRun.edit();
-                    editor.putInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, 0);
-                    editor.commit();
-                }
-            });
-            builder.setPositiveButton(R.string.Grade, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("market://details?id=" + MainActivity.this.getPackageName()));
-                    startActivity(intent);
-                }
-            });
-            builder.setNegativeButton(R.string.Never, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-
-            builder.show();
-        }
-    }
-
-    private void additionOneToSharedPreference() {
-        countOfRun = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = countOfRun.edit();
-        editor.putInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) + 1);
-        editor.commit();
-
-    }
-
-
-    public void showGDPRIfFirstRun() {
-        numberOfRun = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = numberOfRun.edit();
-        editor.putInt(TAG_COUNT_OF_RUN, numberOfRun.getInt(TAG_COUNT_OF_RUN, DEFAULT_COUNT_OF_RUNS) + 1);
-        editor.commit();
-
-
-        if (numberOfRun.getInt(TAG_COUNT_OF_RUN, DEFAULT_COUNT_OF_RUNS) == 1) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.title_gdpr);
-            builder.setMessage(R.string.body_gdpr);
-            builder.setNeutralButton(R.string.yes_gdpr, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    numberOfRun = getPreferences(MODE_PRIVATE);
-                    SharedPreferences.Editor editor = numberOfRun.edit();
-                    editor.putInt(TAG_COUNT_OF_RUN, 2);
-                    editor.commit();
-                }
-            });
-            builder.setPositiveButton(R.string.open_gdpr, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(getResources().getString(R.string.url_gdpr)));
-                    startActivity(intent);
-                }
-            });
-
-
-            builder.show();
-        }
     }
 
 
