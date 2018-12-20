@@ -11,9 +11,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.QUICKBOOT_POWERON" />
-
 
 
     <application
@@ -88,19 +87,23 @@
             android:name=".BranchOfNotifications.ActivityDetailNotification"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".BranchOfNotifications.ActivityListOfNotifications"
-            android:theme="@style/NotificationListActivity"/>
+        <activity
+            android:name=".BranchOfNotifications.ActivityListOfNotifications"
+            android:theme="@style/NotificationListActivity" />
 
-        <activity android:name=".OtherActivity.ActivityAboutSetingsNotifications"/>
+        <activity android:name=".OtherActivity.ActivityAboutSetingsNotifications" />
 
-        <activity android:name=".BranchOfCalculating.ActivityCalculatorSPK"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".BranchOfCalculating.ActivityCalculatorSPK"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".BranchOfNews.ActivityListOfNews"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".BranchOfNews.ActivityListOfNews"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".BranchOfNews.ActivityDetailPhoto"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".BranchOfNews.ActivityDetailPhoto"
+            android:theme="@style/AppTheme.NoActionBar" />
 
 
         <activity
@@ -108,25 +111,37 @@
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
 
-        <activity android:name=".BranchOfExercises.Activities.MainActivity"
+        <activity
+            android:name=".BranchOfExercises.Activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
-        <activity android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityListOfExGroups"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityListOfEx"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityExDetail"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityListOfExGroups"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityListOfEx"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityExDetail"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".BranchOfExercises.ActivitiesProgramm.ActivityListOfTraining"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".BranchOfExercises.ActivitiesProgramm.ActivityWithTiles"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".BranchOfExercises.ActivitiesProgramm.ActivityListOfTraining"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BranchOfExercises.ActivitiesProgramm.ActivityWithTiles"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".BranchOfExercises.ActivitiesArticles.ActivityDetailAcrticles"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".BranchOfExercises.ActivitiesArticles.ActivityDetailAcrticles"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
+        <activity
+            android:name=".BranchOfAnalyzer.ActivityListAndSearch"
+            android:theme="@style/NotificationListActivity" />
 
         <receiver
             android:name=".Services.AlarmManagerBR"
@@ -136,7 +151,7 @@
         <receiver android:name=".Services.RestartReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
     </application>

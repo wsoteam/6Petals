@@ -40,6 +40,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.wsoteam.diet.BranchOfAnalyzer.ActivityListAndSearch;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
 import com.wsoteam.diet.BranchOfDiary.ActivityListOfDiary;
@@ -305,7 +306,7 @@ public class MainActivity extends AppCompatActivity
                     intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
                     break;
                 case 6:
-                    intent = new Intent(MainActivity.this, ActivityEmpty.class);
+                    intent = new Intent(MainActivity.this, ActivityListAndSearch.class);
                     break;
                 case 7:
                     intent = new Intent(MainActivity.this, com.wsoteam.diet.BranchOfExercises.Activities.MainActivity.class);
