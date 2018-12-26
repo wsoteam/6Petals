@@ -29,6 +29,8 @@ import com.squareup.moshi.Moshi;
 import com.wsoteam.diet.POJOFoodItem.DbAnalyzer;
 import com.wsoteam.diet.POJOFoodItem.FoodConnect;
 import com.wsoteam.diet.POJOFoodItem.FoodItem;
+import com.wsoteam.diet.POJOFoodItem.ListOfFoodItem;
+import com.wsoteam.diet.POJOFoodItem.ListOfGroupsOfFood;
 import com.wsoteam.diet.POJOS.ItemOfGlobalBase;
 import com.wsoteam.diet.POJOS.ListOfGroupsFood;
 import com.wsoteam.diet.R;
@@ -36,6 +38,7 @@ import com.wsoteam.diet.R;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityListAndSearch extends AppCompatActivity {
     private RecyclerView rvListOfSearchResponse;
@@ -101,18 +104,12 @@ public class ActivityListAndSearch extends AppCompatActivity {
 
     }
 
-    private ArrayList<ItemOfGlobalBase> fillItemsList(ListOfGroupsFood listOfGroupsFood) {
-        ItemOfGlobalBase itemForGroupNaming;
-        ArrayList<ItemOfGlobalBase> items = new ArrayList<>();
-        for (int i = 0; i < listOfGroupsFood.getListOfGroupsOfFood().size(); i++) {
-            /*itemForGroupNaming = new ItemOfGlobalBase(listOfGroupsFood.getListOfGroupsOfFood().get(i).getName(),
-                    "0", "0", "0", "0",
-                    "0", "0", "0","0");*/
-
-            /*items.add(itemForGroupNaming);*/
-            ItemOfGlobalBase itemOfGlobalBaseForWriting;
-            for (int j = 0; j < listOfGroupsFood.getListOfGroupsOfFood().get(i).getListOfFoodItems().size(); j++) {
-                itemOfGlobalBaseForWriting = listOfGroupsFood.getListOfGroupsOfFood().get(i).getListOfFoodItems().get(j);
+    private ArrayList<ListOfFoodItem> fillItemsList(List<ListOfGroupsOfFood> listOfGroups) {
+        ArrayList<ListOfFoodItem> items = new ArrayList<>();
+        for (int i = 0; i < listOfGroups.size(); i++) {
+            ListOfFoodItem itemOfGlobalBaseForWriting;
+            for (int j = 0; j < listOfGroups.get(i).getListOfFoodItems().size(); j++) {
+                itemOfGlobalBaseForWriting = listOfGroups.get(i).getListOfFoodItems().get(j);
                 items.add(itemOfGlobalBaseForWriting);
             }
 
@@ -136,7 +133,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
             ivMainImage = itemView.findViewById(R.id.ivImage);
         }
 
-        public void bind(ItemOfGlobalBase itemOfGlobalBase, boolean isItemForSeparator) {
+        public void bind(ListOfFoodItem itemOfGlobalBase, boolean isItemForSeparator) {
             if (isItemForSeparator) {
                 tvCal.setVisibility(View.GONE);
                 tvProt.setVisibility(View.GONE);
@@ -150,16 +147,16 @@ public class ActivityListAndSearch extends AppCompatActivity {
                 tvFat.setText(itemOfGlobalBase.getFat());
                 tvCarbo.setText(itemOfGlobalBase.getCarbohydrates());
                 tvNumber.setText(String.valueOf(getAdapterPosition()));
-                Glide.with(ActivityListAndSearch.this).load(itemOfGlobalBase.getUrl_of_images()).into(ivMainImage);
+                Glide.with(ActivityListAndSearch.this).load(itemOfGlobalBase.getUrlOfImages()).into(ivMainImage);
             }
 
         }
     }
 
     public class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
-        ArrayList<ItemOfGlobalBase> itemsOfGlobalBases;
+        ArrayList<ListOfFoodItem> itemsOfGlobalBases;
 
-        public ItemAdapter(ArrayList<ItemOfGlobalBase> itemsOfGlobalBases) {
+        public ItemAdapter(ArrayList<ListOfFoodItem> itemsOfGlobalBases) {
             this.itemsOfGlobalBases = itemsOfGlobalBases;
         }
 
@@ -172,7 +169,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
-            if (itemsOfGlobalBases.get(position).getUrl_of_images().equals("0")) {
+            if (itemsOfGlobalBases.get(position).getUrlOfImages().equals("0")) {
                 holder.bind(itemsOfGlobalBases.get(position), true);
             } else {
                 holder.bind(itemsOfGlobalBases.get(position), false);
@@ -189,17 +186,19 @@ public class ActivityListAndSearch extends AppCompatActivity {
     private class AsyncLoadFoodList extends AsyncTask<Void, Void, DbAnalyzer> {
         @Override
         protected void onPostExecute(DbAnalyzer dbAnalyzer) {
-
+            rvListOfSearchResponse.setLayoutManager(new LinearLayoutManager(ActivityListAndSearch.this));
+            rvListOfSearchResponse.setAdapter(new ItemAdapter
+                    (fillItemsList(dbAnalyzer.getListOfGroupsOfFood())));
+            ivLoadingCircle.clearAnimation();
+            ivLoadingCircle.setVisibility(View.GONE);
         }
 
         @Override
         protected DbAnalyzer doInBackground(Void... voids) {
-            Log.e("LOL", "ASync start");
             String json;
             Moshi moshi = new Moshi.Builder().build();
             JsonAdapter<FoodConnect> jsonAdapter = moshi.adapter(FoodConnect.class);
             try {
-                Log.e("LOL", "ASync try");
                 InputStream inputStream = getAssets().open("food_list.json");
                 int size = inputStream.available();
                 byte[] buffer = new byte[size];
@@ -208,10 +207,9 @@ public class ActivityListAndSearch extends AppCompatActivity {
                 inputStream.close();
                 json = new String(buffer, "UTF-8");
 
-                FoodConnect dbAnalyzer = jsonAdapter.fromJson(json);
-                Log.e("LOL", "dbAna");
-                Log.e("LOL", "________" + String.valueOf(dbAnalyzer.getDbAnalyzer().getListOfGroupsOfFood().size()));
+                FoodConnect foodConnect = jsonAdapter.fromJson(json);
 
+                return foodConnect.getDbAnalyzer();
             } catch (Exception e) {
 
             }
