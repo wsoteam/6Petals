@@ -1,5 +1,6 @@
 package com.wsoteam.diet.BranchOfAnalyzer;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,10 +24,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+import com.wsoteam.diet.POJOFoodItem.DbAnalyzer;
+import com.wsoteam.diet.POJOFoodItem.FoodConnect;
+import com.wsoteam.diet.POJOFoodItem.FoodItem;
 import com.wsoteam.diet.POJOS.ItemOfGlobalBase;
 import com.wsoteam.diet.POJOS.ListOfGroupsFood;
 import com.wsoteam.diet.R;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class ActivityListAndSearch extends AppCompatActivity {
@@ -52,9 +60,10 @@ public class ActivityListAndSearch extends AppCompatActivity {
 
         animationRotate = AnimationUtils.loadAnimation(this, R.anim.animation_rotate);
         ivLoadingCircle.startAnimation(animationRotate);
+        AsyncLoadFoodList asyncLoadFoodList = new AsyncLoadFoodList();
+        asyncLoadFoodList.execute();
 
-
-        for (int i = 0; i < FirebaseApp.getApps(this).size(); i++) {
+        /*for (int i = 0; i < FirebaseApp.getApps(this).size(); i++) {
             if (FirebaseApp.getApps(this).get(i).getName().equals(FIREBASE_APP_NAME)) {
                 isLoadedEarly = true;
             }
@@ -87,7 +96,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
 
     }
@@ -128,13 +137,13 @@ public class ActivityListAndSearch extends AppCompatActivity {
         }
 
         public void bind(ItemOfGlobalBase itemOfGlobalBase, boolean isItemForSeparator) {
-            if (isItemForSeparator){
+            if (isItemForSeparator) {
                 tvCal.setVisibility(View.GONE);
                 tvProt.setVisibility(View.GONE);
                 tvFat.setVisibility(View.GONE);
                 tvCarbo.setVisibility(View.GONE);
                 tvName.setText(itemOfGlobalBase.getName());
-            }else {
+            } else {
                 tvName.setText(itemOfGlobalBase.getName());
                 tvCal.setText(itemOfGlobalBase.getCalories());
                 tvProt.setText(itemOfGlobalBase.getProtein());
@@ -163,9 +172,9 @@ public class ActivityListAndSearch extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
-            if (itemsOfGlobalBases.get(position).getUrl_of_images().equals("0")){
+            if (itemsOfGlobalBases.get(position).getUrl_of_images().equals("0")) {
                 holder.bind(itemsOfGlobalBases.get(position), true);
-            }else {
+            } else {
                 holder.bind(itemsOfGlobalBases.get(position), false);
             }
 
@@ -174,6 +183,39 @@ public class ActivityListAndSearch extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return itemsOfGlobalBases.size();
+        }
+    }
+
+    private class AsyncLoadFoodList extends AsyncTask<Void, Void, DbAnalyzer> {
+        @Override
+        protected void onPostExecute(DbAnalyzer dbAnalyzer) {
+
+        }
+
+        @Override
+        protected DbAnalyzer doInBackground(Void... voids) {
+            Log.e("LOL", "ASync start");
+            String json;
+            Moshi moshi = new Moshi.Builder().build();
+            JsonAdapter<FoodConnect> jsonAdapter = moshi.adapter(FoodConnect.class);
+            try {
+                Log.e("LOL", "ASync try");
+                InputStream inputStream = getAssets().open("food_list.json");
+                int size = inputStream.available();
+                byte[] buffer = new byte[size];
+                Log.e("LOL", String.valueOf(size));
+                inputStream.read(buffer);
+                inputStream.close();
+                json = new String(buffer, "UTF-8");
+
+                FoodConnect dbAnalyzer = jsonAdapter.fromJson(json);
+                Log.e("LOL", "dbAna");
+                Log.e("LOL", "________" + String.valueOf(dbAnalyzer.getDbAnalyzer().getListOfGroupsOfFood().size()));
+
+            } catch (Exception e) {
+
+            }
+            return null;
         }
     }
 }

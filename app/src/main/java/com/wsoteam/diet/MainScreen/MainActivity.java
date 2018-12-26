@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity
                     intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
                     break;
                 case 6:
-                    intent = new Intent(MainActivity.this, ActivityEmpty.class);
+                    intent = new Intent(MainActivity.this, ActivityListAndSearch.class);
                     break;
                 case 7:
                     intent = new Intent(MainActivity.this, ActivityEmpty.class);
