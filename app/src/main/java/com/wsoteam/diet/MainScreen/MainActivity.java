@@ -107,15 +107,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.ad_point:
-                if (mRewardedVideoAd.isLoaded()) {
-                    mRewardedVideoAd.show();
-                    loadAd();
-                    YandexMetrica.reportEvent("Открыта видео-реклама: Анимационная кнопка");
-                }
-                break;
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -306,10 +297,10 @@ public class MainActivity extends AppCompatActivity
                     intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
                     break;
                 case 6:
-                    intent = new Intent(MainActivity.this, ActivityListAndSearch.class);
+                    intent = new Intent(MainActivity.this, ActivityEmpty.class);
                     break;
                 case 7:
-                    intent = new Intent(MainActivity.this, com.wsoteam.diet.BranchOfExercises.Activities.MainActivity.class);
+                    intent = new Intent(MainActivity.this, ActivityEmpty.class);
                     break;
             }
             startActivity(intent);
@@ -320,8 +311,7 @@ public class MainActivity extends AppCompatActivity
             tvProperties.setText(properties);
             Glide.with(MainActivity.this).load(image).into(ivImage);
             if (getAdapterPosition() == 4 && isAccessibleCountry
-                    || getAdapterPosition() == 5
-                    || getAdapterPosition() == 7) {
+                    || getAdapterPosition() == 5) {
                 ivIsOpen.setVisibility(View.VISIBLE);
             }
         }

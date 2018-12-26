@@ -155,7 +155,6 @@ public class ActivityListOfNews extends AppCompatActivity {
                                     YandexMetrica.reportEvent("Украинский доступ, открыт резервный экран");
                                 } else {
                                     updateUI();
-                                    YandexMetrica.reportEvent("Открыта лента");
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
