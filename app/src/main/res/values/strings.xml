@@ -270,5 +270,9 @@
     <string name="search_of_food">Поиск продукта питания</string>
     <string name="for_100_g_of_product"> Ккал на 100 г продукта</string>
     <string name="for_100_g">Ккал на 100 г</string>
+    <string name="fat_detail">Жиры -</string>
+    <string name="gramm">г</string>
+    <string name="carbohydrates_detail">Углеводы -</string>
+    <string name="protein_detail">Белки -</string>
 
 </resources>
