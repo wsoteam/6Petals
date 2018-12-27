@@ -139,9 +139,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
 
+
         <activity
             android:name=".BranchOfAnalyzer.ActivityListAndSearch"
             android:theme="@style/NotificationListActivity" />
+        <activity
+            android:name=".BranchOfAnalyzer.ActivityDetailOfFood"
+            android:theme="@style/NotificationListActivity" />
+
 
         <receiver
             android:name=".Services.AlarmManagerBR"

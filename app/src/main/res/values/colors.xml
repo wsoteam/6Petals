@@ -19,7 +19,15 @@
     <color name="orange">#fb651a</color>
     <color name="purple">#961afb</color>
     <color name="gray">#3c3c3c</color>
+    <color name="light_gray">#8f8f8f</color>
     <color name="yellow">#f9e72a</color>
+    <color name="images_filter">#e17d218f</color>
+
+
+
+    <color name="red_progress">#fa3939</color>
+    <color name="yellow_progress">#fc6237</color>
+    <color name="green_progress">#2adbe1</color>
 
 
     <color name="uninated_nations_blue">#fa6b44</color>

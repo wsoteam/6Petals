@@ -267,5 +267,8 @@
     <string name="ban2_id" translatable="false">ca-app-pub-3050564412171997/5103473829</string>
     <string name="ban3_id" translatable="false">ca-app-pub-3050564412171997/5103473829</string>
     <string name="inter" translatable="false">ca-app-pub-3050564412171997/5945782205</string>
+    <string name="search_of_food">Поиск продукта питания</string>
+    <string name="for_100_g_of_product"> Ккал на 100 г продукта</string>
+    <string name="for_100_g">Ккал на 100 г</string>
 
 </resources>

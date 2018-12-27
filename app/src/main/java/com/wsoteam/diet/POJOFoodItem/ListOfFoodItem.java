@@ -3,7 +3,9 @@ package com.wsoteam.diet.POJOFoodItem;
 
 import com.squareup.moshi.Json;
 
-public class ListOfFoodItem {
+import java.io.Serializable;
+
+public class ListOfFoodItem implements Serializable {
 
     @Json(name = "calories")
     private String calories;
