@@ -36,7 +36,8 @@ public class ActivityListAndSearch extends AppCompatActivity {
     private ArrayList<ListOfFoodItem> listOfGroupsFoods = new ArrayList<>();
     private ArrayList<ListOfFoodItem> tempListOfGroupsFoods = new ArrayList<>();
     private EditText edtSearchField;
-    private ImageView ivCancel;
+    private ImageView ivCancel, ivEmptyImage;
+    private TextView tvEmptyText;
 
 
     @Override
@@ -47,6 +48,8 @@ public class ActivityListAndSearch extends AppCompatActivity {
         ivCancel = findViewById(R.id.ibActivityListAndSearchCollapsingCancelButton);
         rvListOfSearchResponse = findViewById(R.id.rvListOfSearchResponse);
         edtSearchField = findViewById(R.id.edtActivityListAndSearchCollapsingSearchField);
+        ivEmptyImage = findViewById(R.id.ivActivityListAndSearchEmptyImage);
+        tvEmptyText = findViewById(R.id.tvActivityListAndSearchEmptyText);
         rvListOfSearchResponse.setLayoutManager(new LinearLayoutManager(ActivityListAndSearch.this));
         AsyncLoadFoodList asyncLoadFoodList = new AsyncLoadFoodList();
         asyncLoadFoodList.execute();
@@ -59,6 +62,11 @@ public class ActivityListAndSearch extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if (ivEmptyImage.getVisibility() == View.VISIBLE){
+                    ivEmptyImage.setVisibility(View.GONE);
+                    tvEmptyText.setVisibility(View.GONE);
+                }
 
                 tempListOfGroupsFoods = new ArrayList<>();
                 for (int j = 0; j < listOfGroupsFoods.size(); j++) {
