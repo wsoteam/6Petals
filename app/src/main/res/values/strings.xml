@@ -274,5 +274,6 @@
     <string name="gramm">г</string>
     <string name="carbohydrates_detail">Углеводы -</string>
     <string name="protein_detail">Белки -</string>
+    <string name="kcal">Ккал</string>
 
 </resources>
