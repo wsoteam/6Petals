@@ -17,7 +17,8 @@ import com.wsoteam.diet.R;
 public class ActivityDetailOfFood extends AppCompatActivity {
     private TextView tvTitle, tvKcal,
             tvProtein, tvFat, tvCarbohydrates,
-            tvCalculateFat, tvCalculateProtein, tvCalculateCarbohydrates, tvCalculateKcal;
+            tvCalculateFat, tvCalculateProtein, tvCalculateCarbohydrates, tvCalculateKcal
+            , tvProperties;
     private DonutProgress pbCarbohydrates, pbFat, pbProtein;
     private EditText edtWeight;
 
@@ -41,6 +42,8 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         tvCalculateKcal = findViewById(R.id.tvActivityDetailOfFoodCalculateKcal);
         tvCalculateProtein = findViewById(R.id.tvActivityDetailOfFoodCalculateProtein);
 
+        tvProperties = findViewById(R.id.tvActivityDetailOfFoodProperties);
+
         edtWeight = findViewById(R.id.edtActivityDetailOfFoodPortion);
 
         pbCarbohydrates = findViewById(R.id.pbActivityDetailOfFoodCarbo);
@@ -53,6 +56,18 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         tvFat.setText(getString(R.string.fat_detail) + " " + foodItem.getFat() + "" + getString(R.string.gramm));
         tvProtein.setText(getString(R.string.protein_detail) + " " + foodItem.getProtein() + " " + getString(R.string.gramm));
         tvCarbohydrates.setText(getString(R.string.carbohydrates_detail) + " " + foodItem.getCarbohydrates() + " " + getString(R.string.gramm));
+
+        if (!foodItem.getComposition().equals(".")){
+            tvProperties.setText(foodItem.getComposition());
+        }
+
+        if (!foodItem.getDescription().equals(".")){
+            tvProperties.setText(tvProperties.getText().toString() + "\n" + foodItem.getDescription());
+        }
+
+        if (!foodItem.getProperties().equals(".")){
+            tvProperties.setText(tvProperties.getText().toString() + "\n" + foodItem.getProperties());
+        }
 
         calculateNumbersForProgressBars();
 
