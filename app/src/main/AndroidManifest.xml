@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.QUICKBOOT_POWERON" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
 
     <application
@@ -145,6 +146,10 @@
             android:theme="@style/NotificationListActivity" />
         <activity
             android:name=".BranchOfAnalyzer.ActivityDetailOfFood"
+            android:theme="@style/NotificationListActivity" />
+
+        <activity
+            android:name=".BranchOfBilling.ActivityPresentation"
             android:theme="@style/NotificationListActivity" />
 
 

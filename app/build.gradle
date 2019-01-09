@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.wild.diet"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 9
         versionName "1.8"
@@ -67,6 +67,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation files('StartADLib-1.0.1.jar')
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
+    implementation 'com.android.billingclient:billing:1.2'
 
 }
 
