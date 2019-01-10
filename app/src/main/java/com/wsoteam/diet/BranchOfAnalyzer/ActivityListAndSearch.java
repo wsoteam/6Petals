@@ -23,6 +23,7 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.wsoteam.diet.POJOFoodItem.DbAnalyzer;
 import com.wsoteam.diet.POJOFoodItem.FoodConnect;
+import com.wsoteam.diet.POJOFoodItem.FoodItem;
 import com.wsoteam.diet.POJOFoodItem.ListOfFoodItem;
 import com.wsoteam.diet.POJOFoodItem.ListOfGroupsOfFood;
 import com.wsoteam.diet.R;
@@ -33,11 +34,12 @@ import java.util.List;
 
 public class ActivityListAndSearch extends AppCompatActivity {
     private RecyclerView rvListOfSearchResponse;
-    private ArrayList<ListOfFoodItem> listOfGroupsFoods = new ArrayList<>();
-    private ArrayList<ListOfFoodItem> tempListOfGroupsFoods = new ArrayList<>();
+    private ArrayList<FoodItem> listOfGroupsFoods = new ArrayList<>();
+    private ArrayList<FoodItem> tempListOfGroupsFoods = new ArrayList<>();
     private EditText edtSearchField;
     private ImageView ivCancel, ivEmptyImage;
     private TextView tvEmptyText;
+    private final int HARD_KCAL = 500;
 
 
     @Override
@@ -63,14 +65,16 @@ public class ActivityListAndSearch extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if (ivEmptyImage.getVisibility() == View.VISIBLE){
+                if (ivEmptyImage.getVisibility() == View.VISIBLE) {
                     ivEmptyImage.setVisibility(View.GONE);
                     tvEmptyText.setVisibility(View.GONE);
                 }
 
                 tempListOfGroupsFoods = new ArrayList<>();
                 for (int j = 0; j < listOfGroupsFoods.size(); j++) {
-                    if (listOfGroupsFoods.get(j).getName().contains(charSequence)) {
+                    if (listOfGroupsFoods.get(j).getName().contains(charSequence)
+                            || (listOfGroupsFoods.get(j).getName()).contains(charSequence.toString().substring(0, 1).toUpperCase()
+                            + charSequence.toString().substring(1))) {
                         tempListOfGroupsFoods.add(listOfGroupsFoods.get(j));
                     }
                 }
@@ -94,12 +98,21 @@ public class ActivityListAndSearch extends AppCompatActivity {
 
     }
 
-    private ArrayList<ListOfFoodItem> fillItemsList(List<ListOfGroupsOfFood> listOfGroups) {
-        ArrayList<ListOfFoodItem> items = new ArrayList<>();
+    private ArrayList<FoodItem> fillItemsList(List<ListOfGroupsOfFood> listOfGroups) {
+        ArrayList<FoodItem> items = new ArrayList<>();
         for (int i = 0; i < listOfGroups.size(); i++) {
-            ListOfFoodItem itemOfGlobalBaseForWriting;
+            FoodItem itemOfGlobalBaseForWriting;
             for (int j = 0; j < listOfGroups.get(i).getListOfFoodItems().size(); j++) {
-                itemOfGlobalBaseForWriting = listOfGroups.get(i).getListOfFoodItems().get(j);
+                itemOfGlobalBaseForWriting = new FoodItem(listOfGroups.get(i).getListOfFoodItems().get(j).getCalories()
+                        , listOfGroups.get(i).getListOfFoodItems().get(j).getCarbohydrates()
+                        , listOfGroups.get(i).getListOfFoodItems().get(j).getComposition()
+                        , listOfGroups.get(i).getListOfFoodItems().get(j).getDescription()
+                        , listOfGroups.get(i).getListOfFoodItems().get(j).getFat()
+                        , listOfGroups.get(i).getListOfFoodItems().get(j).getName()
+                        , listOfGroups.get(i).getListOfFoodItems().get(j).getProperties()
+                        , listOfGroups.get(i).getListOfFoodItems().get(j).getProtein()
+                        , listOfGroups.get(i).getListOfFoodItems().get(j).getUrlOfImages()
+                        , listOfGroups.get(i).getName());
                 items.add(itemOfGlobalBaseForWriting);
             }
 
@@ -108,15 +121,16 @@ public class ActivityListAndSearch extends AppCompatActivity {
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView tvName, tvCal;
-        private ImageView ivMainImage;
+        private TextView tvName, tvCal, tvNameOfGroup;
+        private ImageView ivMainImage, ivHardKcal;
 
         public ItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_rv_list_of_search_response, viewGroup, false));
             tvName = itemView.findViewById(R.id.tvName);
             tvCal = itemView.findViewById(R.id.tvCal);
             ivMainImage = itemView.findViewById(R.id.ivImage);
-
+            tvNameOfGroup = itemView.findViewById(R.id.tvNameOfGroup);
+            ivHardKcal = itemView.findViewById(R.id.ivHardKcal);
             itemView.setOnClickListener(this);
         }
 
@@ -127,18 +141,23 @@ public class ActivityListAndSearch extends AppCompatActivity {
             startActivity(intent);
         }
 
-        public void bind(ListOfFoodItem itemOfGlobalBase, boolean isItemForSeparator) {
+        public void bind(FoodItem itemOfGlobalBase, boolean isItemForSeparator) {
+            ivHardKcal.setVisibility(View.GONE);
             tvName.setText(itemOfGlobalBase.getName());
             tvCal.setText(itemOfGlobalBase.getCalories() + " " + getString(R.string.for_100_g_of_product));
             Glide.with(ActivityListAndSearch.this).load(itemOfGlobalBase.getUrlOfImages()).into(ivMainImage);
+            tvNameOfGroup.setText(itemOfGlobalBase.getNameOfGroup());
+            if (Integer.parseInt(itemOfGlobalBase.getCalories()) > HARD_KCAL) {
+                ivHardKcal.setVisibility(View.VISIBLE);
+            }
 
         }
     }
 
     public class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
-        ArrayList<ListOfFoodItem> itemsOfGlobalBases;
+        ArrayList<FoodItem> itemsOfGlobalBases;
 
-        public ItemAdapter(ArrayList<ListOfFoodItem> itemsOfGlobalBases) {
+        public ItemAdapter(ArrayList<FoodItem> itemsOfGlobalBases) {
             this.itemsOfGlobalBases = itemsOfGlobalBases;
         }
 

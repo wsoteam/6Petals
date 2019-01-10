@@ -1,52 +1,26 @@
-
 package com.wsoteam.diet.POJOFoodItem;
 
 import com.squareup.moshi.Json;
 
 import java.io.Serializable;
 
-public class ListOfFoodItem implements Serializable {
+public class FoodItem implements Serializable {
 
-    @Json(name = "calories")
     private String calories;
-    @Json(name = "carbohydrates")
     private String carbohydrates;
-    @Json(name = "composition")
     private String composition;
-    @Json(name = "description")
     private String description;
-    @Json(name = "fat")
     private String fat;
-    @Json(name = "name")
     private String name;
-    @Json(name = "properties")
     private String properties;
-    @Json(name = "protein")
     private String protein;
-    @Json(name = "url_of_images")
     private String urlOfImages;
+    private String nameOfGroup;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public ListOfFoodItem() {
+    public FoodItem() {
     }
 
-    /**
-     * 
-     * @param protein
-     * @param description
-     * @param name
-     * @param fat
-     * @param composition
-     * @param carbohydrates
-     * @param calories
-     * @param properties
-     * @param urlOfImages
-     */
-    public ListOfFoodItem(String calories, String carbohydrates, String composition, String description, String fat, String name, String properties, String protein, String urlOfImages) {
-        super();
+    public FoodItem(String calories, String carbohydrates, String composition, String description, String fat, String name, String properties, String protein, String urlOfImages, String nameOfGroup) {
         this.calories = calories;
         this.carbohydrates = carbohydrates;
         this.composition = composition;
@@ -56,7 +30,9 @@ public class ListOfFoodItem implements Serializable {
         this.properties = properties;
         this.protein = protein;
         this.urlOfImages = urlOfImages;
+        this.nameOfGroup = nameOfGroup;
     }
+
     public String getCalories() {
         return calories;
     }
@@ -129,4 +105,11 @@ public class ListOfFoodItem implements Serializable {
         this.urlOfImages = urlOfImages;
     }
 
+    public String getNameOfGroup() {
+        return nameOfGroup;
+    }
+
+    public void setNameOfGroup(String nameOfGroup) {
+        this.nameOfGroup = nameOfGroup;
+    }
 }

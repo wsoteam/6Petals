@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.wsoteam.diet.POJOFoodItem.FoodItem;
 import com.wsoteam.diet.POJOFoodItem.ListOfFoodItem;
 import com.wsoteam.diet.R;
 
@@ -22,14 +23,14 @@ public class ActivityDetailOfFood extends AppCompatActivity {
     private DonutProgress pbCarbohydrates, pbFat, pbProtein;
     private EditText edtWeight;
 
-    private ListOfFoodItem foodItem;
+    private FoodItem foodItem;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_of_food);
 
-        foodItem = (ListOfFoodItem) getIntent().getSerializableExtra("ActivityDetailOfFood");
+        foodItem = (FoodItem) getIntent().getSerializableExtra("ActivityDetailOfFood");
 
         tvTitle = findViewById(R.id.tvActivityDetailOfFoodCollapsingTitle);
         tvKcal = findViewById(R.id.tvActivityDetailOfFoodKcal);
