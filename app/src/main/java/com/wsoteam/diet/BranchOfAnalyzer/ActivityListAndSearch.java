@@ -40,6 +40,10 @@ public class ActivityListAndSearch extends AppCompatActivity {
     private ImageView ivCancel, ivEmptyImage;
     private TextView tvEmptyText;
     private final int HARD_KCAL = 500;
+    private DbAnalyzer dbAnalyzerGlobal = new DbAnalyzer();
+    private final String[] arrayOfNamesOfLockGroups = new String[]{"McDonalds", "Колбасные изделия", "Кондитерские изделия"
+            , "Крупы и каши", "Мука и мучные изделия", "Напитки алкогольные", "Рыба и морепродукты"
+            , "Сыры и творог", "Торты", "Хлебобулочные изделия"};
 
 
     @Override
@@ -112,7 +116,8 @@ public class ActivityListAndSearch extends AppCompatActivity {
                         , listOfGroups.get(i).getListOfFoodItems().get(j).getProperties()
                         , listOfGroups.get(i).getListOfFoodItems().get(j).getProtein()
                         , listOfGroups.get(i).getListOfFoodItems().get(j).getUrlOfImages()
-                        , listOfGroups.get(i).getName());
+                        , listOfGroups.get(i).getName()
+                        , listOfGroups.get(i).getListOfFoodItems().size());
                 items.add(itemOfGlobalBaseForWriting);
             }
 
@@ -122,7 +127,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
 
     public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvName, tvCal, tvNameOfGroup;
-        private ImageView ivMainImage, ivHardKcal;
+        private ImageView ivMainImage, ivHardKcal, ivLockStatus;
 
         public ItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_rv_list_of_search_response, viewGroup, false));
@@ -131,18 +136,25 @@ public class ActivityListAndSearch extends AppCompatActivity {
             ivMainImage = itemView.findViewById(R.id.ivImage);
             tvNameOfGroup = itemView.findViewById(R.id.tvNameOfGroup);
             ivHardKcal = itemView.findViewById(R.id.ivHardKcal);
+            ivLockStatus = itemView.findViewById(R.id.ivLockStatus);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(ActivityListAndSearch.this, ActivityDetailOfFood.class);
+            /*Intent intent = new Intent(ActivityListAndSearch.this, ActivityDetailOfFood.class);
             intent.putExtra("ActivityDetailOfFood", tempListOfGroupsFoods.get(getAdapterPosition()));
+            startActivity(intent);*/
+
+            Intent intent = new Intent(ActivityListAndSearch.this, ActivityRequestOfWatchADVideo.class);
+            intent.putExtra("ActivityRequestOfWatchADVideo", tempListOfGroupsFoods.get(getAdapterPosition()));
             startActivity(intent);
         }
 
         public void bind(FoodItem itemOfGlobalBase, boolean isItemForSeparator) {
+
             ivHardKcal.setVisibility(View.GONE);
+            ivLockStatus.setVisibility(View.GONE);
             tvName.setText(itemOfGlobalBase.getName());
             tvCal.setText(itemOfGlobalBase.getCalories() + " " + getString(R.string.for_100_g_of_product));
             Glide.with(ActivityListAndSearch.this).load(itemOfGlobalBase.getUrlOfImages()).into(ivMainImage);
@@ -187,6 +199,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
     private class AsyncLoadFoodList extends AsyncTask<Void, Void, DbAnalyzer> {
         @Override
         protected void onPostExecute(DbAnalyzer dbAnalyzer) {
+            dbAnalyzerGlobal = dbAnalyzer;
             listOfGroupsFoods = fillItemsList(dbAnalyzer.getListOfGroupsOfFood());
         }
 

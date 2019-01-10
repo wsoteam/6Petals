@@ -152,6 +152,10 @@
             android:name=".BranchOfBilling.ActivityPresentation"
             android:theme="@style/NotificationListActivity" />
 
+        <activity
+            android:name=".BranchOfAnalyzer.ActivityRequestOfWatchADVideo"
+            android:theme="@style/NotificationListActivity" />
+
 
         <receiver
             android:name=".Services.AlarmManagerBR"

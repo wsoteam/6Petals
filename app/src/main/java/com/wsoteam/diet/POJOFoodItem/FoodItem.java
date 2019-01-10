@@ -16,11 +16,12 @@ public class FoodItem implements Serializable {
     private String protein;
     private String urlOfImages;
     private String nameOfGroup;
+    private int countOfItemsInGroup;
 
     public FoodItem() {
     }
 
-    public FoodItem(String calories, String carbohydrates, String composition, String description, String fat, String name, String properties, String protein, String urlOfImages, String nameOfGroup) {
+    public FoodItem(String calories, String carbohydrates, String composition, String description, String fat, String name, String properties, String protein, String urlOfImages, String nameOfGroup, int countOfItemsInGroup) {
         this.calories = calories;
         this.carbohydrates = carbohydrates;
         this.composition = composition;
@@ -31,6 +32,15 @@ public class FoodItem implements Serializable {
         this.protein = protein;
         this.urlOfImages = urlOfImages;
         this.nameOfGroup = nameOfGroup;
+        this.countOfItemsInGroup = countOfItemsInGroup;
+    }
+
+    public int getCountOfItemsInGroup() {
+        return countOfItemsInGroup;
+    }
+
+    public void setCountOfItemsInGroup(int countOfItemsInGroup) {
+        this.countOfItemsInGroup = countOfItemsInGroup;
     }
 
     public String getCalories() {
