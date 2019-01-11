@@ -2,13 +2,13 @@ package com.wsoteam.diet.POJOFoodItem;
 
 import com.orm.SugarRecord;
 
-public class UnLockBase extends SugarRecord {
+public class LockItemOfFoodBase extends SugarRecord {
     private String nameOfUnLockGroup;
 
-    public UnLockBase() {
+    public LockItemOfFoodBase() {
     }
 
-    public UnLockBase(String nameOfUnLockGroup) {
+    public LockItemOfFoodBase(String nameOfUnLockGroup) {
         this.nameOfUnLockGroup = nameOfUnLockGroup;
     }
 

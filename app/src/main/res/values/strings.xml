@@ -229,6 +229,19 @@
         <item>Самые эффективные комплексы упражнений для похудения</item>
     </string-array>
 
+    <string-array name="lock_groups">
+        <item>McDonalds</item>
+        <item>Колбасные изделия</item>
+        <item>Кондитерские изделия</item>
+        <item>Крупы и каши</item>
+        <item>Мука и мучные изделия</item>
+        <item>Напитки алкогольные</item>
+        <item>Рыба и морепродукты</item>
+        <item>Сыры и творог</item>
+        <item>Торты</item>
+        <item>Хлебобулочные изделия</item>
+    </string-array>
+
 
 
     <!--Exercises-->
@@ -276,5 +289,7 @@
     <string name="protein_detail">Белки -</string>
     <string name="kcal">Ккал</string>
     <string name="group_analyzer">Группа -</string>
+
+
 
 </resources>

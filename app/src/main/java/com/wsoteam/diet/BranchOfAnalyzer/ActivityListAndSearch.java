@@ -1,6 +1,7 @@
 package com.wsoteam.diet.BranchOfAnalyzer;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,8 +25,8 @@ import com.squareup.moshi.Moshi;
 import com.wsoteam.diet.POJOFoodItem.DbAnalyzer;
 import com.wsoteam.diet.POJOFoodItem.FoodConnect;
 import com.wsoteam.diet.POJOFoodItem.FoodItem;
-import com.wsoteam.diet.POJOFoodItem.ListOfFoodItem;
 import com.wsoteam.diet.POJOFoodItem.ListOfGroupsOfFood;
+import com.wsoteam.diet.POJOFoodItem.LockItemOfFoodBase;
 import com.wsoteam.diet.R;
 
 import java.io.InputStream;
@@ -41,15 +42,22 @@ public class ActivityListAndSearch extends AppCompatActivity {
     private TextView tvEmptyText;
     private final int HARD_KCAL = 500;
     private DbAnalyzer dbAnalyzerGlobal = new DbAnalyzer();
-    private final String[] arrayOfNamesOfLockGroups = new String[]{"McDonalds", "Колбасные изделия", "Кондитерские изделия"
-            , "Крупы и каши", "Мука и мучные изделия", "Напитки алкогольные", "Рыба и морепродукты"
-            , "Сыры и творог", "Торты", "Хлебобулочные изделия"};
+    private final String TAG_OF_FIRST_RUN = "ActivityListAndSearchTagOfFirstRun";
+    private SharedPreferences isRunEarly;
+    private List<LockItemOfFoodBase> lockItems = new ArrayList<>();
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_and_search);
+
+        isRunEarly = getPreferences(MODE_PRIVATE);
+        checkLockGroupsList();
 
         ivCancel = findViewById(R.id.ibActivityListAndSearchCollapsingCancelButton);
         rvListOfSearchResponse = findViewById(R.id.rvListOfSearchResponse);
@@ -102,6 +110,24 @@ public class ActivityListAndSearch extends AppCompatActivity {
 
     }
 
+    private void checkLockGroupsList() {
+        if (isRunEarly.getBoolean(TAG_OF_FIRST_RUN, false)) {
+            lockItems = LockItemOfFoodBase.listAll(LockItemOfFoodBase.class);
+        } else {
+            SharedPreferences.Editor editor = isRunEarly.edit();
+            editor.putBoolean(TAG_OF_FIRST_RUN, true);
+            editor.commit();
+            String[] arrayLockGroups = getResources().getStringArray(R.array.lock_groups);
+            for (int i = 0; i < arrayLockGroups.length; i++) {
+                LockItemOfFoodBase item = new LockItemOfFoodBase(arrayLockGroups[i]);
+                item.save();
+            }
+            lockItems = LockItemOfFoodBase.listAll(LockItemOfFoodBase.class);
+            Log.e("LOL", String.valueOf(lockItems.size()));
+        }
+    }
+
+
     private ArrayList<FoodItem> fillItemsList(List<ListOfGroupsOfFood> listOfGroups) {
         ArrayList<FoodItem> items = new ArrayList<>();
         for (int i = 0; i < listOfGroups.size(); i++) {
@@ -128,6 +154,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
     public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvName, tvCal, tvNameOfGroup;
         private ImageView ivMainImage, ivHardKcal, ivLockStatus;
+        private boolean isLock = false;
 
         public ItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_rv_list_of_search_response, viewGroup, false));
@@ -142,19 +169,23 @@ public class ActivityListAndSearch extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            /*Intent intent = new Intent(ActivityListAndSearch.this, ActivityDetailOfFood.class);
-            intent.putExtra("ActivityDetailOfFood", tempListOfGroupsFoods.get(getAdapterPosition()));
-            startActivity(intent);*/
+            if (isLock) {
+                Intent intent = new Intent(ActivityListAndSearch.this, ActivityRequestOfWatchADVideo.class);
+                intent.putExtra("ActivityRequestOfWatchADVideo", tempListOfGroupsFoods.get(getAdapterPosition()));
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(ActivityListAndSearch.this, ActivityDetailOfFood.class);
+                intent.putExtra("ActivityDetailOfFood", tempListOfGroupsFoods.get(getAdapterPosition()));
+                startActivity(intent);
+            }
 
-            Intent intent = new Intent(ActivityListAndSearch.this, ActivityRequestOfWatchADVideo.class);
-            intent.putExtra("ActivityRequestOfWatchADVideo", tempListOfGroupsFoods.get(getAdapterPosition()));
-            startActivity(intent);
+
         }
 
         public void bind(FoodItem itemOfGlobalBase, boolean isItemForSeparator) {
-
             ivHardKcal.setVisibility(View.GONE);
             ivLockStatus.setVisibility(View.GONE);
+            isLock = false;
             tvName.setText(itemOfGlobalBase.getName());
             tvCal.setText(itemOfGlobalBase.getCalories() + " " + getString(R.string.for_100_g_of_product));
             Glide.with(ActivityListAndSearch.this).load(itemOfGlobalBase.getUrlOfImages()).into(ivMainImage);
@@ -163,6 +194,12 @@ public class ActivityListAndSearch extends AppCompatActivity {
                 ivHardKcal.setVisibility(View.VISIBLE);
             }
 
+            for (int i = 0; i < lockItems.size(); i++) {
+                if (itemOfGlobalBase.getNameOfGroup().equals(lockItems.get(i).getNameOfUnLockGroup())) {
+                    isLock = true;
+                    ivLockStatus.setVisibility(View.VISIBLE);
+                }
+            }
         }
     }
 
