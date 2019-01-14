@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.squareup.moshi.JsonAdapter;
@@ -45,10 +46,16 @@ public class ActivityListAndSearch extends AppCompatActivity {
     private final String TAG_OF_FIRST_RUN = "ActivityListAndSearchTagOfFirstRun";
     private SharedPreferences isRunEarly;
     private List<LockItemOfFoodBase> lockItems = new ArrayList<>();
+    private boolean isReturnFromUnlockActivity = false;
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (isReturnFromUnlockActivity) {
+            checkLockGroupsList();
+            edtSearchField.setText(edtSearchField.getText().toString());
+            isReturnFromUnlockActivity = false;
+        }
     }
 
     @Override
@@ -57,6 +64,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
         setContentView(R.layout.activity_list_and_search);
 
         isRunEarly = getPreferences(MODE_PRIVATE);
+
         checkLockGroupsList();
 
         ivCancel = findViewById(R.id.ibActivityListAndSearchCollapsingCancelButton);
@@ -81,16 +89,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
                     ivEmptyImage.setVisibility(View.GONE);
                     tvEmptyText.setVisibility(View.GONE);
                 }
-
-                tempListOfGroupsFoods = new ArrayList<>();
-                for (int j = 0; j < listOfGroupsFoods.size(); j++) {
-                    if (listOfGroupsFoods.get(j).getName().contains(charSequence)
-                            || (listOfGroupsFoods.get(j).getName()).contains(charSequence.toString().substring(0, 1).toUpperCase()
-                            + charSequence.toString().substring(1))) {
-                        tempListOfGroupsFoods.add(listOfGroupsFoods.get(j));
-                    }
-                }
-                rvListOfSearchResponse.setAdapter(new ItemAdapter(tempListOfGroupsFoods));
+                searchAndShowList(charSequence);
 
             }
 
@@ -110,6 +109,46 @@ public class ActivityListAndSearch extends AppCompatActivity {
 
     }
 
+    private void searchAndShowList(CharSequence text) {
+        tempListOfGroupsFoods = new ArrayList<>();
+        for (int j = 0; j < listOfGroupsFoods.size(); j++) {
+            if (listOfGroupsFoods.get(j).getName().contains(text)
+                    || (listOfGroupsFoods.get(j).getName()).contains(text.toString().substring(0, 1).toUpperCase()
+                    + text.toString().substring(1))) {
+                tempListOfGroupsFoods.add(listOfGroupsFoods.get(j));
+            }
+        }
+        rvListOfSearchResponse.setAdapter(new ItemAdapter(tempListOfGroupsFoods));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+        String nameOfGroup = data.getStringExtra("nameOfGroup");
+        int idOfToastIcon = data.getIntExtra("idOfToastIcon", 0);
+        showToast(idOfToastIcon, nameOfGroup);
+        isReturnFromUnlockActivity = true;
+    }
+
+    private void showToast(int idOfToastIcon, String nameOfGroup) {
+        TextView tvToastCompleteGift;
+        ImageView ivToastCompleteGift;
+        LayoutInflater toastInflater = getLayoutInflater();
+        View toastLayout = toastInflater.inflate(R.layout.toast_complete_gift, null, false);
+        tvToastCompleteGift = toastLayout.findViewById(R.id.tvToastCompleteGift);
+        ivToastCompleteGift = toastLayout.findViewById(R.id.ivToastCompleteGift);
+        tvToastCompleteGift.setText("Открыт доступ к - " + nameOfGroup);
+
+        Glide.with(this).load(idOfToastIcon).into(ivToastCompleteGift);
+
+        Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastLayout);
+        toast.show();
+    }
+
     private void checkLockGroupsList() {
         if (isRunEarly.getBoolean(TAG_OF_FIRST_RUN, false)) {
             lockItems = LockItemOfFoodBase.listAll(LockItemOfFoodBase.class);
@@ -123,7 +162,6 @@ public class ActivityListAndSearch extends AppCompatActivity {
                 item.save();
             }
             lockItems = LockItemOfFoodBase.listAll(LockItemOfFoodBase.class);
-            Log.e("LOL", String.valueOf(lockItems.size()));
         }
     }
 
@@ -172,7 +210,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
             if (isLock) {
                 Intent intent = new Intent(ActivityListAndSearch.this, ActivityRequestOfWatchADVideo.class);
                 intent.putExtra("ActivityRequestOfWatchADVideo", tempListOfGroupsFoods.get(getAdapterPosition()));
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             } else {
                 Intent intent = new Intent(ActivityListAndSearch.this, ActivityDetailOfFood.class);
                 intent.putExtra("ActivityDetailOfFood", tempListOfGroupsFoods.get(getAdapterPosition()));
