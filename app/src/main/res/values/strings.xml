@@ -208,15 +208,16 @@
     </string-array>
 
     <string-array name="names_items_of_main_screen">
-        <item>Монодиеты</item>
-        <item>Рецепты</item>
-        <item>Расчеты</item>
-        <item>Дневник</item>
-        <item>Лента</item>
+        <item>Новости</item>
         <item>Задачи</item>
         <item>Анализатор</item>
+        <item>Расчеты</item>
+        <item>Дневник</item>
+        <item>Монодиеты</item>
+        <item>Рецепты</item>
         <item>Фитнес</item>
     </string-array>
+
 
     <string-array name="properties_items_of_main_screen">
         <item>Эффективные монодиеты для быстрого похудения</item>

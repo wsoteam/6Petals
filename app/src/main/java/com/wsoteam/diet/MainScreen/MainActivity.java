@@ -75,10 +75,9 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences countOfRun;
     private boolean isAccessibleCountry = true;
     private String notAccessibleCountryCode = "UA";
-    private Integer[] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes,
-            R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary, R.drawable.ic_main_menu_newsfeed,
-            R.drawable.ic_main_menu_targets, R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_fitness};
-
+    private Integer[] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_newsfeed, R.drawable.ic_main_menu_targets,
+            R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary,
+            R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes, R.drawable.ic_main_menu_fitness};
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -278,29 +277,29 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent();
             switch (getAdapterPosition()) {
                 case 0:
-                    intent = new Intent(MainActivity.this, ActivityMonoDiet.class);
-                    break;
-                case 1:
-                    intent = new Intent(MainActivity.this, ActivityGroupsOfRecipes.class);
-                    break;
-                case 2:
-                    intent = new Intent(MainActivity.this, ActivityListOfCalculating.class);
-                    break;
-                case 3:
-                    intent = new Intent(MainActivity.this, ActivityListOfDiary.class);
-                    break;
-                case 4:
                     if (isAccessibleCountry) {
                         intent = new Intent(MainActivity.this, ActivityListOfNews.class);
                     } else {
                         intent = new Intent(MainActivity.this, ActivityEmpty.class);
                     }
                     break;
-                case 5:
+                case 1:
                     intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
                     break;
-                case 6:
+                case 2:
                     intent = new Intent(MainActivity.this, ActivityListAndSearch.class);
+                    break;
+                case 3:
+                    intent = new Intent(MainActivity.this, ActivityListOfCalculating.class);
+                    break;
+                case 4:
+                    intent = new Intent(MainActivity.this, ActivityListOfDiary.class);
+                    break;
+                case 5:
+                    intent = new Intent(MainActivity.this, ActivityMonoDiet.class);
+                    break;
+                case 6:
+                    intent = new Intent(MainActivity.this, ActivityGroupsOfRecipes.class);
                     break;
                 case 7:
                     intent = new Intent(MainActivity.this, ActivityEmpty.class);
@@ -313,10 +312,10 @@ public class MainActivity extends AppCompatActivity
             tvTitle.setText(name);
             tvProperties.setText(properties);
             Glide.with(MainActivity.this).load(image).into(ivImage);
-            if (getAdapterPosition() == 4 && isAccessibleCountry
+            /*if (getAdapterPosition() == 4 && isAccessibleCountry
                     || getAdapterPosition() == 5) {
                 ivIsOpen.setVisibility(View.VISIBLE);
-            }
+            }*/
         }
     }
 
