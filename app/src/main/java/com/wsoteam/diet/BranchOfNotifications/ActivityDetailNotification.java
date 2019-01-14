@@ -112,7 +112,7 @@ public class ActivityDetailNotification extends AppCompatActivity {
 
             tempId = cal.getTimeInMillis();
             edtDate.setText(writeWithNull(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)))
-                    + "." + writeWithNull(String.valueOf(cal.get(Calendar.MONTH)))
+                    + "." + writeWithNull(String.valueOf(cal.get(Calendar.MONTH) + 1))
                     + "." + writeWithNull(String.valueOf(cal.get(Calendar.YEAR))));
             edtTime.setText(writeWithNull(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)))
                     + ":" + writeWithNull(String.valueOf(cal.get(Calendar.MINUTE))));
@@ -233,12 +233,11 @@ public class ActivityDetailNotification extends AppCompatActivity {
     }
 
 
-    //TODO reboot device
     private void createAlarmSchedule(ObjectForNotification objectForNotification) {
         final Calendar calendar = new GregorianCalendar();
 
         calendar.set(Calendar.YEAR, objectForNotification.getYear());
-        calendar.set(Calendar.MONTH, objectForNotification.getMonth());
+        calendar.set(Calendar.MONTH, objectForNotification.getMonth() - 1);
         calendar.set(Calendar.DAY_OF_MONTH, objectForNotification.getDay());
         calendar.set(Calendar.HOUR_OF_DAY, objectForNotification.getHour());
         calendar.set(Calendar.MINUTE, objectForNotification.getMinute());

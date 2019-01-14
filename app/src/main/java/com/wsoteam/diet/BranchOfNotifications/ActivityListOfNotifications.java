@@ -2,6 +2,7 @@ package com.wsoteam.diet.BranchOfNotifications;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,11 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.wsoteam.diet.BranchOfNews.ActivityListOfNews;
-import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.POJOForDB.ObjectForNotification;
 import com.wsoteam.diet.R;
 import com.wsoteam.diet.Services.AlarmManagerBR;
@@ -28,10 +26,12 @@ import com.yandex.metrica.YandexMetrica;
 import java.util.ArrayList;
 
 public class ActivityListOfNotifications extends AppCompatActivity {
+    private static final String TAG_OF_FIRST_RUN = "TAG_OF_FIRST_RUN_ActivityListOfNotifications";
     private RecyclerView recyclerView;
     private FloatingActionButton fabCreateNewNotification;
     private ArrayList<ObjectForNotification> notificationArrayList;
     private ItemAdapter itemAdapter;
+    private SharedPreferences isEmptyListOfNotification;
 
     @Override
     protected void onResume() {
@@ -43,6 +43,9 @@ public class ActivityListOfNotifications extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_notification);
+
+        isEmptyListOfNotification = getPreferences(MODE_PRIVATE);
+
         fabCreateNewNotification = findViewById(R.id.fabActivityListOfNotificationCreate);
         recyclerView = findViewById(R.id.rvActivityListOfNotification);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -78,6 +81,27 @@ public class ActivityListOfNotifications extends AppCompatActivity {
 
     private void updateUI() {
         notificationArrayList = (ArrayList<ObjectForNotification>) ObjectForNotification.listAll(ObjectForNotification.class);
+        if (notificationArrayList.size() == 0 && isEmptyListOfNotification.getBoolean(TAG_OF_FIRST_RUN, true)) {
+            new ObjectForNotification(0,
+                    0, 12, 1, 1, 2019, "Пить воду",
+                    "Однократно", R.drawable.list_of_choise_notification_icon_18).save();
+            new ObjectForNotification(1,
+                    0, 12, 1, 1, 2019, "Записать в дневник свои параметры и вес",
+                    "Однократно", R.drawable.list_of_choise_notification_icon_4).save();
+            new ObjectForNotification(2,
+                    0, 12, 1, 1, 2019, "Взять обед с собой",
+                    "Однократно", R.drawable.list_of_choise_notification_icon_11).save();
+            new ObjectForNotification(3,
+                    0, 12, 1, 1, 2019, "Спланировать диету на следующую неделю",
+                    "Однократно", R.drawable.list_of_choise_notification_icon_8).save();
+            new ObjectForNotification(4,
+                    0, 12, 1, 1, 2019, "Сходить на тренировку",
+                    "Однократно", R.drawable.list_of_choise_notification_icon_16).save();
+            notificationArrayList = (ArrayList<ObjectForNotification>) ObjectForNotification.listAll(ObjectForNotification.class);
+            SharedPreferences.Editor editor = isEmptyListOfNotification.edit();
+            editor.putBoolean(TAG_OF_FIRST_RUN, false);
+            editor.commit();
+        }
         itemAdapter = new ItemAdapter(notificationArrayList);
         recyclerView.setAdapter(itemAdapter);
     }
@@ -117,10 +141,9 @@ public class ActivityListOfNotifications extends AppCompatActivity {
                     + " в " + writeWithNull(String.valueOf(objectForNotification.getHour()))
                     + ":" + writeWithNull(String.valueOf(objectForNotification.getMinute()))
                     + ", начиная с  " + writeWithNull(String.valueOf(objectForNotification.getDay()))
-                    + "." + writeWithNull(String.valueOf(objectForNotification.getMonth())
-                    + "." + writeWithNull(String.valueOf(objectForNotification.getYear()))));
+                    + "." + writeWithNull(String.valueOf(objectForNotification.getMonth()))
+                    + "." + writeWithNull(String.valueOf(objectForNotification.getYear())));
             Glide.with(ActivityListOfNotifications.this).load(objectForNotification.getIdROfIcon()).into(ivIcon);
-
         }
     }
 
