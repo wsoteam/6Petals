@@ -3,6 +3,7 @@ package com.wsoteam.diet.BranchOfAnalyzer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -37,7 +38,7 @@ public class ActivityRequestOfWatchADVideo extends AppCompatActivity {
     private FoodItem foodItem;
     private FloatingActionButton fabMainImageAdRequest, fabCloseRequestAd;
     private CardView cvWatchAd;
-    private LinearLayout llContainerWithImageAndTextAdButton;
+    private ConstraintLayout llContainerWithImageAndTextAdButton;
     private ImageView ivToastCompleteGift;
     private View layoutForToast;
 
@@ -71,7 +72,7 @@ public class ActivityRequestOfWatchADVideo extends AppCompatActivity {
 
         tvTitleOfRequestAd.setText(foodItem.getNameOfGroup());
         tvCountInGroup.setText("Продуктов - " + String.valueOf(foodItem.getCountOfItemsInGroup()) + " шт.");
-        tvPropertiesOfGroupRequestAdWatch.setText("Мы можете открыть доступ к этой группе посмотрев всего лишь один короткий рекламный ролик. Открыть его можно кнопкой снизу.");
+        tvPropertiesOfGroupRequestAdWatch.setText("Вы можете открыть доступ к этой группе посмотрев всего лишь один короткий рекламный ролик. Открыть его можно кнопкой снизу.");
 
 
         mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {

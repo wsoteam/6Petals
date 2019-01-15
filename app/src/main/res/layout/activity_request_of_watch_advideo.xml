@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:elevation="8dp"
         android:text="Properties"
         android:textColor="@color/black"
@@ -41,21 +41,20 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="110dp"
         android:elevation="8dp"
         android:text="Title"
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/cardView7"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="@+id/cardView7"
         app:layout_constraintTop_toTopOf="@+id/cardView7" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView7"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="0dp"
         android:layout_margin="20dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
@@ -66,8 +65,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/fabCloseRequestAd"
+        app:layout_constraintVertical_bias="0.666">
 
         <android.support.v7.widget.CardView
             android:id="@+id/cvRequestAdWatchButton"
@@ -78,29 +77,43 @@
             app:cardCornerRadius="9dp"
             app:cardElevation="3dp">
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/llContainerWithImageAndTextAdButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/llContainerWithImageAndTextAdButton">
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="64dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textView39"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_watch_ad_button" />
 
                 <TextView
+                    android:id="@+id/textView39"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Получить доступ"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Получить доступ"
+                    android:textColor="@color/white"
                     android:textSize="17sp"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:layout_marginLeft="16dp"/>
-            </LinearLayout>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
 
 
