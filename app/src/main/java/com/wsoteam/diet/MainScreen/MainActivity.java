@@ -142,8 +142,6 @@ public class MainActivity extends AppCompatActivity
 
         loadAd();
 
-        YandexMetrica.reportEvent("Открыт экран: Стартовый экран");
-
         additionOneToSharedPreference();
         checkFirstRun();
 

@@ -27,6 +27,7 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.wsoteam.diet.POJOFoodItem.FoodItem;
 import com.wsoteam.diet.POJOFoodItem.LockItemOfFoodBase;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -101,6 +102,7 @@ public class ActivityRequestOfWatchADVideo extends AppCompatActivity {
                     intent.putExtra("nameOfGroup", foodItem.getNameOfGroup());
                     intent.putExtra("idOfToastIcon", idOfToastIcon);
                     setResult(RESULT_OK, intent);
+                    YandexMetrica.reportEvent("Открыт экран: Реклама анлока досмотрена");
                     finish();
                 } else {
                     Toast.makeText(ActivityRequestOfWatchADVideo.this, "Чтобы разблокировать группу нужно досмотреть ролик до конца", Toast.LENGTH_SHORT).show();
@@ -141,6 +143,8 @@ public class ActivityRequestOfWatchADVideo extends AppCompatActivity {
                 }
             }
         });
+
+        YandexMetrica.reportEvent("Открыт экран: Анлок группы");
     }
 
     private void unlockGroup() {

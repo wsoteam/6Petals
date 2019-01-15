@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.vk.sdk.api.VKApiConst;
@@ -61,6 +63,17 @@ public class ActivityListOfNews extends AppCompatActivity {
 
     private ItemAdapter itemAdapter;
 
+    InterstitialAd interstitialAd;
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +112,10 @@ public class ActivityListOfNews extends AppCompatActivity {
                 }
             }
         });
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
 
         YandexMetrica.reportEvent("Открыт экран: Лента");
     }

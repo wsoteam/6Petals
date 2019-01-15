@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.wsoteam.diet.POJOForDB.ObjectForNotification;
 import com.wsoteam.diet.R;
 import com.wsoteam.diet.Services.AlarmManagerBR;
@@ -32,12 +34,27 @@ public class ActivityListOfNotifications extends AppCompatActivity {
     private ArrayList<ObjectForNotification> notificationArrayList;
     private ItemAdapter itemAdapter;
     private SharedPreferences isEmptyListOfNotification;
+    InterstitialAd interstitialAd;
+
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        }
+    }
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
         updateUI();
     }
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +92,10 @@ public class ActivityListOfNotifications extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
 
         YandexMetrica.reportEvent("Открыт экран: Задачи");
     }

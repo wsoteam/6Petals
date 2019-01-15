@@ -37,6 +37,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.wsoteam.diet.POJOForDB.ObjectForNotification;
 import com.wsoteam.diet.R;
 import com.wsoteam.diet.Services.AlarmManagerBR;
@@ -55,6 +57,7 @@ public class ActivityDetailNotification extends AppCompatActivity {
     private ArrayList<ObjectForNotification> notificationArrayList;
     private long tempId;
     private AlertDialog choiseIconAlertDialog;
+    InterstitialAd interstitialAd;
 
     private Integer[] urlOfIconsNotifications = new Integer[]{R.drawable.list_of_choise_notification_icon_1,
             R.drawable.list_of_choise_notification_icon_2,
@@ -76,6 +79,15 @@ public class ActivityDetailNotification extends AppCompatActivity {
             R.drawable.list_of_choise_notification_icon_18,
             R.drawable.list_of_choise_notification_icon_19,
             R.drawable.list_of_choise_notification_icon_20};
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        }
+    }
 
 
     @Override
@@ -171,6 +183,10 @@ public class ActivityDetailNotification extends AppCompatActivity {
                 }
             }
         });
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
     private String writeWithNull(String raw) {

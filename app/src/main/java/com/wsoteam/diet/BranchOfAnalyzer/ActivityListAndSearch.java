@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.wsoteam.diet.POJOFoodItem.DbAnalyzer;
@@ -29,6 +31,7 @@ import com.wsoteam.diet.POJOFoodItem.FoodItem;
 import com.wsoteam.diet.POJOFoodItem.ListOfGroupsOfFood;
 import com.wsoteam.diet.POJOFoodItem.LockItemOfFoodBase;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -48,6 +51,8 @@ public class ActivityListAndSearch extends AppCompatActivity {
     private List<LockItemOfFoodBase> lockItems = new ArrayList<>();
     private boolean isReturnFromUnlockActivity = false;
 
+    InterstitialAd interstitialAd;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -55,6 +60,14 @@ public class ActivityListAndSearch extends AppCompatActivity {
             checkLockGroupsList();
             edtSearchField.setText(edtSearchField.getText().toString());
             isReturnFromUnlockActivity = false;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
         }
     }
 
@@ -106,6 +119,11 @@ public class ActivityListAndSearch extends AppCompatActivity {
             }
         });
 
+        YandexMetrica.reportEvent("Открыт экран: Анализатор");
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
 
     }
 

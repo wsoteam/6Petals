@@ -14,12 +14,12 @@ import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.wsoteam.diet.POJOFoodItem.FoodItem;
 import com.wsoteam.diet.POJOFoodItem.ListOfFoodItem;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 public class ActivityDetailOfFood extends AppCompatActivity {
     private TextView tvTitle, tvKcal,
             tvProtein, tvFat, tvCarbohydrates,
-            tvCalculateFat, tvCalculateProtein, tvCalculateCarbohydrates, tvCalculateKcal
-            , tvProperties;
+            tvCalculateFat, tvCalculateProtein, tvCalculateCarbohydrates, tvCalculateKcal, tvProperties;
     private DonutProgress pbCarbohydrates, pbFat, pbProtein;
     private EditText edtWeight;
 
@@ -58,15 +58,15 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         tvProtein.setText(getString(R.string.protein_detail) + " " + foodItem.getProtein() + " " + getString(R.string.gramm));
         tvCarbohydrates.setText(getString(R.string.carbohydrates_detail) + " " + foodItem.getCarbohydrates() + " " + getString(R.string.gramm));
 
-        if (!foodItem.getComposition().equals(".")){
+        if (!foodItem.getComposition().equals(".")) {
             tvProperties.setText(foodItem.getComposition());
         }
 
-        if (!foodItem.getDescription().equals(".")){
+        if (!foodItem.getDescription().equals(".")) {
             tvProperties.setText(tvProperties.getText().toString() + "\n" + foodItem.getDescription());
         }
 
-        if (!foodItem.getProperties().equals(".")){
+        if (!foodItem.getProperties().equals(".")) {
             tvProperties.setText(tvProperties.getText().toString() + "\n" + foodItem.getProperties());
         }
 
@@ -100,7 +100,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
 
             }
         });
-
+        YandexMetrica.reportEvent("Открыт экран: Детализация продукта группы - " + foodItem.getNameOfGroup());
 
     }
 
