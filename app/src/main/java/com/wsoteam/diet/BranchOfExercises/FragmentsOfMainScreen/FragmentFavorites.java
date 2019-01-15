@@ -34,16 +34,9 @@ public class FragmentFavorites extends Fragment {
     private ArrayList<Training> trainings;
     private FavoriteAdapter favoriteAdapter;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.ex_fragment_favorites, container, false);
-        imageIfEmpty = view.findViewById(R.id.ex_ivBackGroundFavorites);
-        textIfEmpty = view.findViewById(R.id.ex_tvNotFoundEntity);
-        recyclerView = view.findViewById(R.id.ex_rvFavorites);
-        trainings = new ArrayList<>();
-
-
+    public void onResume() {
+        super.onResume();
         if (ObjectLocalDatabase.listAll(ObjectLocalDatabase.class).size() != 0) {
 
             objectLocalDatabases = (ArrayList<ObjectLocalDatabase>) ObjectLocalDatabase.listAll(ObjectLocalDatabase.class);
@@ -69,6 +62,19 @@ public class FragmentFavorites extends Fragment {
             };
             new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(recyclerView);
         }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.ex_fragment_favorites, container, false);
+        imageIfEmpty = view.findViewById(R.id.ex_ivBackGroundFavorites);
+        textIfEmpty = view.findViewById(R.id.ex_tvNotFoundEntity);
+        recyclerView = view.findViewById(R.id.ex_rvFavorites);
+        trainings = new ArrayList<>();
+
+
+
         return view;
     }
 

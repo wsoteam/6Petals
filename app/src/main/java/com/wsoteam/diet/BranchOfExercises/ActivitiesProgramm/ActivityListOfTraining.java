@@ -22,6 +22,7 @@ import com.wsoteam.diet.POJOSExercises.ObjectLocalDatabase;
 import com.wsoteam.diet.POJOSExercises.Programm;
 import com.wsoteam.diet.POJOSExercises.Training;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 import java.util.ArrayList;
 
@@ -61,10 +62,10 @@ public class ActivityListOfTraining extends AppCompatActivity {
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(this.getResources().getString(R.string.inter));
-        //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-
+        mInterstitialAd.setAdUnitId(this.getResources().getString(R.string.admob_interstitial));
         mInterstitialAd.loadAd(adRequest);
+
+        YandexMetrica.reportEvent("Открыт экран: Список тренировок");
 
     }
 

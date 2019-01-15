@@ -28,9 +28,9 @@ import com.wsoteam.diet.POJOSExercises.ObjectLocalDatabase;
 import com.wsoteam.diet.POJOSExercises.Tile;
 import com.wsoteam.diet.POJOSExercises.Training;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 import java.util.ArrayList;
-
 
 
 public class ActivityWithTiles extends AppCompatActivity {
@@ -61,7 +61,6 @@ public class ActivityWithTiles extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-
         numberOfSelectedProgramm = getIntent().getIntExtra(NUMBER_OF_PROGRAM, 0);
         numberOfSelectedItemOfList = getIntent().getIntExtra(NUMBER_OF_ITEM_FROM_LIST, 0);
         training = ObjectHolder.getGlobalObject()
@@ -85,9 +84,7 @@ public class ActivityWithTiles extends AppCompatActivity {
 
 
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(this.getResources().getString(R.string.inter));
-        //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-
+        mInterstitialAd.setAdUnitId(this.getResources().getString(R.string.admob_interstitial));
         mInterstitialAd.loadAd(adRequest);
 
 
@@ -115,6 +112,8 @@ public class ActivityWithTiles extends AppCompatActivity {
                 fab.setVisibility(View.GONE);
             }
         });
+
+        YandexMetrica.reportEvent("Открыт экран: Детализация тренировки");
 
     }
 

@@ -117,6 +117,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
+        MobileAds.initialize(this, Config.ADMOB_ID);
+
         if (getIntent().getStringExtra("MainActivity").equals(notAccessibleCountryCode)) {
             isAccessibleCountry = false;
         }
@@ -140,10 +142,10 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         animationChangeScale = AnimationUtils.loadAnimation(this, R.anim.anim_change_scale);
 
-        loadAd();
-
         additionOneToSharedPreference();
         checkFirstRun();
+
+        YandexMetrica.reportEvent("Открыт экран: Тренировки");
 
     }
 
@@ -300,7 +302,7 @@ public class MainActivity extends AppCompatActivity
                     intent = new Intent(MainActivity.this, ActivityGroupsOfRecipes.class);
                     break;
                 case 7:
-                    intent = new Intent(MainActivity.this, ActivityEmpty.class);
+                    intent = new Intent(MainActivity.this, com.wsoteam.diet.BranchOfExercises.Activities.MainActivity.class);
                     break;
             }
             startActivity(intent);

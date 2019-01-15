@@ -67,14 +67,14 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     mViewPager.setCurrentItem(0);
                     return true;
-                case R.id.navigation_ex:
+                /*case R.id.navigation_ex:
+                    mViewPager.setCurrentItem(1);
+                    return true;*/
+                case R.id.navigation_favorites:
                     mViewPager.setCurrentItem(1);
                     return true;
-                case R.id.navigation_favorites:
-                    mViewPager.setCurrentItem(2);
-                    return true;
                 case R.id.navigation_articles:
-                    mViewPager.setCurrentItem(3);
+                    mViewPager.setCurrentItem(2);
                     return true;
             }
             return false;
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 objectHolder.createObjFromGirebase(dataSnapshot.getValue(GlobalObject.class));
                 listOfFragments = new ArrayList<>();
                 listOfFragments.add(new FragmentProgramms());
-                listOfFragments.add(new FragmentPartsOfBody());
+                /*listOfFragments.add(new FragmentPartsOfBody());*/
                 listOfFragments.add(new FragmentFavorites());
                 listOfFragments.add(new FragmentsArticles());
 

@@ -62,7 +62,6 @@ public class ActivityMonoDiet extends AppCompatActivity {
         rvList.setAdapter(new ItemAdapter(listOfPOJOS));
 
         //ADMob
-        MobileAds.initialize(this, Config.ADMOB_ID);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
         interstitialAd = new InterstitialAd(this);

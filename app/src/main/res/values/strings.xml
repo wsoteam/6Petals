@@ -49,16 +49,16 @@
 
     <string name="tab_body_text_1">test</string>
 
-    <!--<string name="admob_interstitial" translatable="false">ca-app-pub-3050564412171997/5945782205</string>
+    <string name="admob_interstitial" translatable="false">ca-app-pub-3050564412171997/5945782205</string>
     <string name="admob_banner" translatable="false">ca-app-pub-3050564412171997/5103473829</string>
     <string name="admob_award" translatable="false">ca-app-pub-3050564412171997/4889189478</string>
-    <string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3050564412171997/6423885238</string>-->
+    <string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3050564412171997/6423885238</string>
 
 
-    <string name="admob_interstitial" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <!--<string name="admob_interstitial" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
     <string name="admob_banner" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="admob_award" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
-    <string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_banner_viewer_activity" translatable="false">ca-app-pub-3940256099942544/6300978111</string>-->
 
 
     <string name="title_activity_drawer">DrawerActivity</string>
@@ -220,15 +220,16 @@
 
 
     <string-array name="properties_items_of_main_screen">
-        <item>Эффективные монодиеты для быстрого похудения</item>
-        <item>Рецепты вкусных и полезных блюд</item>
-        <item>Калькуляторы для расчета БЖУ, ИМТ и другие</item>
-        <item>Контроль веса и других важных показателей</item>
         <item>Рекомендации, полезные инфографики и лайфхаки</item>
         <item>Менеджер задач с возможностью установки напоминаний</item>
         <item>Анализатор калорийности продуктов</item>
+        <item>Калькуляторы для расчета БЖУ, ИМТ и другие</item>
+        <item>Контроль веса и других важных показателей</item>
+        <item>Эффективные монодиеты для быстрого похудения</item>
+        <item>Рецепты вкусных и полезных блюд</item>
         <item>Самые эффективные комплексы упражнений для похудения</item>
     </string-array>
+
 
     <string-array name="lock_groups">
         <item>McDonalds</item>
@@ -275,12 +276,7 @@
     <string name="neverButtonAlert">Никогда</string>
     <string name="evaluateButtonAlert">Оценить</string>
 
-    <string name="admob_id" translatable="false">ca-app-pub-3050564412171997~8774716406</string>
 
-    <string name="ban1_id" translatable="false">ca-app-pub-3050564412171997/5103473829</string>
-    <string name="ban2_id" translatable="false">ca-app-pub-3050564412171997/5103473829</string>
-    <string name="ban3_id" translatable="false">ca-app-pub-3050564412171997/5103473829</string>
-    <string name="inter" translatable="false">ca-app-pub-3050564412171997/5945782205</string>
     <string name="search_of_food">Поиск продукта питания</string>
     <string name="for_100_g_of_product"> Ккал на 100 г продукта</string>
     <string name="for_100_g">Ккал на 100 г</string>

@@ -20,6 +20,7 @@ import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
 import com.wsoteam.diet.POJOSExercises.Article;
 import com.wsoteam.diet.POJOSExercises.WholeArticle;
 import com.wsoteam.diet.R;
+import com.yandex.metrica.YandexMetrica;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,7 @@ public class ActivityDetailAcrticles extends AppCompatActivity {
 
         banner = findViewById(R.id.ex_bannerFromArticle);
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(this.getResources().getString(R.string.inter));
+        mInterstitialAd.setAdUnitId(this.getResources().getString(R.string.admob_interstitial));
         AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd.loadAd(adRequest);
         banner.loadAd(adRequest);
@@ -65,6 +66,8 @@ public class ActivityDetailAcrticles extends AppCompatActivity {
         recyclerView = findViewById(R.id.ex_rvArticle);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new PartOfArticleAdapter((ArrayList<Article>) wholeArticle.getArticleList()));
+
+        YandexMetrica.reportEvent("Открыт экран: Статья");
     }
 
     private class PartOfArticleVH extends RecyclerView.ViewHolder {

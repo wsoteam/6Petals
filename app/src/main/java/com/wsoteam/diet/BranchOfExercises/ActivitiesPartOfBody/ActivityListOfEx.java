@@ -48,8 +48,7 @@ public class ActivityListOfEx extends AppCompatActivity {
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(this.getResources().getString(R.string.inter));
-        //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId(this.getResources().getString(R.string.admob_interstitial));
 
         mInterstitialAd.loadAd(adRequest);
 

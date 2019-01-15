@@ -325,7 +325,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 ads:adSize="SMART_BANNER"
-                ads:adUnitId="@string/ban1_id"
+                ads:adUnitId="@string/admob_banner"
                 ads:layout_constraintBottom_toBottomOf="parent"
                 ads:layout_constraintTop_toBottomOf="@+id/ex_cardView5"
                 tools:layout_editor_absoluteX="0dp"
