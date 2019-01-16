@@ -7,19 +7,15 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
@@ -31,7 +27,6 @@ import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class ActivityRequestOfWatchADVideo extends AppCompatActivity {
     private TextView tvTitleOfRequestAd, tvPropertiesOfGroupRequestAdWatch, tvCountInGroup, tvToastCompleteGift;
@@ -160,7 +155,7 @@ public class ActivityRequestOfWatchADVideo extends AppCompatActivity {
 
 
     private void setAnimation() {
-        animationMovingFromBottom = AnimationUtils.loadAnimation(this, R.anim.moving_from_bottom);
+        animationMovingFromBottom = AnimationUtils.loadAnimation(this, R.anim.moving_from_bottom_and_change_scale);
         animationChangeAlpha = new AlphaAnimation(0, 1);
         animationChangeAlpha.setInterpolator(new DecelerateInterpolator());
         animationChangeAlpha.setStartOffset(1400);

@@ -7,7 +7,6 @@ import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +23,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,16 +30,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.wsoteam.diet.BranchOfAnalyzer.ActivityListAndSearch;
-import com.wsoteam.diet.BranchOfBilling.ActivityPresentation;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
 import com.wsoteam.diet.BranchOfDiary.ActivityListOfDiary;
@@ -50,17 +49,9 @@ import com.wsoteam.diet.BranchOfNews.ActivityListOfNews;
 import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.Config;
-import com.wsoteam.diet.IPCheck.IPCheckApi;
-import com.wsoteam.diet.IPCheck.IPCheckObject;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -158,37 +149,81 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void checkFirstRun() {
-        if (countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) == 10) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            View view = getLayoutInflater().inflate(R.layout.alert_dialog_grade, null);
-            builder.setView(view);
-            builder.setNeutralButton(R.string.Late, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    countOfRun = getPreferences(MODE_PRIVATE);
-                    SharedPreferences.Editor editor = countOfRun.edit();
-                    editor.putInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, 0);
-                    editor.commit();
-                    YandexMetrica.reportEvent("Оценка отложена");
-                }
-            });
-            builder.setPositiveButton(R.string.Grade, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+        if (countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) == 1) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog alertDialog = builder.create();
+        View view = getLayoutInflater().inflate(R.layout.alert_dialog_grade, null);
+
+        Animation movFromLeft = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_moving_from_left);
+        Animation movOutToRight = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_moving_out_to_right);
+        Animation movFromRight = AnimationUtils.loadAnimation(MainActivity.this, R.anim.moving_from_right);
+
+        RatingBar ratingBar = view.findViewById(R.id.ratingBar);
+        EditText edtReport = view.findViewById(R.id.edtRatingReport);
+        TextView tvThank = view.findViewById(R.id.tvForGrade);
+        Button btnGradeClose = view.findViewById(R.id.btnGradeClose);
+        Button btnGradeLate = view.findViewById(R.id.btnGradeLate);
+        Button btnGradeSend = view.findViewById(R.id.btnGradeSend);
+
+        btnGradeClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                YandexMetrica.reportEvent("Отказ в оценке");
+                alertDialog.cancel();
+            }
+        });
+
+        btnGradeLate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                countOfRun = getPreferences(MODE_PRIVATE);
+                SharedPreferences.Editor editor = countOfRun.edit();
+                editor.putInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, 0);
+                editor.commit();
+                YandexMetrica.reportEvent("Оценка отложена");
+                alertDialog.cancel();
+            }
+        });
+
+        btnGradeSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "sav@wsoteam.com", null));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Отзыв");
+                intent.putExtra(Intent.EXTRA_TEXT, edtReport.getText().toString());
+                startActivity(Intent.createChooser(intent, "Send Email"));
+                alertDialog.cancel();
+            }
+        });
+
+        btnGradeSend.setVisibility(View.GONE);
+        tvThank.setVisibility(View.GONE);
+        edtReport.setVisibility(View.GONE);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                if (v >= 4) {
                     YandexMetrica.reportEvent("Переход в ГП для оценки");
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse("market://details?id=" + MainActivity.this.getPackageName()));
                     startActivity(intent);
+                    alertDialog.cancel();
+                } else {
+                    if (edtReport.getVisibility() == View.GONE) {
+                        edtReport.setVisibility(View.VISIBLE);
+                        edtReport.startAnimation(movFromLeft);
+                        ratingBar.startAnimation(movOutToRight);
+                        ratingBar.setVisibility(View.GONE);
+                        tvThank.setVisibility(View.VISIBLE);
+                        tvThank.startAnimation(movFromLeft);
+                        btnGradeSend.setVisibility(View.VISIBLE);
+                        btnGradeSend.startAnimation(movFromRight);
+                    }
                 }
-            });
-            builder.setNegativeButton(R.string.Never, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    YandexMetrica.reportEvent("Отказ в оценке");
-                }
-            });
-
-            builder.show();
+            }
+        });
+        alertDialog.setView(view);
+        alertDialog.show();
         }
     }
 
