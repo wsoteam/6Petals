@@ -35,6 +35,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity
     private String TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG = "COUNT_OF_RUN";
     private SharedPreferences countOfRun;
     private boolean isAccessibleCountry = true;
+    private boolean isFiveStarSend = false;
     private String notAccessibleCountryCode = "UA";
     private Integer[] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_newsfeed, R.drawable.ic_main_menu_targets,
             R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary,
@@ -101,6 +103,32 @@ public class MainActivity extends AppCompatActivity
         /*Intent intent = new Intent(MainActivity.this, ActivityPresentation.class);
         startActivity(intent);*/
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showThankToast();
+    }
+
+    private void showThankToast() {
+        if (isFiveStarSend) {
+            isFiveStarSend = false;
+            TextView tvToastCompleteGift;
+            ImageView ivToastCompleteGift;
+            LayoutInflater toastInflater = getLayoutInflater();
+            View toastLayout = toastInflater.inflate(R.layout.toast_complete_gift, null, false);
+            tvToastCompleteGift = toastLayout.findViewById(R.id.tvToastCompleteGift);
+            ivToastCompleteGift = toastLayout.findViewById(R.id.ivToastCompleteGift);
+            tvToastCompleteGift.setText("Спасибо за отзыв!");
+
+            Glide.with(this).load(R.drawable.icon_toast_thank_for_grade).into(ivToastCompleteGift);
+
+            Toast toast = new Toast(this);
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(toastLayout);
+            toast.show();
+        }
     }
 
     @Override
@@ -149,7 +177,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void checkFirstRun() {
-        if (countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) == 1) {
+        //if (countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) == 3) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         AlertDialog alertDialog = builder.create();
         View view = getLayoutInflater().inflate(R.layout.alert_dialog_grade, null);
@@ -208,6 +236,7 @@ public class MainActivity extends AppCompatActivity
                     intent.setData(Uri.parse("market://details?id=" + MainActivity.this.getPackageName()));
                     startActivity(intent);
                     alertDialog.cancel();
+                    isFiveStarSend = true;
                 } else {
                     if (edtReport.getVisibility() == View.GONE) {
                         edtReport.setVisibility(View.VISIBLE);
@@ -224,7 +253,7 @@ public class MainActivity extends AppCompatActivity
         });
         alertDialog.setView(view);
         alertDialog.show();
-        }
+        // }
     }
 
     private void loadAd() {
