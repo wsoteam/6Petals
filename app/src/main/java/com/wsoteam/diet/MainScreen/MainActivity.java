@@ -177,83 +177,83 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void checkFirstRun() {
-        //if (countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) == 3) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        AlertDialog alertDialog = builder.create();
-        View view = getLayoutInflater().inflate(R.layout.alert_dialog_grade, null);
+        if (countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) == 3) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog alertDialog = builder.create();
+            View view = getLayoutInflater().inflate(R.layout.alert_dialog_grade, null);
 
-        Animation movFromLeft = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_moving_from_left);
-        Animation movOutToRight = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_moving_out_to_right);
-        Animation movFromRight = AnimationUtils.loadAnimation(MainActivity.this, R.anim.moving_from_right);
+            Animation movFromLeft = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_moving_from_left);
+            Animation movOutToRight = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_moving_out_to_right);
+            Animation movFromRight = AnimationUtils.loadAnimation(MainActivity.this, R.anim.moving_from_right);
 
-        RatingBar ratingBar = view.findViewById(R.id.ratingBar);
-        EditText edtReport = view.findViewById(R.id.edtRatingReport);
-        TextView tvThank = view.findViewById(R.id.tvForGrade);
-        Button btnGradeClose = view.findViewById(R.id.btnGradeClose);
-        Button btnGradeLate = view.findViewById(R.id.btnGradeLate);
-        Button btnGradeSend = view.findViewById(R.id.btnGradeSend);
+            RatingBar ratingBar = view.findViewById(R.id.ratingBar);
+            EditText edtReport = view.findViewById(R.id.edtRatingReport);
+            TextView tvThank = view.findViewById(R.id.tvForGrade);
+            Button btnGradeClose = view.findViewById(R.id.btnGradeClose);
+            Button btnGradeLate = view.findViewById(R.id.btnGradeLate);
+            Button btnGradeSend = view.findViewById(R.id.btnGradeSend);
 
-        btnGradeClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                YandexMetrica.reportEvent("Отказ в оценке");
-                alertDialog.cancel();
-            }
-        });
-
-        btnGradeLate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                countOfRun = getPreferences(MODE_PRIVATE);
-                SharedPreferences.Editor editor = countOfRun.edit();
-                editor.putInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, 0);
-                editor.commit();
-                YandexMetrica.reportEvent("Оценка отложена");
-                alertDialog.cancel();
-            }
-        });
-
-        btnGradeSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "sav@wsoteam.com", null));
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Отзыв");
-                intent.putExtra(Intent.EXTRA_TEXT, edtReport.getText().toString());
-                startActivity(Intent.createChooser(intent, "Send Email"));
-                alertDialog.cancel();
-            }
-        });
-
-        btnGradeSend.setVisibility(View.GONE);
-        tvThank.setVisibility(View.GONE);
-        edtReport.setVisibility(View.GONE);
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                if (v >= 4) {
-                    YandexMetrica.reportEvent("Переход в ГП для оценки");
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("market://details?id=" + MainActivity.this.getPackageName()));
-                    startActivity(intent);
+            btnGradeClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    YandexMetrica.reportEvent("Отказ в оценке");
                     alertDialog.cancel();
-                    isFiveStarSend = true;
-                } else {
-                    if (edtReport.getVisibility() == View.GONE) {
-                        edtReport.setVisibility(View.VISIBLE);
-                        edtReport.startAnimation(movFromLeft);
-                        ratingBar.startAnimation(movOutToRight);
-                        ratingBar.setVisibility(View.GONE);
-                        tvThank.setVisibility(View.VISIBLE);
-                        tvThank.startAnimation(movFromLeft);
-                        btnGradeSend.setVisibility(View.VISIBLE);
-                        btnGradeSend.startAnimation(movFromRight);
+                }
+            });
+
+            btnGradeLate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    countOfRun = getPreferences(MODE_PRIVATE);
+                    SharedPreferences.Editor editor = countOfRun.edit();
+                    editor.putInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, 0);
+                    editor.commit();
+                    YandexMetrica.reportEvent("Оценка отложена");
+                    alertDialog.cancel();
+                }
+            });
+
+            btnGradeSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "sav@wsoteam.com", null));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Отзыв");
+                    intent.putExtra(Intent.EXTRA_TEXT, edtReport.getText().toString());
+                    startActivity(Intent.createChooser(intent, "Send Email"));
+                    alertDialog.cancel();
+                }
+            });
+
+            btnGradeSend.setVisibility(View.GONE);
+            tvThank.setVisibility(View.GONE);
+            edtReport.setVisibility(View.GONE);
+            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                    if (v >= 4) {
+                        YandexMetrica.reportEvent("Переход в ГП для оценки");
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("market://details?id=" + MainActivity.this.getPackageName()));
+                        startActivity(intent);
+                        alertDialog.cancel();
+                        isFiveStarSend = true;
+                    } else {
+                        if (edtReport.getVisibility() == View.GONE) {
+                            edtReport.setVisibility(View.VISIBLE);
+                            edtReport.startAnimation(movFromLeft);
+                            ratingBar.startAnimation(movOutToRight);
+                            ratingBar.setVisibility(View.GONE);
+                            tvThank.setVisibility(View.VISIBLE);
+                            tvThank.startAnimation(movFromLeft);
+                            btnGradeSend.setVisibility(View.VISIBLE);
+                            btnGradeSend.startAnimation(movFromRight);
+                        }
                     }
                 }
-            }
-        });
-        alertDialog.setView(view);
-        alertDialog.show();
-        // }
+            });
+            alertDialog.setView(view);
+            alertDialog.show();
+        }
     }
 
     private void loadAd() {
