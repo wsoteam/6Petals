@@ -45,4 +45,12 @@
     <color name="darkWithoutAlfaMoreLight">#4b4a4a</color>
     <color name="backgroundDelete">#b41c1c</color>
     <color name="transparent">#00b41c1c</color>
+
+
+    <!--Colors for cirlce progress on main screen-->
+    <color name="fatColor">#ffffff</color>
+    <color name="kcalColor">#1cff02</color>
+    <color name="protColor">#ffffff</color>
+    <color name="carboColor">#262525</color>
+    <color name="little_transparent">#5e303030</color>
 </resources>

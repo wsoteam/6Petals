@@ -1,29 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- Use DrawerLayout as root container for activity -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/darkWithoutAlfa"
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/mainappbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:background="@drawable/gradient_for_graphic"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="5dp">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimaryDark"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/darkWithoutAlfa"
+            app:expandedTitleMarginEnd="5dp"
+            app:expandedTitleMarginStart="5dp"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Subhead"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.github.lzyzsd.circleprogress.ArcProgress
+                    android:id="@+id/apCollapsingKcal"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="24dp"
+                    app:arc_bottom_text="Калории"
+                    app:arc_max="10000"
+                    app:arc_text_color="@color/white"
+                    app:arc_progress="7500"
+                    app:arc_finished_color="@color/kcalColor"
+                    app:arc_bottom_text_size="17sp"
+                    app:arc_suffix_text=" "
+                    app:arc_stroke_width="8dp"
+                    app:arc_unfinished_color="@color/little_transparent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.github.lzyzsd.circleprogress.ArcProgress
+                    android:id="@+id/apCollapsingProt"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="24dp"
+                    app:arc_bottom_text="Белки"
+                    app:arc_bottom_text_size="8sp"
+                    app:arc_max="10000"
+                    app:arc_text_color="@color/white"
+                    app:arc_unfinished_color="@color/little_transparent"
+                    app:arc_progress="7500"
+                    app:arc_suffix_text=" "
+                    app:arc_text_size="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/apCollapsingCarbo"
+                    app:layout_constraintTop_toTopOf="@+id/apCollapsingCarbo" />
+
+                <com.github.lzyzsd.circleprogress.ArcProgress
+                    android:id="@+id/apCollapsingCarbo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="32dp"
+                    android:layout_marginTop="32dp"
+                    app:arc_bottom_text="Углеводы"
+                    app:arc_bottom_text_size="9sp"
+                    app:arc_text_color="@color/white"
+                    app:arc_max="10000"
+                    app:arc_progress="7500"
+                    app:arc_unfinished_color="@color/little_transparent"
+                    app:arc_suffix_text=" "
+                    app:arc_text_size="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/apCollapsingProt"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/apCollapsingFat"
+                    app:layout_constraintTop_toBottomOf="@+id/apCollapsingKcal"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <com.github.lzyzsd.circleprogress.ArcProgress
+                    android:id="@+id/apCollapsingFat"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="24dp"
+                    app:arc_bottom_text="Жиры"
+                    app:arc_bottom_text_size="8dp"
+                    app:arc_max="10000"
+                    app:arc_progress="7500"
+                    app:arc_text_color="@color/white"
+                    app:arc_unfinished_color="@color/little_transparent"
+                    app:arc_suffix_text=" "
+                    app:arc_text_size="15sp"
+                    app:layout_constraintEnd_toStartOf="@+id/apCollapsingCarbo"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/apCollapsingCarbo" />
+
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvMainScreen"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-</LinearLayout>
+        android:layout_height="match_parent" />
+</android.support.design.widget.CoordinatorLayout>

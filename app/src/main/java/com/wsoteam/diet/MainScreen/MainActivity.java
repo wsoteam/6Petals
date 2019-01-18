@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity
             R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary,
             R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes, R.drawable.ic_main_menu_fitness};
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top_menu, menu);
         try {
@@ -100,10 +100,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*Intent intent = new Intent(MainActivity.this, ActivityPresentation.class);
-        startActivity(intent);*/
+        *//*Intent intent = new Intent(MainActivity.this, ActivityPresentation.class);
+        startActivity(intent);*//*
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     protected void onResume() {
@@ -147,9 +147,9 @@ public class MainActivity extends AppCompatActivity
         rvMainList.setAdapter(new ItemAdapter(getResources().getStringArray(R.array.names_items_of_main_screen),
                 urlsOfImages, getResources().getStringArray(R.array.properties_items_of_main_screen)));
 
-        toolbar = findViewById(R.id.toolbar);
+        /*toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle(getString(R.string.main_menu));
+        setTitle(getString(R.string.main_menu));*/
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -163,8 +163,6 @@ public class MainActivity extends AppCompatActivity
 
         additionOneToSharedPreference();
         checkFirstRun();
-
-        YandexMetrica.reportEvent("Открыт экран: Тренировки");
 
     }
 
