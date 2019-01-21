@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,6 +24,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
@@ -51,8 +54,12 @@ import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
+import com.wsoteam.diet.POJOsCircleProgress.CalculateAndSavedData;
+import com.wsoteam.diet.POJOsCircleProgress.CurrentDay;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -62,7 +69,12 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView rvMainList;
     private Animation animationChangeScale;
 
+    private ArcProgress apCollapsingKcal, apCollapsingProt, apCollapsingCarbo, apCollapsingFat;
+    private TextView tvCollapsingGreeting;
+    private FloatingActionButton fabAddEating;
+
     private int COUNT_OF_RUN = 0;
+    private int START_COUNT = 0;
     private String TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG = "COUNT_OF_RUN";
     private SharedPreferences countOfRun;
     private boolean isAccessibleCountry = true;
@@ -142,6 +154,16 @@ public class MainActivity extends AppCompatActivity
             isAccessibleCountry = false;
         }
 
+
+        apCollapsingKcal = findViewById(R.id.apCollapsingKcal);
+        apCollapsingProt = findViewById(R.id.apCollapsingProt);
+        apCollapsingCarbo = findViewById(R.id.apCollapsingCarbo);
+        apCollapsingFat = findViewById(R.id.apCollapsingFat);
+        tvCollapsingGreeting = findViewById(R.id.tvCollapsingGreeting);
+        fabAddEating = findViewById(R.id.fabAddEating);
+
+        bindCircleProgressBars();
+
         rvMainList = findViewById(R.id.rvMainScreen);
         rvMainList.setLayoutManager(new GridLayoutManager(this, 2));
         rvMainList.setAdapter(new ItemAdapter(getResources().getStringArray(R.array.names_items_of_main_screen),
@@ -163,6 +185,90 @@ public class MainActivity extends AppCompatActivity
 
         additionOneToSharedPreference();
         checkFirstRun();
+
+        fabAddEating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showChangeEating();
+            }
+        });
+
+    }
+
+    private void showChangeEating() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog alertDialog = builder.create();
+        View view = getLayoutInflater().inflate(R.layout.alert_dialog_choise_eating, null);
+        Button btnChoiseEatingAnalyzer = view.findViewById(R.id.btnChoiseEatingAnalyzer);
+        btnChoiseEatingAnalyzer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ActivityListAndSearch.class);
+                startActivity(intent);
+                alertDialog.cancel();
+            }
+        });
+
+        alertDialog.setView(view);
+        alertDialog.show();
+    }
+
+    private void bindCircleProgressBars() {
+        if (CalculateAndSavedData.count(CalculateAndSavedData.class) != 0) {
+            CalculateAndSavedData data = CalculateAndSavedData.first(CalculateAndSavedData.class);
+            apCollapsingKcal.setMax(data.getCalories());
+            apCollapsingProt.setMax(data.getProtein());
+            apCollapsingCarbo.setMax(data.getCarbohydrates());
+            apCollapsingFat.setMax(data.getFat());
+        } else {
+            apCollapsingKcal.setMax(2000);
+            apCollapsingProt.setMax(100);
+            apCollapsingCarbo.setMax(100);
+            apCollapsingFat.setMax(100);
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+
+        Log.e("LOL", String.valueOf(day) + String.valueOf(month) + String.valueOf(year));
+
+        if (CurrentDay.count(CurrentDay.class) != 0) {
+            CurrentDay currentDay = CurrentDay.first(CurrentDay.class);
+            if (currentDay.getDayOfMonth() < day || currentDay.getMonth() < month || currentDay.getYear() < year) {
+                CurrentDay.deleteAll(CurrentDay.class);
+                currentDay.setDayOfMonth(day);
+                currentDay.setMonth(month);
+                currentDay.setYear(year);
+
+                currentDay.setCalories(START_COUNT);
+                currentDay.setCarbohydrates(START_COUNT);
+                currentDay.setFat(START_COUNT);
+                currentDay.setProtein(START_COUNT);
+                currentDay.save();
+
+                apCollapsingKcal.setProgress(START_COUNT);
+                apCollapsingProt.setProgress(START_COUNT);
+                apCollapsingCarbo.setProgress(START_COUNT);
+                apCollapsingFat.setProgress(START_COUNT);
+
+            } else {
+                apCollapsingKcal.setProgress(currentDay.getCalories());
+                apCollapsingProt.setProgress(currentDay.getProtein());
+                apCollapsingCarbo.setProgress(currentDay.getCarbohydrates());
+                apCollapsingFat.setProgress(currentDay.getFat());
+            }
+        } else {
+            CurrentDay currentDay = new CurrentDay(day, month, year, START_COUNT, START_COUNT, START_COUNT, START_COUNT);
+            currentDay.save();
+
+            apCollapsingKcal.setProgress(START_COUNT);
+            apCollapsingProt.setProgress(START_COUNT);
+            apCollapsingCarbo.setProgress(START_COUNT);
+            apCollapsingFat.setProgress(START_COUNT);
+        }
+
 
     }
 
