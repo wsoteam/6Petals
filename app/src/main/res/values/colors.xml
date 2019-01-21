@@ -48,10 +48,9 @@
 
 
     <!--Colors for cirlce progress on main screen-->
-    <color name="fatColor">#ffffff</color>
-    <color name="kcalColor">#1cff02</color>
+    <color name="fatColor">#fbaa1d</color>
+    <color name="kcalColor">#fffc21</color>
     <color name="protColor">#2bbbff</color>
-    <color name="protColorUnfinished">#233e75</color>
-    <color name="carboColor">#262525</color>
+    <color name="carboColor">#45ff17</color>
     <color name="little_transparent">#5e303030</color>
 </resources>
