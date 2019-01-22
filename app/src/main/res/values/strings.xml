@@ -286,7 +286,10 @@
     <string name="protein_detail">Белки -</string>
     <string name="kcal">Ккал</string>
     <string name="group_analyzer">Группа -</string>
-
+    <string name="btn_nav_eating_breakfast">Завтрак</string>
+    <string name="btn_nav_eating_lunch">Обед</string>
+    <string name="navigation_dinner">Ужин</string>
+    <string name="navigation_snack">Перекус</string>
 
 
 </resources>

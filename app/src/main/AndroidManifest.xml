@@ -156,6 +156,10 @@
             android:name=".BranchOfAnalyzer.ActivityRequestOfWatchADVideo"
             android:theme="@style/NotificationListActivity" />
 
+        <activity
+            android:name=".BranchCircleProgress.ActivityEatingDiary"
+            android:theme="@style/NotificationListActivity" />
+
 
         <receiver
             android:name=".Services.AlarmManagerBR"

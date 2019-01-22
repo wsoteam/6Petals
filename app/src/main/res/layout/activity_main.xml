@@ -37,7 +37,7 @@
                     android:layout_height="200dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     app:arc_bottom_text="еще 1000"
                     app:arc_bottom_text_size="17sp"
                     app:arc_finished_color="@color/kcalColor"
@@ -46,12 +46,12 @@
                     app:arc_stroke_width="2dp"
                     app:arc_suffix_text="ккал"
                     app:arc_suffix_text_padding="20dp"
-                    app:arc_text_size="45sp"
                     app:arc_text_color="@color/white"
+                    app:arc_text_size="45sp"
                     app:arc_unfinished_color="@color/little_transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvCollapsingGreeting" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.github.lzyzsd.circleprogress.ArcProgress
                     android:id="@+id/apCollapsingProt"
@@ -115,32 +115,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/apCollapsingCarbo" />
 
-                <TextView
-                    android:id="@+id/tvCollapsingGreeting"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="24dp"
-                    android:text=""
-                    android:textSize="21sp"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabAddEating"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/transparent"
-                    android:src="@drawable/fab_add_diary"
-                    app:borderWidth="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView40" />
 
                 <TextView
                     android:id="@+id/textView40"
@@ -161,6 +135,7 @@
                     android:id="@+id/textView42"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -168,6 +143,7 @@
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/apCollapsingCarbo"
                     app:layout_constraintStart_toStartOf="@+id/apCollapsingCarbo"
                     app:layout_constraintTop_toBottomOf="@+id/apCollapsingCarbo" />
@@ -198,4 +174,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabAddEating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/green"
+        android:src="@drawable/fab_add_diary"
+        app:borderWidth="0dp"
+        app:layout_anchor="@id/mainappbar"
+        app:layout_anchorGravity="bottom|end"
+        tools:layout_editor_absoluteX="252dp"
+        tools:layout_editor_absoluteY="228dp" />
 </android.support.design.widget.CoordinatorLayout>

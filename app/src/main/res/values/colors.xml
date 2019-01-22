@@ -53,4 +53,5 @@
     <color name="protColor">#2bbbff</color>
     <color name="carboColor">#45ff17</color>
     <color name="little_transparent">#5e303030</color>
+    <color name="littlejust_transparent">#c143d448</color>
 </resources>

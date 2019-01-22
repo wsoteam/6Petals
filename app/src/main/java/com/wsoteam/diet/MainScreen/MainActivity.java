@@ -44,6 +44,7 @@ import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.wsoteam.diet.BranchCircleProgress.ActivityEatingDiary;
 import com.wsoteam.diet.BranchOfAnalyzer.ActivityListAndSearch;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity
     private Animation animationChangeScale;
 
     private ArcProgress apCollapsingKcal, apCollapsingProt, apCollapsingCarbo, apCollapsingFat;
-    private TextView tvCollapsingGreeting;
     private FloatingActionButton fabAddEating;
 
     private int COUNT_OF_RUN = 0;
@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity
         apCollapsingProt = findViewById(R.id.apCollapsingProt);
         apCollapsingCarbo = findViewById(R.id.apCollapsingCarbo);
         apCollapsingFat = findViewById(R.id.apCollapsingFat);
-        tvCollapsingGreeting = findViewById(R.id.tvCollapsingGreeting);
         fabAddEating = findViewById(R.id.fabAddEating);
 
         bindCircleProgressBars();
@@ -189,28 +188,11 @@ public class MainActivity extends AppCompatActivity
         fabAddEating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showChangeEating();
-            }
-        });
-
-    }
-
-    private void showChangeEating() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        AlertDialog alertDialog = builder.create();
-        View view = getLayoutInflater().inflate(R.layout.alert_dialog_choise_eating, null);
-        Button btnChoiseEatingAnalyzer = view.findViewById(R.id.btnChoiseEatingAnalyzer);
-        btnChoiseEatingAnalyzer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ActivityListAndSearch.class);
+                Intent intent = new Intent(MainActivity.this, ActivityEatingDiary.class);
                 startActivity(intent);
-                alertDialog.cancel();
             }
         });
 
-        alertDialog.setView(view);
-        alertDialog.show();
     }
 
     private void bindCircleProgressBars() {
