@@ -290,6 +290,11 @@
     <string name="btn_nav_eating_lunch">Обед</string>
     <string name="navigation_dinner">Ужин</string>
     <string name="navigation_snack">Перекус</string>
+    <string name="input_weight_of_eating">Введите вес порции</string>
+    <string name="saved_in_breakfast">Порция сохранена в завтрак</string>
+    <string name="saved_in_lunch">Порция сохранена в обед</string>
+    <string name="saved_in_dinner">Порция сохранена в ужин</string>
+    <string name="saved_in_snack">Порция сохранена в снэки</string>
 
 
 </resources>

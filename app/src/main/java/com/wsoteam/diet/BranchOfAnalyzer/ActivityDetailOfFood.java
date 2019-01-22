@@ -2,19 +2,30 @@ package com.wsoteam.diet.BranchOfAnalyzer;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.wsoteam.diet.POJOFoodItem.FoodItem;
 import com.wsoteam.diet.POJOFoodItem.ListOfFoodItem;
+import com.wsoteam.diet.POJOsCircleProgress.Eating.Breakfast;
+import com.wsoteam.diet.POJOsCircleProgress.Eating.Dinner;
+import com.wsoteam.diet.POJOsCircleProgress.Eating.Lunch;
+import com.wsoteam.diet.POJOsCircleProgress.Eating.Snack;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
+
+import java.util.Calendar;
 
 public class ActivityDetailOfFood extends AppCompatActivity {
     private TextView tvTitle, tvKcal,
@@ -22,6 +33,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
             tvCalculateFat, tvCalculateProtein, tvCalculateCarbohydrates, tvCalculateKcal, tvProperties;
     private DonutProgress pbCarbohydrates, pbFat, pbProtein;
     private EditText edtWeight;
+    private Button btnSaveEating;
 
     private FoodItem foodItem;
 
@@ -37,6 +49,8 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         tvCarbohydrates = findViewById(R.id.tvActivityDetailOfFoodCountOfCarbohydrates);
         tvFat = findViewById(R.id.tvActivityDetailOfFoodCountOfFat);
         tvProtein = findViewById(R.id.tvActivityDetailOfFoodCountOfProtein);
+
+        btnSaveEating = findViewById(R.id.btnSaveEating);
 
         tvCalculateFat = findViewById(R.id.tvActivityDetailOfFoodCalculateFat);
         tvCalculateCarbohydrates = findViewById(R.id.tvActivityDetailOfFoodCalculateCarbo);
@@ -100,8 +114,88 @@ public class ActivityDetailOfFood extends AppCompatActivity {
 
             }
         });
+
+        btnSaveEating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (edtWeight.getText().toString().equals("") || edtWeight.getText().toString().equals(" ")){
+                    Toast.makeText(ActivityDetailOfFood.this, R.string.input_weight_of_eating, Toast.LENGTH_SHORT).show();
+                }else {
+                    createAddNewEatingDialog();
+                }
+
+            }
+        });
         YandexMetrica.reportEvent("Открыт экран: Детализация продукта группы - " + foodItem.getNameOfGroup());
 
+    }
+
+    private void createAddNewEatingDialog() {
+        Calendar calendar = Calendar.getInstance();
+
+        int kcal = Integer.parseInt(tvCalculateKcal.getText().toString().split(" ")[0]);
+        int carbo = Integer.parseInt(tvCalculateCarbohydrates.getText().toString().split(" ")[0]);
+        int prot = Integer.parseInt(tvCalculateProtein.getText().toString().split(" ")[0]);
+        int fat = Integer.parseInt(tvCalculateFat.getText().toString().split(" ")[0]);
+
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+
+        String name = foodItem.getName();
+        String urlOfImage = foodItem.getUrlOfImages();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog alertDialog = builder.create();
+        View view = getLayoutInflater().inflate(R.layout.alert_dialog_choise_eating_type, null);
+
+        Button btnEatingBreakfast = view.findViewById(R.id.btnEatingBreakfast);
+        Button btnEatingLunch = view.findViewById(R.id.btnEatingLunch);
+        Button btnEatingDinner = view.findViewById(R.id.btnEatingDinner);
+        Button btnEatingSnack = view.findViewById(R.id.btnEatingSnack);
+        Button btnEatingCancel = view.findViewById(R.id.btnEatingCancel);
+
+        btnEatingBreakfast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Breakfast(name, urlOfImage, kcal, carbo, prot, fat, day, month, year).save();
+                alertDialog.cancel();
+                Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_breakfast, Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnEatingLunch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Lunch(name, urlOfImage, kcal, carbo, prot, fat, day, month, year).save();
+                alertDialog.cancel();
+                Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_lunch, Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnEatingDinner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Dinner(name, urlOfImage, kcal, carbo, prot, fat, day, month, year).save();
+                alertDialog.cancel();
+                Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_dinner, Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnEatingSnack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Snack(name, urlOfImage, kcal, carbo, prot, fat, day, month, year).save();
+                alertDialog.cancel();
+                Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_snack, Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnEatingCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.cancel();
+            }
+        });
+
+        alertDialog.setView(view);
+        alertDialog.show();
     }
 
     private void calculateMainParameters() {

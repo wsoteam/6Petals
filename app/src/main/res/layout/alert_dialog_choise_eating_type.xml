@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnEatingBreakfast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Завтрак"
+        tools:layout_editor_absoluteX="114dp"
+        tools:layout_editor_absoluteY="79dp" />
+
+    <Button
+        android:id="@+id/btnEatingLunch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Обед"
+        tools:layout_editor_absoluteX="135dp"
+        tools:layout_editor_absoluteY="154dp" />
+
+    <Button
+        android:id="@+id/btnEatingDinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ужин"
+        tools:layout_editor_absoluteX="72dp"
+        tools:layout_editor_absoluteY="230dp" />
+
+    <Button
+        android:id="@+id/btnEatingSnack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Перекус"
+        tools:layout_editor_absoluteX="114dp"
+        tools:layout_editor_absoluteY="315dp" />
+
+    <Button
+        android:id="@+id/btnEatingCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Отмена"
+        tools:layout_editor_absoluteX="160dp"
+        tools:layout_editor_absoluteY="376dp" />
+</LinearLayout>
