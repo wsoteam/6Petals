@@ -11,6 +11,8 @@ public class Snack extends SugarRecord {
     private int protein;
     private int fat;
 
+    private int weight;
+
     private int day;
     private int month;
     private int year;
@@ -18,16 +20,25 @@ public class Snack extends SugarRecord {
     public Snack() {
     }
 
-    public Snack(String name, String urlOfImages, int calories, int carbohydrates, int protein, int fat, int day, int month, int year) {
+    public Snack(String name, String urlOfImages, int calories, int carbohydrates, int protein, int fat, int weight, int day, int month, int year) {
         this.name = name;
         this.urlOfImages = urlOfImages;
         this.calories = calories;
         this.carbohydrates = carbohydrates;
         this.protein = protein;
         this.fat = fat;
+        this.weight = weight;
         this.day = day;
         this.month = month;
         this.year = year;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     public String getName() {

@@ -118,9 +118,9 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         btnSaveEating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (edtWeight.getText().toString().equals("") || edtWeight.getText().toString().equals(" ")){
+                if (edtWeight.getText().toString().equals("") || edtWeight.getText().toString().equals(" ")) {
                     Toast.makeText(ActivityDetailOfFood.this, R.string.input_weight_of_eating, Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     createAddNewEatingDialog();
                 }
 
@@ -137,6 +137,8 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         int carbo = Integer.parseInt(tvCalculateCarbohydrates.getText().toString().split(" ")[0]);
         int prot = Integer.parseInt(tvCalculateProtein.getText().toString().split(" ")[0]);
         int fat = Integer.parseInt(tvCalculateFat.getText().toString().split(" ")[0]);
+
+        int weight = Integer.parseInt(edtWeight.getText().toString());
 
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
@@ -158,7 +160,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         btnEatingBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Breakfast(name, urlOfImage, kcal, carbo, prot, fat, day, month, year).save();
+                new Breakfast(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
                 alertDialog.cancel();
                 Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_breakfast, Toast.LENGTH_SHORT).show();
             }
@@ -166,7 +168,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         btnEatingLunch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Lunch(name, urlOfImage, kcal, carbo, prot, fat, day, month, year).save();
+                new Lunch(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
                 alertDialog.cancel();
                 Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_lunch, Toast.LENGTH_SHORT).show();
             }
@@ -174,7 +176,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         btnEatingDinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Dinner(name, urlOfImage, kcal, carbo, prot, fat, day, month, year).save();
+                new Dinner(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
                 alertDialog.cancel();
                 Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_dinner, Toast.LENGTH_SHORT).show();
             }
@@ -182,7 +184,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         btnEatingSnack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Snack(name, urlOfImage, kcal, carbo, prot, fat, day, month, year).save();
+                new Snack(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
                 alertDialog.cancel();
                 Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_snack, Toast.LENGTH_SHORT).show();
             }
