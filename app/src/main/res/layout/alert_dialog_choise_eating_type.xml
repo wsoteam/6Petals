@@ -7,13 +7,106 @@
     android:background="@color/transparent">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cvChoiseEatingLunch"
+        android:id="@+id/cvChoiseEatingSnack"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="5dp"
+        app:layout_constraintStart_toEndOf="@+id/cvChoiseEatingDinner"
+        app:layout_constraintTop_toBottomOf="@+id/cvChoiseEatingLunch">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_choise_eating_snack">
+
+            <ImageView
+                android:id="@+id/ivAlertChoiseEatingSnack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_choise_eating_snack"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvAlertChoiseEatingSnack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="Перекус"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/ivAlertChoiseEatingSnack"
+                app:layout_constraintHorizontal_bias="0.571"
+                app:layout_constraintStart_toStartOf="@+id/ivAlertChoiseEatingSnack"
+                app:layout_constraintTop_toBottomOf="@+id/ivAlertChoiseEatingSnack" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cvChoiseEatingDinner"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/cvChoiseEatingBreakFast"
+        app:layout_constraintStart_toStartOf="@+id/cvChoiseEatingBreakFast"
+        app:layout_constraintTop_toBottomOf="@+id/cvChoiseEatingBreakFast">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_choise_eating_dinner">
+
+            <ImageView
+                android:id="@+id/ivAlertChoiseEatingDinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_choise_eating_dinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvAlertChoiseEatingDinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="Ужин"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/ivAlertChoiseEatingDinner"
+                app:layout_constraintStart_toStartOf="@+id/ivAlertChoiseEatingDinner"
+                app:layout_constraintTop_toBottomOf="@+id/ivAlertChoiseEatingDinner" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cvChoiseEatingLunch"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cvChoiseEatingBreakFast"
         app:layout_constraintStart_toEndOf="@+id/cvChoiseEatingBreakFast"
         app:layout_constraintTop_toTopOf="@+id/cvChoiseEatingBreakFast">
 
@@ -40,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:text="Обед"
                 android:textColor="@color/white"
                 android:textStyle="bold"
@@ -95,11 +188,9 @@
         android:id="@+id/btnEatingCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="Отмена"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEatingSnack" />
+        tools:layout_editor_absoluteX="224dp"
+        tools:layout_editor_absoluteY="194dp" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/cvChoiseEatingBreakFast"
@@ -135,7 +226,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:text="Завтрак"
                 android:textColor="@color/white"
                 android:textStyle="bold"
