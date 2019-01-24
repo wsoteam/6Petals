@@ -54,4 +54,7 @@
     <color name="carboColor">#45ff17</color>
     <color name="little_transparent">#5e303030</color>
     <color name="littlejust_transparent">#c143d448</color>
+
+
+    <color name="text_color_item_eating_diary">#7091be</color>
 </resources>

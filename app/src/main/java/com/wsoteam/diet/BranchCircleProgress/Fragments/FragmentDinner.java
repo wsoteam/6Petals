@@ -60,8 +60,8 @@ public class FragmentDinner extends Fragment {
             tvEatingItemFat.setText(String.valueOf(dinner.getFat()));
             tvEatingItemCarbo.setText(String.valueOf(dinner.getCarbohydrates()));
             tvEatingItemProt.setText(String.valueOf(dinner.getProtein()));
-            tvEatingItemKcal.setText(String.valueOf(dinner.getCalories()));
-            tvEatingItemWeight.setText(String.valueOf(dinner.getWeight()));
+            tvEatingItemKcal.setText(String.valueOf(dinner.getCalories()) + " ккал");
+            tvEatingItemWeight.setText(String.valueOf(dinner.getWeight()) + " кг");
 
             Glide.with(getActivity()).load(dinner.getUrlOfImages()).into(ivImage);
 

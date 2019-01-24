@@ -55,11 +55,11 @@ public class FragmentBreakfast extends Fragment {
 
         public void bind(Breakfast breakfast) {
             tvEatingItemName.setText(String.valueOf(breakfast.getName()));
-            tvEatingItemFat.setText(String.valueOf(breakfast.getFat()));
-            tvEatingItemCarbo.setText(String.valueOf(breakfast.getCarbohydrates()));
-            tvEatingItemProt.setText(String.valueOf(breakfast.getProtein()));
-            tvEatingItemKcal.setText(String.valueOf(breakfast.getCalories()));
-            tvEatingItemWeight.setText(String.valueOf(breakfast.getWeight()));
+            tvEatingItemFat.setText(String.valueOf(breakfast.getFat())+ " г");
+            tvEatingItemCarbo.setText(String.valueOf(breakfast.getCarbohydrates())+ " г");
+            tvEatingItemProt.setText(String.valueOf(breakfast.getProtein())+ " г");
+            tvEatingItemKcal.setText(String.valueOf(breakfast.getCalories()) + " ккал");
+            tvEatingItemWeight.setText(String.valueOf(breakfast.getWeight()) + " г");
 
             Glide.with(getActivity()).load(breakfast.getUrlOfImages()).into(ivImage);
 

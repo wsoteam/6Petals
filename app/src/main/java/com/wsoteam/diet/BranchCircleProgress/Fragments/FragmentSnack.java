@@ -58,8 +58,8 @@ public class FragmentSnack extends Fragment {
             tvEatingItemFat.setText(String.valueOf(snack.getFat()));
             tvEatingItemCarbo.setText(String.valueOf(snack.getCarbohydrates()));
             tvEatingItemProt.setText(String.valueOf(snack.getProtein()));
-            tvEatingItemKcal.setText(String.valueOf(snack.getCalories()));
-            tvEatingItemWeight.setText(String.valueOf(snack.getWeight()));
+            tvEatingItemKcal.setText(String.valueOf(snack.getCalories()) + " ккал");
+            tvEatingItemWeight.setText(String.valueOf(snack.getWeight()) + " кг");
 
             Glide.with(getActivity()).load(snack.getUrlOfImages()).into(ivImage);
 
