@@ -294,7 +294,7 @@
     <string name="saved_in_breakfast">Порция сохранена в завтрак</string>
     <string name="saved_in_lunch">Порция сохранена в обед</string>
     <string name="saved_in_dinner">Порция сохранена в ужин</string>
-    <string name="saved_in_snack">Порция сохранена в снэки</string>
+    <string name="saved_in_snack">Порция сохранена в перекус</string>
 
 
 </resources>

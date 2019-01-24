@@ -1,9 +1,12 @@
 package com.wsoteam.diet.BranchOfAnalyzer;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -151,13 +154,12 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         View view = getLayoutInflater().inflate(R.layout.alert_dialog_choise_eating_type, null);
 
-        Button btnEatingBreakfast = view.findViewById(R.id.btnEatingBreakfast);
-        Button btnEatingLunch = view.findViewById(R.id.btnEatingLunch);
-        Button btnEatingDinner = view.findViewById(R.id.btnEatingDinner);
-        Button btnEatingSnack = view.findViewById(R.id.btnEatingSnack);
-        Button btnEatingCancel = view.findViewById(R.id.btnEatingCancel);
+        CardView cvChoiseEatingBreakFast = view.findViewById(R.id.cvChoiseEatingBreakFast);
+        CardView cvChoiseEatingLunch = view.findViewById(R.id.cvChoiseEatingLunch);
+        CardView cvChoiseEatingDinner = view.findViewById(R.id.cvChoiseEatingDinner);
+        CardView cvChoiseEatingSnack = view.findViewById(R.id.cvChoiseEatingSnack);
 
-        btnEatingBreakfast.setOnClickListener(new View.OnClickListener() {
+        cvChoiseEatingBreakFast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new Breakfast(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
@@ -165,7 +167,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
                 Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_breakfast, Toast.LENGTH_SHORT).show();
             }
         });
-        btnEatingLunch.setOnClickListener(new View.OnClickListener() {
+        cvChoiseEatingLunch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new Lunch(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
@@ -173,7 +175,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
                 Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_lunch, Toast.LENGTH_SHORT).show();
             }
         });
-        btnEatingDinner.setOnClickListener(new View.OnClickListener() {
+        cvChoiseEatingDinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new Dinner(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
@@ -181,7 +183,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
                 Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_dinner, Toast.LENGTH_SHORT).show();
             }
         });
-        btnEatingSnack.setOnClickListener(new View.OnClickListener() {
+        cvChoiseEatingSnack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new Snack(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
@@ -189,13 +191,8 @@ public class ActivityDetailOfFood extends AppCompatActivity {
                 Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_snack, Toast.LENGTH_SHORT).show();
             }
         });
-        btnEatingCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.cancel();
-            }
-        });
 
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         alertDialog.setView(view);
         alertDialog.show();
     }
