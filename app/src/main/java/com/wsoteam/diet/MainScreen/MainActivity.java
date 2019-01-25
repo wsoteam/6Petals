@@ -1,16 +1,10 @@
 package com.wsoteam.diet.MainScreen;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -26,7 +20,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,11 +49,16 @@ import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.POJOsCircleProgress.CalculateAndSavedData;
-import com.wsoteam.diet.POJOsCircleProgress.CurrentDay;
+import com.wsoteam.diet.POJOsCircleProgress.Eating.Breakfast;
+import com.wsoteam.diet.POJOsCircleProgress.Eating.Dinner;
+import com.wsoteam.diet.POJOsCircleProgress.Eating.Lunch;
+import com.wsoteam.diet.POJOsCircleProgress.Eating.Snack;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -121,6 +119,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         showThankToast();
+        bindCircleProgressBars();
     }
 
     private void showThankToast() {
@@ -161,7 +160,6 @@ public class MainActivity extends AppCompatActivity
         apCollapsingFat = findViewById(R.id.apCollapsingFat);
         fabAddEating = findViewById(R.id.fabAddEating);
 
-        bindCircleProgressBars();
 
         rvMainList = findViewById(R.id.rvMainScreen);
         rvMainList.setLayoutManager(new GridLayoutManager(this, 2));
@@ -196,6 +194,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void bindCircleProgressBars() {
+        Log.e("LOL", "Start");
         if (CalculateAndSavedData.count(CalculateAndSavedData.class) != 0) {
             CalculateAndSavedData data = CalculateAndSavedData.first(CalculateAndSavedData.class);
             apCollapsingKcal.setMax(data.getCalories());
@@ -214,43 +213,83 @@ public class MainActivity extends AppCompatActivity
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
 
+        int prot = 0, kcal = 0, fat = 0, carbo = 0;
+
         Log.e("LOL", String.valueOf(day) + String.valueOf(month) + String.valueOf(year));
 
-        if (CurrentDay.count(CurrentDay.class) != 0) {
-            CurrentDay currentDay = CurrentDay.first(CurrentDay.class);
-            if (currentDay.getDayOfMonth() < day || currentDay.getMonth() < month || currentDay.getYear() < year) {
-                CurrentDay.deleteAll(CurrentDay.class);
-                currentDay.setDayOfMonth(day);
-                currentDay.setMonth(month);
-                currentDay.setYear(year);
+        List<Breakfast> breakfasts = Breakfast.listAll(Breakfast.class);
+        List<Lunch> lunches = Lunch.listAll(Lunch.class);
+        List<Dinner> dinners = Dinner.listAll(Dinner.class);
+        List<Snack> snacks = Snack.listAll(Snack.class);
 
-                currentDay.setCalories(START_COUNT);
-                currentDay.setCarbohydrates(START_COUNT);
-                currentDay.setFat(START_COUNT);
-                currentDay.setProtein(START_COUNT);
-                currentDay.save();
+        Breakfast.deleteAll(Breakfast.class);
+        Lunch.deleteAll(Lunch.class);
+        Dinner.deleteAll(Dinner.class);
+        Snack.deleteAll(Snack.class);
 
-                apCollapsingKcal.setProgress(START_COUNT);
-                apCollapsingProt.setProgress(START_COUNT);
-                apCollapsingCarbo.setProgress(START_COUNT);
-                apCollapsingFat.setProgress(START_COUNT);
+        for (int i = 0; i < breakfasts.size(); i++) {
+            if (breakfasts.get(i).getDay() < day || breakfasts.get(i).getMonth() < month || breakfasts.get(i).getYear() < year) {
 
             } else {
-                apCollapsingKcal.setProgress(currentDay.getCalories());
-                apCollapsingProt.setProgress(currentDay.getProtein());
-                apCollapsingCarbo.setProgress(currentDay.getCarbohydrates());
-                apCollapsingFat.setProgress(currentDay.getFat());
+                breakfasts.get(i).save();
+                prot += breakfasts.get(i).getProtein();
+                kcal += breakfasts.get(i).getCalories();
+                fat += breakfasts.get(i).getFat();
+                carbo += breakfasts.get(i).getCarbohydrates();
             }
-        } else {
-            CurrentDay currentDay = new CurrentDay(day, month, year, START_COUNT, START_COUNT, START_COUNT, START_COUNT);
-            currentDay.save();
-
-            apCollapsingKcal.setProgress(START_COUNT);
-            apCollapsingProt.setProgress(START_COUNT);
-            apCollapsingCarbo.setProgress(START_COUNT);
-            apCollapsingFat.setProgress(START_COUNT);
         }
+        for (int i = 0; i < lunches.size(); i++) {
+            if (lunches.get(i).getDay() < day || lunches.get(i).getMonth() < month || lunches.get(i).getYear() < year) {
 
+            } else {
+                lunches.get(i).save();
+                prot += lunches.get(i).getProtein();
+                kcal += lunches.get(i).getCalories();
+                fat += lunches.get(i).getFat();
+                carbo += lunches.get(i).getCarbohydrates();
+            }
+        }
+        for (int i = 0; i < dinners.size(); i++) {
+            if (dinners.get(i).getDay() < day || dinners.get(i).getMonth() < month || dinners.get(i).getYear() < year) {
+
+            } else {
+                dinners.get(i).save();
+                prot += dinners.get(i).getProtein();
+                kcal += dinners.get(i).getCalories();
+                fat += dinners.get(i).getFat();
+                carbo += dinners.get(i).getCarbohydrates();
+            }
+        }
+        for (int i = 0; i < snacks.size(); i++) {
+            if (snacks.get(i).getDay() < day || snacks.get(i).getMonth() < month || snacks.get(i).getYear() < year) {
+
+            } else {
+                snacks.get(i).save();
+                prot += snacks.get(i).getProtein();
+                kcal += snacks.get(i).getCalories();
+                fat += snacks.get(i).getFat();
+                carbo += snacks.get(i).getCarbohydrates();
+            }
+        }
+        Log.e("LOL", "Finish");
+
+        apCollapsingKcal.setProgress(kcal);
+        apCollapsingProt.setProgress(prot);
+        apCollapsingCarbo.setProgress(carbo);
+        apCollapsingFat.setProgress(fat);
+
+        if (apCollapsingKcal.getMax() < kcal){
+
+        }
+        if (apCollapsingCarbo.getMax() < carbo){
+
+        }
+        if (apCollapsingFat.getMax() < fat){
+
+        }
+        if (apCollapsingProt.getMax() < prot){
+
+        }
 
     }
 
