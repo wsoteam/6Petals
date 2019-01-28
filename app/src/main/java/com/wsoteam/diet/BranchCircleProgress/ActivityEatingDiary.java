@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.wsoteam.diet.BranchCircleProgress.Fragments.FragmentBreakfast;
 import com.wsoteam.diet.BranchCircleProgress.Fragments.FragmentDinner;
@@ -29,6 +30,12 @@ public class ActivityEatingDiary extends AppCompatActivity {
     private ArrayList<Fragment> listOfFragments;
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigationView;
+    private TextView tvEatingDiaryCollapsingFat, tvEatingDiaryCollapsingCarbo, tvEatingDiaryCollapsingProt, tvEatingDiaryCollapsingKcal;
+
+    int breakfastKcal = 0, lunchKcal = 0, dinnerKcal = 0, snackKcal = 0,
+            breakfastProt = 0, lunchProt = 0, dinnerProt = 0, snackProt = 0,
+            breakfastCarbo = 0, lunchCarbo = 0, dinnerCarbo = 0, snackCarbo = 0,
+            breakfastFat = 0, lunchFat = 0, dinnerFat = 0, snackFat = 0;
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -38,15 +45,19 @@ public class ActivityEatingDiary extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.btn_nav_eating_breakfast:
                     viewPager.setCurrentItem(0);
+                    fillMainIndicators(0);
                     return true;
                 case R.id.btn_nav_eating_lunch:
                     viewPager.setCurrentItem(1);
+                    fillMainIndicators(1);
                     return true;
                 case R.id.btn_nav_eating_dinner:
                     viewPager.setCurrentItem(2);
+                    fillMainIndicators(2);
                     return true;
                 case R.id.btn_nav_eating_snack:
                     viewPager.setCurrentItem(3);
+                    fillMainIndicators(3);
                     return true;
             }
             return false;
@@ -61,7 +72,13 @@ public class ActivityEatingDiary extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottNavEatingDinner);
         viewPager = findViewById(R.id.vpEatingDiary);
 
+        tvEatingDiaryCollapsingFat = findViewById(R.id.tvEatingDiaryCollapsingFat);
+        tvEatingDiaryCollapsingCarbo = findViewById(R.id.tvEatingDiaryCollapsingCarbo);
+        tvEatingDiaryCollapsingProt = findViewById(R.id.tvEatingDiaryCollapsingProt);
+        tvEatingDiaryCollapsingKcal = findViewById(R.id.tvEatingDiaryCollapsingKcal);
+
         compareDate();
+        fillMainIndicators(0);
 
         listOfFragments = new ArrayList<>();
         listOfFragments.add(new FragmentBreakfast());
@@ -90,6 +107,7 @@ public class ActivityEatingDiary extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 bottomNavigationView.getMenu().getItem(position).setChecked(true);
+                fillMainIndicators(position);
             }
 
             @Override
@@ -103,13 +121,36 @@ public class ActivityEatingDiary extends AppCompatActivity {
 
     }
 
+    private void fillMainIndicators(int position) {
+        switch (position) {
+            case 0:
+                setUpNumbers(breakfastFat, breakfastCarbo, breakfastProt, breakfastKcal);
+                break;
+            case 1:
+                setUpNumbers(lunchFat, lunchCarbo, lunchProt, lunchKcal);
+                break;
+            case 2:
+                setUpNumbers(dinnerFat, dinnerCarbo, dinnerProt, dinnerKcal);
+                break;
+            case 3:
+                setUpNumbers(snackFat, snackCarbo, snackProt, snackKcal);
+                break;
+        }
+    }
+
+    private void setUpNumbers(int fat, int carbo, int prot, int kcal) {
+        tvEatingDiaryCollapsingFat.setText(String.valueOf(fat) + " г");
+        tvEatingDiaryCollapsingCarbo.setText(String.valueOf(carbo) + " г");
+        tvEatingDiaryCollapsingProt.setText(String.valueOf(prot) + " г");
+        tvEatingDiaryCollapsingKcal.setText(String.valueOf(kcal) + " ккал");
+    }
+
     private void compareDate() {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
 
-        int breakfastKcal = 0, lunchKcal = 0, dinnerKcal = 0, snackKcal = 0;
 
         List<Breakfast> breakfasts = Breakfast.listAll(Breakfast.class);
         List<Lunch> lunches = Lunch.listAll(Lunch.class);
@@ -127,6 +168,9 @@ public class ActivityEatingDiary extends AppCompatActivity {
             } else {
                 breakfasts.get(i).save();
                 breakfastKcal += breakfasts.get(i).getCalories();
+                breakfastProt += breakfasts.get(i).getProtein();
+                breakfastCarbo += breakfasts.get(i).getCarbohydrates();
+                breakfastFat += breakfasts.get(i).getFat();
             }
         }
         for (int i = 0; i < lunches.size(); i++) {
@@ -134,7 +178,10 @@ public class ActivityEatingDiary extends AppCompatActivity {
 
             } else {
                 lunches.get(i).save();
-                lunchKcal += breakfasts.get(i).getCalories();
+                lunchKcal += lunches.get(i).getCalories();
+                lunchProt += lunches.get(i).getProtein();
+                lunchCarbo += lunches.get(i).getCarbohydrates();
+                lunchFat += lunches.get(i).getFat();
             }
         }
         for (int i = 0; i < dinners.size(); i++) {
@@ -142,7 +189,10 @@ public class ActivityEatingDiary extends AppCompatActivity {
 
             } else {
                 dinners.get(i).save();
-                dinnerKcal += breakfasts.get(i).getCalories();
+                dinnerKcal += dinners.get(i).getCalories();
+                dinnerProt += dinners.get(i).getProtein();
+                dinnerCarbo += dinners.get(i).getCarbohydrates();
+                dinnerFat += dinners.get(i).getFat();
             }
         }
         for (int i = 0; i < snacks.size(); i++) {
@@ -150,7 +200,10 @@ public class ActivityEatingDiary extends AppCompatActivity {
 
             } else {
                 snacks.get(i).save();
-                snackKcal += breakfasts.get(i).getCalories();
+                snackKcal += snacks.get(i).getCalories();
+                snackProt += snacks.get(i).getProtein();
+                snackCarbo += snacks.get(i).getCarbohydrates();
+                snackFat += snacks.get(i).getFat();
             }
         }
     }

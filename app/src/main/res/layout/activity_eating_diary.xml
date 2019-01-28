@@ -25,7 +25,7 @@
             app:expandedTitleMarginEnd="5dp"
             app:expandedTitleMarginStart="5dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Subhead"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|snap">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
