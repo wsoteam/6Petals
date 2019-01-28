@@ -293,41 +293,31 @@ public class MainActivity extends AppCompatActivity
 
         //TODO over writing
         if (apCollapsingKcal.getMax() < kcal) {
-            //apCollapsingKcal.setTextColor(getResources().getColor(R.color.over_eat_color));
             apCollapsingKcal.setFinishedStrokeColor(getResources().getColor(R.color.over_eat_color));
             apCollapsingKcal.setSuffixText("-" + String.valueOf(kcal - apCollapsingKcal.getMax()));
         } else {
-            apCollapsingKcal.setTextColor(getResources().getColor(R.color.white));
+            apCollapsingKcal.setFinishedStrokeColor(getResources().getColor(R.color.white));
             apCollapsingKcal.setSuffixText("+" + String.valueOf(apCollapsingKcal.getMax() - kcal));
         }
         if (apCollapsingCarbo.getMax() < carbo) {
-            //apCollapsingCarbo.setTextColor(getResources().getColor(R.color.over_eat_color));
-            //tvCircleProgressCarbo.setTextColor(getResources().getColor(R.color.over_eat_color));
             apCollapsingCarbo.setFinishedStrokeColor(getResources().getColor(R.color.over_eat_color));
             tvCircleProgressCarbo.setText("избыток  " + String.valueOf(carbo - apCollapsingCarbo.getMax()) + " г");
         } else {
-            apCollapsingCarbo.setTextColor(getResources().getColor(R.color.white));
-            tvCircleProgressCarbo.setTextColor(getResources().getColor(R.color.white));
+            apCollapsingCarbo.setFinishedStrokeColor(getResources().getColor(R.color.white));
             tvCircleProgressCarbo.setText("осталось  " + String.valueOf(apCollapsingCarbo.getMax() - carbo) + " г");
         }
         if (apCollapsingFat.getMax() < fat) {
-            //apCollapsingFat.setTextColor(getResources().getColor(R.color.over_eat_color));
-            //tvCircleProgressFat.setTextColor(getResources().getColor(R.color.over_eat_color));
             apCollapsingFat.setFinishedStrokeColor(getResources().getColor(R.color.over_eat_color));
             tvCircleProgressFat.setText("избыток  " + String.valueOf(fat - apCollapsingFat.getMax()) + " г");
         } else {
-            apCollapsingFat.setTextColor(getResources().getColor(R.color.white));
-            tvCircleProgressFat.setTextColor(getResources().getColor(R.color.white));
+            apCollapsingFat.setFinishedStrokeColor(getResources().getColor(R.color.white));
             tvCircleProgressFat.setText("осталось  " + String.valueOf(apCollapsingFat.getMax() - fat) + " г");
         }
         if (apCollapsingProt.getMax() < prot) {
-            //apCollapsingProt.setTextColor(getResources().getColor(R.color.over_eat_color));
-            //tvCircleProgressProt.setTextColor(getResources().getColor(R.color.over_eat_color));
             apCollapsingProt.setFinishedStrokeColor(getResources().getColor(R.color.over_eat_color));
             tvCircleProgressProt.setText("избыток " + String.valueOf(prot - apCollapsingProt.getMax()) + " г");
         } else {
-            apCollapsingProt.setTextColor(getResources().getColor(R.color.white));
-            tvCircleProgressProt.setTextColor(getResources().getColor(R.color.white));
+            apCollapsingProt.setFinishedStrokeColor(getResources().getColor(R.color.white));
             tvCircleProgressProt.setText("осталось " + String.valueOf(apCollapsingProt.getMax() - prot) + " г");
         }
 

@@ -109,7 +109,7 @@ public class ActivityEatingDiary extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
 
-        int prot = 0, kcal = 0, fat = 0, carbo = 0;
+        int breakfastKcal = 0, lunchKcal = 0, dinnerKcal = 0, snackKcal = 0;
 
         List<Breakfast> breakfasts = Breakfast.listAll(Breakfast.class);
         List<Lunch> lunches = Lunch.listAll(Lunch.class);
@@ -126,10 +126,7 @@ public class ActivityEatingDiary extends AppCompatActivity {
 
             } else {
                 breakfasts.get(i).save();
-                prot += breakfasts.get(i).getProtein();
-                kcal += breakfasts.get(i).getCalories();
-                fat += breakfasts.get(i).getFat();
-                carbo += breakfasts.get(i).getCarbohydrates();
+                breakfastKcal += breakfasts.get(i).getCalories();
             }
         }
         for (int i = 0; i < lunches.size(); i++) {
@@ -137,10 +134,7 @@ public class ActivityEatingDiary extends AppCompatActivity {
 
             } else {
                 lunches.get(i).save();
-                prot += lunches.get(i).getProtein();
-                kcal += lunches.get(i).getCalories();
-                fat += lunches.get(i).getFat();
-                carbo += lunches.get(i).getCarbohydrates();
+                lunchKcal += breakfasts.get(i).getCalories();
             }
         }
         for (int i = 0; i < dinners.size(); i++) {
@@ -148,10 +142,7 @@ public class ActivityEatingDiary extends AppCompatActivity {
 
             } else {
                 dinners.get(i).save();
-                prot += dinners.get(i).getProtein();
-                kcal += dinners.get(i).getCalories();
-                fat += dinners.get(i).getFat();
-                carbo += dinners.get(i).getCarbohydrates();
+                dinnerKcal += breakfasts.get(i).getCalories();
             }
         }
         for (int i = 0; i < snacks.size(); i++) {
@@ -159,10 +150,7 @@ public class ActivityEatingDiary extends AppCompatActivity {
 
             } else {
                 snacks.get(i).save();
-                prot += snacks.get(i).getProtein();
-                kcal += snacks.get(i).getCalories();
-                fat += snacks.get(i).getFat();
-                carbo += snacks.get(i).getCarbohydrates();
+                snackKcal += breakfasts.get(i).getCalories();
             }
         }
     }
