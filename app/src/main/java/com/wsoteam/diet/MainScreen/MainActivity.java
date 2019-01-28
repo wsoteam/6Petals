@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity
 
     private ArcProgress apCollapsingKcal, apCollapsingProt, apCollapsingCarbo, apCollapsingFat;
     private FloatingActionButton fabAddEating;
+    private TextView tvCircleProgressProt, tvCircleProgressCarbo, tvCircleProgressFat, tvCircleProgressKcal;
 
     private int COUNT_OF_RUN = 0;
     private int START_COUNT = 0;
@@ -154,12 +155,19 @@ public class MainActivity extends AppCompatActivity
         }
 
 
+        Breakfast.deleteAll(Breakfast.class);
+        Dinner.deleteAll(Dinner.class);
+        Lunch.deleteAll(Lunch.class);
+        Snack.deleteAll(Snack.class);
         apCollapsingKcal = findViewById(R.id.apCollapsingKcal);
         apCollapsingProt = findViewById(R.id.apCollapsingProt);
         apCollapsingCarbo = findViewById(R.id.apCollapsingCarbo);
         apCollapsingFat = findViewById(R.id.apCollapsingFat);
         fabAddEating = findViewById(R.id.fabAddEating);
 
+        tvCircleProgressProt = findViewById(R.id.tvCircleProgressProt);
+        tvCircleProgressCarbo = findViewById(R.id.tvCircleProgressCarbo);
+        tvCircleProgressFat = findViewById(R.id.tvCircleProgressFat);
 
         rvMainList = findViewById(R.id.rvMainScreen);
         rvMainList.setLayoutManager(new GridLayoutManager(this, 2));
@@ -278,17 +286,41 @@ public class MainActivity extends AppCompatActivity
         apCollapsingCarbo.setProgress(carbo);
         apCollapsingFat.setProgress(fat);
 
-        if (apCollapsingKcal.getMax() < kcal){
 
+        //TODO over writing
+        if (apCollapsingKcal.getMax() < kcal) {
+            apCollapsingKcal.setTextColor(getResources().getColor(R.color.over_eat_color));
+            apCollapsingKcal.setSuffixText("-" + String.valueOf(kcal - apCollapsingKcal.getMax()));
+        } else {
+            apCollapsingKcal.setTextColor(getResources().getColor(R.color.white));
+            apCollapsingKcal.setSuffixText("+" + String.valueOf(apCollapsingKcal.getMax() - kcal));
         }
-        if (apCollapsingCarbo.getMax() < carbo){
-
+        if (apCollapsingCarbo.getMax() < carbo) {
+            apCollapsingCarbo.setTextColor(getResources().getColor(R.color.over_eat_color));
+            tvCircleProgressCarbo.setTextColor(getResources().getColor(R.color.over_eat_color));
+            tvCircleProgressCarbo.setText("избыток  " + String.valueOf(carbo - apCollapsingCarbo.getMax()) + " г");
+        } else {
+            apCollapsingCarbo.setTextColor(getResources().getColor(R.color.white));
+            tvCircleProgressCarbo.setTextColor(getResources().getColor(R.color.white));
+            tvCircleProgressCarbo.setText("осталось  " + String.valueOf(apCollapsingCarbo.getMax() - carbo) + " г");
         }
-        if (apCollapsingFat.getMax() < fat){
-
+        if (apCollapsingFat.getMax() < fat) {
+            apCollapsingFat.setTextColor(getResources().getColor(R.color.over_eat_color));
+            tvCircleProgressFat.setTextColor(getResources().getColor(R.color.over_eat_color));
+            tvCircleProgressFat.setText("избыток  " + String.valueOf(fat - apCollapsingFat.getMax()) + " г");
+        } else {
+            apCollapsingFat.setTextColor(getResources().getColor(R.color.white));
+            tvCircleProgressFat.setTextColor(getResources().getColor(R.color.white));
+            tvCircleProgressFat.setText("осталось  " + String.valueOf(apCollapsingFat.getMax() - fat) + " г");
         }
-        if (apCollapsingProt.getMax() < prot){
-
+        if (apCollapsingProt.getMax() < prot) {
+            apCollapsingProt.setTextColor(getResources().getColor(R.color.over_eat_color));
+            tvCircleProgressProt.setTextColor(getResources().getColor(R.color.over_eat_color));
+            tvCircleProgressProt.setText("избыток " + String.valueOf(prot - apCollapsingProt.getMax()) + " г");
+        } else {
+            apCollapsingProt.setTextColor(getResources().getColor(R.color.white));
+            tvCircleProgressProt.setTextColor(getResources().getColor(R.color.white));
+            tvCircleProgressProt.setText("осталось " + String.valueOf(apCollapsingProt.getMax() - prot) + " г");
         }
 
     }

@@ -38,7 +38,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
-                    app:arc_bottom_text="еще 1000"
+                    app:arc_bottom_text="Калории"
                     app:arc_bottom_text_size="17sp"
                     app:arc_finished_color="@color/kcalColor"
                     app:arc_max="2000"
@@ -59,7 +59,7 @@
                     android:layout_height="100dp"
                     android:layout_marginEnd="24dp"
                     android:layout_marginStart="16dp"
-                    app:arc_bottom_text="еще 50 г"
+                    app:arc_bottom_text="Белки"
                     app:arc_bottom_text_size="9sp"
                     app:arc_finished_color="@color/protColor"
                     app:arc_max="1000"
@@ -78,8 +78,8 @@
                     android:id="@+id/apCollapsingCarbo"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_marginTop="32dp"
-                    app:arc_bottom_text="еще 50 г"
+                    android:layout_marginTop="8dp"
+                    app:arc_bottom_text="Углеводы"
                     app:arc_bottom_text_size="9sp"
                     app:arc_finished_color="@color/carboColor"
                     app:arc_max="1000"
@@ -100,7 +100,7 @@
                     android:layout_height="100dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="24dp"
-                    app:arc_bottom_text="еще 50 г"
+                    app:arc_bottom_text="Жиры"
                     app:arc_bottom_text_size="9dp"
                     app:arc_finished_color="@color/fatColor"
                     app:arc_max="1000"
@@ -117,7 +117,7 @@
 
 
                 <TextView
-                    android:id="@+id/textView40"
+                    android:id="@+id/tvCircleProgressProt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -132,10 +132,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/apCollapsingProt" />
 
                 <TextView
-                    android:id="@+id/textView42"
+                    android:id="@+id/tvCircleProgressCarbo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="32dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -149,7 +149,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/apCollapsingCarbo" />
 
                 <TextView
-                    android:id="@+id/textView41"
+                    android:id="@+id/tvCircleProgressFat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
