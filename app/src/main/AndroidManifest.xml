@@ -160,6 +160,10 @@
             android:name=".BranchCircleProgress.ActivityEatingDiary"
             android:theme="@style/EatingDiaryStyle" />
 
+        <activity
+            android:name=".BranchProfile.ActivityProfile"
+            android:theme="@style/EatingDiaryStyle" />
+
 
         <receiver
             android:name=".Services.AlarmManagerBR"

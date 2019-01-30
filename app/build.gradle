@@ -68,6 +68,7 @@ dependencies {
     implementation files('StartADLib-1.0.1.jar')
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
     implementation 'com.android.billingclient:billing:1.2'
+    implementation 'me.itangqi.waveloadingview:library:0.3.5'
 
 }
 

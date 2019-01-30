@@ -31,12 +31,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <me.itangqi.waveloadingview.WaveLoadingView
+                    android:id="@+id/waveLoadingView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:wlv_titleCenterColor="@color/white"
+                    app:wlv_titleCenter="0/2000"
+                    app:wlv_titleCenterSize="14sp"
+                    android:layout_marginBottom="38dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/apCollapsingKcal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/apCollapsingKcal"
+                    app:layout_constraintTop_toTopOf="@+id/apCollapsingKcal"
+                    app:layout_constraintVertical_bias="1.0"
+                    app:wlv_borderColor="@color/glass_color"
+                    app:wlv_borderWidth="1dp"
+                    app:wlv_progressValue="0"
+                    app:wlv_waveColor="@color/wave_color" />
+
                 <com.github.lzyzsd.circleprogress.ArcProgress
                     android:id="@+id/apCollapsingKcal"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
                     app:arc_bottom_text="Калории"
                     app:arc_bottom_text_size="17sp"
@@ -49,7 +68,6 @@
                     app:arc_text_color="@color/white"
                     app:arc_text_size="45sp"
                     app:arc_unfinished_color="@color/little_transparent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -162,6 +180,30 @@
                     app:layout_constraintEnd_toEndOf="@+id/apCollapsingFat"
                     app:layout_constraintStart_toStartOf="@+id/apCollapsingFat"
                     app:layout_constraintTop_toBottomOf="@+id/apCollapsingFat" />
+
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="99dp"
+                    android:src="@drawable/highlight_ball"
+                    app:layout_constraintBottom_toBottomOf="@+id/waveLoadingView"
+                    app:layout_constraintEnd_toEndOf="@+id/waveLoadingView"
+                    app:layout_constraintStart_toStartOf="@+id/waveLoadingView"
+                    app:layout_constraintTop_toTopOf="@+id/waveLoadingView" />
+
+                <TextView
+                    android:id="@+id/textView46"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Вода"
+                    android:textSize="17sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/waveLoadingView"
+                    app:layout_constraintStart_toStartOf="@+id/waveLoadingView"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView11" />
 
 
             </android.support.constraint.ConstraintLayout>

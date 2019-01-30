@@ -3,6 +3,8 @@ package com.wsoteam.diet.MainScreen;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,6 +50,7 @@ import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
 import com.wsoteam.diet.BranchOfNews.ActivityListOfNews;
 import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
+import com.wsoteam.diet.BranchProfile.ActivityProfile;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.POJOsCircleProgress.CalculateAndSavedData;
@@ -55,12 +58,16 @@ import com.wsoteam.diet.POJOsCircleProgress.Eating.Breakfast;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Dinner;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Lunch;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Snack;
+import com.wsoteam.diet.POJOsCircleProgress.Water;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import me.itangqi.waveloadingview.WaveLoadingView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -73,6 +80,11 @@ public class MainActivity extends AppCompatActivity
     private ArcProgress apCollapsingKcal, apCollapsingProt, apCollapsingCarbo, apCollapsingFat;
     private FloatingActionButton fabAddEating;
     private TextView tvCircleProgressProt, tvCircleProgressCarbo, tvCircleProgressFat, tvCircleProgressKcal;
+    private WaveLoadingView waveLoadingView;
+
+    private SoundPool soundPool;
+    private int soundIDdBubble;
+
 
     private int COUNT_OF_RUN = 0;
     private int START_COUNT = 0;
@@ -127,6 +139,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
                 bindCircleProgressBars();
+                fillWaterView();
             }
         });
     }
@@ -163,8 +176,6 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-
-
         apCollapsingKcal = findViewById(R.id.apCollapsingKcal);
         apCollapsingProt = findViewById(R.id.apCollapsingProt);
         apCollapsingCarbo = findViewById(R.id.apCollapsingCarbo);
@@ -174,6 +185,9 @@ public class MainActivity extends AppCompatActivity
         tvCircleProgressProt = findViewById(R.id.tvCircleProgressProt);
         tvCircleProgressCarbo = findViewById(R.id.tvCircleProgressCarbo);
         tvCircleProgressFat = findViewById(R.id.tvCircleProgressFat);
+        waveLoadingView = findViewById(R.id.waveLoadingView);
+
+        loadSound();
 
         rvMainList = findViewById(R.id.rvMainScreen);
         rvMainList.setLayoutManager(new GridLayoutManager(this, 2));
@@ -200,11 +214,39 @@ public class MainActivity extends AppCompatActivity
         fabAddEating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ActivityEatingDiary.class);
+                Intent intent = new Intent(MainActivity.this, ActivityProfile.class);
                 startActivity(intent);
             }
         });
+        waveLoadingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                soundPool.play(soundIDdBubble, 1, 1, 0, 0, 1);
+                addCountOfWater();
+            }
+        });
 
+    }
+
+    private void loadSound() {
+        soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        try {
+            soundIDdBubble = soundPool.load(getAssets().openFd("buble.mp3"), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void addCountOfWater() {
+        waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() + 10);
+    }
+
+    private void fillWaterView() {
+
+        Water water = Water.last(Water.class);
+        waveLoadingView.setCenterTitle(String.valueOf(water.getCurrentNumber()) + "/" + String.valueOf(water.getMax()));
+        waveLoadingView.setProgressValue((water.getCurrentNumber() / water.getMax()) * 100);
     }
 
     private void bindCircleProgressBars() {

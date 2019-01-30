@@ -61,4 +61,8 @@
 
 
     <color name="text_color_item_eating_diary">#7091be</color>
+
+
+    <color name="wave_color">#00d2ff</color>
+    <color name="glass_color">#3784899d</color>
 </resources>
