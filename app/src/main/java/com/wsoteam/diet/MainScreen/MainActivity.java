@@ -66,6 +66,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import me.itangqi.waveloadingview.WaveLoadingView;
 
@@ -80,10 +81,11 @@ public class MainActivity extends AppCompatActivity
     private ArcProgress apCollapsingKcal, apCollapsingProt, apCollapsingCarbo, apCollapsingFat;
     private FloatingActionButton fabAddEating;
     private TextView tvCircleProgressProt, tvCircleProgressCarbo, tvCircleProgressFat, tvCircleProgressKcal;
-    private WaveLoadingView waveLoadingView;
 
+    private WaveLoadingView waveLoadingView;
     private SoundPool soundPool;
     private int soundIDdBubble;
+    private Water water;
 
 
     private int COUNT_OF_RUN = 0;
@@ -133,13 +135,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+
         showThankToast();
         Handler bindHandler = new Handler(Looper.getMainLooper());
         bindHandler.post(new Runnable() {
             @Override
             public void run() {
-                bindCircleProgressBars();
-                fillWaterView();
+                bindCircleProgressBars(day, month, year);
+                fillWaterView(day, month, year);
             }
         });
     }
@@ -239,17 +247,45 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void addCountOfWater() {
-        waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() + 10);
+        double percent = (double) water.getStep() / (double) water.getMax();
+        int step = (int) (percent * 100);
+        int newCurrentNumber = water.getCurrentNumber() + water.getStep();
+        waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf(water.getMax()));
+        waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() + step);
+
+        water.setCurrentNumber(newCurrentNumber);
+        Water.deleteAll(Water.class);
+        water.save();
     }
 
-    private void fillWaterView() {
+    private void fillWaterView(int day, int month, int year) {
+        final int DEFAULT_FIRST_STEP = 200;
+        final int DEFAULT_FIRST_MAX = 2000;
 
-        Water water = Water.last(Water.class);
+        if (Water.count(Water.class) != 1) {
+            water = new Water(day, month, year, DEFAULT_FIRST_STEP, DEFAULT_FIRST_MAX, 0);
+            water.save();
+        }else {
+            water = Water.last(Water.class);
+            if (water.getDay() < day || water.getMonth() < month || water.getYear() < year) {
+                water = Water.last(Water.class);
+                water.setDay(day);
+                water.setMonth(month);
+                water.setYear(year);
+                water.setCurrentNumber(0);
+                Water.deleteAll(Water.class);
+
+                water.save();
+            }
+        }
         waveLoadingView.setCenterTitle(String.valueOf(water.getCurrentNumber()) + "/" + String.valueOf(water.getMax()));
-        waveLoadingView.setProgressValue((water.getCurrentNumber() / water.getMax()) * 100);
+        double percent = (double) water.getCurrentNumber() / (double) water.getMax();
+        int progress = (int) (percent * 100);
+        waveLoadingView.setProgressValue(progress);
+
     }
 
-    private void bindCircleProgressBars() {
+    private void bindCircleProgressBars(int day, int month, int year) {
         Log.e("LOL", "Start");
         if (CalculateAndSavedData.count(CalculateAndSavedData.class) != 0) {
             CalculateAndSavedData data = CalculateAndSavedData.first(CalculateAndSavedData.class);
@@ -264,10 +300,6 @@ public class MainActivity extends AppCompatActivity
             apCollapsingFat.setMax(100);
         }
 
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
 
         int prot = 0, kcal = 0, fat = 0, carbo = 0;
 
