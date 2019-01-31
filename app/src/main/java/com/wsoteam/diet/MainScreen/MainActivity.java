@@ -1,5 +1,6 @@
 package com.wsoteam.diet.MainScreen;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -234,6 +235,42 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        waveLoadingView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showChoisePortionOfWaterAD();
+                return true;
+            }
+        });
+    }
+
+    private void showChoisePortionOfWaterAD() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.alert_dialog_show_choise_portion_of_water, null);
+        EditText edtADChoiseWaterPortion = view.findViewById(R.id.edtADChoiseWaterPortion);
+        builder.setView(view);
+        builder.setPositiveButton("Сохранить", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (edtADChoiseWaterPortion.getText().toString().equals("")
+                        || Integer.parseInt(edtADChoiseWaterPortion.getText().toString()) == 0) {
+                    Toast.makeText(MainActivity.this, "Введите порцию воды", Toast.LENGTH_SHORT).show();
+                }else {
+                    water = Water.last(Water.class);
+                    water.setStep(Integer.parseInt(edtADChoiseWaterPortion.getText().toString()));
+                    Water.deleteAll(Water.class);
+                    water.save();
+                    Toast.makeText(MainActivity.this, "Новая порция сохранена", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.show();
     }
 
     private void loadSound() {
@@ -265,7 +302,7 @@ public class MainActivity extends AppCompatActivity
         if (Water.count(Water.class) != 1) {
             water = new Water(day, month, year, DEFAULT_FIRST_STEP, DEFAULT_FIRST_MAX, 0);
             water.save();
-        }else {
+        } else {
             water = Water.last(Water.class);
             if (water.getDay() < day || water.getMonth() < month || water.getYear() < year) {
                 water = Water.last(Water.class);
