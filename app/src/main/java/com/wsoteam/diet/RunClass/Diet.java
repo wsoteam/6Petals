@@ -23,6 +23,13 @@ public class Diet extends Application{
 //        YandexMetrica.activate(getApplicationContext(), configBuilder.build());
 //        YandexMetrica.enableActivityAutoTracking(this);
 
+        // Создание расширенной конфигурации библиотеки.
+        YandexMetricaConfig config = YandexMetricaConfig.newConfigBuilder(Config.YANDEX_API_KEY).build();
+        // Инициализация AppMetrica SDK.
+        YandexMetrica.activate(getApplicationContext(), config);
+        // Отслеживание активности пользователей.
+        YandexMetrica.enableActivityAutoTracking(this);
+
         vkAccessTokenTracker.startTracking();
         VKSdk.initialize(this);
     }
