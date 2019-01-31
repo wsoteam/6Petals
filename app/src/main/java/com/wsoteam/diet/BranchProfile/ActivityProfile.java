@@ -11,15 +11,21 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.wsoteam.diet.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ActivityProfile extends AppCompatActivity {
     private ImageView ivProfileAvatar;
+    private CircleImageView civProfile;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        ivProfileAvatar = findViewById(R.id.ivProfileAvatar);
 
-        ivProfileAvatar.setOnClickListener(new View.OnClickListener() {
+        civProfile = findViewById(R.id.civProfile);
+
+
+
+        civProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
@@ -34,7 +40,7 @@ public class ActivityProfile extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK){
             Uri urlOfImage = data.getData();
-            Glide.with(this).load(urlOfImage).into(ivProfileAvatar);
+            Glide.with(this).load(urlOfImage).into(civProfile);
         }
     }
 }
