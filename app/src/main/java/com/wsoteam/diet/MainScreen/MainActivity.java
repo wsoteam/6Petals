@@ -37,6 +37,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.AdRequest;
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
+        Appodeal.show(this, Appodeal.INTERSTITIAL);
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
@@ -179,6 +181,11 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+
+        String appKey = "6ff7ff7154c82eeeebdfed01e9313c36aeb9092ac99bc7d8";
+        Appodeal.initialize(this, appKey, Appodeal.INTERSTITIAL, true);
+
+
 
         MobileAds.initialize(this, Config.ADMOB_ID);
 
