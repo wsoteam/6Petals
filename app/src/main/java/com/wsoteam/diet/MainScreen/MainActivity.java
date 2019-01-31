@@ -69,6 +69,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.itangqi.waveloadingview.WaveLoadingView;
 
 public class MainActivity extends AppCompatActivity
@@ -87,6 +88,9 @@ public class MainActivity extends AppCompatActivity
     private SoundPool soundPool;
     private int soundIDdBubble;
     private Water water;
+
+    private TextView tvLeftNBName;
+    private CircleImageView ivLeftNBAvatar;
 
 
     private int COUNT_OF_RUN = 0;
@@ -216,6 +220,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_g);
         navigationView.setNavigationItemSelectedListener(this);
         animationChangeScale = AnimationUtils.loadAnimation(this, R.anim.anim_change_scale);
+
+        View view = navigationView.getHeaderView(0);
+        tvLeftNBName = view.findViewById(R.id.tvLeftNBName);
+        tvLeftNBName.setText("fff");
 
         additionOneToSharedPreference();
         checkFirstRun();
