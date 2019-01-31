@@ -1,4 +1,4 @@
-package com.wsoteam.diet.BranchCircleProgress.Fragments;
+package com.wsoteam.diet.BranchEatingDiary.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Dinner;
-import com.wsoteam.diet.POJOsCircleProgress.Eating.Lunch;
 import com.wsoteam.diet.R;
 
 import java.util.ArrayList;

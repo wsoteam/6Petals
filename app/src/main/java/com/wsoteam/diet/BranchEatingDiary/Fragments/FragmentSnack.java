@@ -1,4 +1,4 @@
-package com.wsoteam.diet.BranchCircleProgress.Fragments;
+package com.wsoteam.diet.BranchEatingDiary.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,37 +13,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.wsoteam.diet.POJOsCircleProgress.Eating.Lunch;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Snack;
 import com.wsoteam.diet.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentLunch extends Fragment {
+public class FragmentSnack extends Fragment {
+    private List<Snack> snackList;
     private RecyclerView recyclerView;
-    private List<Lunch> lunchList;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lunch, container, false);
+        View view = inflater.inflate(R.layout.fragment_snack, container, false);
 
-        lunchList = Lunch.listAll(Lunch.class);
-        Log.e("LOL", String.valueOf(lunchList.size()));
+        snackList = Snack.listAll(Snack.class);
 
-        recyclerView = view.findViewById(R.id.rvEatingLunch);
+        recyclerView = view.findViewById(R.id.rvEatingSnacks);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new LunchItemAdapter((ArrayList<Lunch>) lunchList));
-
+        recyclerView.setAdapter(new SnackItemAdapter((ArrayList<Snack>) snackList));
         return view;
     }
 
-    private class LunchItemHolder extends RecyclerView.ViewHolder {
+    private class SnackItemHolder extends RecyclerView.ViewHolder {
         private TextView tvEatingItemName, tvEatingItemFat, tvEatingItemCarbo, tvEatingItemProt, tvEatingItemKcal, tvEatingItemWeight;
         private ImageView ivImage;
 
-        public LunchItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
+        public SnackItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_eating_diary_lists, viewGroup, false));
 
             tvEatingItemName = itemView.findViewById(R.id.tvEatingItemName);
@@ -57,41 +53,41 @@ public class FragmentLunch extends Fragment {
 
         }
 
-        public void bind(Lunch lunch) {
-            tvEatingItemName.setText(String.valueOf(lunch.getName()));
-            tvEatingItemFat.setText(String.valueOf(lunch.getFat())+ " г");
-            tvEatingItemCarbo.setText(String.valueOf(lunch.getCarbohydrates())+ " г");
-            tvEatingItemProt.setText(String.valueOf(lunch.getProtein())+ " г");
-            tvEatingItemKcal.setText(String.valueOf(lunch.getCalories()) + " ккал");
-            tvEatingItemWeight.setText(String.valueOf(lunch.getWeight()) + " г");
+        public void bind(Snack snack) {
+            tvEatingItemName.setText(String.valueOf(snack.getName()));
+            tvEatingItemFat.setText(String.valueOf(snack.getFat())+ " г");
+            tvEatingItemCarbo.setText(String.valueOf(snack.getCarbohydrates())+ " г");
+            tvEatingItemProt.setText(String.valueOf(snack.getProtein())+ " г");
+            tvEatingItemKcal.setText(String.valueOf(snack.getCalories()) + " ккал");
+            tvEatingItemWeight.setText(String.valueOf(snack.getWeight()) + " г");
 
-            Glide.with(getActivity()).load(lunch.getUrlOfImages()).into(ivImage);
+            Glide.with(getActivity()).load(snack.getUrlOfImages()).into(ivImage);
 
         }
     }
 
-    private class LunchItemAdapter extends RecyclerView.Adapter<LunchItemHolder> {
-        ArrayList<Lunch> lunchList;
+    private class SnackItemAdapter extends RecyclerView.Adapter<SnackItemHolder> {
+        ArrayList<Snack> snackList;
 
-        public LunchItemAdapter(ArrayList<Lunch> lunchList) {
-            this.lunchList = lunchList;
+        public SnackItemAdapter(ArrayList<Snack> snackList) {
+            this.snackList = snackList;
         }
 
         @NonNull
         @Override
-        public LunchItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public SnackItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            return new LunchItemHolder(layoutInflater, parent);
+            return new SnackItemHolder(layoutInflater, parent);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull LunchItemHolder holder, int position) {
-            holder.bind(lunchList.get(position));
+        public void onBindViewHolder(@NonNull SnackItemHolder holder, int position) {
+            holder.bind(snackList.get(position));
         }
 
         @Override
         public int getItemCount() {
-            return lunchList.size();
+            return snackList.size();
         }
     }
 }

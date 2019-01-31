@@ -1,6 +1,5 @@
-package com.wsoteam.diet.BranchCircleProgress;
+package com.wsoteam.diet.BranchEatingDiary;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,10 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.wsoteam.diet.BranchCircleProgress.Fragments.FragmentBreakfast;
-import com.wsoteam.diet.BranchCircleProgress.Fragments.FragmentDinner;
-import com.wsoteam.diet.BranchCircleProgress.Fragments.FragmentLunch;
-import com.wsoteam.diet.BranchCircleProgress.Fragments.FragmentSnack;
+import com.wsoteam.diet.BranchEatingDiary.Fragments.FragmentBreakfast;
+import com.wsoteam.diet.BranchEatingDiary.Fragments.FragmentDinner;
+import com.wsoteam.diet.BranchEatingDiary.Fragments.FragmentLunch;
+import com.wsoteam.diet.BranchEatingDiary.Fragments.FragmentSnack;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Breakfast;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Dinner;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Lunch;

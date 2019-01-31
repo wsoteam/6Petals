@@ -157,7 +157,7 @@
             android:theme="@style/NotificationListActivity" />
 
         <activity
-            android:name=".BranchCircleProgress.ActivityEatingDiary"
+            android:name=".BranchEatingDiary.ActivityEatingDiary"
             android:theme="@style/EatingDiaryStyle" />
 
         <activity

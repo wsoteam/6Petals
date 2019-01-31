@@ -42,7 +42,7 @@ import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.wsoteam.diet.BranchCircleProgress.ActivityEatingDiary;
+import com.wsoteam.diet.BranchEatingDiary.ActivityEatingDiary;
 import com.wsoteam.diet.BranchOfAnalyzer.ActivityListAndSearch;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
@@ -64,10 +64,8 @@ import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.itangqi.waveloadingview.WaveLoadingView;
@@ -223,7 +221,15 @@ public class MainActivity extends AppCompatActivity
 
         View view = navigationView.getHeaderView(0);
         tvLeftNBName = view.findViewById(R.id.tvLeftNBName);
-        tvLeftNBName.setText("fff");
+        ivLeftNBAvatar = view.findViewById(R.id.ivLeftNBAvatar);
+
+        ivLeftNBAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ActivityProfile.class);
+                startActivity(intent);
+            }
+        });
 
         additionOneToSharedPreference();
         checkFirstRun();
@@ -231,7 +237,7 @@ public class MainActivity extends AppCompatActivity
         fabAddEating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ActivityProfile.class);
+                Intent intent = new Intent(MainActivity.this, ActivityEatingDiary.class);
                 startActivity(intent);
             }
         });
