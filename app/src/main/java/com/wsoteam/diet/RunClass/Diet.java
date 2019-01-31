@@ -19,9 +19,9 @@ public class Diet extends Application{
     public void onCreate() {
         super.onCreate();
         SugarContext.init(this);
-        YandexMetricaConfig.Builder configBuilder = YandexMetricaConfig.newConfigBuilder(Config.YANDEX_API_KEY);
-        YandexMetrica.activate(getApplicationContext(), configBuilder.build());
-        YandexMetrica.enableActivityAutoTracking(this);
+//        YandexMetricaConfig.Builder configBuilder = YandexMetricaConfig.newConfigBuilder(Config.YANDEX_API_KEY);
+//        YandexMetrica.activate(getApplicationContext(), configBuilder.build());
+//        YandexMetrica.enableActivityAutoTracking(this);
 
         vkAccessTokenTracker.startTracking();
         VKSdk.initialize(this);
