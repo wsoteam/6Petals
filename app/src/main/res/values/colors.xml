@@ -65,4 +65,8 @@
 
     <color name="wave_color">#00d2ff</color>
     <color name="glass_color">#3784899d</color>
+
+    <color name="level_easy">#43d448</color>
+    <color name="level_normal">#fbaa1d</color>
+    <color name="level_hard">#b41c1c</color>
 </resources>
