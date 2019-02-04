@@ -12,9 +12,9 @@
         android:id="@+id/mainappbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/gradient_for_background_splash"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay"
-        android:background="@drawable/gradient_for_background_splash"
         app:elevation="5dp">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -87,8 +87,8 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:text="Здесь можно ввести свои профильные данные и расчитать важные показатели своего тела"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/textView56"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/civEditProfile"
@@ -160,7 +160,6 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="8dp"
                 android:ems="10"
-                android:inputType="numberSigned"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/edtSpkName"
@@ -173,7 +172,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="16dp"
                 android:ems="10"
-                android:inputType="numberSigned"
                 app:layout_constraintEnd_toStartOf="@+id/edtSpkSecondName"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -244,23 +242,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView7" />
             </RadioGroup>
 
-            <Button
-                android:id="@+id/btnSpkCalculate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
-                android:backgroundTint="@color/white_red"
-                android:text="@string/calculate_btn"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnSpkChoiseLevel" />
-
             <TextView
                 android:id="@+id/textView23"
                 android:layout_width="wrap_content"
@@ -317,24 +298,6 @@
                 app:layout_constraintStart_toEndOf="@+id/edtSpkGrowth"
                 app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
-            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/bnrSPK"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                ads:adSize="BANNER"
-                ads:adUnitId="@string/admob_banner"
-                ads:layout_constraintEnd_toEndOf="parent"
-                ads:layout_constraintStart_toStartOf="parent"
-                ads:layout_constraintTop_toBottomOf="@+id/btnSpkCalculate"></com.google.android.gms.ads.AdView>
-
             <TextView
                 android:id="@+id/textView55"
                 android:layout_width="wrap_content"
@@ -354,7 +317,7 @@
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabAddEating"
+        android:id="@+id/fabEditProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/green"

@@ -1,6 +1,9 @@
 package com.wsoteam.diet.BranchProfile;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -15,25 +18,33 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.wsoteam.diet.BranchOfCalculating.ActivityCalculatorSPK;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ActivityEditProfile extends AppCompatActivity {
-    private EditText edtHeight, edtAge, edtWeight;
-    private Button btnLevelLoad, btnCalculate;
+    private EditText edtHeight, edtAge, edtWeight, edtSpkName, edtSpkSecondName;
+    private Button btnLevelLoad;
     private RadioGroup rgFemaleOrMale;
-    private TextView tvTitle;
-    private AdView adBanner;
+    private CircleImageView civEditProfile;
+    private FloatingActionButton fabEditProfile;
+
     private InterstitialAd interstitialAd;
+
+    private final String DEFAULT_AVATAR = "default";
+    private final int WATER_ON_KG_FEMALE = 30;
+    private final int WATER_ON_KG_MALE = 40;
+    private String urlOfPhoto = "default";
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(interstitialAd.isLoaded()){
+        if (interstitialAd.isLoaded()) {
             interstitialAd.show();
         }
     }
@@ -46,9 +57,12 @@ public class ActivityEditProfile extends AppCompatActivity {
         edtAge = findViewById(R.id.edtSpkAge);
         edtWeight = findViewById(R.id.edtSpkWeight);
         btnLevelLoad = findViewById(R.id.btnSpkChoiseLevel);
-        btnCalculate = findViewById(R.id.btnSpkCalculate);
         rgFemaleOrMale = findViewById(R.id.rgFemaleOrMaleSpk);
-        adBanner = findViewById(R.id.bnrSPK);
+        edtSpkName = findViewById(R.id.edtSpkName);
+        edtSpkSecondName = findViewById(R.id.edtSpkSecondName);
+        civEditProfile = findViewById(R.id.civEditProfile);
+        fabEditProfile = findViewById(R.id.fabEditProfile);
+
 
 
 
@@ -59,7 +73,7 @@ public class ActivityEditProfile extends AppCompatActivity {
             }
         });
 
-        btnCalculate.setOnClickListener(new View.OnClickListener() {
+        fabEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (checkInputData()) {
@@ -68,40 +82,58 @@ public class ActivityEditProfile extends AppCompatActivity {
             }
         });
 
-        adBanner.loadAd(new AdRequest.Builder().build());
+        civEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, 1);
+            }
+        });
+
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
 
-        YandexMetrica.reportEvent("Открыт экран: Калькулятор СПК");
+        YandexMetrica.reportEvent("Открыт экран: Редактировать профиль");
     }
 
     private boolean checkInputData() {
-        if (rgFemaleOrMale.getCheckedRadioButtonId() != -1) {
-            if (!edtAge.getText().toString().equals("")
-                    && Integer.parseInt(edtAge.getText().toString()) >= 18
-                    && Integer.parseInt(edtAge.getText().toString()) <= 200) {
-                if (!edtHeight.getText().toString().equals("")
-                        && Integer.parseInt(edtHeight.getText().toString()) >= 100
-                        && Integer.parseInt(edtHeight.getText().toString()) <= 300) {
-                    if (!edtWeight.getText().toString().equals("")
-                            && Double.parseDouble(edtWeight.getText().toString()) >= 30
-                            && Double.parseDouble(edtWeight.getText().toString()) <= 300) {
-                        return true;
+        if (!edtSpkSecondName.getText().toString().equals("")) {
+            if (!edtSpkName.getText().toString().equals("")) {
+                if (rgFemaleOrMale.getCheckedRadioButtonId() != -1) {
+                    if (!edtAge.getText().toString().equals("")
+                            && Integer.parseInt(edtAge.getText().toString()) >= 18
+                            && Integer.parseInt(edtAge.getText().toString()) <= 200) {
+                        if (!edtHeight.getText().toString().equals("")
+                                && Integer.parseInt(edtHeight.getText().toString()) >= 100
+                                && Integer.parseInt(edtHeight.getText().toString()) <= 300) {
+                            if (!edtWeight.getText().toString().equals("")
+                                    && Double.parseDouble(edtWeight.getText().toString()) >= 30
+                                    && Double.parseDouble(edtWeight.getText().toString()) <= 300) {
+                                return true;
+                            } else {
+                                Toast.makeText(ActivityEditProfile.this, R.string.spk_check_weight, Toast.LENGTH_SHORT).show();
+                                return false;
+                            }
+                        } else {
+                            Toast.makeText(ActivityEditProfile.this, R.string.spk_check_your_height, Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
                     } else {
-                        Toast.makeText(ActivityEditProfile.this, R.string.spk_check_weight, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityEditProfile.this, R.string.spk_check_your_age, Toast.LENGTH_SHORT).show();
                         return false;
                     }
                 } else {
-                    Toast.makeText(ActivityEditProfile.this, R.string.spk_check_your_height, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityEditProfile.this, R.string.spk_choise_your_gender, Toast.LENGTH_SHORT).show();
                     return false;
                 }
             } else {
-                Toast.makeText(ActivityEditProfile.this, R.string.spk_check_your_age, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityEditProfile.this, "Введите имя", Toast.LENGTH_SHORT).show();
                 return false;
             }
         } else {
-            Toast.makeText(ActivityEditProfile.this, R.string.spk_choise_your_gender, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityEditProfile.this, "Введите фамилию", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -122,7 +154,7 @@ public class ActivityEditProfile extends AppCompatActivity {
         double rateNone = 1.2, rateEasy = 1.375, rateMedium = 1.4625, rateHard = 1.55,
                 rateUpHard = 1.6375, rateSuper = 1.725, rateUpSuper = 1.9;
         double weight = Double.parseDouble(edtWeight.getText().toString()), height = Double.parseDouble(edtHeight.getText().toString());
-        int age = Integer.parseInt(edtAge.getText().toString());
+        int age = Integer.parseInt(edtAge.getText().toString()), maxWater;
         double SPK = 0, upLineSPK = 0, downLineSPK = 0;
         double forCountUpLine = 300, forCountDownLine = 500;
         double fat, protein, carbohydrate;
@@ -162,11 +194,13 @@ public class ActivityEditProfile extends AppCompatActivity {
         protein = upLineSPK * 0.3 / 4;
         carbohydrate = upLineSPK * 0.5 / 3.75;
 
+        maxWater = WATER_ON_KG_FEMALE * (int) weight;
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog alertDialog = builder.create();
-        View view = View.inflate(this, R.layout.alert_dialog_spk, null);
-        TextView tvCalInDay = view.findViewById(R.id.tvAlertDialogSPKCountOfSPK);
+        View view = View.inflate(this, R.layout.alert_dialog_choise_difficulty_level, null);
+        /*TextView tvCalInDay = view.findViewById(R.id.tvAlertDialogSPKCountOfSPK);
         TextView tvDownLine = view.findViewById(R.id.tvAlertDialogSPKDownLine);
         TextView tvBGU = view.findViewById(R.id.tvAlertDialogSPKBGU);
         FloatingActionButton btnOk = view.findViewById(R.id.btnAlertDialogSPKOk);
@@ -182,7 +216,8 @@ public class ActivityEditProfile extends AppCompatActivity {
             public void onClick(View view) {
                 alertDialog.cancel();
             }
-        });
+        });*/
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         alertDialog.setView(view);
         alertDialog.show();
 
@@ -210,5 +245,15 @@ public class ActivityEditProfile extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            Uri urlOfImage = data.getData();
+            Glide.with(this).load(urlOfImage).into(civEditProfile);
+            urlOfPhoto = String.valueOf(urlOfImage);
+        }
     }
 }
