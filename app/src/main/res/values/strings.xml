@@ -94,7 +94,7 @@
         П. Брока включил в свои расчеты данные о возрастной категории, к которой относится исследуемый,
         а также сведения о длине его тела и конституционном типе сложения.</string>
     <string name="brok">Метод Поля Брока</string>
-    <string name="tall">Ваш рост в сантиметрах</string>
+    <string name="tall">Ваш рост (см)</string>
     <string name="girth">Обхват запяться в сантиметрах</string>
     <string name="your_age">Ваш возраст</string>
     <string name="sex">Ваш пол</string>
