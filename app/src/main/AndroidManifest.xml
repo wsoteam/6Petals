@@ -166,6 +166,10 @@
             android:name=".BranchProfile.ActivityProfile"
             android:theme="@style/EatingDiaryStyle" />
 
+        <activity
+            android:name=".BranchProfile.ActivityEditProfile"
+            android:theme="@style/EatingDiaryStyle" />
+
 
         <receiver
             android:name=".Services.AlarmManagerBR"

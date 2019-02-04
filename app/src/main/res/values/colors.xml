@@ -23,6 +23,7 @@
     <color name="light_gray">#8f8f8f</color>
     <color name="yellow">#f9e72a</color>
     <color name="images_filter">#e17d218f</color>
+    <color name="images_filter_edit_profile">#be252525</color>
 
 
 
@@ -65,4 +66,8 @@
 
     <color name="wave_color">#00d2ff</color>
     <color name="glass_color">#3784899d</color>
+
+    <color name="level_easy">#43d448</color>
+    <color name="level_normal">#fbaa1d</color>
+    <color name="level_hard">#b41c1c</color>
 </resources>
