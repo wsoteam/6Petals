@@ -92,9 +92,9 @@ public class MainActivity extends AppCompatActivity
 
 
     private int COUNT_OF_RUN = 0;
-    private int START_COUNT = 0;
-    private String TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG = "COUNT_OF_RUN";
-    private SharedPreferences countOfRun;
+    private final String TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG = "COUNT_OF_RUN";
+    private final String FIRST_ENTER = "FIRST_ENTER";
+    private SharedPreferences countOfRun, firstEnter;
     private boolean isAccessibleCountry = true;
     private boolean isFiveStarSend = false;
     private String notAccessibleCountryCode = "UA";
@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity
                 fillWaterView(day, month, year);
             }
         });
+
     }
 
     private void showThankToast() {
@@ -186,6 +187,7 @@ public class MainActivity extends AppCompatActivity
             isAccessibleCountry = false;
         }
 
+        saveFirstEnter();
 
         apCollapsingKcal = findViewById(R.id.apCollapsingKcal);
         apCollapsingProt = findViewById(R.id.apCollapsingProt);
@@ -269,7 +271,7 @@ public class MainActivity extends AppCompatActivity
                 if (edtADChoiseWaterPortion.getText().toString().equals("")
                         || Integer.parseInt(edtADChoiseWaterPortion.getText().toString()) == 0) {
                     Toast.makeText(MainActivity.this, "Введите порцию воды", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     water = Water.last(Water.class);
                     water.setStep(Integer.parseInt(edtADChoiseWaterPortion.getText().toString()));
                     Water.deleteAll(Water.class);
@@ -454,6 +456,36 @@ public class MainActivity extends AppCompatActivity
         editor.commit();
 
     }
+
+    private void saveFirstEnter() {
+        firstEnter = getSharedPreferences(FIRST_ENTER, MODE_PRIVATE);
+        if (firstEnter.getString(FIRST_ENTER, "").equals("")) {
+            Calendar calendar = Calendar.getInstance();
+
+            int dayOfFirstEnter = calendar.get(Calendar.DAY_OF_MONTH);
+            int monthOfFirstEnter = calendar.get(Calendar.MONTH) + 1;
+            int yearOfFirstEnter = calendar.get(Calendar.YEAR);
+
+            String month = String.valueOf(monthOfFirstEnter);
+            String day = String.valueOf(dayOfFirstEnter);
+
+            if (month.length() == 1) {
+                month = "0" + month;
+            }
+            if (day.length() == 1) {
+                day = "0" + day;
+            }
+
+            String date = day + "." + month + "." + String.valueOf(yearOfFirstEnter);
+
+            SharedPreferences.Editor editor = firstEnter.edit();
+            editor.putString(FIRST_ENTER, date);
+            editor.commit();
+
+            Log.e("LOL", firstEnter.getString(FIRST_ENTER, ""));
+        }
+    }
+
 
     private void checkFirstRun() {
         if (countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) == 3) {

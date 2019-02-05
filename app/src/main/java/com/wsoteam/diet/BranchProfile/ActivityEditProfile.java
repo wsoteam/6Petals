@@ -122,7 +122,8 @@ public class ActivityEditProfile extends AppCompatActivity {
             rgFemaleOrMale.check(R.id.rdSpkMale);
         }
         if (!profile.getPhotoUrl().equals(DEFAULT_AVATAR)){
-            Glide.with(this).load(profile.getPhotoUrl()).into(civEditProfile);
+            Uri uri = Uri.parse(profile.getPhotoUrl());
+            Glide.with(this).load(uri).into(civEditProfile);
         }
 
     }

@@ -1,10 +1,12 @@
 package com.wsoteam.diet.BranchProfile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,6 +26,8 @@ public class ActivityProfile extends AppCompatActivity {
             tvProfileHeight, tvProfileFirstEnter, tvProfileChangeWeight,
             tvProfileMaxKcal, tvProfileMaxWater, tvProfileMaxFat, tvProfileMaxCarbo,
             tvProfileMaxProt;
+    private SharedPreferences firstEnter;
+    private final String FIRST_ENTER = "FIRST_ENTER";
 
     @Override
     protected void onResume() {
@@ -56,6 +60,10 @@ public class ActivityProfile extends AppCompatActivity {
         tvProfileMaxCarbo = findViewById(R.id.tvProfileMaxCarbo);
         tvProfileMaxProt = findViewById(R.id.tvProfileMaxProt);
 
+        firstEnter = getSharedPreferences(FIRST_ENTER, MODE_PRIVATE);
+        tvProfileFirstEnter.setText(firstEnter.getString(FIRST_ENTER, "-"));
+        Log.e("LOL", firstEnter.getString(FIRST_ENTER, "-"));
+
 
         ibProfileBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +95,6 @@ public class ActivityProfile extends AppCompatActivity {
         tvProfileWeight.setText(String.valueOf(profile.getWeight()) + " " + getString(R.string.kg));
         tvProfileLevel.setText(profile.getDifficultyLevel());
         tvProfileHeight.setText(String.valueOf(profile.getHeight()) + " " + getString(R.string.cm));
-        tvProfileFirstEnter.setText(profile.getFirstEnter());
         tvProfileMaxKcal.setText(String.valueOf(profile.getMaxKcal()));
         tvProfileMaxCarbo.setText(String.valueOf(profile.getMaxCarbo()));
         tvProfileMaxFat.setText(String.valueOf(profile.getMaxFat()));
@@ -103,10 +110,9 @@ public class ActivityProfile extends AppCompatActivity {
                 tvProfileLevel.setTextColor(getResources().getColor(R.color.level_hard));
             }
         }
-
         if (!profile.getPhotoUrl().equals("default")) {
             Uri uri = Uri.parse(profile.getPhotoUrl());
-            Glide.with(this).load(profile.getPhotoUrl()).into(civProfile);
+            Glide.with(this).load(uri).into(civProfile);
         }
     }
 
