@@ -296,6 +296,13 @@
     <string name="saved_in_dinner">Порция сохранена в ужин</string>
     <string name="saved_in_snack">Порция сохранена в перекус</string>
 
+    <string name="dif_level_easy">Легкая</string>
+    <string name="dif_level_normal">Средняя</string>
+    <string name="dif_level_hard">Высокая</string>
+
+    <string name="cm">см</string>
+    <string name="kg">кг</string>
+    <string name="profile_saved">Профиль сохранен</string>
 
 
 </resources>

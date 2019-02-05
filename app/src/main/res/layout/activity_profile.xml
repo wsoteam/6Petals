@@ -31,12 +31,13 @@
             app:srcCompat="@drawable/ic_edit_profile" />
 
         <ImageButton
+            android:id="@+id/ibProfileBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:src="@drawable/ic_left_arrow_back_profile"
             android:background="@color/transparent"
+            android:src="@drawable/ic_left_arrow_back_profile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -141,8 +142,8 @@
 
                 <TextView
                     android:id="@+id/tvProfileLifestyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="225dp"
+                    android:layout_height="0dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
@@ -218,6 +219,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:text="85 кг"
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -231,6 +233,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:text="182 см"
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -378,6 +381,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/divider10" />
 
                 <TextView
+                    android:id="@+id/tvProfileChangeWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="23dp"
                     android:layout_marginBottom="8dp"

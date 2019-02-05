@@ -9,19 +9,19 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.POJOProfile.Profile;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
@@ -41,6 +41,10 @@ public class ActivityEditProfile extends AppCompatActivity {
     private final int WATER_ON_KG_MALE = 40;
     private String urlOfPhoto = "default";
 
+    private boolean isFemale = true;
+    private double SPK = 0, upLineSPK = 0, downLineSPK = 0;
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -52,6 +56,7 @@ public class ActivityEditProfile extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("LOL", "Create");
         setContentView(R.layout.activity_edit_profile);
         edtHeight = findViewById(R.id.edtSpkGrowth);
         edtAge = findViewById(R.id.edtSpkAge);
@@ -63,7 +68,9 @@ public class ActivityEditProfile extends AppCompatActivity {
         civEditProfile = findViewById(R.id.civEditProfile);
         fabEditProfile = findViewById(R.id.fabEditProfile);
 
-
+        if (Profile.count(Profile.class) == 1) {
+            fillViewsIfProfileNotNull();
+        }
 
 
         btnLevelLoad.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +103,28 @@ public class ActivityEditProfile extends AppCompatActivity {
         interstitialAd.loadAd(new AdRequest.Builder().build());
 
         YandexMetrica.reportEvent("Открыт экран: Редактировать профиль");
+    }
+
+    private void fillViewsIfProfileNotNull() {
+
+
+        Profile profile = Profile.last(Profile.class);
+
+        edtHeight.setText(String.valueOf(profile.getHeight()));
+        edtAge.setText(String.valueOf(profile.getAge()));
+        edtWeight.setText(String.valueOf(profile.getWeight()));
+        btnLevelLoad.setText(profile.getExerciseStress());
+        edtSpkName.setText(profile.getFirstName());
+        edtSpkSecondName.setText(profile.getLastName());
+        if (profile.isFemale()) {
+            rgFemaleOrMale.check(R.id.rdSpkFemale);
+        } else {
+            rgFemaleOrMale.check(R.id.rdSpkMale);
+        }
+        if (!profile.getPhotoUrl().equals(DEFAULT_AVATAR)){
+            Glide.with(this).load(profile.getPhotoUrl()).into(civEditProfile);
+        }
+
     }
 
     private boolean checkInputData() {
@@ -155,7 +184,6 @@ public class ActivityEditProfile extends AppCompatActivity {
                 rateUpHard = 1.6375, rateSuper = 1.725, rateUpSuper = 1.9;
         double weight = Double.parseDouble(edtWeight.getText().toString()), height = Double.parseDouble(edtHeight.getText().toString());
         int age = Integer.parseInt(edtAge.getText().toString()), maxWater;
-        double SPK = 0, upLineSPK = 0, downLineSPK = 0;
         double forCountUpLine = 300, forCountDownLine = 500;
         double fat, protein, carbohydrate;
 
@@ -163,29 +191,36 @@ public class ActivityEditProfile extends AppCompatActivity {
         switch (rgFemaleOrMale.getCheckedRadioButtonId()) {
             case R.id.rdSpkFemale:
                 BOO = (9.99 * weight + 6.25 * height - 4.92 * age - 161) * 1.1;
-                Log.i("LOL", String.valueOf(BOO));
+                isFemale = true;
                 break;
             case R.id.rdSpkMale:
                 BOO = (9.99 * weight + 6.25 * height - 4.92 * age + 5) * 1.1;
-                Log.i("LOL", String.valueOf(BOO));
+                isFemale = false;
                 break;
         }
 
         /*Check level load*/
-        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_none)))
+        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_none))) {
             SPK = BOO * rateNone;
-        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_easy)))
+        }
+        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_easy))) {
             SPK = BOO * rateEasy;
-        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_medium)))
+        }
+        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_medium))) {
             SPK = BOO * rateMedium;
-        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_hard)))
+        }
+        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_hard))) {
             SPK = BOO * rateHard;
-        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_up_hard)))
+        }
+        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_up_hard))) {
             SPK = BOO * rateUpHard;
-        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_super)))
+        }
+        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_super))) {
             SPK = BOO * rateSuper;
-        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_up_super)))
+        }
+        if (btnLevelLoad.getText().toString().equals(getString(R.string.level_up_super))) {
             SPK = BOO * rateUpSuper;
+        }
 
         upLineSPK = SPK - forCountUpLine;
         downLineSPK = SPK - forCountDownLine;
@@ -194,29 +229,62 @@ public class ActivityEditProfile extends AppCompatActivity {
         protein = upLineSPK * 0.3 / 4;
         carbohydrate = upLineSPK * 0.5 / 3.75;
 
-        maxWater = WATER_ON_KG_FEMALE * (int) weight;
+        if (isFemale) {
+            maxWater = WATER_ON_KG_FEMALE * (int) weight;
+        } else {
+            maxWater = WATER_ON_KG_MALE * (int) weight;
+        }
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog alertDialog = builder.create();
         View view = View.inflate(this, R.layout.alert_dialog_choise_difficulty_level, null);
-        /*TextView tvCalInDay = view.findViewById(R.id.tvAlertDialogSPKCountOfSPK);
-        TextView tvDownLine = view.findViewById(R.id.tvAlertDialogSPKDownLine);
-        TextView tvBGU = view.findViewById(R.id.tvAlertDialogSPKBGU);
-        FloatingActionButton btnOk = view.findViewById(R.id.btnAlertDialogSPKOk);
+        CardView cvADChoiseDiffLevelHard = view.findViewById(R.id.cvADChoiseDiffLevelHard);
+        CardView cvADChoiseDiffLevelNormal = view.findViewById(R.id.cvADChoiseDiffLevelNormal);
+        CardView cvADChoiseDiffLevelEasy = view.findViewById(R.id.cvADChoiseDiffLevelEasy);
 
-        tvCalInDay.setText(String.valueOf(((int) SPK)) + " " + getString(R.string.spk_kcal));
-        tvDownLine.setText(String.valueOf(((int) downLineSPK)) + " " + getString(R.string.spk_kcal) + " - "
-                + String.valueOf(((int) upLineSPK)) + " " + getString(R.string.spk_kcal));
-        tvBGU.setText("Белки - " + String.valueOf(((int) protein))
-                + " г" + "\n" + "Жиры - " + String.valueOf(((int) fat))
-                + " г" + "\n" + "Углеводы - " + String.valueOf(((int) carbohydrate)) + " г");
-        btnOk.setOnClickListener(new View.OnClickListener() {
+        cvADChoiseDiffLevelEasy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Profile.deleteAll(Profile.class);
+                Profile profile = new Profile(edtSpkName.getText().toString(), edtSpkSecondName.getText().toString(),
+                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), Integer.parseInt(edtWeight.getText().toString()),
+                        btnLevelLoad.getText().toString(), maxWater, "18.12.2018", 0, urlOfPhoto, (int) SPK, (int) protein,
+                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_easy));
+                profile.save();
+                Toast.makeText(ActivityEditProfile.this, R.string.profile_saved, Toast.LENGTH_SHORT).show();
                 alertDialog.cancel();
+                finish();
             }
-        });*/
+        });
+        cvADChoiseDiffLevelNormal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Profile.deleteAll(Profile.class);
+                Profile profile = new Profile(edtSpkName.getText().toString(), edtSpkSecondName.getText().toString(),
+                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), Integer.parseInt(edtWeight.getText().toString()),
+                        btnLevelLoad.getText().toString(), maxWater, "18.12.2018", 0, urlOfPhoto, (int) upLineSPK, (int) protein,
+                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_normal));
+                profile.save();
+                Toast.makeText(ActivityEditProfile.this, R.string.profile_saved, Toast.LENGTH_SHORT).show();
+                alertDialog.cancel();
+                finish();
+            }
+        });
+        cvADChoiseDiffLevelHard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Profile.deleteAll(Profile.class);
+                Profile profile = new Profile(edtSpkName.getText().toString(), edtSpkSecondName.getText().toString(),
+                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), Integer.parseInt(edtWeight.getText().toString()),
+                        btnLevelLoad.getText().toString(), maxWater, "18.12.2018", 0, urlOfPhoto, (int) downLineSPK, (int) protein,
+                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_hard));
+                profile.save();
+                Toast.makeText(ActivityEditProfile.this, R.string.profile_saved, Toast.LENGTH_SHORT).show();
+                alertDialog.cancel();
+                finish();
+            }
+        });
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         alertDialog.setView(view);
         alertDialog.show();
@@ -250,9 +318,10 @@ public class ActivityEditProfile extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             Uri urlOfImage = data.getData();
             Glide.with(this).load(urlOfImage).into(civEditProfile);
+            Log.e("LOl", String.valueOf(urlOfImage));
             urlOfPhoto = String.valueOf(urlOfImage);
         }
     }
