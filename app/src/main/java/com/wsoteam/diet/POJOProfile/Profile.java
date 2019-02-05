@@ -25,7 +25,10 @@ public class Profile extends SugarRecord {
     public Profile() {
     }
 
-    public Profile(String firstName, String lastName, boolean isFemale, int age, int height, int weight, String exerciseStress, int waterCount, String firstEnter, int loseWeight, String photoUrl, int maxKcal, int maxProt, int maxFat, int maxCarbo, String difficultyLevel) {
+    public Profile(String firstName, String lastName, boolean isFemale,
+                   int age, int height, int weight, String exerciseStress,
+                   int waterCount, String firstEnter, int loseWeight, String photoUrl,
+                   int maxKcal, int maxProt, int maxFat, int maxCarbo, String difficultyLevel) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.isFemale = isFemale;

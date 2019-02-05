@@ -122,7 +122,8 @@ public class ActivityEditProfile extends AppCompatActivity {
             rgFemaleOrMale.check(R.id.rdSpkMale);
         }
         if (!profile.getPhotoUrl().equals(DEFAULT_AVATAR)){
-            Uri uri = Uri.parse(profile.getPhotoUrl());
+            urlOfPhoto = profile.getPhotoUrl();
+            Uri uri = Uri.parse(urlOfPhoto);
             Glide.with(this).load(uri).into(civEditProfile);
         }
 
@@ -236,6 +237,7 @@ public class ActivityEditProfile extends AppCompatActivity {
             maxWater = WATER_ON_KG_MALE * (int) weight;
         }
 
+        Log.e("LOl", String.valueOf(SPK));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog alertDialog = builder.create();

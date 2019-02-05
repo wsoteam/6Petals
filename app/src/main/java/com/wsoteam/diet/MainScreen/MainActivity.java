@@ -51,9 +51,11 @@ import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
 import com.wsoteam.diet.BranchOfNews.ActivityListOfNews;
 import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
+import com.wsoteam.diet.BranchProfile.ActivityEditProfile;
 import com.wsoteam.diet.BranchProfile.ActivityProfile;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
+import com.wsoteam.diet.POJOProfile.Profile;
 import com.wsoteam.diet.POJOsCircleProgress.CalculateAndSavedData;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Breakfast;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Dinner;
@@ -86,6 +88,8 @@ public class MainActivity extends AppCompatActivity
     private SoundPool soundPool;
     private int soundIDdBubble;
     private Water water;
+
+    private Profile profile;
 
     private TextView tvLeftNBName;
     private CircleImageView ivLeftNBAvatar;
@@ -139,6 +143,17 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
+        if (Profile.count(Profile.class) == 1) {
+            profile = Profile.last(Profile.class);
+
+            tvLeftNBName.setText(profile.getFirstName() + " " + profile.getLastName());
+            tvLeftNBName.setTextSize(17);
+            if (!profile.getPhotoUrl().equals("default")) {
+                Uri uri = Uri.parse(profile.getPhotoUrl());
+                Glide.with(MainActivity.this).load(uri).into(ivLeftNBAvatar);
+            }
+        }
+
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
@@ -149,8 +164,30 @@ public class MainActivity extends AppCompatActivity
         bindHandler.post(new Runnable() {
             @Override
             public void run() {
-                bindCircleProgressBars(day, month, year);
-                fillWaterView(day, month, year);
+                bindCircleProgressBars(day, month, year, profile);
+                fillWaterView(day, month, year, profile);
+            }
+        });
+
+        waveLoadingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                soundPool.play(soundIDdBubble, 1, 1, 0, 0, 1);
+                addCountOfWater();
+            }
+        });
+
+        ivLeftNBAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (profile == null){
+                    Intent intent = new Intent(MainActivity.this, ActivityEditProfile.class);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(MainActivity.this, ActivityProfile.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -186,6 +223,7 @@ public class MainActivity extends AppCompatActivity
         if (getIntent().getStringExtra("MainActivity").equals(notAccessibleCountryCode)) {
             isAccessibleCountry = false;
         }
+
 
         saveFirstEnter();
 
@@ -225,13 +263,7 @@ public class MainActivity extends AppCompatActivity
         tvLeftNBName = view.findViewById(R.id.tvLeftNBName);
         ivLeftNBAvatar = view.findViewById(R.id.ivLeftNBAvatar);
 
-        ivLeftNBAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ActivityProfile.class);
-                startActivity(intent);
-            }
-        });
+
 
         additionOneToSharedPreference();
         checkFirstRun();
@@ -243,13 +275,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-        waveLoadingView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                soundPool.play(soundIDdBubble, 1, 1, 0, 0, 1);
-                addCountOfWater();
-            }
-        });
+
 
         waveLoadingView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -300,10 +326,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void addCountOfWater() {
-        double percent = (double) water.getStep() / (double) water.getMax();
+        double percent = (double) water.getStep() / (double) profile.getWaterCount();
         int step = (int) (percent * 100);
         int newCurrentNumber = water.getCurrentNumber() + water.getStep();
-        waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf(water.getMax()));
+        waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf(profile.getWaterCount()));
         waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() + step);
 
         water.setCurrentNumber(newCurrentNumber);
@@ -311,12 +337,12 @@ public class MainActivity extends AppCompatActivity
         water.save();
     }
 
-    private void fillWaterView(int day, int month, int year) {
+    private void fillWaterView(int day, int month, int year, @Nullable Profile profile) {
         final int DEFAULT_FIRST_STEP = 200;
         final int DEFAULT_FIRST_MAX = 2000;
 
         if (Water.count(Water.class) != 1) {
-            water = new Water(day, month, year, DEFAULT_FIRST_STEP, DEFAULT_FIRST_MAX, 0);
+            water = new Water(day, month, year, DEFAULT_FIRST_STEP, 0);
             water.save();
         } else {
             water = Water.last(Water.class);
@@ -331,21 +357,27 @@ public class MainActivity extends AppCompatActivity
                 water.save();
             }
         }
-        waveLoadingView.setCenterTitle(String.valueOf(water.getCurrentNumber()) + "/" + String.valueOf(water.getMax()));
-        double percent = (double) water.getCurrentNumber() / (double) water.getMax();
+        int maxWater = DEFAULT_FIRST_MAX;
+        if (profile != null) {
+            maxWater = profile.getWaterCount();
+        }
+
+        waveLoadingView.setCenterTitle(String.valueOf(water.getCurrentNumber()) + "/" + String.valueOf(maxWater));
+        double percent = (double) water.getCurrentNumber() / (double) maxWater;
         int progress = (int) (percent * 100);
         waveLoadingView.setProgressValue(progress);
 
+
     }
 
-    private void bindCircleProgressBars(int day, int month, int year) {
+    private void bindCircleProgressBars(int day, int month, int year, @Nullable Profile profile) {
         Log.e("LOL", "Start");
-        if (CalculateAndSavedData.count(CalculateAndSavedData.class) != 0) {
-            CalculateAndSavedData data = CalculateAndSavedData.first(CalculateAndSavedData.class);
-            apCollapsingKcal.setMax(data.getCalories());
-            apCollapsingProt.setMax(data.getProtein());
-            apCollapsingCarbo.setMax(data.getCarbohydrates());
-            apCollapsingFat.setMax(data.getFat());
+
+        if (profile != null) {
+            apCollapsingKcal.setMax(profile.getMaxKcal());
+            apCollapsingProt.setMax(profile.getMaxProt());
+            apCollapsingCarbo.setMax(profile.getMaxCarbo());
+            apCollapsingFat.setMax(profile.getMaxFat());
         } else {
             apCollapsingKcal.setMax(2000);
             apCollapsingProt.setMax(100);

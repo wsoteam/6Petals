@@ -265,7 +265,7 @@
                 android:drawablePadding="8dp"
                 android:drawableRight="@drawable/down_arrow"
                 android:drawableTint="@color/white"
-                android:text="Минимальные нагрузки (сидячая работа)"
+                android:text="@string/level_none"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.372"

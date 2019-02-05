@@ -8,18 +8,16 @@ public class Water extends SugarRecord {
     private int year;
 
     private int step;
-    private int max;
     private int currentNumber;
 
     public Water() {
     }
 
-    public Water(int day, int month, int year, int step, int max, int currentNumber) {
+    public Water(int day, int month, int year, int step, int currentNumber) {
         this.day = day;
         this.month = month;
         this.year = year;
         this.step = step;
-        this.max = max;
         this.currentNumber = currentNumber;
     }
 
@@ -53,14 +51,6 @@ public class Water extends SugarRecord {
 
     public void setStep(int step) {
         this.step = step;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public void setMax(int max) {
-        this.max = max;
     }
 
     public int getCurrentNumber() {
