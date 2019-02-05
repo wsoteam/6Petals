@@ -9,8 +9,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.POJOForDB.DiaryData;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
@@ -40,6 +42,11 @@ public class ActivityAddData extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_data);
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
         fabSaveData = findViewById(R.id.fabSaveInputDataDiary);
         edtWeight = findViewById(R.id.edtInputDataDiaryWeight);
         edtChest = findViewById(R.id.edtInputDataDiaryChest);

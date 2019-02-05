@@ -15,9 +15,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
@@ -42,6 +44,11 @@ public class ActivityCalculatorSPK extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator_spk);
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
         edtHeight = findViewById(R.id.edtSpkGrowth);
         edtAge = findViewById(R.id.edtSpkAge);
         edtWeight = findViewById(R.id.edtSpkWeight);

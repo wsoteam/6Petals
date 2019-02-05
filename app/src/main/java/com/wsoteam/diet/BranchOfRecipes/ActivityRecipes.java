@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.appodeal.ads.Appodeal;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.ObjectHolder;
@@ -44,6 +46,10 @@ public class ActivityRecipes extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
 
         listOfRecipes = (ArrayList<ItemRecipes>) ObjectHolder.
                 getGlobalObject().

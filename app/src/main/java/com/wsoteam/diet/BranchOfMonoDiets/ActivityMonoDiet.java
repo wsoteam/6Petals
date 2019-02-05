@@ -18,12 +18,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.appodeal.ads.Appodeal;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.OtherActivity.ActivitySettings;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.ObjectHolder;
@@ -52,10 +54,15 @@ public class ActivityMonoDiet extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mono_diet);
+
+
         rvList = findViewById(R.id.rvMonoDiets);
         adView = findViewById(R.id.bannerMainActivity);
         listOfPOJOS = (ArrayList<POJO>) ObjectHolder.getGlobalObject().getListOfPOJO().getListOFPOJO();
 
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
         //TestFillDB.fiilDB(ObjectHolder.getGlobalObject().getListOfPOJO());
 
         rvList.setLayoutManager(new LinearLayoutManager(this));

@@ -20,11 +20,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.POJOFoodItem.DbAnalyzer;
 import com.wsoteam.diet.POJOFoodItem.FoodConnect;
 import com.wsoteam.diet.POJOFoodItem.FoodItem;
@@ -37,7 +39,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityListAndSearch extends AppCompatActivity {
+public class  ActivityListAndSearch extends AppCompatActivity {
     private RecyclerView rvListOfSearchResponse;
     private ArrayList<FoodItem> listOfGroupsFoods = new ArrayList<>();
     private ArrayList<FoodItem> tempListOfGroupsFoods = new ArrayList<>();
@@ -75,6 +77,10 @@ public class ActivityListAndSearch extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_and_search);
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
 
         isRunEarly = getPreferences(MODE_PRIVATE);
 

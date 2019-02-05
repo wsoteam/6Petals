@@ -17,11 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
 import com.wsoteam.diet.POJOSExercises.ArrayOfTiles;
 import com.wsoteam.diet.POJOSExercises.ObjectLocalDatabase;
@@ -73,6 +75,11 @@ public class ActivityWithTiles extends AppCompatActivity {
             setContentView(R.layout.ex_activity_with_tiles_if_list_empty);
         } else {
             setContentView(R.layout.ex_activity_with_tiles);
+
+            if (ADsSingleton.getInstance().check()) {
+                Appodeal.show(this, Appodeal.INTERSTITIAL);
+            }
+
             recyclerView = findViewById(R.id.ex_rvTiles);
             recyclerView.setLayoutManager(new LinearLayoutManager(getParent()));
             GroupTilesAdapter groupTilesAdapter = new GroupTilesAdapter((ArrayList<ArrayOfTiles>) training.getTilesList());

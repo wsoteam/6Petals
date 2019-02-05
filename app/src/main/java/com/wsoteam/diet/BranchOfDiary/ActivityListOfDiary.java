@@ -14,11 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.POJOForDB.DiaryData;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
@@ -52,6 +54,10 @@ public class ActivityListOfDiary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_diary);
 
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
 
         fabAddData = findViewById(R.id.fabAddDataListOfDiary);
         recyclerView = findViewById(R.id.rvListOfDiary);

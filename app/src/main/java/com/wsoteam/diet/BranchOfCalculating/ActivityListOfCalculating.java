@@ -12,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
@@ -39,6 +41,11 @@ public class ActivityListOfCalculating extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         fillDataForList();
         setContentView(R.layout.activity_list_of_calculating);
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
         rvListOfCalculating = findViewById(R.id.rvListOfCalculating);
         rvListOfCalculating.setLayoutManager(new LinearLayoutManager(this));
         rvListOfCalculating.setAdapter(new CalculatingAdapter(listOfTitles, listOfDescriptions));

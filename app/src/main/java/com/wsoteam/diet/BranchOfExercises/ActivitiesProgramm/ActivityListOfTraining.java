@@ -14,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.appodeal.ads.Appodeal;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
 import com.wsoteam.diet.POJOSExercises.ObjectLocalDatabase;
 import com.wsoteam.diet.POJOSExercises.Programm;
@@ -56,6 +58,11 @@ public class ActivityListOfTraining extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex_activity_training_list);
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
         selectedNumber = getIntent().getIntExtra(TAG, 0);
         recyclerView = findViewById(R.id.ex_rvTrainingList);
         fillRecycler();

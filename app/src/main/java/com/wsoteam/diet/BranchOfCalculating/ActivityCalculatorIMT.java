@@ -11,10 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
@@ -41,6 +43,10 @@ public class ActivityCalculatorIMT extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator_imt);
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
         bodyTypes = getResources().getStringArray(R.array.body_types);
 
         btnCalculate = findViewById(R.id.btnIMTCalculate);

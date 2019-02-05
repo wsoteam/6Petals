@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.POJOSExercises.*;
 import com.wsoteam.diet.R;
 
@@ -41,6 +43,11 @@ public class ActivityListOfEx extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex_activity_list_of_ex);
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
         recyclerView = findViewById(R.id.ex_rvListOfAllEx);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         exGroups = (ExGroups) getIntent().getSerializableExtra(TAG);

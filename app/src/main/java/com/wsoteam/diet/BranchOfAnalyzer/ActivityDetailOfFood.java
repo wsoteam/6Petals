@@ -17,8 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.POJOFoodItem.FoodItem;
 import com.wsoteam.diet.POJOFoodItem.ListOfFoodItem;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Breakfast;
@@ -44,6 +46,10 @@ public class ActivityDetailOfFood extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_of_food);
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
 
         foodItem = (FoodItem) getIntent().getSerializableExtra("ActivityDetailOfFood");
 

@@ -8,10 +8,12 @@ import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.appodeal.ads.Appodeal;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.POJOSExercises.Ex;
 import com.wsoteam.diet.R;
 
@@ -29,6 +31,11 @@ public class ActivityExDetail extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex_activity_ex_detail);
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
+
         banner = findViewById(R.id.ex_bannerMainActivity);
 
         mInterstitialAd = new InterstitialAd(this);

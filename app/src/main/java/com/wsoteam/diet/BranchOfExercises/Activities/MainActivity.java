@@ -23,6 +23,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.FirebaseApp;
@@ -32,6 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentFavorites;
 import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentPartsOfBody;
 import com.wsoteam.diet.BranchOfExercises.FragmentsOfMainScreen.FragmentProgramms;
@@ -85,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex_activity_main);
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
 
         AdRequest request = new AdRequest.Builder().build();
 

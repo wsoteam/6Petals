@@ -43,6 +43,7 @@ import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.BranchEatingDiary.ActivityEatingDiary;
 import com.wsoteam.diet.BranchOfAnalyzer.ActivityListAndSearch;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        Appodeal.show(this, Appodeal.INTERSTITIAL);
+
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
@@ -182,8 +183,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
-        String appKey = "6ff7ff7154c82eeeebdfed01e9313c36aeb9092ac99bc7d8";
-        Appodeal.initialize(this, appKey, Appodeal.INTERSTITIAL, true);
+
+        Appodeal.initialize(this, Config.APPODEAL_KEY, Appodeal.INTERSTITIAL, true);
 
 
 
@@ -550,6 +551,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+
+        if (ADsSingleton.getInstance().check()) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);

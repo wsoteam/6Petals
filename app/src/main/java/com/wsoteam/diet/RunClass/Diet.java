@@ -3,17 +3,21 @@ package com.wsoteam.diet.RunClass;
 import android.app.Application;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.orm.SugarContext;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKSdk;
+import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.MainScreen.MainActivity;
 import com.yandex.metrica.YandexMetrica;
 import com.yandex.metrica.YandexMetricaConfig;
 
 public class Diet extends Application{
+
+    private String TAG_appodeal = "appodeal";
 
     @Override
     public void onCreate() {
@@ -29,6 +33,10 @@ public class Diet extends Application{
         YandexMetrica.activate(getApplicationContext(), config);
         // Отслеживание активности пользователей.
         YandexMetrica.enableActivityAutoTracking(this);
+
+        Log.i(TAG_appodeal, "onCreate MyApp");
+
+        ADsSingleton.initInstance();
 
         vkAccessTokenTracker.startTracking();
         VKSdk.initialize(this);
