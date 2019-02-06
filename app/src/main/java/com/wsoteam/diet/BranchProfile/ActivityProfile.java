@@ -136,7 +136,6 @@ public class ActivityProfile extends AppCompatActivity {
         }
         if (!profile.getPhotoUrl().equals("default")) {
             Uri uri = Uri.parse(profile.getPhotoUrl());
-            Log.e("LOL", profile.getPhotoUrl());
             Glide.with(this).load(uri).into(civProfile);
         }
     }

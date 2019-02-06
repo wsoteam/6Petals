@@ -1,12 +1,17 @@
 package com.wsoteam.diet.BranchOfAnalyzer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -17,6 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +32,13 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+import com.wsoteam.diet.BranchProfile.ActivityEditProfile;
 import com.wsoteam.diet.POJOFoodItem.DbAnalyzer;
 import com.wsoteam.diet.POJOFoodItem.FoodConnect;
 import com.wsoteam.diet.POJOFoodItem.FoodItem;
 import com.wsoteam.diet.POJOFoodItem.ListOfGroupsOfFood;
 import com.wsoteam.diet.POJOFoodItem.LockItemOfFoodBase;
+import com.wsoteam.diet.POJOProfile.Profile;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
@@ -38,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityListAndSearch extends AppCompatActivity {
+    private FloatingActionButton fabSearchAddNewProduct;
     private RecyclerView rvListOfSearchResponse;
     private ArrayList<FoodItem> listOfGroupsFoods = new ArrayList<>();
     private ArrayList<FoodItem> tempListOfGroupsFoods = new ArrayList<>();
@@ -85,9 +95,18 @@ public class ActivityListAndSearch extends AppCompatActivity {
         edtSearchField = findViewById(R.id.edtActivityListAndSearchCollapsingSearchField);
         ivEmptyImage = findViewById(R.id.ivActivityListAndSearchEmptyImage);
         tvEmptyText = findViewById(R.id.tvActivityListAndSearchEmptyText);
+        fabSearchAddNewProduct = findViewById(R.id.fabSearchAddNewProduct);
+
         rvListOfSearchResponse.setLayoutManager(new LinearLayoutManager(ActivityListAndSearch.this));
         AsyncLoadFoodList asyncLoadFoodList = new AsyncLoadFoodList();
         asyncLoadFoodList.execute();
+
+        fabSearchAddNewProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createADAboutAddNewProduct();
+            }
+        });
 
         edtSearchField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -319,4 +338,22 @@ public class ActivityListAndSearch extends AppCompatActivity {
             return null;
         }
     }
+
+   private void createADAboutAddNewProduct(){
+       AlertDialog.Builder builder = new AlertDialog.Builder(this);
+       final AlertDialog alertDialog = builder.create();
+       View view = View.inflate(this, R.layout.alert_dialog_add_new_product, null);
+
+       EditText edtADAddNewProductName = view.findViewById(R.id.edtADAddNewProductName);
+       EditText edtADAddNewProductWeight = view.findViewById(R.id.edtADAddNewProductWeight);
+       EditText edtADAddNewProductProt = view.findViewById(R.id.edtADAddNewProductProt);
+       EditText edtADAddNewProductCarbo = view.findViewById(R.id.edtADAddNewProductCarbo);
+       EditText edtADAddNewProductFat = view.findViewById(R.id.edtADAddNewProductFat);
+       EditText edtADAddNewProductKcal = view.findViewById(R.id.edtADAddNewProductKcal);
+
+
+       alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+       alertDialog.setView(view);
+       alertDialog.show();
+   }
 }

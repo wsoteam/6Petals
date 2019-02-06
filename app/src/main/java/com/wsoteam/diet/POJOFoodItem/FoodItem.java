@@ -1,10 +1,11 @@
 package com.wsoteam.diet.POJOFoodItem;
 
+import com.orm.SugarRecord;
 import com.squareup.moshi.Json;
 
 import java.io.Serializable;
 
-public class FoodItem implements Serializable {
+public class FoodItem extends SugarRecord implements Serializable {
 
     private String calories;
     private String carbohydrates;
