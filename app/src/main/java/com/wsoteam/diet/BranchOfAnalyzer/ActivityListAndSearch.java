@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -339,21 +340,56 @@ public class ActivityListAndSearch extends AppCompatActivity {
         }
     }
 
-   private void createADAboutAddNewProduct(){
-       AlertDialog.Builder builder = new AlertDialog.Builder(this);
-       final AlertDialog alertDialog = builder.create();
-       View view = View.inflate(this, R.layout.alert_dialog_add_new_product, null);
+    private void createADAboutAddNewProduct() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog alertDialog = builder.create();
+        View view = View.inflate(this, R.layout.alert_dialog_add_new_product, null);
 
-       EditText edtADAddNewProductName = view.findViewById(R.id.edtADAddNewProductName);
-       EditText edtADAddNewProductWeight = view.findViewById(R.id.edtADAddNewProductWeight);
-       EditText edtADAddNewProductProt = view.findViewById(R.id.edtADAddNewProductProt);
-       EditText edtADAddNewProductCarbo = view.findViewById(R.id.edtADAddNewProductCarbo);
-       EditText edtADAddNewProductFat = view.findViewById(R.id.edtADAddNewProductFat);
-       EditText edtADAddNewProductKcal = view.findViewById(R.id.edtADAddNewProductKcal);
+        EditText edtADAddNewProductName = view.findViewById(R.id.edtADAddNewProductName);
+
+        EditText edtADAddNewProductWeight = view.findViewById(R.id.edtADAddNewProductWeight);
+        EditText edtADAddNewProductKcal = view.findViewById(R.id.edtADAddNewProductKcal);
+
+        EditText edtADAddNewProductProt = view.findViewById(R.id.edtADAddNewProductProt);
+        EditText edtADAddNewProductCarbo = view.findViewById(R.id.edtADAddNewProductCarbo);
+        EditText edtADAddNewProductFat = view.findViewById(R.id.edtADAddNewProductFat);
 
 
-       alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-       alertDialog.setView(view);
-       alertDialog.show();
-   }
+        Button btnADAddNewProductCancel = view.findViewById(R.id.btnADAddNewProductCancel);
+        Button btnADAddNewProductSave = view.findViewById(R.id.btnADAddNewProductSave);
+
+
+        btnADAddNewProductCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.cancel();
+            }
+        });
+
+        btnADAddNewProductSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!edtADAddNewProductName.getText().toString().equals("")
+                        && !edtADAddNewProductWeight.getText().toString().equals("")
+                        && !edtADAddNewProductKcal.getText().toString().equals("")) {
+                    saveNewProduct();
+                } else {
+                    Toast.makeText(ActivityListAndSearch.this, "Для сохранение заполните три обязательных первых поля", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        });
+
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        alertDialog.setView(view);
+        alertDialog.show();
+    }
+
+    private void saveNewProduct(String name, String weight, String kcal, String prot, String carbo, String fat) {
+        FoodItem newFoodItem = new FoodItem();
+        newFoodItem.setName(name);
+        newFoodItem.set(name);
+        newFoodItem.setName(name);
+        newFoodItem.setName(name);
+    }
 }

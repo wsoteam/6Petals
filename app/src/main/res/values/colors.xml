@@ -70,4 +70,8 @@
     <color name="level_easy">#43d448</color>
     <color name="level_normal">#fbaa1d</color>
     <color name="level_hard">#b41c1c</color>
+
+
+    <color name="add_food_green">#00C853</color>
+    <color name="add_food_red">#f44336</color>
 </resources>

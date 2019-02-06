@@ -21,7 +21,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardView13"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="65dp"
@@ -174,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="Жиры, г"
                 android:textSize="11sp"
                 android:textStyle="bold"
@@ -185,11 +185,13 @@
                 android:id="@+id/textView74"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
                 android:text="Название продукта"
                 android:textSize="11sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/edtADAddNewProductName"
                 app:layout_constraintStart_toStartOf="@+id/edtADAddNewProductName"
                 app:layout_constraintTop_toBottomOf="@+id/divider11" />
 
@@ -214,6 +216,40 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/edtADAddNewProductProt"
                 app:layout_constraintStart_toStartOf="@+id/edtADAddNewProductProt" />
+
+            <Button
+                android:id="@+id/btnADAddNewProductCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/add_food_red"
+                android:text="ОТМЕНА"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnADAddNewProductSave"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtADAddNewProductFat" />
+
+            <Button
+                android:id="@+id/btnADAddNewProductSave"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/add_food_green"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="СОХРАНИТЬ"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnADAddNewProductCancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnADAddNewProductCancel"
+                app:layout_constraintTop_toTopOf="@+id/btnADAddNewProductCancel" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
