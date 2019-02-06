@@ -9,7 +9,7 @@ public class ADsSingleton {
     private static ADsSingleton instance;
     private static String TAG = "appodeal";
 
-    private int AD_index = Config.AD_FREQUENCY;
+    private int AD_index = Config.INTERSTITIAL_FREQUENCY;
 
     private ADsSingleton(){ }
 
@@ -32,7 +32,7 @@ public class ADsSingleton {
             return false;
         } else if (AD_index == 0 && isLoadet){
             Log.i(TAG, "MySingleton::check - == 0");
-            AD_index = Config.AD_FREQUENCY;
+            AD_index = Config.INTERSTITIAL_FREQUENCY;
             return true;
         } else {
             Log.i(TAG, "MySingleton::check - another");

@@ -4,7 +4,7 @@
 
     <string name="menu_drawer_settings">Настройки</string>
     <string name="nav_title">Диета - это просто!</string>
-
+<string name="nativeAdMessage">Ad</string>
     <string-array name="tab_title">
         <item>Суть диеты</item>
         <item>F.A.Q.</item>

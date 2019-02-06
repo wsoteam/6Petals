@@ -17,7 +17,8 @@ public class Config {
     public static final String DE= "de";
 
     //appodeal
-    public static int AD_FREQUENCY = 1;
+    public static int INTERSTITIAL_FREQUENCY = 1;  // > 0
+    public static int NATIVE_STEP = 3;
     public static String APPODEAL_KEY = "6ff7ff7154c82eeeebdfed01e9313c36aeb9092ac99bc7d8";
 
 

@@ -33,6 +33,8 @@ import com.vk.sdk.api.methods.VKApiGroups;
 import com.vk.sdk.api.methods.VKApiWall;
 import com.vk.sdk.api.model.VKList;
 import com.wsoteam.diet.Appodeal.ADsSingleton;
+import com.wsoteam.diet.Appodeal.AppodealWrapperAdapter;
+import com.wsoteam.diet.Config;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.POJOSForVkResponse.Item;
 import com.wsoteam.diet.POJOSForVkResponse.Response;
@@ -50,6 +52,7 @@ import java.util.Locale;
 public class ActivityListOfNews extends AppCompatActivity {
 
 
+
     private final int MAX_COUNT_OF_LETTERS = 50;
     private String CURRENT_GROUP_ID = "amazingheapkotya";
     private final String MAIN_GROUP_ID = "amazingheapkotya";
@@ -63,6 +66,7 @@ public class ActivityListOfNews extends AppCompatActivity {
     private FloatingActionButton fabSwitchUrl;
 
     private ItemAdapter itemAdapter;
+    private AppodealWrapperAdapter appodealWrapperAdapter;
 
     InterstitialAd interstitialAd;
 
@@ -190,11 +194,12 @@ public class ActivityListOfNews extends AppCompatActivity {
 
     private void updateUI() {
         itemAdapter = new ItemAdapter((ArrayList<Item>) ObjectHolder.getResponseVk().getItems());
-        itemAdapter.notifyDataSetChanged();
-        rvListOfNews.setAdapter(itemAdapter);
+        AppodealWrapperAdapter AppodealWrapperAdapter = new AppodealWrapperAdapter(itemAdapter, Config.NATIVE_STEP);
+        AppodealWrapperAdapter.notifyDataSetChanged();
+        rvListOfNews.setAdapter(AppodealWrapperAdapter);
     }
 
-    private class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvTitle, tvDate;
         ImageView imageView;
         CardView cardView;
@@ -268,7 +273,7 @@ public class ActivityListOfNews extends AppCompatActivity {
         }
     }
 
-    private class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
+    public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         ArrayList<Item> items;
 
         public ItemAdapter(ArrayList<Item> items) {
