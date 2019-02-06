@@ -2,12 +2,15 @@ package com.wsoteam.diet.BranchOfDiary;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.wsoteam.diet.POJOForDB.DiaryData;
+import com.wsoteam.diet.POJOProfile.Profile;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
@@ -61,7 +65,7 @@ public class ActivityListOfDiary extends AppCompatActivity {
         updateUI();
         drawGraphs();
 
-        if (diaryDataArrayList.size() == 0){
+        if (diaryDataArrayList.size() == 0) {
             Intent intent = new Intent(ActivityListOfDiary.this, ActivityAddData.class);
             startActivity(intent);
         }

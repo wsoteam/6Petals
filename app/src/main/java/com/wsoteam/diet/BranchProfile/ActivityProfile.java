@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,8 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.wsoteam.diet.POJOForDB.DiaryData;
 import com.wsoteam.diet.POJOProfile.Profile;
 import com.wsoteam.diet.R;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -27,15 +32,35 @@ public class ActivityProfile extends AppCompatActivity {
             tvProfileMaxKcal, tvProfileMaxWater, tvProfileMaxFat, tvProfileMaxCarbo,
             tvProfileMaxProt;
     private SharedPreferences firstEnter;
+    private ImageView ivProfileChangeWeight;
     private final String FIRST_ENTER = "FIRST_ENTER";
+    private int[] arrayOfDrawabaleArrowForChangeWeight = new int[]{R.drawable.ic_decrease_weight, R.drawable.ic_increase_weight};
 
     @Override
     protected void onResume() {
         super.onResume();
         if (Profile.count(Profile.class) == 1) {
-            fillViewsIfProfileNotNull();
+            Profile profile = Profile.last(Profile.class);
+            fillViewsIfProfileNotNull(profile);
+            Handler bindHandler = new Handler(Looper.getMainLooper());
+            bindHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    double difference = getDifferenceWeight(profile);
+
+                    if (difference > 0){
+                        tvProfileChangeWeight.setText("+" + String.valueOf(difference) + " " + getResources().getString(R.string.kg));
+                        Glide.with(ActivityProfile.this)
+                                .load(arrayOfDrawabaleArrowForChangeWeight[1]).into(ivProfileChangeWeight);
+                    }else{
+                        tvProfileChangeWeight.setText(String.valueOf(difference) + " " + getResources().getString(R.string.kg));
+                    }
+                }
+            });
+
         }
     }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +84,7 @@ public class ActivityProfile extends AppCompatActivity {
         tvProfileMaxFat = findViewById(R.id.tvProfileMaxFat);
         tvProfileMaxCarbo = findViewById(R.id.tvProfileMaxCarbo);
         tvProfileMaxProt = findViewById(R.id.tvProfileMaxProt);
+        ivProfileChangeWeight = findViewById(R.id.ivProfileChangeWeight);
 
         firstEnter = getSharedPreferences(FIRST_ENTER, MODE_PRIVATE);
         tvProfileFirstEnter.setText(firstEnter.getString(FIRST_ENTER, "-"));
@@ -81,8 +107,7 @@ public class ActivityProfile extends AppCompatActivity {
 
     }
 
-    private void fillViewsIfProfileNotNull() {
-        Profile profile = Profile.last(Profile.class);
+    private void fillViewsIfProfileNotNull(Profile profile) {
 
         tvProfileName.setText(profile.getFirstName() + " " + profile.getLastName());
         tvProfileOld.setText(String.valueOf(profile.getAge()));
@@ -100,7 +125,6 @@ public class ActivityProfile extends AppCompatActivity {
         tvProfileMaxFat.setText(String.valueOf(profile.getMaxFat()));
         tvProfileMaxProt.setText(String.valueOf(profile.getMaxProt()));
         tvProfileMaxWater.setText(String.valueOf(profile.getWaterCount()));
-        //tvProfileChangeWeight.setText(profile.);
         if (profile.getDifficultyLevel().equals(getString(R.string.dif_level_easy))) {
             tvProfileLevel.setTextColor(getResources().getColor(R.color.level_easy));
         } else {
@@ -115,6 +139,40 @@ public class ActivityProfile extends AppCompatActivity {
             Log.e("LOL", profile.getPhotoUrl());
             Glide.with(this).load(uri).into(civProfile);
         }
+    }
+
+    private double getDifferenceWeight(Profile profile) {
+        double difference = 0;
+        if (DiaryData.count(DiaryData.class) > 0) {
+            List<DiaryData> diaryDataArrayList = DiaryData.listAll(DiaryData.class);
+
+            if (diaryDataArrayList.size() > 1){
+
+                DiaryData[] arrayForSort = new DiaryData[diaryDataArrayList.size()];
+
+                for (int i = 0; i < diaryDataArrayList.size(); i++) {
+                    arrayForSort[i] = diaryDataArrayList.get(i);
+                }
+
+                int lenght = arrayForSort.length;
+                for (int i = 0; i < lenght - 1; i++) {
+                    for (int j = 0; j < lenght - i - 1; j++) {
+                        if (arrayForSort[j].getOwnId() < arrayForSort[j + 1].getOwnId()) {
+                            DiaryData temp = arrayForSort[j];
+                            arrayForSort[j] = arrayForSort[j + 1];
+                            arrayForSort[j + 1] = temp;
+                        }
+                    }
+
+                    difference = arrayForSort[0].getWeight() - profile.getWeight();
+                }
+            }else{
+                difference = diaryDataArrayList.get(0).getWeight() - profile.getWeight();
+            }
+
+        }
+
+        return difference;
     }
 
 }

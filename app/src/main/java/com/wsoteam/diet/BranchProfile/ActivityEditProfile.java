@@ -251,7 +251,7 @@ public class ActivityEditProfile extends AppCompatActivity {
             public void onClick(View view) {
                 Profile.deleteAll(Profile.class);
                 Profile profile = new Profile(edtSpkName.getText().toString(), edtSpkSecondName.getText().toString(),
-                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), Integer.parseInt(edtWeight.getText().toString()),
+                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), weight,
                         btnLevelLoad.getText().toString(), maxWater, "18.12.2018", 0, urlOfPhoto, (int) SPK, (int) protein,
                         (int) fat, (int) carbohydrate, getString(R.string.dif_level_easy));
                 profile.save();
@@ -265,7 +265,7 @@ public class ActivityEditProfile extends AppCompatActivity {
             public void onClick(View view) {
                 Profile.deleteAll(Profile.class);
                 Profile profile = new Profile(edtSpkName.getText().toString(), edtSpkSecondName.getText().toString(),
-                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), Integer.parseInt(edtWeight.getText().toString()),
+                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), weight,
                         btnLevelLoad.getText().toString(), maxWater, "18.12.2018", 0, urlOfPhoto, (int) upLineSPK, (int) protein,
                         (int) fat, (int) carbohydrate, getString(R.string.dif_level_normal));
                 profile.save();
@@ -279,7 +279,7 @@ public class ActivityEditProfile extends AppCompatActivity {
             public void onClick(View view) {
                 Profile.deleteAll(Profile.class);
                 Profile profile = new Profile(edtSpkName.getText().toString(), edtSpkSecondName.getText().toString(),
-                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), Integer.parseInt(edtWeight.getText().toString()),
+                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), weight,
                         btnLevelLoad.getText().toString(), maxWater, "18.12.2018", 0, urlOfPhoto, (int) downLineSPK, (int) protein,
                         (int) fat, (int) carbohydrate, getString(R.string.dif_level_hard));
                 profile.save();

@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity
         int year = calendar.get(Calendar.YEAR);
 
         showThankToast();
+
         Handler bindHandler = new Handler(Looper.getMainLooper());
         bindHandler.post(new Runnable() {
             @Override

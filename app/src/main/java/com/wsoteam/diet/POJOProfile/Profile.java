@@ -8,11 +8,11 @@ public class Profile extends SugarRecord {
     private boolean isFemale;
     private int age;
     private int height;
-    private int weight;
+    private double weight;
     private String exerciseStress;
     private int waterCount;
     private String firstEnter;
-    private int loseWeight;
+    private double loseWeight;
     private String photoUrl;
 
     private int maxKcal;
@@ -26,8 +26,8 @@ public class Profile extends SugarRecord {
     }
 
     public Profile(String firstName, String lastName, boolean isFemale,
-                   int age, int height, int weight, String exerciseStress,
-                   int waterCount, String firstEnter, int loseWeight, String photoUrl,
+                   int age, int height, double weight, String exerciseStress,
+                   int waterCount, String firstEnter, double loseWeight, String photoUrl,
                    int maxKcal, int maxProt, int maxFat, int maxCarbo, String difficultyLevel) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -127,11 +127,11 @@ public class Profile extends SugarRecord {
         this.height = height;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
@@ -159,11 +159,11 @@ public class Profile extends SugarRecord {
         this.firstEnter = firstEnter;
     }
 
-    public int getLoseWeight() {
+    public double getLoseWeight() {
         return loseWeight;
     }
 
-    public void setLoseWeight(int loseWeight) {
+    public void setLoseWeight(double loseWeight) {
         this.loseWeight = loseWeight;
     }
 
