@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -31,7 +32,7 @@ import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.methods.VKApiGroups;
 import com.vk.sdk.api.methods.VKApiWall;
 import com.vk.sdk.api.model.VKList;
-import com.wsoteam.diet.Config;
+import com.wsoteam.diet.Appodeal.ADsSingleton;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.POJOSForVkResponse.Item;
 import com.wsoteam.diet.POJOSForVkResponse.Response;
@@ -69,8 +70,8 @@ public class ActivityListOfNews extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (interstitialAd.isLoaded()) {
-            interstitialAd.show();
+        if (ADsSingleton.getInstance().check(Appodeal.isLoaded(Appodeal.INTERSTITIAL))) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
     }
 

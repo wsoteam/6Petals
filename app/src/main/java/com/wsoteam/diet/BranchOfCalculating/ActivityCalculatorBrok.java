@@ -13,12 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appodeal.ads.Appodeal;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.wsoteam.diet.ADsSingleton;
-import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
+import com.wsoteam.diet.Appodeal.ADsSingleton;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
@@ -35,8 +33,8 @@ public class ActivityCalculatorBrok extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(interstitialAd.isLoaded()){
-            interstitialAd.show();
+        if (ADsSingleton.getInstance().check(Appodeal.isLoaded(Appodeal.INTERSTITIAL))) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
     }
 
@@ -45,9 +43,7 @@ public class ActivityCalculatorBrok extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator_brok);
 
-        if (ADsSingleton.getInstance().check()) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
-        }
+
 
         edtBrokGrowth = findViewById(R.id.edtBrokGrowth);
         edtBrokGirth = findViewById(R.id.edtBrokGirth);

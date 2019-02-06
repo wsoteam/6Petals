@@ -1,6 +1,8 @@
-package com.wsoteam.diet;
+package com.wsoteam.diet.Appodeal;
 
 import android.util.Log;
+
+import com.wsoteam.diet.Config;
 
 public class ADsSingleton {
 
@@ -23,12 +25,12 @@ public class ADsSingleton {
         return instance;
     }
 
-    public boolean check(){
+    public boolean check(boolean isLoadet){
         if (AD_index > 0){
             Log.i(TAG, "MySingleton::check - > 0");
             AD_index--;
             return false;
-        } else if (AD_index ==0){
+        } else if (AD_index == 0 && isLoadet){
             Log.i(TAG, "MySingleton::check - == 0");
             AD_index = Config.AD_FREQUENCY;
             return true;

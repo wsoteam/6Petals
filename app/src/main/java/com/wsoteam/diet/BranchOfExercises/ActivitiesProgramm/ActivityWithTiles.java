@@ -23,7 +23,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.wsoteam.diet.ADsSingleton;
+import com.wsoteam.diet.Appodeal.ADsSingleton;
 import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
 import com.wsoteam.diet.POJOSExercises.ArrayOfTiles;
 import com.wsoteam.diet.POJOSExercises.ObjectLocalDatabase;
@@ -52,8 +52,8 @@ public class ActivityWithTiles extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
+        if (ADsSingleton.getInstance().check(Appodeal.isLoaded(Appodeal.INTERSTITIAL))) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
         super.onBackPressed();
     }
@@ -75,10 +75,6 @@ public class ActivityWithTiles extends AppCompatActivity {
             setContentView(R.layout.ex_activity_with_tiles_if_list_empty);
         } else {
             setContentView(R.layout.ex_activity_with_tiles);
-
-            if (ADsSingleton.getInstance().check()) {
-                Appodeal.show(this, Appodeal.INTERSTITIAL);
-            }
 
             recyclerView = findViewById(R.id.ex_rvTiles);
             recyclerView.setLayoutManager(new LinearLayoutManager(getParent()));

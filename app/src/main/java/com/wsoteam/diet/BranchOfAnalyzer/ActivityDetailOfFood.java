@@ -3,26 +3,21 @@ package com.wsoteam.diet.BranchOfAnalyzer;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appodeal.ads.Appodeal;
-import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.DonutProgress;
-import com.wsoteam.diet.ADsSingleton;
+import com.wsoteam.diet.Appodeal.ADsSingleton;
 import com.wsoteam.diet.POJOFoodItem.FoodItem;
-import com.wsoteam.diet.POJOFoodItem.ListOfFoodItem;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Breakfast;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Dinner;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Lunch;
@@ -47,9 +42,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_of_food);
 
-        if (ADsSingleton.getInstance().check()) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
-        }
+
 
         foodItem = (FoodItem) getIntent().getSerializableExtra("ActivityDetailOfFood");
 
@@ -137,6 +130,14 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         });
         YandexMetrica.reportEvent("Открыт экран: Детализация продукта группы - " + foodItem.getNameOfGroup());
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (ADsSingleton.getInstance().check(Appodeal.isLoaded(Appodeal.INTERSTITIAL))) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
+        }
     }
 
     private void createAddNewEatingDialog() {

@@ -9,7 +9,7 @@ import com.orm.SugarContext;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKSdk;
-import com.wsoteam.diet.ADsSingleton;
+import com.wsoteam.diet.Appodeal.ADsSingleton;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.MainScreen.MainActivity;
 import com.yandex.metrica.YandexMetrica;

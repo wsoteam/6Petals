@@ -14,11 +14,9 @@ import android.widget.TextView;
 
 import com.appodeal.ads.Appodeal;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
-import com.wsoteam.diet.ADsSingleton;
-import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
+import com.wsoteam.diet.Appodeal.ADsSingleton;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.ItemRecipes;
@@ -37,8 +35,8 @@ public class ActivityRecipes extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(interstitialAd.isLoaded()){
-            interstitialAd.show();
+        if (ADsSingleton.getInstance().check(Appodeal.isLoaded(Appodeal.INTERSTITIAL))) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
     }
 
@@ -46,10 +44,6 @@ public class ActivityRecipes extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
-
-        if (ADsSingleton.getInstance().check()) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
-        }
 
         listOfRecipes = (ArrayList<ItemRecipes>) ObjectHolder.
                 getGlobalObject().

@@ -1,7 +1,6 @@
 package com.wsoteam.diet.BranchOfExercises.ActivitiesPartOfBody;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +15,7 @@ import android.widget.TextView;
 import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
-import com.wsoteam.diet.ADsSingleton;
+import com.wsoteam.diet.Appodeal.ADsSingleton;
 import com.wsoteam.diet.POJOSExercises.*;
 import com.wsoteam.diet.R;
 
@@ -33,8 +32,8 @@ public class ActivityListOfEx extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
+        if (ADsSingleton.getInstance().check(Appodeal.isLoaded(Appodeal.INTERSTITIAL))) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
         super.onBackPressed();
     }
@@ -43,10 +42,6 @@ public class ActivityListOfEx extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex_activity_list_of_ex);
-
-        if (ADsSingleton.getInstance().check()) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
-        }
 
         recyclerView = findViewById(R.id.ex_rvListOfAllEx);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -1,7 +1,6 @@
 package com.wsoteam.diet.BranchOfExercises.ActivitiesPartOfBody;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 import com.appodeal.ads.Appodeal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
-import com.wsoteam.diet.ADsSingleton;
+import com.wsoteam.diet.Appodeal.ADsSingleton;
 import com.wsoteam.diet.BranchOfExercises.ObjectHolder;
 import com.wsoteam.diet.POJOSExercises.ExGroups;
 import com.wsoteam.diet.POJOSExercises.PartOfBody;
@@ -38,8 +37,8 @@ public class ActivityListOfExGroups extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
+        if (ADsSingleton.getInstance().check(Appodeal.isLoaded(Appodeal.INTERSTITIAL))) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
         super.onBackPressed();
     }
@@ -48,9 +47,6 @@ public class ActivityListOfExGroups extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ex_activity_list_of_ex_groups);
-        if (ADsSingleton.getInstance().check()) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
-        }
 
         selectedNumber = getIntent().getIntExtra(TAG, 0);
         partOfBody = ObjectHolder.getGlobalObject().getExercises().getPartOfBodyList().get(selectedNumber);

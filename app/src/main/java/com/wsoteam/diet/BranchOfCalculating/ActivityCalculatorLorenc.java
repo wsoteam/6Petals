@@ -12,12 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appodeal.ads.Appodeal;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.wsoteam.diet.ADsSingleton;
-import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
+import com.wsoteam.diet.Appodeal.ADsSingleton;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
@@ -30,8 +28,8 @@ public class ActivityCalculatorLorenc extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(interstitialAd.isLoaded()){
-            interstitialAd.show();
+        if (ADsSingleton.getInstance().check(Appodeal.isLoaded(Appodeal.INTERSTITIAL))) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
     }
 
@@ -40,9 +38,6 @@ public class ActivityCalculatorLorenc extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator_lorenc);
 
-        if (ADsSingleton.getInstance().check()) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
-        }
         edtLorencHeight = findViewById(R.id.edtLorencHeight);
         btnCalculate = findViewById(R.id.btnLorencCalculate);
         adBanner = findViewById(R.id.bnrCalculatorLorenc);

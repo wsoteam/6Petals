@@ -2,11 +2,9 @@ package com.wsoteam.diet.BranchOfMonoDiets;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.AnimatedVectorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,24 +12,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.appodeal.ads.Appodeal;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.wsoteam.diet.ADsSingleton;
-import com.wsoteam.diet.OtherActivity.ActivitySettings;
+import com.wsoteam.diet.Appodeal.ADsSingleton;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.POJO;
 import com.wsoteam.diet.R;
-import com.wsoteam.diet.TestFillDB;
 import com.yandex.metrica.YandexMetrica;
 
 import java.util.ArrayList;
@@ -45,8 +38,8 @@ public class ActivityMonoDiet extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (interstitialAd.isLoaded()) {
-            interstitialAd.show();
+        if (ADsSingleton.getInstance().check(Appodeal.isLoaded(Appodeal.INTERSTITIAL))) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
     }
 
@@ -60,9 +53,7 @@ public class ActivityMonoDiet extends AppCompatActivity {
         adView = findViewById(R.id.bannerMainActivity);
         listOfPOJOS = (ArrayList<POJO>) ObjectHolder.getGlobalObject().getListOfPOJO().getListOFPOJO();
 
-        if (ADsSingleton.getInstance().check()) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
-        }
+
         //TestFillDB.fiilDB(ObjectHolder.getGlobalObject().getListOfPOJO());
 
         rvList.setLayoutManager(new LinearLayoutManager(this));

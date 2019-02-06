@@ -43,7 +43,6 @@ import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.wsoteam.diet.ADsSingleton;
 import com.wsoteam.diet.BranchEatingDiary.ActivityEatingDiary;
 import com.wsoteam.diet.BranchOfAnalyzer.ActivityListAndSearch;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
@@ -184,7 +183,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_drawer);
 
 
-        Appodeal.initialize(this, Config.APPODEAL_KEY, Appodeal.INTERSTITIAL, true);
+        Appodeal.initialize(this, Config.APPODEAL_KEY, Appodeal.INTERSTITIAL | Appodeal.NATIVE | Appodeal.REWARDED_VIDEO, true);
 
 
 
@@ -552,9 +551,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
 
-        if (ADsSingleton.getInstance().check()) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
-        }
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);

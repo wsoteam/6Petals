@@ -9,11 +9,10 @@ import android.widget.TextView;
 
 import com.appodeal.ads.Appodeal;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.wsoteam.diet.ADsSingleton;
+import com.wsoteam.diet.Appodeal.ADsSingleton;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.POJOS.POJO;
 import com.wsoteam.diet.R;
@@ -28,8 +27,8 @@ public class ActivityViewerOfBodyItem extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(interstitialAd.isLoaded()){
-            interstitialAd.show();
+        if (ADsSingleton.getInstance().check(Appodeal.isLoaded(Appodeal.INTERSTITIAL))) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL);
         }
     }
 
@@ -39,9 +38,6 @@ public class ActivityViewerOfBodyItem extends AppCompatActivity {
         setContentView(R.layout.activity_viewer_of_body_item);
         getSupportActionBar().hide();
 
-        if (ADsSingleton.getInstance().check()) {
-            Appodeal.show(this, Appodeal.INTERSTITIAL);
-        }
 
         tvTitle = findViewById(R.id.tvTitle);
         tvBody = findViewById(R.id.tvBody);
