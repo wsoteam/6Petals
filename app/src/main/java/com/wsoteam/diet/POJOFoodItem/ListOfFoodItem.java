@@ -1,11 +1,12 @@
 
 package com.wsoteam.diet.POJOFoodItem;
 
+import com.orm.SugarRecord;
 import com.squareup.moshi.Json;
 
 import java.io.Serializable;
 
-public class ListOfFoodItem implements Serializable {
+public class ListOfFoodItem extends SugarRecord implements Serializable {
 
     @Json(name = "calories")
     private String calories;

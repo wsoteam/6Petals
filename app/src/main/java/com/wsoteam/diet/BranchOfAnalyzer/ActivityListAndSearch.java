@@ -37,6 +37,7 @@ import com.wsoteam.diet.BranchProfile.ActivityEditProfile;
 import com.wsoteam.diet.POJOFoodItem.DbAnalyzer;
 import com.wsoteam.diet.POJOFoodItem.FoodConnect;
 import com.wsoteam.diet.POJOFoodItem.FoodItem;
+import com.wsoteam.diet.POJOFoodItem.ListOfFoodItem;
 import com.wsoteam.diet.POJOFoodItem.ListOfGroupsOfFood;
 import com.wsoteam.diet.POJOFoodItem.LockItemOfFoodBase;
 import com.wsoteam.diet.POJOProfile.Profile;
@@ -61,6 +62,9 @@ public class ActivityListAndSearch extends AppCompatActivity {
     private SharedPreferences isRunEarly;
     private List<LockItemOfFoodBase> lockItems = new ArrayList<>();
     private boolean isReturnFromUnlockActivity = false;
+    private final String EMPTY = "";
+
+    private final String TAG_OWN_PRODUCT = "OWN";
 
     InterstitialAd interstitialAd;
 
@@ -228,7 +232,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView tvName, tvCal, tvNameOfGroup;
+        private TextView tvName, tvCal, tvNameOfGroup, tvLeterOfProduct;
         private ImageView ivMainImage, ivHardKcal, ivLockStatus;
         private boolean isLock = false;
 
@@ -240,6 +244,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
             tvNameOfGroup = itemView.findViewById(R.id.tvNameOfGroup);
             ivHardKcal = itemView.findViewById(R.id.ivHardKcal);
             ivLockStatus = itemView.findViewById(R.id.ivLockStatus);
+            tvLeterOfProduct = itemView.findViewById(R.id.tvLeterOfProduct);
             itemView.setOnClickListener(this);
         }
 
@@ -261,11 +266,20 @@ public class ActivityListAndSearch extends AppCompatActivity {
         public void bind(FoodItem itemOfGlobalBase, boolean isItemForSeparator) {
             ivHardKcal.setVisibility(View.GONE);
             ivLockStatus.setVisibility(View.GONE);
+            tvLeterOfProduct.setVisibility(View.GONE);
             isLock = false;
             tvName.setText(itemOfGlobalBase.getName());
             tvCal.setText(itemOfGlobalBase.getCalories() + " " + getString(R.string.for_100_g_of_product));
-            Glide.with(ActivityListAndSearch.this).load(itemOfGlobalBase.getUrlOfImages()).into(ivMainImage);
-            tvNameOfGroup.setText(itemOfGlobalBase.getNameOfGroup());
+
+            if (!itemOfGlobalBase.getNameOfGroup().equals(TAG_OWN_PRODUCT)) {
+                tvNameOfGroup.setText(itemOfGlobalBase.getNameOfGroup());
+                Glide.with(ActivityListAndSearch.this).load(itemOfGlobalBase.getUrlOfImages()).into(ivMainImage);
+            } else {
+                tvLeterOfProduct.setVisibility(View.VISIBLE);
+                tvNameOfGroup.setText("Сохраненные");
+                tvLeterOfProduct.setText(String.valueOf(Character.toUpperCase(itemOfGlobalBase.getName().charAt(0))));
+            }
+
             if (Integer.parseInt(itemOfGlobalBase.getCalories()) > HARD_KCAL) {
                 ivHardKcal.setVisibility(View.VISIBLE);
             }
@@ -332,7 +346,15 @@ public class ActivityListAndSearch extends AppCompatActivity {
 
                 FoodConnect foodConnect = jsonAdapter.fromJson(json);
 
-                return foodConnect.getDbAnalyzer();
+                DbAnalyzer dbAnalyzer = foodConnect.getDbAnalyzer();
+
+                if (ListOfFoodItem.count(ListOfFoodItem.class) > 0) {
+                    ArrayList<ListOfFoodItem> listOfFoodItem = (ArrayList) ListOfFoodItem.listAll(ListOfFoodItem.class);
+                    ListOfGroupsOfFood savedGroupFood = new ListOfGroupsOfFood(listOfFoodItem, TAG_OWN_PRODUCT, TAG_OWN_PRODUCT);
+                    dbAnalyzer.getListOfGroupsOfFood().add(0, savedGroupFood);
+                }
+
+                return dbAnalyzer;
             } catch (Exception e) {
 
             }
@@ -372,7 +394,14 @@ public class ActivityListAndSearch extends AppCompatActivity {
                 if (!edtADAddNewProductName.getText().toString().equals("")
                         && !edtADAddNewProductWeight.getText().toString().equals("")
                         && !edtADAddNewProductKcal.getText().toString().equals("")) {
-                    saveNewProduct();
+
+                    saveNewProduct(edtADAddNewProductName.getText().toString(),
+                            edtADAddNewProductWeight.getText().toString(), edtADAddNewProductKcal.getText().toString(),
+                            edtADAddNewProductProt.getText().toString(), edtADAddNewProductCarbo.getText().toString(),
+                            edtADAddNewProductFat.getText().toString());
+
+                    alertDialog.cancel();
+                    showToastAfterSave();
                 } else {
                     Toast.makeText(ActivityListAndSearch.this, "Для сохранение заполните три обязательных первых поля", Toast.LENGTH_LONG).show();
                 }
@@ -386,10 +415,48 @@ public class ActivityListAndSearch extends AppCompatActivity {
     }
 
     private void saveNewProduct(String name, String weight, String kcal, String prot, String carbo, String fat) {
-        FoodItem newFoodItem = new FoodItem();
-        newFoodItem.setName(name);
-        newFoodItem.set(name);
-        newFoodItem.setName(name);
-        newFoodItem.setName(name);
+        double protInPortion = 0, carboInPortion = 0, fatInPortion = 0;
+
+        double coefficient = (Integer.parseInt(weight) / 100);
+        double kcalInPortion = Integer.parseInt(kcal) / coefficient;
+        if (!prot.equals("")) {
+            protInPortion = Integer.parseInt(prot) / coefficient;
+        }
+        if (!carbo.equals("")) {
+            carboInPortion = Integer.parseInt(carbo) / coefficient;
+        }
+        if (!fat.equals("")) {
+            fatInPortion = Integer.parseInt(fat) / coefficient;
+        }
+
+        ListOfFoodItem item = new ListOfFoodItem();
+        item.setName(name);
+        item.setCalories(String.valueOf((int) kcalInPortion));
+        item.setUrlOfImages(TAG_OWN_PRODUCT);
+
+        item.setProtein(String.valueOf((int) protInPortion));
+        item.setCarbohydrates(String.valueOf((int) carboInPortion));
+        item.setFat(String.valueOf((int) fatInPortion));
+
+        listOfGroupsFoods.add(0, new FoodItem(item.getCalories(), carbo, EMPTY,
+                EMPTY, fat, name, EMPTY, prot, EMPTY, TAG_OWN_PRODUCT, 0));
+
+        item.save();
+
+    }
+
+    private void showToastAfterSave() {
+        LayoutInflater toastInflater = getLayoutInflater();
+        View toastLayout = toastInflater.inflate(R.layout.toast_complete_gift, null, false);
+        TextView tvToastCompleteGift = toastLayout.findViewById(R.id.tvToastCompleteGift);
+        ImageView ivToastCompleteGift = toastLayout.findViewById(R.id.ivToastCompleteGift);
+
+        tvToastCompleteGift.setText("Продукт сохранен");
+        Glide.with(this).load(R.drawable.ic_toast_product_saved).into(ivToastCompleteGift);
+
+        Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(toastLayout);
+        toast.show();
     }
 }

@@ -5,7 +5,7 @@ import com.squareup.moshi.Json;
 
 import java.io.Serializable;
 
-public class FoodItem extends SugarRecord implements Serializable {
+public class FoodItem implements Serializable {
 
     private String calories;
     private String carbohydrates;
