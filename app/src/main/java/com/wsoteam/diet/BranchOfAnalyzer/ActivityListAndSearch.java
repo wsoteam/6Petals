@@ -278,6 +278,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
                 tvLeterOfProduct.setVisibility(View.VISIBLE);
                 tvNameOfGroup.setText("Сохраненные");
                 tvLeterOfProduct.setText(String.valueOf(Character.toUpperCase(itemOfGlobalBase.getName().charAt(0))));
+                Glide.with(ActivityListAndSearch.this).load(R.drawable.gradient_for_background_splash).into(ivMainImage);
             }
 
             if (Integer.parseInt(itemOfGlobalBase.getCalories()) > HARD_KCAL) {
@@ -438,8 +439,9 @@ public class ActivityListAndSearch extends AppCompatActivity {
         item.setCarbohydrates(String.valueOf((int) carboInPortion));
         item.setFat(String.valueOf((int) fatInPortion));
 
-        listOfGroupsFoods.add(0, new FoodItem(item.getCalories(), carbo, EMPTY,
-                EMPTY, fat, name, EMPTY, prot, EMPTY, TAG_OWN_PRODUCT, 0));
+        listOfGroupsFoods.add(0, new FoodItem(String.valueOf((int) kcalInPortion),
+                String.valueOf((int) carboInPortion), EMPTY, EMPTY, String.valueOf((int) fatInPortion),
+                name, EMPTY, String.valueOf((int) protInPortion), EMPTY, TAG_OWN_PRODUCT, 0));
 
         item.save();
 

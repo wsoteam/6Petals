@@ -1,20 +1,24 @@
 package com.wsoteam.diet.BranchEatingDiary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.wsoteam.diet.BranchEatingDiary.Fragments.FragmentBreakfast;
 import com.wsoteam.diet.BranchEatingDiary.Fragments.FragmentDinner;
 import com.wsoteam.diet.BranchEatingDiary.Fragments.FragmentLunch;
 import com.wsoteam.diet.BranchEatingDiary.Fragments.FragmentSnack;
+import com.wsoteam.diet.BranchOfAnalyzer.ActivityListAndSearch;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Breakfast;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Dinner;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Lunch;
@@ -28,6 +32,7 @@ import java.util.List;
 public class ActivityEatingDiary extends AppCompatActivity {
     private ArrayList<Fragment> listOfFragments;
     private ViewPager viewPager;
+    private FloatingActionButton fabEatingDiaryAddNewEating;
     private BottomNavigationView bottomNavigationView;
     private TextView tvEatingDiaryCollapsingFat, tvEatingDiaryCollapsingCarbo, tvEatingDiaryCollapsingProt, tvEatingDiaryCollapsingKcal;
 
@@ -76,6 +81,8 @@ public class ActivityEatingDiary extends AppCompatActivity {
         tvEatingDiaryCollapsingProt = findViewById(R.id.tvEatingDiaryCollapsingProt);
         tvEatingDiaryCollapsingKcal = findViewById(R.id.tvEatingDiaryCollapsingKcal);
 
+        fabEatingDiaryAddNewEating = findViewById(R.id.fabEatingDiaryAddNewEating);
+
         compareDate();
         fillMainIndicators(0);
 
@@ -84,6 +91,14 @@ public class ActivityEatingDiary extends AppCompatActivity {
         listOfFragments.add(new FragmentLunch());
         listOfFragments.add(new FragmentDinner());
         listOfFragments.add(new FragmentSnack());
+
+        fabEatingDiaryAddNewEating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ActivityEatingDiary.this, ActivityListAndSearch.class);
+                startActivity(intent);
+            }
+        });
 
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

@@ -39,6 +39,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
     private Button btnSaveEating;
 
     private FoodItem foodItem;
+    private final String TAG_OWN_PRODUCT = "OWN";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +47,12 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         setContentView(R.layout.activity_detail_of_food);
 
         foodItem = (FoodItem) getIntent().getSerializableExtra("ActivityDetailOfFood");
+
+        if (foodItem.getNameOfGroup().equals(TAG_OWN_PRODUCT)) {
+            foodItem.setDescription("");
+            foodItem.setComposition("");
+            foodItem.setProperties("");
+        }
 
         tvTitle = findViewById(R.id.tvActivityDetailOfFoodCollapsingTitle);
         tvKcal = findViewById(R.id.tvActivityDetailOfFoodKcal);

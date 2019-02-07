@@ -12,6 +12,7 @@
 
 
     <color name="green">#1cae17</color>
+    <color name="пку">#1cae17</color>
     <color name="white">#ffffff</color>
     <color name="red">#e12a2a</color>
     <color name="light_red">#cf3838</color>
@@ -72,6 +73,6 @@
     <color name="level_hard">#b41c1c</color>
 
 
-    <color name="add_food_green">#00C853</color>
+    <color name="add_food_green">#00a82d</color>
     <color name="add_food_red">#f44336</color>
 </resources>
