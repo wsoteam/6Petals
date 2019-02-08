@@ -38,6 +38,8 @@ public class ActivityDetailOfFood extends AppCompatActivity {
     private EditText edtWeight;
     private Button btnSaveEating;
 
+    private CardView cvDetailOfFoodProperties;
+
     private FoodItem foodItem;
     private final String TAG_OWN_PRODUCT = "OWN";
 
@@ -48,17 +50,14 @@ public class ActivityDetailOfFood extends AppCompatActivity {
 
         foodItem = (FoodItem) getIntent().getSerializableExtra("ActivityDetailOfFood");
 
-        if (foodItem.getNameOfGroup().equals(TAG_OWN_PRODUCT)) {
-            foodItem.setDescription("");
-            foodItem.setComposition("");
-            foodItem.setProperties("");
-        }
 
         tvTitle = findViewById(R.id.tvActivityDetailOfFoodCollapsingTitle);
         tvKcal = findViewById(R.id.tvActivityDetailOfFoodKcal);
         tvCarbohydrates = findViewById(R.id.tvActivityDetailOfFoodCountOfCarbohydrates);
         tvFat = findViewById(R.id.tvActivityDetailOfFoodCountOfFat);
         tvProtein = findViewById(R.id.tvActivityDetailOfFoodCountOfProtein);
+
+        cvDetailOfFoodProperties = findViewById(R.id.cvDetailOfFoodProperties);
 
         btnSaveEating = findViewById(R.id.btnSaveEating);
 
@@ -74,6 +73,13 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         pbCarbohydrates = findViewById(R.id.pbActivityDetailOfFoodCarbo);
         pbFat = findViewById(R.id.pbActivityDetailOfFoodFat);
         pbProtein = findViewById(R.id.pbActivityDetailOfFoodProtein);
+
+        if (foodItem.getNameOfGroup().equals(TAG_OWN_PRODUCT)) {
+            foodItem.setDescription("");
+            foodItem.setComposition("");
+            foodItem.setProperties("");
+            cvDetailOfFoodProperties.setVisibility(View.GONE);
+        }
 
 
         tvTitle.setText(foodItem.getName());
@@ -228,13 +234,28 @@ public class ActivityDetailOfFood extends AppCompatActivity {
 
     private void calculateNumbersForProgressBars() {
         Double fat, carbohydrates, protein;
+        String maxPercent = "100";
+        int maxCountForProgressBar = 100;
 
         fat = Double.parseDouble(foodItem.getFat());
         carbohydrates = Double.parseDouble(foodItem.getCarbohydrates());
         protein = Double.parseDouble(foodItem.getProtein());
 
-        pbFat.setDonut_progress(String.valueOf(fat.intValue()));
-        pbProtein.setDonut_progress(String.valueOf(protein.intValue()));
-        pbCarbohydrates.setDonut_progress(String.valueOf(carbohydrates.intValue()));
+        if (fat > maxCountForProgressBar) {
+            pbFat.setDonut_progress(maxPercent);
+        } else {
+            pbFat.setDonut_progress(String.valueOf(fat.intValue()));
+        }
+        if (carbohydrates > maxCountForProgressBar) {
+            pbProtein.setDonut_progress(maxPercent);
+        } else {
+            pbProtein.setDonut_progress(String.valueOf(protein.intValue()));
+        }
+        if (protein > maxCountForProgressBar) {
+            pbCarbohydrates.setDonut_progress(maxPercent);
+        } else {
+            pbCarbohydrates.setDonut_progress(String.valueOf(carbohydrates.intValue()));
+        }
+
     }
 }

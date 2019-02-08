@@ -181,10 +181,10 @@ public class MainActivity extends AppCompatActivity
         ivLeftNBAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (profile == null){
+                if (profile == null) {
                     Intent intent = new Intent(MainActivity.this, ActivityEditProfile.class);
                     startActivity(intent);
-                }else {
+                } else {
                     Intent intent = new Intent(MainActivity.this, ActivityProfile.class);
                     startActivity(intent);
                 }
@@ -265,7 +265,6 @@ public class MainActivity extends AppCompatActivity
         ivLeftNBAvatar = view.findViewById(R.id.ivLeftNBAvatar);
 
 
-
         additionOneToSharedPreference();
         checkFirstRun();
 
@@ -327,15 +326,29 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void addCountOfWater() {
-        double percent = (double) water.getStep() / (double) profile.getWaterCount();
-        int step = (int) (percent * 100);
-        int newCurrentNumber = water.getCurrentNumber() + water.getStep();
-        waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf(profile.getWaterCount()));
-        waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() + step);
+        double defaultWaterCount = 2000;
 
-        water.setCurrentNumber(newCurrentNumber);
-        Water.deleteAll(Water.class);
-        water.save();
+        if (profile != null) {
+            double percent = (double) water.getStep() / (double) profile.getWaterCount();
+            int step = (int) (percent * 100);
+            int newCurrentNumber = water.getCurrentNumber() + water.getStep();
+            waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf(profile.getWaterCount()));
+            waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() + step);
+
+            water.setCurrentNumber(newCurrentNumber);
+            Water.deleteAll(Water.class);
+            water.save();
+        } else {
+            double percent = (double) water.getStep() / defaultWaterCount;
+            int step = (int) (percent * 100);
+            int newCurrentNumber = water.getCurrentNumber() + water.getStep();
+            waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf((int) defaultWaterCount));
+            waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() + step);
+
+            water.setCurrentNumber(newCurrentNumber);
+            Water.deleteAll(Water.class);
+            water.save();
+        }
     }
 
     private void fillWaterView(int day, int month, int year, @Nullable Profile profile) {
