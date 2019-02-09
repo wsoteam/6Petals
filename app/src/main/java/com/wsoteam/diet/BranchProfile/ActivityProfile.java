@@ -9,12 +9,14 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,14 +41,28 @@ public class ActivityProfile extends AppCompatActivity {
     private RecyclerView rvProfileMainParams;
     private SharedPreferences firstEnter;
     private ImageView ivProfileChangeWeight;
+
+    private ItemAdapter itemAdapter;
+
     private final String FIRST_ENTER = "FIRST_ENTER";
     private int[] arrayOfDrawabaleArrowForChangeWeight = new int[]{R.drawable.ic_decrease_weight, R.drawable.ic_increase_weight};
+    private int[] arrayOfBackgroundDrawables = new int[]{R.drawable.background_item_profile_kcal,
+            R.drawable.background_item_profile_water, R.drawable.background_item_profile_fat,
+            R.drawable.background_item_profile_carbo, R.drawable.background_item_profile_prot};
+    private int[] arrayOfIcon = new int[]{R.drawable.ic_item_profile_kcal,
+            R.drawable.ic_item_profile_water, R.drawable.ic_item_profile_fat,
+            R.drawable.ic_item_profile_carbo, R.drawable.ic_item_profile_protein};
+    private int[] arrayOfGradients = new int[]{R.drawable.gradient_filter_profile_kcal,
+            R.drawable.gradient_filter_profile_water, R.drawable.gradient_filter_profile_fat,
+            R.drawable.gradient_filter_profile_carbo, R.drawable.gradient_filter_profile_prot};
+
 
     @Override
     protected void onResume() {
         super.onResume();
         if (Profile.count(Profile.class) == 1) {
             Profile profile = Profile.last(Profile.class);
+            updateUI(profile);
             fillViewsIfProfileNotNull(profile);
             Handler bindHandler = new Handler(Looper.getMainLooper());
             bindHandler.post(new Runnable() {
@@ -54,11 +70,11 @@ public class ActivityProfile extends AppCompatActivity {
                 public void run() {
                     double difference = getDifferenceWeight(profile);
 
-                    if (difference > 0){
+                    if (difference > 0) {
                         tvProfileChangeWeight.setText("+" + String.valueOf(difference) + " " + getResources().getString(R.string.kg));
                         Glide.with(ActivityProfile.this)
                                 .load(arrayOfDrawabaleArrowForChangeWeight[1]).into(ivProfileChangeWeight);
-                    }else{
+                    } else {
                         tvProfileChangeWeight.setText(String.valueOf(difference) + " " + getResources().getString(R.string.kg));
                     }
                 }
@@ -93,8 +109,9 @@ public class ActivityProfile extends AppCompatActivity {
         ivProfileChangeWeight = findViewById(R.id.ivProfileChangeWeight);
 
         rvProfileMainParams = findViewById(R.id.rvProfileMainParams);
-        rvProfileMainParams.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvProfileMainParams.setAdapter(new ItemAdapter());
+        rvProfileMainParams.setHasFixedSize(true);
+        rvProfileMainParams.setItemViewCacheSize(5);
+
 
         firstEnter = getSharedPreferences(FIRST_ENTER, MODE_PRIVATE);
         tvProfileFirstEnter.setText(firstEnter.getString(FIRST_ENTER, "-"));
@@ -115,6 +132,12 @@ public class ActivityProfile extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void updateUI(Profile profile) {
+        itemAdapter = new ItemAdapter(profile);
+        rvProfileMainParams.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvProfileMainParams.setAdapter(itemAdapter);
     }
 
     private void fillViewsIfProfileNotNull(Profile profile) {
@@ -155,7 +178,7 @@ public class ActivityProfile extends AppCompatActivity {
         if (DiaryData.count(DiaryData.class) > 0) {
             List<DiaryData> diaryDataArrayList = DiaryData.listAll(DiaryData.class);
 
-            if (diaryDataArrayList.size() > 1){
+            if (diaryDataArrayList.size() > 1) {
 
                 DiaryData[] arrayForSort = new DiaryData[diaryDataArrayList.size()];
 
@@ -175,7 +198,7 @@ public class ActivityProfile extends AppCompatActivity {
 
                     difference = arrayForSort[0].getWeight() - profile.getWeight();
                 }
-            }else{
+            } else {
                 difference = diaryDataArrayList.get(0).getWeight() - profile.getWeight();
             }
 
@@ -184,13 +207,37 @@ public class ActivityProfile extends AppCompatActivity {
         return difference;
     }
 
-    private class ItemHolder extends RecyclerView.ViewHolder{
+    private class ItemHolder extends RecyclerView.ViewHolder {
+        private ImageView ivProfileItemIcon, ivProfileItemBackground, ivProfileItemFilter;
+        private TextView tvProfileItemName, tvProfileItemSubstring;
+
+
         public ItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_main_params_profile, viewGroup, false));
+            ivProfileItemIcon = itemView.findViewById(R.id.ivProfileItemIcon);
+            ivProfileItemFilter = itemView.findViewById(R.id.ivProfileItemFilter);
+            ivProfileItemBackground = itemView.findViewById(R.id.ivProfileItemBackground);
+            tvProfileItemName = itemView.findViewById(R.id.tvProfileItemName);
+            tvProfileItemSubstring = itemView.findViewById(R.id.tvProfileItemSubstring);
+        }
+
+        public void bind(String nameOfParam, int countOfMainParam, String afterMainParam,
+                         int idBackgroud, int idFilter, int idIcon) {
+            Glide.with(ActivityProfile.this).load(idFilter).into(ivProfileItemFilter);
+            tvProfileItemName.setText(nameOfParam);
+            tvProfileItemSubstring.setText(String.valueOf(countOfMainParam) + " " + afterMainParam);
+            Glide.with(ActivityProfile.this).load(idBackgroud).into(ivProfileItemBackground);
+            Glide.with(ActivityProfile.this).load(idIcon).into(ivProfileItemIcon);
         }
     }
 
-    private class ItemAdapter extends RecyclerView.Adapter<ItemHolder>{
+    private class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
+        Profile profile;
+
+        public ItemAdapter(Profile profile) {
+            this.profile = profile;
+        }
+
         @NonNull
         @Override
         public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -200,12 +247,32 @@ public class ActivityProfile extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
-
+            int mainParam = 0;
+            switch (position) {
+                case 0:
+                    mainParam = profile.getMaxKcal();
+                    break;
+                case 1:
+                    mainParam = profile.getWaterCount();
+                    break;
+                case 2:
+                    mainParam = profile.getMaxFat();
+                    break;
+                case 3:
+                    mainParam = profile.getMaxCarbo();
+                    break;
+                case 4:
+                    mainParam = profile.getMaxProt();
+                    break;
+            }
+            holder.bind(getResources().getStringArray(R.array.namesOfMainParam)[position],
+                    mainParam, getResources().getStringArray(R.array.afterMainParam)[position],
+                    arrayOfBackgroundDrawables[position], arrayOfGradients[position], arrayOfIcon[position]);
         }
 
         @Override
         public int getItemCount() {
-            return 9;
+            return 5;
         }
     }
 

@@ -304,5 +304,23 @@
     <string name="kg">кг</string>
     <string name="profile_saved">Профиль сохранен</string>
 
+    <!--List of main max params in profile-->
+    <string-array name="namesOfMainParam">
+        <item>Калории</item>
+        <item>Вода</item>
+        <item>Жиры</item>
+        <item>Углеводы</item>
+        <item>Белки</item>
+    </string-array>
+
+    <string-array name="afterMainParam">
+        <item>ккал в день</item>
+        <item>мл в день</item>
+        <item>грамм в день</item>
+        <item>грамм в день</item>
+        <item>грамм в день</item>
+    </string-array>
+
+
 
 </resources>
