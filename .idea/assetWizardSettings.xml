@@ -14,8 +14,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_item_profile_water" />
-                            <entry key="sourceFile" value="C:\Users\37525\Desktop\drops.svg" />
+                            <entry key="height" value="496" />
+                            <entry key="outputName" value="ic_refresh_profile" />
+                            <entry key="overrideSize" value="true" />
+                            <entry key="sourceFile" value="C:\Users\37525\Desktop\cloud-computing.svg" />
+                            <entry key="width" value="496" />
                           </map>
                         </option>
                       </PersistentState>

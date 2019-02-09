@@ -95,6 +95,11 @@ public class ActivityListOfDiary extends AppCompatActivity {
             if (profile.getNumberOfDay() < diaryDataArrayList.get(0).getNumberOfDay()
                     && profile.getMonth() <= diaryDataArrayList.get(0).getMonth()
                     && profile.getYear() <= diaryDataArrayList.get(0).getYear()) {
+
+                profile.setNumberOfDay(diaryDataArrayList.get(0).getNumberOfDay());
+                profile.setMonth(diaryDataArrayList.get(0).getMonth());
+                profile.setYear(diaryDataArrayList.get(0).getYear());
+
                 updateProfile(profile, diaryDataArrayList.get(0).getWeight());
                 showToastAfterReWrite();
             }
@@ -183,8 +188,8 @@ public class ActivityListOfDiary extends AppCompatActivity {
         TextView tvToastCompleteGift = toastLayout.findViewById(R.id.tvToastCompleteGift);
         ImageView ivToastCompleteGift = toastLayout.findViewById(R.id.ivToastCompleteGift);
 
-        tvToastCompleteGift.setText("Дневные данные обновлены");
-        Glide.with(this).load(R.drawable.ic_toast_product_saved).into(ivToastCompleteGift);
+        tvToastCompleteGift.setText("Величина СПК обновлена");
+        Glide.with(this).load(R.drawable.ic_refresh_profile).into(ivToastCompleteGift);
 
         Toast toast = new Toast(this);
         toast.setDuration(Toast.LENGTH_SHORT);
