@@ -64,22 +64,6 @@ public class ActivityProfile extends AppCompatActivity {
             Profile profile = Profile.last(Profile.class);
             updateUI(profile);
             fillViewsIfProfileNotNull(profile);
-            Handler bindHandler = new Handler(Looper.getMainLooper());
-            bindHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    double difference = getDifferenceWeight(profile);
-
-                    if (difference > 0) {
-                        tvProfileChangeWeight.setText("+" + String.valueOf(difference) + " " + getResources().getString(R.string.kg));
-                        Glide.with(ActivityProfile.this)
-                                .load(arrayOfDrawabaleArrowForChangeWeight[1]).into(ivProfileChangeWeight);
-                    } else {
-                        tvProfileChangeWeight.setText(String.valueOf(difference) + " " + getResources().getString(R.string.kg));
-                    }
-                }
-            });
-
         }
     }
 
@@ -99,24 +83,17 @@ public class ActivityProfile extends AppCompatActivity {
         tvProfileWeight = findViewById(R.id.tvProfileWeight);
         tvProfileLevel = findViewById(R.id.tvProfileLevel);
         tvProfileHeight = findViewById(R.id.tvProfileHeight);
+        //reread from profile
         tvProfileFirstEnter = findViewById(R.id.tvProfileFirstEnter);
-        tvProfileChangeWeight = findViewById(R.id.tvProfileChangeWeight);
+
         tvProfileMaxKcal = findViewById(R.id.tvProfileMaxKcal);
         tvProfileMaxWater = findViewById(R.id.tvProfileMaxWater);
         tvProfileMaxFat = findViewById(R.id.tvProfileMaxFat);
         tvProfileMaxCarbo = findViewById(R.id.tvProfileMaxCarbo);
         tvProfileMaxProt = findViewById(R.id.tvProfileMaxProt);
-        ivProfileChangeWeight = findViewById(R.id.ivProfileChangeWeight);
+
 
         rvProfileMainParams = findViewById(R.id.rvProfileMainParams);
-        rvProfileMainParams.setHasFixedSize(true);
-        rvProfileMainParams.setItemViewCacheSize(5);
-
-
-        firstEnter = getSharedPreferences(FIRST_ENTER, MODE_PRIVATE);
-        tvProfileFirstEnter.setText(firstEnter.getString(FIRST_ENTER, "-"));
-        Log.e("LOL", firstEnter.getString(FIRST_ENTER, "-"));
-
 
         ibProfileBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,40 +148,6 @@ public class ActivityProfile extends AppCompatActivity {
             Uri uri = Uri.parse(profile.getPhotoUrl());
             Glide.with(this).load(uri).into(civProfile);
         }
-    }
-
-    private double getDifferenceWeight(Profile profile) {
-        double difference = 0;
-        if (DiaryData.count(DiaryData.class) > 0) {
-            List<DiaryData> diaryDataArrayList = DiaryData.listAll(DiaryData.class);
-
-            if (diaryDataArrayList.size() > 1) {
-
-                DiaryData[] arrayForSort = new DiaryData[diaryDataArrayList.size()];
-
-                for (int i = 0; i < diaryDataArrayList.size(); i++) {
-                    arrayForSort[i] = diaryDataArrayList.get(i);
-                }
-
-                int lenght = arrayForSort.length;
-                for (int i = 0; i < lenght - 1; i++) {
-                    for (int j = 0; j < lenght - i - 1; j++) {
-                        if (arrayForSort[j].getOwnId() < arrayForSort[j + 1].getOwnId()) {
-                            DiaryData temp = arrayForSort[j];
-                            arrayForSort[j] = arrayForSort[j + 1];
-                            arrayForSort[j + 1] = temp;
-                        }
-                    }
-
-                    difference = arrayForSort[0].getWeight() - profile.getWeight();
-                }
-            } else {
-                difference = diaryDataArrayList.get(0).getWeight() - profile.getWeight();
-            }
-
-        }
-
-        return difference;
     }
 
     private class ItemHolder extends RecyclerView.ViewHolder {

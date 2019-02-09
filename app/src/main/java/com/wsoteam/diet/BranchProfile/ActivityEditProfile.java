@@ -25,6 +25,8 @@ import com.wsoteam.diet.POJOProfile.Profile;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
+import java.util.Calendar;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActivityEditProfile extends AppCompatActivity {
@@ -40,6 +42,7 @@ public class ActivityEditProfile extends AppCompatActivity {
     private final int WATER_ON_KG_FEMALE = 30;
     private final int WATER_ON_KG_MALE = 40;
     private String urlOfPhoto = "default";
+    private int day, month, year;
 
     private boolean isFemale = true;
     private double SPK = 0, upLineSPK = 0, downLineSPK = 0;
@@ -98,11 +101,18 @@ public class ActivityEditProfile extends AppCompatActivity {
             }
         });
 
+        Calendar calendar = Calendar.getInstance();
+        day = calendar.get(Calendar.DAY_OF_MONTH) - 1;
+        month = calendar.get(Calendar.MONTH);
+        year = calendar.get(Calendar.YEAR);
+
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.admob_interstitial));
         interstitialAd.loadAd(new AdRequest.Builder().build());
 
         YandexMetrica.reportEvent("Открыт экран: Редактировать профиль");
+
+
     }
 
     private void fillViewsIfProfileNotNull() {
@@ -251,9 +261,9 @@ public class ActivityEditProfile extends AppCompatActivity {
             public void onClick(View view) {
                 Profile.deleteAll(Profile.class);
                 Profile profile = new Profile(edtSpkName.getText().toString(), edtSpkSecondName.getText().toString(),
-                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), weight,
-                        btnLevelLoad.getText().toString(), maxWater, "18.12.2018", 0, urlOfPhoto, (int) SPK, (int) protein,
-                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_easy));
+                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), weight, 0,
+                        btnLevelLoad.getText().toString(),urlOfPhoto, maxWater, (int) SPK, (int) protein,
+                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_easy), day, month, year);
                 profile.save();
                 Toast.makeText(ActivityEditProfile.this, R.string.profile_saved, Toast.LENGTH_SHORT).show();
                 alertDialog.cancel();
@@ -265,9 +275,9 @@ public class ActivityEditProfile extends AppCompatActivity {
             public void onClick(View view) {
                 Profile.deleteAll(Profile.class);
                 Profile profile = new Profile(edtSpkName.getText().toString(), edtSpkSecondName.getText().toString(),
-                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), weight,
-                        btnLevelLoad.getText().toString(), maxWater, "18.12.2018", 0, urlOfPhoto, (int) upLineSPK, (int) protein,
-                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_normal));
+                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), weight, 0,
+                        btnLevelLoad.getText().toString(),urlOfPhoto, maxWater, (int) upLineSPK, (int) protein,
+                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_easy), day, month, year);
                 profile.save();
                 Toast.makeText(ActivityEditProfile.this, R.string.profile_saved, Toast.LENGTH_SHORT).show();
                 alertDialog.cancel();
@@ -279,9 +289,9 @@ public class ActivityEditProfile extends AppCompatActivity {
             public void onClick(View view) {
                 Profile.deleteAll(Profile.class);
                 Profile profile = new Profile(edtSpkName.getText().toString(), edtSpkSecondName.getText().toString(),
-                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), weight,
-                        btnLevelLoad.getText().toString(), maxWater, "18.12.2018", 0, urlOfPhoto, (int) downLineSPK, (int) protein,
-                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_hard));
+                        isFemale, age, Integer.parseInt(edtHeight.getText().toString()), weight, 0,
+                        btnLevelLoad.getText().toString(),urlOfPhoto, maxWater, (int) downLineSPK, (int) protein,
+                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_easy), day, month, year);
                 profile.save();
                 Toast.makeText(ActivityEditProfile.this, R.string.profile_saved, Toast.LENGTH_SHORT).show();
                 alertDialog.cancel();

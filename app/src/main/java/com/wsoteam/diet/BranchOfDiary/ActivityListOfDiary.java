@@ -16,7 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.jjoe64.graphview.GraphView;
@@ -36,6 +38,9 @@ public class ActivityListOfDiary extends AppCompatActivity {
     private GraphView graphView;
     InterstitialAd interstitialAd;
 
+    private final int WATER_ON_KG_FEMALE = 30;
+    private final int WATER_ON_KG_MALE = 40;
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -49,6 +54,11 @@ public class ActivityListOfDiary extends AppCompatActivity {
         super.onResume();
         updateUI();
         drawGraphs();
+
+        if (diaryDataArrayList.size() == 0) {
+            Intent intent = new Intent(ActivityListOfDiary.this, ActivityAddData.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -59,17 +69,7 @@ public class ActivityListOfDiary extends AppCompatActivity {
 
         fabAddData = findViewById(R.id.fabAddDataListOfDiary);
         recyclerView = findViewById(R.id.rvListOfDiary);
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        updateUI();
-        drawGraphs();
-
-        if (diaryDataArrayList.size() == 0) {
-            Intent intent = new Intent(ActivityListOfDiary.this, ActivityAddData.class);
-            startActivity(intent);
-        }
-
 
         fabAddData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,8 +90,106 @@ public class ActivityListOfDiary extends AppCompatActivity {
         diaryDataArrayList = (ArrayList<DiaryData>) DiaryData.listAll(DiaryData.class);
         bubbleSort();
         recyclerView.setAdapter(new ItemAdapter(diaryDataArrayList));
+        Profile profile;
+        if ((profile = Profile.last(Profile.class)) != null) {
+            if (profile.getNumberOfDay() < diaryDataArrayList.get(0).getNumberOfDay()
+                    && profile.getMonth() <= diaryDataArrayList.get(0).getMonth()
+                    && profile.getYear() <= diaryDataArrayList.get(0).getYear()) {
+                updateProfile(profile, diaryDataArrayList.get(0).getWeight());
+                showToastAfterReWrite();
+            }
+        }
 
 
+    }
+
+    //Repeat calculate from edit profile. Re - calculate SPK
+    private void updateProfile(Profile profile, double currentWeight) {
+
+        String levelNone = getString(R.string.level_none);
+        double BOO = 0, SDD = 0.1, SPK = 0, upLineSPK = 0, downLineSPK = 0;
+        double rateNone = 1.2, rateEasy = 1.375, rateMedium = 1.4625, rateHard = 1.55,
+                rateUpHard = 1.6375, rateSuper = 1.725, rateUpSuper = 1.9;
+        double forCountUpLine = 300, forCountDownLine = 500;
+        double fat, protein, carbohydrate;
+        int maxWater;
+
+        if (profile.isFemale()) {
+            BOO = (9.99 * currentWeight + 6.25 * profile.getHeight() - 4.92 * profile.getAge() - 161) * 1.1;
+            maxWater = WATER_ON_KG_FEMALE * (int) currentWeight;
+        } else {
+            BOO = (9.99 * currentWeight + 6.25 * profile.getHeight() - 4.92 * profile.getAge() + 5) * 1.1;
+            maxWater = WATER_ON_KG_MALE * (int) currentWeight;
+        }
+
+        /*Check level load*/
+        if (profile.getExerciseStress().equals(getString(R.string.level_none))) {
+            SPK = BOO * rateNone;
+        }
+        if (profile.getExerciseStress().toString().equals(getString(R.string.level_easy))) {
+            SPK = BOO * rateEasy;
+        }
+        if (profile.getExerciseStress().toString().equals(getString(R.string.level_medium))) {
+            SPK = BOO * rateMedium;
+        }
+        if (profile.getExerciseStress().toString().equals(getString(R.string.level_hard))) {
+            SPK = BOO * rateHard;
+        }
+        if (profile.getExerciseStress().toString().equals(getString(R.string.level_up_hard))) {
+            SPK = BOO * rateUpHard;
+        }
+        if (profile.getExerciseStress().toString().equals(getString(R.string.level_super))) {
+            SPK = BOO * rateSuper;
+        }
+        if (profile.getExerciseStress().toString().equals(getString(R.string.level_up_super))) {
+            SPK = BOO * rateUpSuper;
+        }
+
+        upLineSPK = SPK - forCountUpLine;
+        downLineSPK = SPK - forCountDownLine;
+
+        fat = upLineSPK * 0.2 / 9;
+        protein = upLineSPK * 0.3 / 4;
+        carbohydrate = upLineSPK * 0.5 / 3.75;
+
+
+        profile.setWaterCount(maxWater);
+        profile.setWeight(currentWeight);
+        profile.setMaxFat((int) fat);
+        profile.setMaxProt((int) protein);
+        profile.setMaxCarbo((int) carbohydrate);
+
+        if (profile.getDifficultyLevel().equals(getString(R.string.dif_level_easy))) {
+            profile.setMaxKcal((int) SPK);
+        } else {
+            if (profile.getDifficultyLevel().equals(getString(R.string.dif_level_normal))) {
+                profile.setMaxKcal((int) upLineSPK);
+            } else {
+                profile.setMaxKcal((int) downLineSPK);
+            }
+        }
+
+
+        Profile.deleteAll(Profile.class);
+        profile.save();
+
+        Log.e("LOL", String.valueOf(Profile.count(Profile.class)));
+
+    }
+
+    private void showToastAfterReWrite() {
+        LayoutInflater toastInflater = getLayoutInflater();
+        View toastLayout = toastInflater.inflate(R.layout.toast_complete_gift, null, false);
+        TextView tvToastCompleteGift = toastLayout.findViewById(R.id.tvToastCompleteGift);
+        ImageView ivToastCompleteGift = toastLayout.findViewById(R.id.ivToastCompleteGift);
+
+        tvToastCompleteGift.setText("Дневные данные обновлены");
+        Glide.with(this).load(R.drawable.ic_toast_product_saved).into(ivToastCompleteGift);
+
+        Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(toastLayout);
+        toast.show();
     }
 
     private void drawGraphs() {
@@ -323,6 +421,7 @@ public class ActivityListOfDiary extends AppCompatActivity {
         public int getItemCount() {
             return diaryDataArrayList.size();
         }
+
     }
 
     private void bubbleSort() {

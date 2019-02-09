@@ -5,16 +5,19 @@ import com.orm.SugarRecord;
 public class Profile extends SugarRecord {
     private String firstName;
     private String lastName;
+
     private boolean isFemale;
+
     private int age;
     private int height;
+
     private double weight;
-    private String exerciseStress;
-    private int waterCount;
-    private String firstEnter;
     private double loseWeight;
+
+    private String exerciseStress;
     private String photoUrl;
 
+    private int waterCount;
     private int maxKcal;
     private int maxProt;
     private int maxFat;
@@ -22,29 +25,56 @@ public class Profile extends SugarRecord {
 
     private String difficultyLevel;
 
+    private int numberOfDay;
+    private int month;
+    private int year;
+
     public Profile() {
     }
 
-    public Profile(String firstName, String lastName, boolean isFemale,
-                   int age, int height, double weight, String exerciseStress,
-                   int waterCount, String firstEnter, double loseWeight, String photoUrl,
-                   int maxKcal, int maxProt, int maxFat, int maxCarbo, String difficultyLevel) {
+    public Profile(String firstName, String lastName, boolean isFemale, int age, int height, double weight, double loseWeight, String exerciseStress, String photoUrl, int waterCount, int maxKcal, int maxProt, int maxFat, int maxCarbo, String difficultyLevel, int numberOfDay, int month, int year) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.isFemale = isFemale;
         this.age = age;
         this.height = height;
         this.weight = weight;
-        this.exerciseStress = exerciseStress;
-        this.waterCount = waterCount;
-        this.firstEnter = firstEnter;
         this.loseWeight = loseWeight;
+        this.exerciseStress = exerciseStress;
         this.photoUrl = photoUrl;
+        this.waterCount = waterCount;
         this.maxKcal = maxKcal;
         this.maxProt = maxProt;
         this.maxFat = maxFat;
         this.maxCarbo = maxCarbo;
         this.difficultyLevel = difficultyLevel;
+        this.numberOfDay = numberOfDay;
+        this.month = month;
+        this.year = year;
+    }
+
+    public int getNumberOfDay() {
+        return numberOfDay;
+    }
+
+    public void setNumberOfDay(int numberOfDay) {
+        this.numberOfDay = numberOfDay;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public String getDifficultyLevel() {
@@ -149,14 +179,6 @@ public class Profile extends SugarRecord {
 
     public void setWaterCount(int waterCount) {
         this.waterCount = waterCount;
-    }
-
-    public String getFirstEnter() {
-        return firstEnter;
-    }
-
-    public void setFirstEnter(String firstEnter) {
-        this.firstEnter = firstEnter;
     }
 
     public double getLoseWeight() {
