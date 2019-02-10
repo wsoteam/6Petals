@@ -277,7 +277,7 @@ public class ActivityEditProfile extends AppCompatActivity {
                 Profile profile = new Profile(edtSpkName.getText().toString(), edtSpkSecondName.getText().toString(),
                         isFemale, age, Integer.parseInt(edtHeight.getText().toString()), weight, 0,
                         btnLevelLoad.getText().toString(),urlOfPhoto, maxWater, (int) upLineSPK, (int) protein,
-                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_easy), day, month, year);
+                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_normal), day, month, year);
                 profile.save();
                 Toast.makeText(ActivityEditProfile.this, R.string.profile_saved, Toast.LENGTH_SHORT).show();
                 alertDialog.cancel();
@@ -291,7 +291,7 @@ public class ActivityEditProfile extends AppCompatActivity {
                 Profile profile = new Profile(edtSpkName.getText().toString(), edtSpkSecondName.getText().toString(),
                         isFemale, age, Integer.parseInt(edtHeight.getText().toString()), weight, 0,
                         btnLevelLoad.getText().toString(),urlOfPhoto, maxWater, (int) downLineSPK, (int) protein,
-                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_easy), day, month, year);
+                        (int) fat, (int) carbohydrate, getString(R.string.dif_level_hard), day, month, year);
                 profile.save();
                 Toast.makeText(ActivityEditProfile.this, R.string.profile_saved, Toast.LENGTH_SHORT).show();
                 alertDialog.cancel();
