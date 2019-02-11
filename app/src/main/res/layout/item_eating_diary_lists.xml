@@ -118,7 +118,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Kcal"
                 android:textColor="@color/text_color_item_eating_diary"
                 android:textSize="20sp"
@@ -189,20 +189,46 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvEatingItemKcal"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
-                android:id="@+id/tvLeterOfProductInDiary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="9dp"
-                android:text="Г"
-                android:textColor="@color/bottom_color_for_eating_diary_style"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                android:visibility="gone"
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cvInvisibleCardEatingDiary"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:elevation="12dp"
+                app:cardCornerRadius="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/ivImage"
                 app:layout_constraintEnd_toEndOf="@+id/ivImage"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/ivImage"
-                app:layout_constraintTop_toTopOf="@+id/ivImage" />
+                app:layout_constraintTop_toTopOf="@+id/ivImage"
+                app:layout_constraintVertical_bias="0.0">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_for_background_splash">
+
+                    <TextView
+                        android:id="@+id/tvLeterOfProductInDiary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Г"
+                        android:textColor="@color/white"
+                        android:textSize="35sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v7.widget.CardView>
+
 
 
         </android.support.constraint.ConstraintLayout>

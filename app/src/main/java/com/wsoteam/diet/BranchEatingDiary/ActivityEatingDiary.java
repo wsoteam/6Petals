@@ -130,6 +130,7 @@ public class ActivityEatingDiary extends AppCompatActivity {
             }
         });
 
+
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
 

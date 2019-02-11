@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -29,7 +30,13 @@ public class FragmentBreakfast extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
+        Log.e("LOL", "Res");
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e("LOL", "Start");
     }
 
     private void updateUI() {
@@ -79,6 +86,7 @@ public class FragmentBreakfast extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_breakfast, container, false);
         recyclerView = view.findViewById(R.id.rvEatingBreakfast);
+        Log.e("LOL", "Create");
         return view;
     }
 
@@ -86,6 +94,7 @@ public class FragmentBreakfast extends Fragment {
         private TextView tvEatingItemName, tvEatingItemFat, tvEatingItemCarbo,
                 tvEatingItemProt, tvEatingItemKcal, tvEatingItemWeight, tvLeterOfProductInDiary;
         private ImageView ivImage;
+        private CardView cvInvisibleCardEatingDiary;
 
         public BreakfastItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_eating_diary_lists, viewGroup, false));
@@ -97,12 +106,13 @@ public class FragmentBreakfast extends Fragment {
             tvEatingItemKcal = itemView.findViewById(R.id.tvEatingItemKcal);
             tvEatingItemWeight = itemView.findViewById(R.id.tvEatingItemWeight);
             tvLeterOfProductInDiary = itemView.findViewById(R.id.tvLeterOfProductInDiary);
+            cvInvisibleCardEatingDiary = itemView.findViewById(R.id.cvInvisibleCardEatingDiary);
             ivImage = itemView.findViewById(R.id.ivImage);
 
         }
 
         public void bind(Breakfast breakfast) {
-
+            cvInvisibleCardEatingDiary.setVisibility(View.GONE);
             tvEatingItemName.setText(String.valueOf(breakfast.getName()));
             tvEatingItemFat.setText(String.valueOf(breakfast.getFat()) + " г");
             tvEatingItemCarbo.setText(String.valueOf(breakfast.getCarbohydrates()) + " г");
@@ -110,7 +120,14 @@ public class FragmentBreakfast extends Fragment {
             tvEatingItemKcal.setText(String.valueOf(breakfast.getCalories()) + " ккал");
             tvEatingItemWeight.setText(String.valueOf(breakfast.getWeight()) + " г");
 
-            Glide.with(getActivity()).load(breakfast.getUrlOfImages()).into(ivImage);
+            if (!breakfast.getUrlOfImages().equals("")){
+                Glide.with(getActivity()).load(breakfast.getUrlOfImages()).into(ivImage);
+            }else {
+                cvInvisibleCardEatingDiary.setVisibility(View.VISIBLE);
+                tvLeterOfProductInDiary.setText(String.valueOf(Character.toUpperCase(breakfast.getName().charAt(0))));
+            }
+
+
 
         }
     }
@@ -120,7 +137,6 @@ public class FragmentBreakfast extends Fragment {
 
         public BreakfastItemAdapter(ArrayList<Breakfast> breakfastList) {
             this.breakfastList = breakfastList;
-            Log.e("LOL", String.valueOf(breakfastList.size()));
         }
 
         @NonNull
