@@ -30,13 +30,6 @@ public class FragmentBreakfast extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
-        Log.e("LOL", "Res");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.e("LOL", "Start");
     }
 
     private void updateUI() {

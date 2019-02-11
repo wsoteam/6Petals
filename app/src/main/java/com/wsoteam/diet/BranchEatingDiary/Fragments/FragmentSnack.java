@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -87,8 +88,10 @@ public class FragmentSnack extends Fragment {
     }
 
     private class SnackItemHolder extends RecyclerView.ViewHolder {
-        private TextView tvEatingItemName, tvEatingItemFat, tvEatingItemCarbo, tvEatingItemProt, tvEatingItemKcal, tvEatingItemWeight;
+        private TextView tvEatingItemName, tvEatingItemFat, tvEatingItemCarbo,
+                tvEatingItemProt, tvEatingItemKcal, tvEatingItemWeight, tvLeterOfProductInDiary;
         private ImageView ivImage;
+        private CardView cvInvisibleCardEatingDiary;
 
         public SnackItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.item_eating_diary_lists, viewGroup, false));
@@ -99,11 +102,14 @@ public class FragmentSnack extends Fragment {
             tvEatingItemProt = itemView.findViewById(R.id.tvEatingItemProt);
             tvEatingItemKcal = itemView.findViewById(R.id.tvEatingItemKcal);
             tvEatingItemWeight = itemView.findViewById(R.id.tvEatingItemWeight);
+            tvLeterOfProductInDiary = itemView.findViewById(R.id.tvLeterOfProductInDiary);
+            cvInvisibleCardEatingDiary = itemView.findViewById(R.id.cvInvisibleCardEatingDiary);
             ivImage = itemView.findViewById(R.id.ivImage);
 
         }
 
         public void bind(Snack snack) {
+            cvInvisibleCardEatingDiary.setVisibility(View.GONE);
             tvEatingItemName.setText(String.valueOf(snack.getName()));
             tvEatingItemFat.setText(String.valueOf(snack.getFat()) + " г");
             tvEatingItemCarbo.setText(String.valueOf(snack.getCarbohydrates()) + " г");
@@ -111,7 +117,12 @@ public class FragmentSnack extends Fragment {
             tvEatingItemKcal.setText(String.valueOf(snack.getCalories()) + " ккал");
             tvEatingItemWeight.setText(String.valueOf(snack.getWeight()) + " г");
 
-            Glide.with(getActivity()).load(snack.getUrlOfImages()).into(ivImage);
+            if (!snack.getUrlOfImages().equals("")){
+                Glide.with(getActivity()).load(snack.getUrlOfImages()).into(ivImage);
+            }else {
+                cvInvisibleCardEatingDiary.setVisibility(View.VISIBLE);
+                tvLeterOfProductInDiary.setText(String.valueOf(Character.toUpperCase(snack.getName().charAt(0))));
+            }
 
         }
     }

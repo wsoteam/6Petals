@@ -8,10 +8,12 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.wsoteam.diet.BranchEatingDiary.Fragments.FragmentBreakfast;
@@ -31,9 +33,10 @@ import java.util.List;
 
 public class ActivityEatingDiary extends AppCompatActivity {
     private ArrayList<Fragment> listOfFragments;
-    private ViewPager viewPager;
     private FloatingActionButton fabEatingDiaryAddNewEating;
     private BottomNavigationView bottomNavigationView;
+    private FrameLayout flEatingDiary;
+    private FragmentTransaction transaction;
     private TextView tvEatingDiaryCollapsingFat, tvEatingDiaryCollapsingCarbo, tvEatingDiaryCollapsingProt, tvEatingDiaryCollapsingKcal;
 
     int breakfastKcal = 0, lunchKcal = 0, dinnerKcal = 0, snackKcal = 0,
@@ -46,22 +49,23 @@ public class ActivityEatingDiary extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            transaction = getSupportFragmentManager().beginTransaction();
             switch (item.getItemId()) {
                 case R.id.btn_nav_eating_breakfast:
-                    viewPager.setCurrentItem(0);
-                    fillMainIndicators(0);
+                    //fillMainIndicators(0);
+                    transaction.replace(R.id.flEatingDiary, listOfFragments.get(0)).commit();
                     return true;
                 case R.id.btn_nav_eating_lunch:
-                    viewPager.setCurrentItem(1);
-                    fillMainIndicators(1);
+                    //fillMainIndicators(1);
+                    transaction.replace(R.id.flEatingDiary, listOfFragments.get(1)).commit();
                     return true;
                 case R.id.btn_nav_eating_dinner:
-                    viewPager.setCurrentItem(2);
-                    fillMainIndicators(2);
+                    //fillMainIndicators(2);
+                    transaction.replace(R.id.flEatingDiary, listOfFragments.get(2)).commit();
                     return true;
                 case R.id.btn_nav_eating_snack:
-                    viewPager.setCurrentItem(3);
-                    fillMainIndicators(3);
+                    //fillMainIndicators(3);
+                    transaction.replace(R.id.flEatingDiary, listOfFragments.get(3)).commit();
                     return true;
             }
             return false;
@@ -74,13 +78,12 @@ public class ActivityEatingDiary extends AppCompatActivity {
         setContentView(R.layout.activity_eating_diary);
 
         bottomNavigationView = findViewById(R.id.bottNavEatingDinner);
-        viewPager = findViewById(R.id.vpEatingDiary);
 
         tvEatingDiaryCollapsingFat = findViewById(R.id.tvEatingDiaryCollapsingFat);
         tvEatingDiaryCollapsingCarbo = findViewById(R.id.tvEatingDiaryCollapsingCarbo);
         tvEatingDiaryCollapsingProt = findViewById(R.id.tvEatingDiaryCollapsingProt);
         tvEatingDiaryCollapsingKcal = findViewById(R.id.tvEatingDiaryCollapsingKcal);
-
+        flEatingDiary = findViewById(R.id.flEatingDiary);
         fabEatingDiaryAddNewEating = findViewById(R.id.fabEatingDiaryAddNewEating);
 
         compareDate();
@@ -92,6 +95,8 @@ public class ActivityEatingDiary extends AppCompatActivity {
         listOfFragments.add(new FragmentDinner());
         listOfFragments.add(new FragmentSnack());
 
+        getSupportFragmentManager().beginTransaction().add(R.id.flEatingDiary, listOfFragments.get(0)).commit();
+
         fabEatingDiaryAddNewEating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,35 +105,6 @@ public class ActivityEatingDiary extends AppCompatActivity {
             }
         });
 
-        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return listOfFragments.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return listOfFragments.size();
-            }
-        });
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                bottomNavigationView.getMenu().getItem(position).setChecked(true);
-                fillMainIndicators(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
 
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);

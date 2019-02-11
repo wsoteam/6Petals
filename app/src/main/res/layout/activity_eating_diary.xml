@@ -151,8 +151,8 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vpEatingDiary"
+    <FrameLayout
+        android:id="@+id/flEatingDiary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp"
