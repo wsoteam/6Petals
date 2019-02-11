@@ -1,10 +1,13 @@
 package com.wsoteam.diet.BranchOfDiary;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +27,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.wsoteam.diet.BranchOfAnalyzer.ActivityListAndSearch;
 import com.wsoteam.diet.POJOForDB.DiaryData;
 import com.wsoteam.diet.POJOProfile.Profile;
 import com.wsoteam.diet.R;
@@ -34,8 +40,11 @@ public class ActivityListOfDiary extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<DiaryData> diaryDataArrayList = new ArrayList<>();
     private GraphView graphView;
-    InterstitialAd interstitialAd;
+    private InterstitialAd interstitialAd;
+    private SharedPreferences isFirstEnter, isRewrite;
 
+    private final String TAG_OF_FIRST_ENTER = "TAG_OF_FIRST_ENTER";
+    private final String TAG_OF_REWRITE = "TAG_OF_FIRST_ENTER";
     private final int WATER_ON_KG_FEMALE = 30;
     private final int WATER_ON_KG_MALE = 40;
 
@@ -194,6 +203,18 @@ public class ActivityListOfDiary extends AppCompatActivity {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(toastLayout);
         toast.show();
+    }
+
+    private void createADAboutAddNewProduct() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog alertDialog = builder.create();
+        View view = View.inflate(this, R.layout.alert_dialog_rewrite_profile_data, null);
+        Button btnADRefreshProfileCancel = view.findViewById(R.id.btnADRefreshProfileCancel);
+        Button btnADRefreshProfileOk = view.findViewById(R.id.btnADRefreshProfileOk);
+
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        alertDialog.setView(view);
+        alertDialog.show();
     }
 
     private void drawGraphs() {
