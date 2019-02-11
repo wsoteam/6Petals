@@ -4,29 +4,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.wsoteam.diet.POJOForDB.DiaryData;
 import com.wsoteam.diet.POJOProfile.Profile;
 import com.wsoteam.diet.R;
-
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,16 +28,13 @@ public class ActivityProfile extends AppCompatActivity {
     private ImageButton ibProfileEdit, ibProfileBack;
     private TextView tvProfileName, tvProfileOld, tvProfileGender,
             tvProfileLifestyle, tvProfileWeight, tvProfileLevel,
-            tvProfileHeight, tvProfileFirstEnter, tvProfileChangeWeight,
-            tvProfileMaxKcal, tvProfileMaxWater, tvProfileMaxFat, tvProfileMaxCarbo,
-            tvProfileMaxProt;
+            tvProfileHeight, tvProfileFirstEnter, tvProfileChangeWeight;
+
     private RecyclerView rvProfileMainParams;
-    private SharedPreferences firstEnter;
     private ImageView ivProfileChangeWeight;
 
     private ItemAdapter itemAdapter;
 
-    private final String FIRST_ENTER = "FIRST_ENTER";
     private int[] arrayOfDrawabaleArrowForChangeWeight = new int[]{R.drawable.ic_decrease_weight, R.drawable.ic_increase_weight};
     private int[] arrayOfBackgroundDrawables = new int[]{R.drawable.background_item_profile_kcal,
             R.drawable.background_item_profile_water, R.drawable.background_item_profile_fat,
@@ -62,7 +52,7 @@ public class ActivityProfile extends AppCompatActivity {
         super.onResume();
         if (Profile.count(Profile.class) == 1) {
             Profile profile = Profile.last(Profile.class);
-            updateUI(profile);
+            updateUIOfList(profile);
             fillViewsIfProfileNotNull(profile);
         }
     }
@@ -83,15 +73,9 @@ public class ActivityProfile extends AppCompatActivity {
         tvProfileWeight = findViewById(R.id.tvProfileWeight);
         tvProfileLevel = findViewById(R.id.tvProfileLevel);
         tvProfileHeight = findViewById(R.id.tvProfileHeight);
-        //reread from profile
         tvProfileFirstEnter = findViewById(R.id.tvProfileFirstEnter);
-
-        tvProfileMaxKcal = findViewById(R.id.tvProfileMaxKcal);
-        tvProfileMaxWater = findViewById(R.id.tvProfileMaxWater);
-        tvProfileMaxFat = findViewById(R.id.tvProfileMaxFat);
-        tvProfileMaxCarbo = findViewById(R.id.tvProfileMaxCarbo);
-        tvProfileMaxProt = findViewById(R.id.tvProfileMaxProt);
-
+        tvProfileChangeWeight = findViewById(R.id.tvProfileChangeWeight);
+        ivProfileChangeWeight = findViewById(R.id.ivProfileChangeWeight);
 
         rvProfileMainParams = findViewById(R.id.rvProfileMainParams);
 
@@ -111,13 +95,14 @@ public class ActivityProfile extends AppCompatActivity {
 
     }
 
-    private void updateUI(Profile profile) {
+    private void updateUIOfList(Profile profile) {
         itemAdapter = new ItemAdapter(profile);
         rvProfileMainParams.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvProfileMainParams.setAdapter(itemAdapter);
     }
 
     private void fillViewsIfProfileNotNull(Profile profile) {
+        String day = "0", month = "0";
 
         tvProfileName.setText(profile.getFirstName() + " " + profile.getLastName());
         tvProfileOld.setText(String.valueOf(profile.getAge()));
@@ -130,11 +115,19 @@ public class ActivityProfile extends AppCompatActivity {
         tvProfileWeight.setText(String.valueOf(profile.getWeight()) + " " + getString(R.string.kg));
         tvProfileLevel.setText(profile.getDifficultyLevel());
         tvProfileHeight.setText(String.valueOf(profile.getHeight()) + " " + getString(R.string.cm));
-        tvProfileMaxKcal.setText(String.valueOf(profile.getMaxKcal()));
-        tvProfileMaxCarbo.setText(String.valueOf(profile.getMaxCarbo()));
-        tvProfileMaxFat.setText(String.valueOf(profile.getMaxFat()));
-        tvProfileMaxProt.setText(String.valueOf(profile.getMaxProt()));
-        tvProfileMaxWater.setText(String.valueOf(profile.getWaterCount()));
+        if (profile.getNumberOfDay() < 10) {
+            day = "0" + String.valueOf(profile.getNumberOfDay());
+        } else {
+            day = String.valueOf(profile.getNumberOfDay());
+        }
+        if ((profile.getMonth() + 1) < 10) {
+            month = "0" + String.valueOf(profile.getMonth() + 1);
+        } else {
+            month = String.valueOf(profile.getMonth() + 1);
+        }
+        tvProfileFirstEnter.setText(day + "."
+                + month + "." + String.valueOf(profile.getYear()));
+
         if (profile.getDifficultyLevel().equals(getString(R.string.dif_level_easy))) {
             tvProfileLevel.setTextColor(getResources().getColor(R.color.level_easy));
         } else {
@@ -148,6 +141,14 @@ public class ActivityProfile extends AppCompatActivity {
             Uri uri = Uri.parse(profile.getPhotoUrl());
             Glide.with(this).load(uri).into(civProfile);
         }
+        if (profile.getLoseWeight() < 0) {
+            Glide.with(ActivityProfile.this).load(arrayOfDrawabaleArrowForChangeWeight[0]).into(ivProfileChangeWeight);
+        } else {
+            Glide.with(ActivityProfile.this).load(arrayOfDrawabaleArrowForChangeWeight[1]).into(ivProfileChangeWeight);
+            tvProfileChangeWeight.setText("+" + String.valueOf(profile.getLoseWeight()) + " " + getResources().getString(R.string.kg));
+        }
+
+        Log.e("LOL", String.valueOf(profile.getLoseWeight()));
     }
 
     private class ItemHolder extends RecyclerView.ViewHolder {

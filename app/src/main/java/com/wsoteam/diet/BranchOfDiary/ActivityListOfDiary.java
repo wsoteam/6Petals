@@ -2,8 +2,6 @@ package com.wsoteam.diet.BranchOfDiary;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -54,11 +52,6 @@ public class ActivityListOfDiary extends AppCompatActivity {
         super.onResume();
         updateUI();
         drawGraphs();
-
-        if (diaryDataArrayList.size() == 0) {
-            Intent intent = new Intent(ActivityListOfDiary.this, ActivityAddData.class);
-            startActivity(intent);
-        }
     }
 
     @Override
@@ -91,25 +84,36 @@ public class ActivityListOfDiary extends AppCompatActivity {
         bubbleSort();
         recyclerView.setAdapter(new ItemAdapter(diaryDataArrayList));
         Profile profile;
-        if ((profile = Profile.last(Profile.class)) != null) {
-            if (profile.getNumberOfDay() < diaryDataArrayList.get(0).getNumberOfDay()
+
+        if ((profile = Profile.last(Profile.class)) != null && diaryDataArrayList.size() > 0) {
+            // if the day when the profile was created earlier than
+            // the last entry in the diary or equal in weight and day of profile creation
+            if ((profile.getNumberOfDay() < diaryDataArrayList.get(0).getNumberOfDay()
                     && profile.getMonth() <= diaryDataArrayList.get(0).getMonth()
-                    && profile.getYear() <= diaryDataArrayList.get(0).getYear()) {
+                    && profile.getYear() <= diaryDataArrayList.get(0).getYear())
+                    || (profile.getNumberOfDay() == diaryDataArrayList.get(0).getNumberOfDay()
+                    && profile.getMonth() <= diaryDataArrayList.get(0).getMonth()
+                    && profile.getYear() <= diaryDataArrayList.get(0).getYear()
+                    && profile.getWeight() != diaryDataArrayList.get(0).getWeight())) {
 
                 profile.setNumberOfDay(diaryDataArrayList.get(0).getNumberOfDay());
                 profile.setMonth(diaryDataArrayList.get(0).getMonth());
                 profile.setYear(diaryDataArrayList.get(0).getYear());
 
-                updateProfile(profile, diaryDataArrayList.get(0).getWeight());
-                showToastAfterReWrite();
+                profile = updateProfile(profile, diaryDataArrayList.get(0).getWeight());
             }
+            profile.setLoseWeight(profile.getWeight() - diaryDataArrayList.get(diaryDataArrayList.size() - 1).getWeight());
+            Log.e("LOL", String.valueOf(diaryDataArrayList.get(diaryDataArrayList.size() - 1)));
+            Profile.deleteAll(Profile.class);
+            profile.save();
+            showToastAfterReWrite();
         }
 
 
     }
 
     //Repeat calculate from edit profile. Re - calculate SPK
-    private void updateProfile(Profile profile, double currentWeight) {
+    private Profile updateProfile(Profile profile, double currentWeight) {
 
         String levelNone = getString(R.string.level_none);
         double BOO = 0, SDD = 0.1, SPK = 0, upLineSPK = 0, downLineSPK = 0;
@@ -174,12 +178,7 @@ public class ActivityListOfDiary extends AppCompatActivity {
             }
         }
 
-
-        Profile.deleteAll(Profile.class);
-        profile.save();
-
-        Log.e("LOL", String.valueOf(Profile.count(Profile.class)));
-
+        return profile;
     }
 
     private void showToastAfterReWrite() {

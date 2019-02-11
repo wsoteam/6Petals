@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:focusable="true">
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvProfileMainParams"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView8" />
 
         <ImageView
             android:id="@+id/imageView13"
@@ -273,31 +266,55 @@
             app:layout_constraintEnd_toEndOf="@+id/cardView8"
             app:layout_constraintStart_toStartOf="@+id/cardView8" />
 
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvProfileMainParams"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView57" />
+
+
         <android.support.v7.widget.CardView
-            android:id="@+id/cardView11"
-            android:layout_width="140dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
+            android:id="@+id/cardView9"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView9"
-            tools:layout_editor_absoluteX="194dp">
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/cardView10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView8">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <View
+                    android:id="@+id/divider8"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView58" />
+
                 <ImageView
-                    android:id="@+id/ivProfileChangeWeight"
+                    android:id="@+id/imageView15"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_gravity="center_horizontal"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:src="@drawable/ic_decrease_weight"
+                    android:src="@drawable/ic_time_start_profile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -306,244 +323,125 @@
                     android:id="@+id/textView58"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Изменение веса"
+                    android:text="Дата старта"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/ivProfileChangeWeight"
-                    app:layout_constraintStart_toStartOf="@+id/ivProfileChangeWeight"
-                    app:layout_constraintTop_toBottomOf="@+id/divider10" />
+                    app:layout_constraintEnd_toEndOf="@+id/imageView15"
+                    app:layout_constraintStart_toStartOf="@+id/imageView15"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView15" />
 
                 <TextView
-                    android:id="@+id/tvProfileChangeWeight"
+                    android:id="@+id/tvProfileFirstEnter"
                     android:layout_width="wrap_content"
-                    android:layout_height="23dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:text="-"
+                    android:layout_marginTop="8dp"
+                    android:text="18.02.2019"
                     android:textColor="@color/black"
-                    android:textSize="17sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView58" />
+                    app:layout_constraintTop_toBottomOf="@+id/divider8" />
 
-                <View
-                    android:id="@+id/divider10"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:background="?android:attr/listDivider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivProfileChangeWeight" />
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cardView9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:id="@+id/cardView10"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
+            app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvProfileMainParams">
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cardView9"
+            app:layout_constraintTop_toBottomOf="@+id/cardView8">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tvProfileFirstEnter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="19dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:text="01.12.2018"
-                    android:textColor="@color/black"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView57"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
-                    android:id="@+id/textView59"
+                <View
+                    android:id="@+id/divider8"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView58" />
+
+                <ImageView
+                    android:id="@+id/ivProfileChangeWeight"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="Граничные показатели"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:src="@drawable/ic_increase_weight"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tvProfileMaxKcal"
+                    android:id="@+id/textView58"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:drawableTop="@drawable/ic_kcal_profile"
-                    android:text="2000 ккал"
+                    android:text="Изменение веса"
                     android:textColor="@color/black"
-                    app:layout_constraintEnd_toStartOf="@+id/tvProfileMaxWater"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider8" />
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/ivProfileChangeWeight"
+                    app:layout_constraintStart_toStartOf="@+id/ivProfileChangeWeight"
+                    app:layout_constraintTop_toBottomOf="@+id/ivProfileChangeWeight" />
 
                 <TextView
-                    android:id="@+id/tvProfileMaxWater"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_waterdrop_profile"
-                    android:text="2000 мл"
-                    android:textColor="@color/black"
-                    app:layout_constraintBottom_toTopOf="@+id/textView68"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tvProfileMaxKcal"
-                    app:layout_constraintTop_toTopOf="@+id/tvProfileMaxKcal" />
-
-                <TextView
-                    android:id="@+id/tvProfileMaxFat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:drawableTop="@drawable/ic_top_collapsing_fat"
-                    android:text="120 г"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toStartOf="@+id/tvProfileMaxCarbo"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView68" />
-
-                <TextView
-                    android:id="@+id/textView63"
+                    android:id="@+id/tvProfileChangeWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Жиры"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="- 10 кг"
                     android:textColor="@color/black"
-                    android:textSize="13sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/tvProfileMaxFat"
-                    app:layout_constraintStart_toStartOf="@+id/tvProfileMaxFat"
-                    app:layout_constraintTop_toBottomOf="@+id/tvProfileMaxFat" />
-
-                <TextView
-                    android:id="@+id/tvProfileMaxCarbo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="4dp"
-                    android:drawableTop="@drawable/ic_top_collapsing_carbohydrates"
-                    android:text="120 г"
-                    android:textColor="@color/black"
-                    app:layout_constraintBottom_toTopOf="@+id/textView63"
-                    app:layout_constraintEnd_toStartOf="@+id/tvProfileMaxProt"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tvProfileMaxFat"
-                    app:layout_constraintTop_toTopOf="@+id/tvProfileMaxFat" />
-
-                <TextView
-                    android:id="@+id/textView65"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Углеводы"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/tvProfileMaxCarbo"
-                    app:layout_constraintStart_toStartOf="@+id/tvProfileMaxCarbo"
-                    app:layout_constraintTop_toBottomOf="@+id/tvProfileMaxCarbo" />
-
-                <TextView
-                    android:id="@+id/tvProfileMaxProt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="4dp"
-                    android:drawableTop="@drawable/ic_top_collapsing_protein"
-                    android:text="120 г"
-                    android:textColor="@color/black"
-                    app:layout_constraintBottom_toTopOf="@+id/textView65"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tvProfileMaxCarbo"
-                    app:layout_constraintTop_toTopOf="@+id/tvProfileMaxCarbo" />
-
-                <TextView
-                    android:id="@+id/textView67"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Белки"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/tvProfileMaxProt"
-                    app:layout_constraintStart_toStartOf="@+id/tvProfileMaxProt"
-                    app:layout_constraintTop_toBottomOf="@+id/tvProfileMaxProt" />
-
-                <TextView
-                    android:id="@+id/textView68"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:text="Калории"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/tvProfileMaxKcal"
-                    app:layout_constraintStart_toStartOf="@+id/tvProfileMaxKcal"
-                    app:layout_constraintTop_toBottomOf="@+id/tvProfileMaxKcal" />
-
-                <TextView
-                    android:id="@+id/textView69"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Вода"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/tvProfileMaxWater"
-                    app:layout_constraintStart_toStartOf="@+id/tvProfileMaxWater"
-                    app:layout_constraintTop_toBottomOf="@+id/tvProfileMaxWater" />
-
-                <View
-                    android:id="@+id/divider8"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:background="?android:attr/listDivider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView59" />
+                    app:layout_constraintTop_toBottomOf="@+id/divider8" />
+
+
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/textView57"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Максимальные дневные значения"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView9" />
 
 
     </android.support.constraint.ConstraintLayout>

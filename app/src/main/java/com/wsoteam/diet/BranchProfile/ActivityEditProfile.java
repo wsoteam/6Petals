@@ -140,8 +140,8 @@ public class ActivityEditProfile extends AppCompatActivity {
     }
 
     private boolean checkInputData() {
-        if (!edtSpkSecondName.getText().toString().equals("")) {
-            if (!edtSpkName.getText().toString().equals("")) {
+        if (!edtSpkName.getText().toString().equals("")) {
+            if (!edtSpkSecondName.getText().toString().equals("")) {
                 if (rgFemaleOrMale.getCheckedRadioButtonId() != -1) {
                     if (!edtAge.getText().toString().equals("")
                             && Integer.parseInt(edtAge.getText().toString()) >= 18
@@ -170,11 +170,11 @@ public class ActivityEditProfile extends AppCompatActivity {
                     return false;
                 }
             } else {
-                Toast.makeText(ActivityEditProfile.this, "Введите имя", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityEditProfile.this, "Введите фамилию", Toast.LENGTH_SHORT).show();
                 return false;
             }
         } else {
-            Toast.makeText(ActivityEditProfile.this, "Введите фамилию", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityEditProfile.this, "Введите имя", Toast.LENGTH_SHORT).show();
             return false;
         }
     }

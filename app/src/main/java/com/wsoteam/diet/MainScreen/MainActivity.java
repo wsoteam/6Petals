@@ -225,9 +225,6 @@ public class MainActivity extends AppCompatActivity
             isAccessibleCountry = false;
         }
 
-
-        saveFirstEnter();
-
         apCollapsingKcal = findViewById(R.id.apCollapsingKcal);
         apCollapsingProt = findViewById(R.id.apCollapsingProt);
         apCollapsingCarbo = findViewById(R.id.apCollapsingCarbo);
@@ -501,35 +498,6 @@ public class MainActivity extends AppCompatActivity
         editor.putInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, countOfRun.getInt(TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG, COUNT_OF_RUN) + 1);
         editor.commit();
 
-    }
-
-    private void saveFirstEnter() {
-        firstEnter = getSharedPreferences(FIRST_ENTER, MODE_PRIVATE);
-        if (firstEnter.getString(FIRST_ENTER, "").equals("")) {
-            Calendar calendar = Calendar.getInstance();
-
-            int dayOfFirstEnter = calendar.get(Calendar.DAY_OF_MONTH);
-            int monthOfFirstEnter = calendar.get(Calendar.MONTH) + 1;
-            int yearOfFirstEnter = calendar.get(Calendar.YEAR);
-
-            String month = String.valueOf(monthOfFirstEnter);
-            String day = String.valueOf(dayOfFirstEnter);
-
-            if (month.length() == 1) {
-                month = "0" + month;
-            }
-            if (day.length() == 1) {
-                day = "0" + day;
-            }
-
-            String date = day + "." + month + "." + String.valueOf(yearOfFirstEnter);
-
-            SharedPreferences.Editor editor = firstEnter.edit();
-            editor.putString(FIRST_ENTER, date);
-            editor.commit();
-
-            Log.e("LOL", firstEnter.getString(FIRST_ENTER, ""));
-        }
     }
 
 
