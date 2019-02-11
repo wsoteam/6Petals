@@ -16,10 +16,11 @@ public class Config {
     public static final String ES= "es";
     public static final String DE= "de";
 
-    //appodeal
+    //appodeal start
     public static int INTERSTITIAL_FREQUENCY = 1;  // > 0
-    public static int NATIVE_STEP = 3;
+    public static int NATIVE_STEP = 3; // > 3
     public static String APPODEAL_KEY = "6ff7ff7154c82eeeebdfed01e9313c36aeb9092ac99bc7d8";
+    //appodeal end
 
 
 

@@ -1,5 +1,6 @@
 package com.wsoteam.diet.BranchOfAnalyzer;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -16,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.RewardedVideoCallbacks;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
@@ -38,10 +42,12 @@ public class ActivityRequestOfWatchADVideo extends AppCompatActivity {
     private View layoutForToast;
 
     private Animation animationMovingFromBottom, animationChangeAlpha;
-    private RewardedVideoAd mRewardedVideoAd;
+//    private RewardedVideoAd mRewardedVideoAd;
 
     private int idOfToastIcon;
     private boolean isWatchedAD = false;
+
+    Activity activity = this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,27 +76,84 @@ public class ActivityRequestOfWatchADVideo extends AppCompatActivity {
         tvPropertiesOfGroupRequestAdWatch.setText("Вы можете открыть доступ к этой группе посмотрев всего лишь один короткий рекламный ролик. Открыть его можно кнопкой снизу.");
 
 
-        mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+//        mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+//            @Override
+//            public void onRewardedVideoAdLoaded() {
+//                cvWatchAd.startAnimation(animationMovingFromBottom);
+//                cvWatchAd.setVisibility(View.VISIBLE);
+//                llContainerWithImageAndTextAdButton.startAnimation(animationChangeAlpha);
+//                llContainerWithImageAndTextAdButton.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onRewardedVideoAdOpened() {
+//
+//            }
+//
+//            @Override
+//            public void onRewardedVideoStarted() {
+//
+//            }
+//
+//            @Override
+//            public void onRewardedVideoAdClosed() {
+//                cvWatchAd.setVisibility(View.GONE);
+//                if (isWatchedAD) {
+//                    unlockGroup();
+//                    Intent intent = new Intent();
+//                    intent.putExtra("nameOfGroup", foodItem.getNameOfGroup());
+//                    intent.putExtra("idOfToastIcon", idOfToastIcon);
+//                    setResult(RESULT_OK, intent);
+//                    YandexMetrica.reportEvent("Открыт экран: Реклама анлока досмотрена");
+//                    finish();
+//                } else {
+//                    Toast.makeText(ActivityRequestOfWatchADVideo.this, "Чтобы разблокировать группу нужно досмотреть ролик до конца", Toast.LENGTH_SHORT).show();
+//                    loadAd();
+//                }
+//            }
+//
+//            @Override
+//            public void onRewarded(RewardItem rewardItem) {
+//                isWatchedAD = true;
+//            }
+//
+//            @Override
+//            public void onRewardedVideoAdLeftApplication() {
+//
+//            }
+//
+//            @Override
+//            public void onRewardedVideoAdFailedToLoad(int i) {
+//
+//            }
+//        });
+
+        Appodeal.setRewardedVideoCallbacks(new RewardedVideoCallbacks() {
             @Override
-            public void onRewardedVideoAdLoaded() {
+            public void onRewardedVideoLoaded(boolean isPrecache) {
+                Log.d("Appodeal", "onRewardedVideoLoaded");
                 cvWatchAd.startAnimation(animationMovingFromBottom);
                 cvWatchAd.setVisibility(View.VISIBLE);
                 llContainerWithImageAndTextAdButton.startAnimation(animationChangeAlpha);
                 llContainerWithImageAndTextAdButton.setVisibility(View.VISIBLE);
             }
-
             @Override
-            public void onRewardedVideoAdOpened() {
+            public void onRewardedVideoFailedToLoad() {
+                Log.d("Appodeal", "onRewardedVideoFailedToLoad");
+            }
+            @Override
+            public void onRewardedVideoShown() {
+                Log.d("Appodeal", "onRewardedVideoShown");
+            }
+            @Override
+            public void onRewardedVideoFinished(double amount, String name) {
+                Log.d("Appodeal", "onRewardedVideoFinished");
+                isWatchedAD = true;
 
             }
-
             @Override
-            public void onRewardedVideoStarted() {
-
-            }
-
-            @Override
-            public void onRewardedVideoAdClosed() {
+            public void onRewardedVideoClosed(boolean finished) {
+                Log.d("Appodeal", "onRewardedVideoClosed");
                 cvWatchAd.setVisibility(View.GONE);
                 if (isWatchedAD) {
                     unlockGroup();
@@ -105,20 +168,9 @@ public class ActivityRequestOfWatchADVideo extends AppCompatActivity {
                     loadAd();
                 }
             }
-
             @Override
-            public void onRewarded(RewardItem rewardItem) {
-                isWatchedAD = true;
-            }
-
-            @Override
-            public void onRewardedVideoAdLeftApplication() {
-
-            }
-
-            @Override
-            public void onRewardedVideoAdFailedToLoad(int i) {
-
+            public void onRewardedVideoExpired() {
+                Log.d("Appodeal", "onRewardedVideoExpired");
             }
         });
 
@@ -132,8 +184,9 @@ public class ActivityRequestOfWatchADVideo extends AppCompatActivity {
         cvWatchAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mRewardedVideoAd.isLoaded()) {
-                    mRewardedVideoAd.show();
+                if (/*mRewardedVideoAd.isLoaded()*/Appodeal.isLoaded(Appodeal.REWARDED_VIDEO)) {
+//                    mRewardedVideoAd.show();
+                    Appodeal.show(activity, Appodeal.REWARDED_VIDEO);
                 } else {
                     Toast.makeText(ActivityRequestOfWatchADVideo.this, "Ролик прогружается, нужно немного подождать", Toast.LENGTH_SHORT).show();
                 }
@@ -202,8 +255,8 @@ public class ActivityRequestOfWatchADVideo extends AppCompatActivity {
     }
 
     private void loadAd() {
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-        mRewardedVideoAd.loadAd(getResources().getString(R.string.admob_award),
-                new AdRequest.Builder().build());
+//        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+//        mRewardedVideoAd.loadAd(getResources().getString(R.string.admob_award),
+//                new AdRequest.Builder().build());
     }
 }
