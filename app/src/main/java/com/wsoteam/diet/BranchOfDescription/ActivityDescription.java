@@ -29,7 +29,6 @@ public class ActivityDescription extends AppCompatActivity {
         setContentView(R.layout.activity_description);
 
 
-
         // Получаем ViewPager и устанавливаем в него адаптер
         viewPager = findViewById(R.id.viewpager2);
         viewPager.setAdapter(
@@ -40,7 +39,7 @@ public class ActivityDescription extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         //открываем на нужной вкладке
-        int position = (int)getIntent().getSerializableExtra(Config.ID_OF_SELECT_MENU);
+        int position = (int) getIntent().getSerializableExtra(Config.ID_OF_SELECT_MENU);
         selectPage(position);
 
         YandexMetrica.reportEvent("Открыт экран: Описание");
@@ -68,31 +67,35 @@ public class ActivityDescription extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
 
-            switch (position){
-                case 0: return FragmentViewText.newInstance(getString(R.string.tab_core));
+            switch (position) {
+                case 0:
+                    return FragmentViewText.newInstance(getString(R.string.tab_core));
 
-                case 1: return FragmentViewText.newInstance(getString(R.string.tab_faq));
+                case 1:
+                    return FragmentViewText.newInstance(getString(R.string.tab_faq));
 
-                case 2: return FragmentViewText.newInstance(getString(R.string.tab_exit));
+                case 2:
+                    return FragmentViewText.newInstance(getString(R.string.tab_exit));
 
-                case 3: return FragmentViewText.newInstance(getString(R.string.tab_contraindications));
+                case 3:
+                    return FragmentViewText.newInstance(getString(R.string.tab_contraindications));
 
-                case 4: return new FragmentSetting();
+                case 4:
+                    return new FragmentSetting();
 
-                default: return FragmentViewText.newInstance("Error");
+                default:
+                    return FragmentViewText.newInstance("Error");
 
             }
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            // генерируем заголовок в зависимости от позиции
             return tabTitles[position];
         }
     }
 
-    void selectPage(int pageIndex)
-    {
+    void selectPage(int pageIndex) {
         viewPager.setCurrentItem(pageIndex);
         tabLayout.setupWithViewPager(viewPager);
     }

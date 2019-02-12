@@ -97,8 +97,7 @@ public class MainActivity extends AppCompatActivity
 
     private int COUNT_OF_RUN = 0;
     private final String TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG = "COUNT_OF_RUN";
-    private final String FIRST_ENTER = "FIRST_ENTER";
-    private SharedPreferences countOfRun, firstEnter;
+    private SharedPreferences countOfRun;
     private boolean isAccessibleCountry = true;
     private boolean isFiveStarSend = false;
     private String notAccessibleCountryCode = "UA";
@@ -579,12 +578,6 @@ public class MainActivity extends AppCompatActivity
             alertDialog.setView(view);
             alertDialog.show();
         }
-    }
-
-    private void loadAd() {
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-        mRewardedVideoAd.loadAd(getResources().getString(R.string.admob_award),
-                new AdRequest.Builder().build());
     }
 
     @Override

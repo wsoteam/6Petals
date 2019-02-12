@@ -12,11 +12,15 @@ public class Config {
 
     public static String EXERCISES_NAME_OF_ENTITY_FOR_DB = "WORKOUT";
 
-    public static final String EN= "en";
-    public static final String ES= "es";
-    public static final String DE= "de";
+    public static final String EN = "en";
+    public static final String ES = "es";
+    public static final String DE = "de";
 
-
+    //Diary rewrite
+    public static final String TAG_OF_REWRITE = "TAG_OF_REWRITE";
+    public static final int NOT_ENTER_EARLY = -1;
+    public static final int REWRITE_PROFILE = 1;
+    public static final int NOT_REWRITE_PROFILE = 0;
 
 
 }

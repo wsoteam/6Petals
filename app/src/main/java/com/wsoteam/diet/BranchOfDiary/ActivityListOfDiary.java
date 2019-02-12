@@ -28,6 +28,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.wsoteam.diet.BranchOfAnalyzer.ActivityListAndSearch;
+import com.wsoteam.diet.Config;
 import com.wsoteam.diet.POJOForDB.DiaryData;
 import com.wsoteam.diet.POJOProfile.Profile;
 import com.wsoteam.diet.R;
@@ -41,10 +42,8 @@ public class ActivityListOfDiary extends AppCompatActivity {
     private ArrayList<DiaryData> diaryDataArrayList = new ArrayList<>();
     private GraphView graphView;
     private InterstitialAd interstitialAd;
-    private SharedPreferences isFirstEnter, isRewrite;
+    private SharedPreferences isRewrite;
 
-    private final String TAG_OF_FIRST_ENTER = "TAG_OF_FIRST_ENTER";
-    private final String TAG_OF_REWRITE = "TAG_OF_FIRST_ENTER";
     private final int WATER_ON_KG_FEMALE = 30;
     private final int WATER_ON_KG_MALE = 40;
 
@@ -89,6 +88,7 @@ public class ActivityListOfDiary extends AppCompatActivity {
     }
 
     private void updateUI() {
+        int temp = 0;
         diaryDataArrayList = (ArrayList<DiaryData>) DiaryData.listAll(DiaryData.class);
         bubbleSort();
         recyclerView.setAdapter(new ItemAdapter(diaryDataArrayList));
@@ -105,17 +105,25 @@ public class ActivityListOfDiary extends AppCompatActivity {
                     && profile.getYear() <= diaryDataArrayList.get(0).getYear()
                     && profile.getWeight() != diaryDataArrayList.get(0).getWeight())) {
 
-                profile.setNumberOfDay(diaryDataArrayList.get(0).getNumberOfDay());
-                profile.setMonth(diaryDataArrayList.get(0).getMonth());
-                profile.setYear(diaryDataArrayList.get(0).getYear());
+                isRewrite = getSharedPreferences(Config.TAG_OF_REWRITE, MODE_PRIVATE);
 
-                profile = updateProfile(profile, diaryDataArrayList.get(0).getWeight());
+                if (isRewrite.getInt(Config.TAG_OF_REWRITE, Config.NOT_ENTER_EARLY) == Config.NOT_ENTER_EARLY) {
+                    createADAboutRewriteProfile(isRewrite.edit());
+                }
+
+                Log.e("LOL", String.valueOf(isRewrite.getInt(Config.TAG_OF_REWRITE, Config.NOT_ENTER_EARLY)));
+
+                if (isRewrite.getInt(Config.TAG_OF_REWRITE, Config.NOT_REWRITE_PROFILE) == Config.REWRITE_PROFILE) {
+                    profile.setNumberOfDay(diaryDataArrayList.get(0).getNumberOfDay());
+                    profile.setMonth(diaryDataArrayList.get(0).getMonth());
+                    profile.setYear(diaryDataArrayList.get(0).getYear());
+                    profile = updateProfile(profile, diaryDataArrayList.get(0).getWeight());
+                    showToastAfterReWrite();
+                }
             }
             profile.setLoseWeight(profile.getWeight() - diaryDataArrayList.get(diaryDataArrayList.size() - 1).getWeight());
-            Log.e("LOL", String.valueOf(diaryDataArrayList.get(diaryDataArrayList.size() - 1)));
             Profile.deleteAll(Profile.class);
             profile.save();
-            showToastAfterReWrite();
         }
 
 
@@ -205,12 +213,28 @@ public class ActivityListOfDiary extends AppCompatActivity {
         toast.show();
     }
 
-    private void createADAboutAddNewProduct() {
+    private void createADAboutRewriteProfile(SharedPreferences.Editor editor) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog alertDialog = builder.create();
         View view = View.inflate(this, R.layout.alert_dialog_rewrite_profile_data, null);
         Button btnADRefreshProfileCancel = view.findViewById(R.id.btnADRefreshProfileCancel);
         Button btnADRefreshProfileOk = view.findViewById(R.id.btnADRefreshProfileOk);
+
+        btnADRefreshProfileCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.putInt(Config.TAG_OF_REWRITE, Config.NOT_REWRITE_PROFILE).commit();
+                alertDialog.cancel();
+            }
+        });
+
+        btnADRefreshProfileOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.putInt(Config.TAG_OF_REWRITE, Config.REWRITE_PROFILE).commit();
+                alertDialog.cancel();
+            }
+        });
 
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         alertDialog.setView(view);

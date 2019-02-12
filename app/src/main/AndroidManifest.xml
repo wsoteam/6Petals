@@ -92,7 +92,9 @@
             android:name=".BranchOfNotifications.ActivityListOfNotifications"
             android:theme="@style/NotificationListActivity" />
 
-        <activity android:name=".OtherActivity.ActivityAboutSetingsNotifications" />
+        <activity
+            android:name=".OtherActivity.ActivityAboutSetingsNotifications"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".BranchOfCalculating.ActivityCalculatorSPK"
@@ -138,7 +140,6 @@
         <activity
             android:name=".BranchOfExercises.ActivitiesArticles.ActivityDetailAcrticles"
             android:theme="@style/AppTheme.NoActionBar" />
-
 
 
         <activity
