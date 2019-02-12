@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class ActivityEditProfile extends AppCompatActivity {
     private RadioGroup rgFemaleOrMale;
     private CircleImageView civEditProfile;
     private FloatingActionButton fabEditProfile;
+    private ImageView ivHelpEditProfile;
 
     private InterstitialAd interstitialAd;
 
@@ -70,11 +72,20 @@ public class ActivityEditProfile extends AppCompatActivity {
         edtSpkSecondName = findViewById(R.id.edtSpkSecondName);
         civEditProfile = findViewById(R.id.civEditProfile);
         fabEditProfile = findViewById(R.id.fabEditProfile);
+        ivHelpEditProfile = findViewById(R.id.ivHelpEditProfile);
 
         if (Profile.count(Profile.class) == 1) {
             fillViewsIfProfileNotNull();
         }
 
+
+        ivHelpEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ActivityEditProfile.this, ActivityHelp.class);
+                startActivity(intent);
+            }
+        });
 
         btnLevelLoad.setOnClickListener(new View.OnClickListener() {
             @Override

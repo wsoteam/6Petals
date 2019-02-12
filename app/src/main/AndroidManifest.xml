@@ -168,6 +168,9 @@
         <activity
             android:name=".BranchProfile.ActivityEditProfile"
             android:theme="@style/EatingDiaryStyle" />
+        
+        <activity android:name=".BranchProfile.ActivityHelp"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
 
         <receiver
