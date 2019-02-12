@@ -111,8 +111,6 @@ public class ActivityListOfDiary extends AppCompatActivity {
                     createADAboutRewriteProfile(isRewrite.edit());
                 }
 
-                Log.e("LOL", String.valueOf(isRewrite.getInt(Config.TAG_OF_REWRITE, Config.NOT_ENTER_EARLY)));
-
                 if (isRewrite.getInt(Config.TAG_OF_REWRITE, Config.NOT_REWRITE_PROFILE) == Config.REWRITE_PROFILE) {
                     profile.setNumberOfDay(diaryDataArrayList.get(0).getNumberOfDay());
                     profile.setMonth(diaryDataArrayList.get(0).getMonth());
@@ -121,6 +119,7 @@ public class ActivityListOfDiary extends AppCompatActivity {
                     showToastAfterReWrite();
                 }
             }
+
             profile.setLoseWeight(profile.getWeight() - diaryDataArrayList.get(diaryDataArrayList.size() - 1).getWeight());
             Profile.deleteAll(Profile.class);
             profile.save();

@@ -205,6 +205,16 @@
                     app:layout_constraintStart_toStartOf="@+id/waveLoadingView"
                     app:layout_constraintTop_toBottomOf="@+id/imageView11" />
 
+                <ImageView
+                    android:id="@+id/ivMainScreenCollapsingCancelWater"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_main_collapsing_cancel_water"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView46"
+                    app:layout_constraintStart_toEndOf="@+id/textView46"
+                    app:layout_constraintTop_toTopOf="@+id/textView46" />
+
 
             </android.support.constraint.ConstraintLayout>
         </android.support.design.widget.CollapsingToolbarLayout>

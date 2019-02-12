@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity
     private RewardedVideoAd mRewardedVideoAd;
     private Toolbar toolbar;
     private RecyclerView rvMainList;
-    private Animation animationChangeScale;
+    private Animation animationChangeScale, animRotateCancelWater;
 
     private ArcProgress apCollapsingKcal, apCollapsingProt, apCollapsingCarbo, apCollapsingFat;
     private FloatingActionButton fabAddEating;
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
 
     private TextView tvLeftNBName;
     private CircleImageView ivLeftNBAvatar;
-
+    private ImageView ivMainScreenCollapsingCancelWater;
 
     private int COUNT_OF_RUN = 0;
     private final String TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG = "COUNT_OF_RUN";
@@ -191,6 +191,15 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        ivMainScreenCollapsingCancelWater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                soundPool.play(soundIDdBubble, 1, 1, 0, 0, 1);
+                ivMainScreenCollapsingCancelWater.startAnimation(animRotateCancelWater);
+                backCountOfWater();
+            }
+        });
+
     }
 
     private void showThankToast() {
@@ -234,6 +243,7 @@ public class MainActivity extends AppCompatActivity
         tvCircleProgressCarbo = findViewById(R.id.tvCircleProgressCarbo);
         tvCircleProgressFat = findViewById(R.id.tvCircleProgressFat);
         waveLoadingView = findViewById(R.id.waveLoadingView);
+        ivMainScreenCollapsingCancelWater = findViewById(R.id.ivMainScreenCollapsingCancelWater);
 
         loadSound();
 
@@ -255,6 +265,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_g);
         navigationView.setNavigationItemSelectedListener(this);
         animationChangeScale = AnimationUtils.loadAnimation(this, R.anim.anim_change_scale);
+
+        animRotateCancelWater = AnimationUtils.loadAnimation(this, R.anim.anim_rotate_cancel_water);
 
         View view = navigationView.getHeaderView(0);
         tvLeftNBName = view.findViewById(R.id.tvLeftNBName);
@@ -340,6 +352,32 @@ public class MainActivity extends AppCompatActivity
             int newCurrentNumber = water.getCurrentNumber() + water.getStep();
             waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf((int) defaultWaterCount));
             waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() + step);
+
+            water.setCurrentNumber(newCurrentNumber);
+            Water.deleteAll(Water.class);
+            water.save();
+        }
+    }
+
+    private void backCountOfWater(){
+        double defaultWaterCount = 2000;
+
+        if (profile != null) {
+            double percent = (double) water.getStep() / (double) profile.getWaterCount();
+            int step = (int) (percent * 100);
+            int newCurrentNumber = water.getCurrentNumber() - water.getStep();
+            waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf(profile.getWaterCount()));
+            waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() - step);
+
+            water.setCurrentNumber(newCurrentNumber);
+            Water.deleteAll(Water.class);
+            water.save();
+        } else {
+            double percent = (double) water.getStep() / defaultWaterCount;
+            int step = (int) (percent * 100);
+            int newCurrentNumber = water.getCurrentNumber() - water.getStep();
+            waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf((int) defaultWaterCount));
+            waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() - step);
 
             water.setCurrentNumber(newCurrentNumber);
             Water.deleteAll(Water.class);

@@ -142,6 +142,7 @@ public class ActivityProfile extends AppCompatActivity {
         }
         if (profile.getLoseWeight() < 0) {
             Glide.with(ActivityProfile.this).load(arrayOfDrawabaleArrowForChangeWeight[0]).into(ivProfileChangeWeight);
+            tvProfileChangeWeight.setText(String.valueOf(profile.getLoseWeight()) + " " + getResources().getString(R.string.kg));
         } else {
             Glide.with(ActivityProfile.this).load(arrayOfDrawabaleArrowForChangeWeight[1]).into(ivProfileChangeWeight);
             tvProfileChangeWeight.setText("+" + String.valueOf(profile.getLoseWeight()) + " " + getResources().getString(R.string.kg));
