@@ -3,15 +3,20 @@ package com.wsoteam.diet.MainScreen;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,6 +30,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +89,8 @@ public class MainActivity extends AppCompatActivity
     private ArcProgress apCollapsingKcal, apCollapsingProt, apCollapsingCarbo, apCollapsingFat;
     private FloatingActionButton fabAddEating;
     private TextView tvCircleProgressProt, tvCircleProgressCarbo, tvCircleProgressFat, tvCircleProgressKcal;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private AppBarLayout appBarLayout;
 
     private WaveLoadingView waveLoadingView;
     private SoundPool soundPool;
@@ -105,7 +113,7 @@ public class MainActivity extends AppCompatActivity
             R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary,
             R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes, R.drawable.ic_main_menu_fitness};
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top_menu, menu);
         try {
@@ -131,12 +139,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        *//*Intent intent = new Intent(MainActivity.this, ActivityPresentation.class);
-        startActivity(intent);*//*
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @Override
     protected void onResume() {
@@ -245,6 +247,33 @@ public class MainActivity extends AppCompatActivity
         waveLoadingView = findViewById(R.id.waveLoadingView);
         ivMainScreenCollapsingCancelWater = findViewById(R.id.ivMainScreenCollapsingCancelWater);
 
+        collapsingToolbarLayout = findViewById(R.id.collapsingToolbarLayout);
+        appBarLayout = findViewById(R.id.mainappbar);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("");
+
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle(getString(R.string.main_menu));
+                    isShow = true;
+                } else if (isShow) {
+                    collapsingToolbarLayout.setTitle("");
+                    isShow = false;
+                }
+            }
+        });
         loadSound();
 
         rvMainList = findViewById(R.id.rvMainScreen);
@@ -252,9 +281,6 @@ public class MainActivity extends AppCompatActivity
         rvMainList.setAdapter(new ItemAdapter(getResources().getStringArray(R.array.names_items_of_main_screen),
                 urlsOfImages, getResources().getStringArray(R.array.properties_items_of_main_screen)));
 
-        /*toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setTitle(getString(R.string.main_menu));*/
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -338,7 +364,7 @@ public class MainActivity extends AppCompatActivity
 
         if (profile != null) {
             double percent = (double) water.getStep() / (double) profile.getWaterCount();
-            int step = (int) (percent * 100);
+            int step = (int) Math.round(percent * 100);
             int newCurrentNumber = water.getCurrentNumber() + water.getStep();
             waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf(profile.getWaterCount()));
             waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() + step);
@@ -348,7 +374,7 @@ public class MainActivity extends AppCompatActivity
             water.save();
         } else {
             double percent = (double) water.getStep() / defaultWaterCount;
-            int step = (int) (percent * 100);
+            int step = (int) Math.round(percent * 100);
             int newCurrentNumber = water.getCurrentNumber() + water.getStep();
             waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf((int) defaultWaterCount));
             waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() + step);
@@ -359,12 +385,12 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void backCountOfWater(){
+    private void backCountOfWater() {
         double defaultWaterCount = 2000;
 
         if (profile != null) {
             double percent = (double) water.getStep() / (double) profile.getWaterCount();
-            int step = (int) (percent * 100);
+            int step = (int) Math.round(percent * 100);
             int newCurrentNumber = water.getCurrentNumber() - water.getStep();
             waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf(profile.getWaterCount()));
             waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() - step);
@@ -374,7 +400,7 @@ public class MainActivity extends AppCompatActivity
             water.save();
         } else {
             double percent = (double) water.getStep() / defaultWaterCount;
-            int step = (int) (percent * 100);
+            int step = (int) Math.round(percent * 100);
             int newCurrentNumber = water.getCurrentNumber() - water.getStep();
             waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf((int) defaultWaterCount));
             waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() - step);
@@ -412,8 +438,8 @@ public class MainActivity extends AppCompatActivity
 
         waveLoadingView.setCenterTitle(String.valueOf(water.getCurrentNumber()) + "/" + String.valueOf(maxWater));
         double percent = (double) water.getCurrentNumber() / (double) maxWater;
-        int progress = (int) (percent * 100);
-        waveLoadingView.setProgressValue(progress);
+        double progress = percent * 100;
+        waveLoadingView.setProgressValue((int) Math.round(progress));
 
 
     }

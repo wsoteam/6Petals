@@ -1,6 +1,7 @@
 package com.wsoteam.diet.BranchOfAnalyzer;
 
 import android.graphics.drawable.ColorDrawable;
+import android.icu.util.TimeUnit;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -178,6 +179,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
                 new Breakfast(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
                 alertDialog.cancel();
                 Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_breakfast, Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
         });
         cvChoiseEatingLunch.setOnClickListener(new View.OnClickListener() {
@@ -186,6 +188,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
                 new Lunch(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
                 alertDialog.cancel();
                 Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_lunch, Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
         });
         cvChoiseEatingDinner.setOnClickListener(new View.OnClickListener() {
@@ -194,6 +197,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
                 new Dinner(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
                 alertDialog.cancel();
                 Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_dinner, Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
         });
         cvChoiseEatingSnack.setOnClickListener(new View.OnClickListener() {
@@ -202,6 +206,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
                 new Snack(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
                 alertDialog.cancel();
                 Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_snack, Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
         });
 
@@ -244,17 +249,17 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         if (fat > maxCountForProgressBar) {
             pbFat.setDonut_progress(maxPercent);
         } else {
-            pbFat.setDonut_progress(String.valueOf(fat.intValue()));
+            pbFat.setDonut_progress(String.valueOf(Math.round(fat)));
         }
         if (carbohydrates > maxCountForProgressBar) {
             pbProtein.setDonut_progress(maxPercent);
         } else {
-            pbProtein.setDonut_progress(String.valueOf(protein.intValue()));
+            pbProtein.setDonut_progress(String.valueOf(Math.round(protein)));
         }
         if (protein > maxCountForProgressBar) {
             pbCarbohydrates.setDonut_progress(maxPercent);
         } else {
-            pbCarbohydrates.setDonut_progress(String.valueOf(carbohydrates.intValue()));
+            pbCarbohydrates.setDonut_progress(String.valueOf(Math.round(carbohydrates)));
         }
 
     }

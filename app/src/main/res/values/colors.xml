@@ -52,7 +52,7 @@
     <!--Colors for cirlce progress on main screen-->
     <color name="fatColor">#fbaa1d</color>
     <color name="kcalColor">#fffc21</color>
-    <color name="protColor">#2bbbff</color>
+    <color name="protColor">#ff2b8e</color>
     <color name="carboColor">#45ff17</color>
     <color name="little_transparent">#5e303030</color>
     <color name="littlejust_transparent">#c143d448</color>
