@@ -24,6 +24,8 @@ import java.util.List;
 public class FragmentDinner extends Fragment {
     private RecyclerView recyclerView;
     private DinnerItemAdapter dinnerItemAdapter;
+    private ImageView ivEmptyState;
+    private TextView tvEmptyStateTitle, tvEmptyStateText;
 
     @Override
     public void onResume() {
@@ -33,6 +35,13 @@ public class FragmentDinner extends Fragment {
 
     private void updateUI() {
         List<Dinner> dinnerArrayList = Dinner.listAll(Dinner.class);
+
+        if (dinnerArrayList.size() == 0){
+            showEmptyStateViews();
+        }else {
+            hideEmptyStateViews();
+        }
+
         setNumbersInCollapsingBar((ArrayList<Dinner>) dinnerArrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         dinnerItemAdapter = new DinnerItemAdapter((ArrayList<Dinner>) dinnerArrayList);
@@ -51,6 +60,18 @@ public class FragmentDinner extends Fragment {
         };
 
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
+    }
+
+    private void hideEmptyStateViews() {
+        ivEmptyState.setVisibility(View.GONE);
+        tvEmptyStateTitle.setVisibility(View.GONE);
+        tvEmptyStateText.setVisibility(View.GONE);
+    }
+
+    private void showEmptyStateViews() {
+        ivEmptyState.setVisibility(View.VISIBLE);
+        tvEmptyStateTitle.setVisibility(View.VISIBLE);
+        tvEmptyStateText.setVisibility(View.VISIBLE);
     }
 
     private void setNumbersInCollapsingBar(ArrayList<Dinner> dinnerArrayList) {
@@ -78,6 +99,9 @@ public class FragmentDinner extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dinner, container, false);
         recyclerView = view.findViewById(R.id.rvEatingDinner);
+        ivEmptyState = view.findViewById(R.id.ivEmptyState);
+        tvEmptyStateTitle = view.findViewById(R.id.tvEmptyStateTitle);
+        tvEmptyStateText = view.findViewById(R.id.tvEmptyStateText);
         return view;
     }
 

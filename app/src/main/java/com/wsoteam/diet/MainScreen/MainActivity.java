@@ -45,7 +45,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.ArcProgress;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.wsoteam.diet.BranchEatingDiary.ActivityEatingDiary;
@@ -62,7 +61,6 @@ import com.wsoteam.diet.BranchProfile.ActivityProfile;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.POJOProfile.Profile;
-import com.wsoteam.diet.POJOsCircleProgress.CalculateAndSavedData;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Breakfast;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Dinner;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Lunch;
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity
     private RewardedVideoAd mRewardedVideoAd;
     private Toolbar toolbar;
     private RecyclerView rvMainList;
-    private Animation animationChangeScale, animRotateCancelWater;
+    private Animation animChangeScale, animRotateCancelWater, animWaterComplete;
 
     private ArcProgress apCollapsingKcal, apCollapsingProt, apCollapsingCarbo, apCollapsingFat;
     private FloatingActionButton fabAddEating;
@@ -101,13 +99,14 @@ public class MainActivity extends AppCompatActivity
 
     private TextView tvLeftNBName;
     private CircleImageView ivLeftNBAvatar;
-    private ImageView ivMainScreenCollapsingCancelWater;
+    private ImageView ivMainScreenCollapsingCancelWater, ivCollapsingMainCompleteWater;
 
     private int COUNT_OF_RUN = 0;
     private final String TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG = "COUNT_OF_RUN";
     private SharedPreferences countOfRun;
     private boolean isAccessibleCountry = true;
     private boolean isFiveStarSend = false;
+    private boolean isFullWater;
     private String notAccessibleCountryCode = "UA";
     private Integer[] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_newsfeed, R.drawable.ic_main_menu_targets,
             R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary,
@@ -174,8 +173,10 @@ public class MainActivity extends AppCompatActivity
         waveLoadingView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                soundPool.play(soundIDdBubble, 1, 1, 0, 0, 1);
-                addCountOfWater();
+                if (!isFullWater) {
+                    soundPool.play(soundIDdBubble, 1, 1, 0, 0, 1);
+                    addCountOfWater();
+                }
             }
         });
 
@@ -246,6 +247,7 @@ public class MainActivity extends AppCompatActivity
         tvCircleProgressFat = findViewById(R.id.tvCircleProgressFat);
         waveLoadingView = findViewById(R.id.waveLoadingView);
         ivMainScreenCollapsingCancelWater = findViewById(R.id.ivMainScreenCollapsingCancelWater);
+        ivCollapsingMainCompleteWater = findViewById(R.id.ivCollapsingMainCompleteWater);
 
         collapsingToolbarLayout = findViewById(R.id.collapsingToolbarLayout);
         appBarLayout = findViewById(R.id.mainappbar);
@@ -290,7 +292,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_g);
         navigationView.setNavigationItemSelectedListener(this);
-        animationChangeScale = AnimationUtils.loadAnimation(this, R.anim.anim_change_scale);
+        animChangeScale = AnimationUtils.loadAnimation(this, R.anim.anim_change_scale);
+        animWaterComplete = AnimationUtils.loadAnimation(this, R.anim.anim_water_complete_tick);
 
         animRotateCancelWater = AnimationUtils.loadAnimation(this, R.anim.anim_rotate_cancel_water);
 
@@ -369,6 +372,7 @@ public class MainActivity extends AppCompatActivity
             waveLoadingView.setCenterTitle(String.valueOf(newCurrentNumber) + "/" + String.valueOf(profile.getWaterCount()));
             waveLoadingView.setProgressValue(waveLoadingView.getProgressValue() + step);
 
+
             water.setCurrentNumber(newCurrentNumber);
             Water.deleteAll(Water.class);
             water.save();
@@ -383,6 +387,16 @@ public class MainActivity extends AppCompatActivity
             Water.deleteAll(Water.class);
             water.save();
         }
+
+
+        if (waveLoadingView.getProgressValue() >= 100){
+            waveLoadingView.setCenterTitle("");
+            isFullWater = true;
+            ivMainScreenCollapsingCancelWater.setVisibility(View.GONE);
+            ivCollapsingMainCompleteWater.setVisibility(View.VISIBLE);
+            ivCollapsingMainCompleteWater.startAnimation(animWaterComplete);
+        }
+
     }
 
     private void backCountOfWater() {
@@ -440,6 +454,13 @@ public class MainActivity extends AppCompatActivity
         double percent = (double) water.getCurrentNumber() / (double) maxWater;
         double progress = percent * 100;
         waveLoadingView.setProgressValue((int) Math.round(progress));
+
+        if (waveLoadingView.getProgressValue() >= 100) {
+            isFullWater = true;
+            waveLoadingView.setCenterTitle("");
+            ivCollapsingMainCompleteWater.setVisibility(View.VISIBLE);
+            ivMainScreenCollapsingCancelWater.setVisibility(View.GONE);
+        }
 
 
     }
@@ -719,7 +740,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onClick(View view) {
-            cardView.startAnimation(animationChangeScale);
+            cardView.startAnimation(animChangeScale);
             Intent intent = new Intent();
             switch (getAdapterPosition()) {
                 case 0:

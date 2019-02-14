@@ -25,6 +25,8 @@ import java.util.List;
 public class FragmentBreakfast extends Fragment {
     private RecyclerView recyclerView;
     private BreakfastItemAdapter breakfastItemAdapter;
+    private ImageView ivEmptyState;
+    private TextView tvEmptyStateTitle, tvEmptyStateText;
 
     @Override
     public void onResume() {
@@ -34,6 +36,13 @@ public class FragmentBreakfast extends Fragment {
 
     private void updateUI() {
         List<Breakfast> breakfastArrayList = Breakfast.listAll(Breakfast.class);
+
+        if (breakfastArrayList.size() == 0) {
+            showEmptyStateViews();
+        } else {
+            hideEmptyStateViews();
+        }
+
         setNumbersInCollapsingBar((ArrayList<Breakfast>) breakfastArrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         breakfastItemAdapter = new BreakfastItemAdapter((ArrayList<Breakfast>) breakfastArrayList);
@@ -52,6 +61,20 @@ public class FragmentBreakfast extends Fragment {
         };
 
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
+
+
+    }
+
+    private void hideEmptyStateViews() {
+        ivEmptyState.setVisibility(View.GONE);
+        tvEmptyStateTitle.setVisibility(View.GONE);
+        tvEmptyStateText.setVisibility(View.GONE);
+    }
+
+    private void showEmptyStateViews() {
+        ivEmptyState.setVisibility(View.VISIBLE);
+        tvEmptyStateTitle.setVisibility(View.VISIBLE);
+        tvEmptyStateText.setVisibility(View.VISIBLE);
     }
 
     private void setNumbersInCollapsingBar(ArrayList<Breakfast> breakfastList) {
@@ -68,10 +91,10 @@ public class FragmentBreakfast extends Fragment {
             carbo += breakfastList.get(i).getCarbohydrates();
             prot += breakfastList.get(i).getProtein();
         }
-        tvEatingDiaryCollapsingFat.setText(String.valueOf(fat)+ " " + getActivity().getString(R.string.gramm));
-        tvEatingDiaryCollapsingCarbo.setText(String.valueOf(carbo)+ " " + getActivity().getString(R.string.gramm));
-        tvEatingDiaryCollapsingProt.setText(String.valueOf(prot)+ " " + getActivity().getString(R.string.gramm));
-        tvEatingDiaryCollapsingKcal.setText(String.valueOf(kcal)+ " " + getActivity().getString(R.string.kcal));
+        tvEatingDiaryCollapsingFat.setText(String.valueOf(fat) + " " + getActivity().getString(R.string.gramm));
+        tvEatingDiaryCollapsingCarbo.setText(String.valueOf(carbo) + " " + getActivity().getString(R.string.gramm));
+        tvEatingDiaryCollapsingProt.setText(String.valueOf(prot) + " " + getActivity().getString(R.string.gramm));
+        tvEatingDiaryCollapsingKcal.setText(String.valueOf(kcal) + " " + getActivity().getString(R.string.kcal));
     }
 
     @Nullable
@@ -79,7 +102,9 @@ public class FragmentBreakfast extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_breakfast, container, false);
         recyclerView = view.findViewById(R.id.rvEatingBreakfast);
-        Log.e("LOL", "Create");
+        ivEmptyState = view.findViewById(R.id.ivEmptyState);
+        tvEmptyStateTitle = view.findViewById(R.id.tvEmptyStateTitle);
+        tvEmptyStateText = view.findViewById(R.id.tvEmptyStateText);
         return view;
     }
 
@@ -113,13 +138,12 @@ public class FragmentBreakfast extends Fragment {
             tvEatingItemKcal.setText(String.valueOf(breakfast.getCalories()) + " ккал");
             tvEatingItemWeight.setText(String.valueOf(breakfast.getWeight()) + " г");
 
-            if (!breakfast.getUrlOfImages().equals("")){
+            if (!breakfast.getUrlOfImages().equals("")) {
                 Glide.with(getActivity()).load(breakfast.getUrlOfImages()).into(ivImage);
-            }else {
+            } else {
                 cvInvisibleCardEatingDiary.setVisibility(View.VISIBLE);
                 tvLeterOfProductInDiary.setText(String.valueOf(Character.toUpperCase(breakfast.getName().charAt(0))));
             }
-
 
 
         }

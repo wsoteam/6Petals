@@ -24,6 +24,8 @@ import java.util.List;
 public class FragmentLunch extends Fragment {
     private RecyclerView recyclerView;
     private LunchItemAdapter lunchItemAdapter;
+    private ImageView ivEmptyState;
+    private TextView tvEmptyStateTitle, tvEmptyStateText;
 
     @Override
     public void onResume() {
@@ -33,6 +35,11 @@ public class FragmentLunch extends Fragment {
 
     private void updateUI() {
         List<Lunch> lunchArrayList = Lunch.listAll(Lunch.class);
+        if (lunchArrayList.size() == 0) {
+            showEmptyStateViews();
+        } else {
+            hideEmptyStateViews();
+        }
         setNumbersInCollapsingBar((ArrayList<Lunch>) lunchArrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         lunchItemAdapter = new LunchItemAdapter((ArrayList<Lunch>) lunchArrayList);
@@ -51,6 +58,18 @@ public class FragmentLunch extends Fragment {
         };
 
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
+    }
+
+    private void hideEmptyStateViews() {
+        ivEmptyState.setVisibility(View.GONE);
+        tvEmptyStateTitle.setVisibility(View.GONE);
+        tvEmptyStateText.setVisibility(View.GONE);
+    }
+
+    private void showEmptyStateViews() {
+        ivEmptyState.setVisibility(View.VISIBLE);
+        tvEmptyStateTitle.setVisibility(View.VISIBLE);
+        tvEmptyStateText.setVisibility(View.VISIBLE);
     }
 
     private void setNumbersInCollapsingBar(ArrayList<Lunch> lunchList) {
@@ -78,6 +97,9 @@ public class FragmentLunch extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lunch, container, false);
         recyclerView = view.findViewById(R.id.rvEatingLunch);
+        ivEmptyState = view.findViewById(R.id.ivEmptyState);
+        tvEmptyStateTitle = view.findViewById(R.id.tvEmptyStateTitle);
+        tvEmptyStateText = view.findViewById(R.id.tvEmptyStateText);
         return view;
     }
 

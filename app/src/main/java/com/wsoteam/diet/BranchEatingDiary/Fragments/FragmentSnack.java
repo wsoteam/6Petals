@@ -25,6 +25,8 @@ public class FragmentSnack extends Fragment {
     private List<Snack> snackList;
     private RecyclerView recyclerView;
     private SnackItemAdapter snackItemAdapter;
+    private ImageView ivEmptyState;
+    private TextView tvEmptyStateTitle, tvEmptyStateText;
 
     @Override
     public void onResume() {
@@ -34,6 +36,11 @@ public class FragmentSnack extends Fragment {
 
     private void updateUI() {
         List<Snack> snackArrayList = Snack.listAll(Snack.class);
+        if (snackArrayList.size() == 0) {
+            showEmptyStateViews();
+        } else {
+            hideEmptyStateViews();
+        }
         setNumbersInCollapsingBar((ArrayList<Snack>) snackArrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         snackItemAdapter = new SnackItemAdapter((ArrayList<Snack>) snackArrayList);
@@ -52,6 +59,18 @@ public class FragmentSnack extends Fragment {
         };
 
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
+    }
+
+    private void hideEmptyStateViews() {
+        ivEmptyState.setVisibility(View.GONE);
+        tvEmptyStateTitle.setVisibility(View.GONE);
+        tvEmptyStateText.setVisibility(View.GONE);
+    }
+
+    private void showEmptyStateViews() {
+        ivEmptyState.setVisibility(View.VISIBLE);
+        tvEmptyStateTitle.setVisibility(View.VISIBLE);
+        tvEmptyStateText.setVisibility(View.VISIBLE);
     }
 
     private void setNumbersInCollapsingBar(ArrayList<Snack> snackList) {
@@ -78,12 +97,10 @@ public class FragmentSnack extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_snack, container, false);
-
-        snackList = Snack.listAll(Snack.class);
-
         recyclerView = view.findViewById(R.id.rvEatingSnacks);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new SnackItemAdapter((ArrayList<Snack>) snackList));
+        ivEmptyState = view.findViewById(R.id.ivEmptyState);
+        tvEmptyStateTitle = view.findViewById(R.id.tvEmptyStateTitle);
+        tvEmptyStateText = view.findViewById(R.id.tvEmptyStateText);
         return view;
     }
 
@@ -117,9 +134,9 @@ public class FragmentSnack extends Fragment {
             tvEatingItemKcal.setText(String.valueOf(snack.getCalories()) + " ккал");
             tvEatingItemWeight.setText(String.valueOf(snack.getWeight()) + " г");
 
-            if (!snack.getUrlOfImages().equals("")){
+            if (!snack.getUrlOfImages().equals("")) {
                 Glide.with(getActivity()).load(snack.getUrlOfImages()).into(ivImage);
-            }else {
+            } else {
                 cvInvisibleCardEatingDiary.setVisibility(View.VISIBLE);
                 tvLeterOfProductInDiary.setText(String.valueOf(Character.toUpperCase(snack.getName().charAt(0))));
             }

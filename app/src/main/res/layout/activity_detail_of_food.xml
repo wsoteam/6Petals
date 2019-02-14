@@ -472,7 +472,7 @@
                     android:background="@color/green"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
-                    android:text="Сохранить"
+                    android:text="Добавить в прием пищи"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
