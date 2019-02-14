@@ -17,21 +17,54 @@
             android:id="@+id/main.collapsing"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/black"
             app:expandedTitleMarginStart="5dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Subhead"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/gvGraphOfWeight"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:id="@+id/llEmptyStateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_empty_state_diary"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="64dp"
+                    android:src="@drawable/empty_state_diary" />
 
 
-                <com.jjoe64.graphview.GraphView
-                    android:id="@+id/gvGraphOfWeight"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="8dp" />
+                <TextView
+                    android:id="@+id/tvEmptyStateDiaryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:text="Начало работы"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/tvEmptyStateDiaryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp"
+                    android:text="Для начала создайте первую запись в дневнике"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
 
 
         </android.support.design.widget.CollapsingToolbarLayout>

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class ActivityListOfDiary extends AppCompatActivity {
     private GraphView graphView;
     private InterstitialAd interstitialAd;
     private SharedPreferences isRewrite;
-
+    private LinearLayout llEmptyStateLayout;
     private final int WATER_ON_KG_FEMALE = 30;
     private final int WATER_ON_KG_MALE = 40;
 
@@ -66,10 +67,9 @@ public class ActivityListOfDiary extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_diary);
-
-
         fabAddData = findViewById(R.id.fabAddDataListOfDiary);
         recyclerView = findViewById(R.id.rvListOfDiary);
+        llEmptyStateLayout = findViewById(R.id.llEmptyStateLayout);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         fabAddData.setOnClickListener(new View.OnClickListener() {
@@ -90,41 +90,45 @@ public class ActivityListOfDiary extends AppCompatActivity {
     private void updateUI() {
         int temp = 0;
         diaryDataArrayList = (ArrayList<DiaryData>) DiaryData.listAll(DiaryData.class);
-        bubbleSort();
-        recyclerView.setAdapter(new ItemAdapter(diaryDataArrayList));
-        Profile profile;
+        if (diaryDataArrayList.size() == 0) {
+            llEmptyStateLayout.setVisibility(View.VISIBLE);
+        } else {
+            llEmptyStateLayout.setVisibility(View.GONE);
+            bubbleSort();
+            recyclerView.setAdapter(new ItemAdapter(diaryDataArrayList));
+            Profile profile;
 
-        if ((profile = Profile.last(Profile.class)) != null && diaryDataArrayList.size() > 0) {
-            // if the day when the profile was created earlier than
-            // the last entry in the diary or equal in weight and day of profile creation
-            if ((profile.getNumberOfDay() < diaryDataArrayList.get(0).getNumberOfDay()
-                    && profile.getMonth() <= diaryDataArrayList.get(0).getMonth()
-                    && profile.getYear() <= diaryDataArrayList.get(0).getYear())
-                    || (profile.getNumberOfDay() == diaryDataArrayList.get(0).getNumberOfDay()
-                    && profile.getMonth() <= diaryDataArrayList.get(0).getMonth()
-                    && profile.getYear() <= diaryDataArrayList.get(0).getYear()
-                    && profile.getWeight() != diaryDataArrayList.get(0).getWeight())) {
+            if ((profile = Profile.last(Profile.class)) != null) {
+                // if the day when the profile was created earlier than
+                // the last entry in the diary or equal in weight and day of profile creation
+                if ((profile.getNumberOfDay() < diaryDataArrayList.get(0).getNumberOfDay()
+                        && profile.getMonth() <= diaryDataArrayList.get(0).getMonth()
+                        && profile.getYear() <= diaryDataArrayList.get(0).getYear())
+                        || (profile.getNumberOfDay() == diaryDataArrayList.get(0).getNumberOfDay()
+                        && profile.getMonth() <= diaryDataArrayList.get(0).getMonth()
+                        && profile.getYear() <= diaryDataArrayList.get(0).getYear()
+                        && profile.getWeight() != diaryDataArrayList.get(0).getWeight())) {
 
-                isRewrite = getSharedPreferences(Config.TAG_OF_REWRITE, MODE_PRIVATE);
+                    isRewrite = getSharedPreferences(Config.TAG_OF_REWRITE, MODE_PRIVATE);
 
-                if (isRewrite.getInt(Config.TAG_OF_REWRITE, Config.NOT_ENTER_EARLY) == Config.NOT_ENTER_EARLY) {
-                    createADAboutRewriteProfile(isRewrite.edit());
+                    if (isRewrite.getInt(Config.TAG_OF_REWRITE, Config.NOT_ENTER_EARLY) == Config.NOT_ENTER_EARLY) {
+                        createADAboutRewriteProfile(isRewrite.edit());
+                    }
+
+                    if (isRewrite.getInt(Config.TAG_OF_REWRITE, Config.NOT_REWRITE_PROFILE) == Config.REWRITE_PROFILE) {
+                        profile.setNumberOfDay(diaryDataArrayList.get(0).getNumberOfDay());
+                        profile.setMonth(diaryDataArrayList.get(0).getMonth());
+                        profile.setYear(diaryDataArrayList.get(0).getYear());
+                        profile = updateProfile(profile, diaryDataArrayList.get(0).getWeight());
+                        showToastAfterReWrite();
+                    }
                 }
 
-                if (isRewrite.getInt(Config.TAG_OF_REWRITE, Config.NOT_REWRITE_PROFILE) == Config.REWRITE_PROFILE) {
-                    profile.setNumberOfDay(diaryDataArrayList.get(0).getNumberOfDay());
-                    profile.setMonth(diaryDataArrayList.get(0).getMonth());
-                    profile.setYear(diaryDataArrayList.get(0).getYear());
-                    profile = updateProfile(profile, diaryDataArrayList.get(0).getWeight());
-                    showToastAfterReWrite();
-                }
+                profile.setLoseWeight(profile.getWeight() - diaryDataArrayList.get(diaryDataArrayList.size() - 1).getWeight());
+                Profile.deleteAll(Profile.class);
+                profile.save();
             }
-
-            profile.setLoseWeight(profile.getWeight() - diaryDataArrayList.get(diaryDataArrayList.size() - 1).getWeight());
-            Profile.deleteAll(Profile.class);
-            profile.save();
         }
-
 
     }
 
