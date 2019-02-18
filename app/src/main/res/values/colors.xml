@@ -78,4 +78,7 @@
 
     <color name="add_food_green">#00a82d</color>
     <color name="add_food_red">#f44336</color>
+
+
+    <color name="imt_close_ad">#00a82d</color>
 </resources>

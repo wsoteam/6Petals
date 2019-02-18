@@ -68,7 +68,9 @@
         <activity
             android:name=".OtherActivity.ActivityEmpty"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BranchOfCalculating.ActivityCalculatorIMT" />
+        <activity
+            android:name=".BranchOfCalculating.ActivityCalculatorIMT"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".BranchOfRecipes.ActivityRecipes"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -168,9 +170,10 @@
         <activity
             android:name=".BranchProfile.ActivityEditProfile"
             android:theme="@style/EatingDiaryStyle" />
-        
-        <activity android:name=".BranchProfile.ActivityHelp"
-            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".BranchProfile.ActivityHelp"
+            android:theme="@style/AppTheme.NoActionBar" />
 
 
         <receiver

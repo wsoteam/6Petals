@@ -402,7 +402,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
                             edtADAddNewProductFat.getText().toString());
 
                     alertDialog.cancel();
-                    showToastAfterSave();
+
                 } else {
                     Toast.makeText(ActivityListAndSearch.this, "Для сохранение заполните три обязательных первых поля", Toast.LENGTH_LONG).show();
                 }
@@ -444,6 +444,10 @@ public class ActivityListAndSearch extends AppCompatActivity {
                 name, EMPTY, String.valueOf((int) protInPortion), EMPTY, TAG_OWN_PRODUCT, 0));
 
         item.save();
+
+        Intent intent = new Intent(ActivityListAndSearch.this, ActivityDetailOfFood.class);
+        intent.putExtra("ActivityDetailOfFood", listOfGroupsFoods.get(0));
+        startActivity(intent);
 
     }
 

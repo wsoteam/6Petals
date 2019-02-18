@@ -1,38 +1,38 @@
 package com.wsoteam.diet.BranchOfCalculating;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.wsoteam.diet.BranchOfMonoDiets.ActivityViewerOfBodyItem;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
+
+import java.util.ArrayList;
 
 public class ActivityCalculatorIMT extends AppCompatActivity {
 
     private Button btnCalculate;
     private EditText edtHeight, edtWeight;
-    int weight, height;
-    String bodyType;
-    String[] bodyTypes;
-    InterstitialAd interstitialAd;
+    private double weight, height;
+    private InterstitialAd interstitialAd;
     private AdView adBanner;
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(interstitialAd.isLoaded()){
+        if (interstitialAd.isLoaded()) {
             interstitialAd.show();
         }
     }
@@ -41,7 +41,6 @@ public class ActivityCalculatorIMT extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator_imt);
-        bodyTypes = getResources().getStringArray(R.array.body_types);
 
         btnCalculate = findViewById(R.id.btnIMTCalculate);
         edtHeight = findViewById(R.id.edtIMTHeight);
@@ -70,32 +69,42 @@ public class ActivityCalculatorIMT extends AppCompatActivity {
 
     }
 
-    private String countIMT() {
-        double coefficient = weight / (double) ((height / 100) ^ 2);
-        String bodyTypeForShow = "";
-        if (coefficient < 16) {
-            bodyTypeForShow = bodyTypes[0];
+    private ArrayList<String> countIMT() {
+        double minIndex = 16.5, notEnoughIndex = 18.49, normalIndex = 24.99,
+                upNormalIndex = 29.99, obesityIndex = 34.99, obesitySecondIndex = 39.99, nextIndexStep = 0.01;
+        double coefficient = weight / ((height / 100) * (height / 100));
+        int position = 0;
+        ArrayList<String> mainIndicators = new ArrayList<>();
+        String[] arrayOfBodyTypes = getResources().getStringArray(R.array.body_types);
+        String[] arrayOfBodyTypesDescriptions = getResources().getStringArray(R.array.descriptions_bodytypes);
+
+        if (coefficient < minIndex) {
+            position = 0;
         }
-        if (coefficient >= 16 && coefficient <= 19) {
-            bodyTypeForShow = bodyTypes[1];
+        if (coefficient >= minIndex && coefficient < notEnoughIndex) {
+            position = 1;
         }
-        if (coefficient > 19 && coefficient <= 25) {
-            bodyTypeForShow = bodyTypes[2];
+        if (coefficient >= (notEnoughIndex + nextIndexStep) && coefficient <= normalIndex) {
+            position = 2;
         }
-        if (coefficient > 25 && coefficient <= 30) {
-            bodyTypeForShow = bodyTypes[3];
+        if (coefficient >= (normalIndex + nextIndexStep) && coefficient <= (upNormalIndex)) {
+            position = 3;
         }
-        if (coefficient > 30 && coefficient <= 35) {
-            bodyTypeForShow = bodyTypes[4];
+        if (coefficient >= (upNormalIndex + nextIndexStep) && coefficient <= (obesityIndex)) {
+            position = 4;
         }
-        if (coefficient > 35 && coefficient <= 40) {
-            bodyTypeForShow = bodyTypes[5];
+        if (coefficient >= (obesityIndex + nextIndexStep) && coefficient <= obesitySecondIndex) {
+            position = 5;
         }
-        if (coefficient > 40) {
-            bodyTypeForShow = bodyTypes[6];
+        if (coefficient >= (obesitySecondIndex + nextIndexStep)) {
+            position = 6;
         }
-        Toast.makeText(this, String.valueOf(coefficient), Toast.LENGTH_SHORT).show();
-        return bodyTypeForShow;
+
+        mainIndicators.add(arrayOfBodyTypes[position]);
+        mainIndicators.add(String.valueOf(coefficient).substring(0, 5));
+        mainIndicators.add(arrayOfBodyTypesDescriptions[position]);
+
+        return mainIndicators;
     }
 
     private boolean checkNull() {
@@ -103,32 +112,35 @@ public class ActivityCalculatorIMT extends AppCompatActivity {
             Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            height = Integer.parseInt(edtHeight.getText().toString());
-            weight = Integer.parseInt(edtWeight.getText().toString());
+            height = Double.parseDouble(edtHeight.getText().toString());
+            weight = Double.parseDouble(edtWeight.getText().toString());
             return true;
         }
     }
 
-    private void createAlertDialog(String bodyType) {
-        TextView tvAlertDialogWeight, tvTitleOfAlertDialog;
-        FloatingActionButton btnOk;
+    private void createAlertDialog(ArrayList<String> mainIndicators) {
+        String bodyType = mainIndicators.get(0), IMT = mainIndicators.get(1), description = mainIndicators.get(2);
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog alertDialog = builder.create();
-        View view = getLayoutInflater().inflate(R.layout.alert_dialog_weight, null);
-        tvAlertDialogWeight = view.findViewById(R.id.tvAlertDialogWeight);
-        tvTitleOfAlertDialog = view.findViewById(R.id.tvTitleAlertDialogWeight);
-        tvTitleOfAlertDialog.setText("Ваш ИМТ");
-        btnOk = view.findViewById(R.id.btnAlertDialogOk);
-        tvAlertDialogWeight.setText(bodyType);
-        btnOk.setOnClickListener(new View.OnClickListener() {
+        View view = View.inflate(this, R.layout.alert_dialog_imt, null);
+        TextView tvIMTAdName = view.findViewById(R.id.tvIMTAdName);
+        TextView tvIMTAdDescription = view.findViewById(R.id.tvIMTAdDescription);
+        TextView tvIMTAdIndex = view.findViewById(R.id.tvIMTAdIndex);
+        FloatingActionButton floatingActionButton = view.findViewById(R.id.floatingActionButton);
+        tvIMTAdIndex.setText("Ваш ИМТ - " + IMT);
+        tvIMTAdName.setText(bodyType);
+        tvIMTAdDescription.setText(description);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 alertDialog.cancel();
             }
         });
+
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         alertDialog.setView(view);
         alertDialog.show();
-
     }
 }
