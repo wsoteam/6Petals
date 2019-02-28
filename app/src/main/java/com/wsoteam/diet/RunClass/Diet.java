@@ -13,7 +13,7 @@ import com.wsoteam.diet.MainScreen.MainActivity;
 import com.yandex.metrica.YandexMetrica;
 import com.yandex.metrica.YandexMetricaConfig;
 
-public class Diet extends Application{
+public class Diet extends Application {
 
     @Override
     public void onCreate() {
@@ -36,9 +36,9 @@ public class Diet extends Application{
     VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
         @Override
         public void onVKAccessTokenChanged(@Nullable VKAccessToken oldToken, @Nullable VKAccessToken newToken) {
-            if(newToken==null){
+            if (newToken == null) {
                 Intent intent = new Intent(Diet.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         }
