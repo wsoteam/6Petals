@@ -34,6 +34,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.wsoteam.diet.BranchProfile.ActivityEditProfile;
+import com.wsoteam.diet.Config;
 import com.wsoteam.diet.POJOFoodItem.DbAnalyzer;
 import com.wsoteam.diet.POJOFoodItem.FoodConnect;
 import com.wsoteam.diet.POJOFoodItem.FoodItem;
@@ -257,6 +258,7 @@ public class ActivityListAndSearch extends AppCompatActivity {
             } else {
                 Intent intent = new Intent(ActivityListAndSearch.this, ActivityDetailOfFood.class);
                 intent.putExtra("ActivityDetailOfFood", tempListOfGroupsFoods.get(getAdapterPosition()));
+                intent.putExtra(Config.TAG_CHOISE_EATING, getIntent().getStringExtra(Config.TAG_CHOISE_EATING));
                 startActivity(intent);
             }
 
@@ -447,24 +449,8 @@ public class ActivityListAndSearch extends AppCompatActivity {
 
         Intent intent = new Intent(ActivityListAndSearch.this, ActivityDetailOfFood.class);
         intent.putExtra("ActivityDetailOfFood", listOfGroupsFoods.get(0));
+        intent.putExtra(Config.TAG_CHOISE_EATING, getIntent().getStringExtra(Config.TAG_CHOISE_EATING));
         startActivity(intent);
 
     }
-
-    private void showToastAfterSave() {
-        LayoutInflater toastInflater = getLayoutInflater();
-        View toastLayout = toastInflater.inflate(R.layout.toast_complete_gift, null, false);
-        TextView tvToastCompleteGift = toastLayout.findViewById(R.id.tvToastCompleteGift);
-        ImageView ivToastCompleteGift = toastLayout.findViewById(R.id.ivToastCompleteGift);
-
-        tvToastCompleteGift.setText("Продукт сохранен");
-        Glide.with(this).load(R.drawable.ic_toast_product_saved).into(ivToastCompleteGift);
-
-        Toast toast = new Toast(this);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(toastLayout);
-        toast.show();
-    }
-
-
 }

@@ -24,15 +24,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -45,23 +42,16 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.MobileAds;
-import com.wsoteam.diet.BranchEatingDiary.ActivityEatingDiary;
-import com.wsoteam.diet.BranchOfAnalyzer.ActivityListAndSearch;
-import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
-import com.wsoteam.diet.BranchOfDiary.ActivityListOfDiary;
-import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
-import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
-import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.BranchProfile.ActivityEditProfile;
 import com.wsoteam.diet.BranchProfile.ActivityProfile;
 import com.wsoteam.diet.Config;
-import com.wsoteam.diet.OtherActivity.ActivityEmpty;
+import com.wsoteam.diet.MainScreen.AlertDialogs.AlertDialogChoiseEating;
 import com.wsoteam.diet.POJOProfile.Profile;
-import com.wsoteam.diet.POJOsCircleProgress.Eating.Breakfast;
-import com.wsoteam.diet.POJOsCircleProgress.Eating.Dinner;
-import com.wsoteam.diet.POJOsCircleProgress.Eating.Lunch;
-import com.wsoteam.diet.POJOsCircleProgress.Eating.Snack;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Breakfast;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Dinner;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Lunch;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Snack;
 import com.wsoteam.diet.POJOsCircleProgress.Water;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
@@ -110,9 +100,6 @@ public class MainActivity extends AppCompatActivity
     private boolean isFiveStarSend = false;
     private boolean isFullWater;
 
-    private Integer[] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_newsfeed, R.drawable.ic_main_menu_targets,
-            R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary,
-            R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes, R.drawable.ic_main_menu_fitness};
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -174,7 +161,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 if (!isFullWater) {
                     soundPool.play(soundIDdBubble, 1, 1, 0, 0, 1);
-                    addCountOfWater();
+                    increaseCountOfWater();
                 }
             }
         });
@@ -198,7 +185,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 soundPool.play(soundIDdBubble, 1, 1, 0, 0, 1);
                 ivMainScreenCollapsingCancelWater.startAnimation(animRotateCancelWater);
-                backCountOfWater();
+                decreaseCountOfWater();
             }
         });
 
@@ -275,8 +262,7 @@ public class MainActivity extends AppCompatActivity
         fabAddEating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ActivityEatingDiary.class);
-                startActivity(intent);
+                AlertDialogChoiseEating.createChoiseEatingAlertDialog(MainActivity.this).show();
             }
         });
 
@@ -329,7 +315,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void addCountOfWater() {
+    private void increaseCountOfWater() {
         double defaultWaterCount = 2000;
 
         if (profile != null) {
@@ -366,7 +352,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void backCountOfWater() {
+    private void decreaseCountOfWater() {
         double defaultWaterCount = 2000;
 
         if (profile != null) {
@@ -685,97 +671,6 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
         return true;
-    }
-
-    private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView tvTitle, tvProperties;
-        private ImageView ivImage, ivIsOpen;
-        private CardView cardView;
-
-        public ItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
-            super(layoutInflater.inflate(R.layout.item_list_main_menu, viewGroup, false));
-
-            ivImage = itemView.findViewById(R.id.ivMainMenuImage);
-            ivIsOpen = itemView.findViewById(R.id.ivIsOpen);
-            tvTitle = itemView.findViewById(R.id.tvMainMenuTitle);
-            tvProperties = itemView.findViewById(R.id.tvMainMenuProperties);
-            cardView = itemView.findViewById(R.id.cvParentView);
-            ivIsOpen.setVisibility(View.GONE);
-
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            cardView.startAnimation(animChangeScale);
-            Intent intent = new Intent();
-            switch (getAdapterPosition()) {
-                case 0:
-                    intent = new Intent(MainActivity.this, ActivityEmpty.class);
-
-                    break;
-                case 1:
-                    intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
-                    break;
-                case 2:
-                    intent = new Intent(MainActivity.this, ActivityListAndSearch.class);
-                    break;
-                case 3:
-                    intent = new Intent(MainActivity.this, ActivityListOfCalculating.class);
-                    break;
-                case 4:
-                    intent = new Intent(MainActivity.this, ActivityListOfDiary.class);
-                    break;
-                case 5:
-                    intent = new Intent(MainActivity.this, ActivityMonoDiet.class);
-                    break;
-                case 6:
-                    intent = new Intent(MainActivity.this, ActivityGroupsOfRecipes.class);
-                    break;
-                case 7:
-                    intent = new Intent(MainActivity.this, com.wsoteam.diet.BranchOfExercises.Activities.MainActivity.class);
-                    break;
-            }
-            startActivity(intent);
-        }
-
-        public void bind(String name, Integer image, String properties) {
-            tvTitle.setText(name);
-            tvProperties.setText(properties);
-            Glide.with(MainActivity.this).load(image).into(ivImage);
-            /*if (getAdapterPosition() == 4 && isAccessibleCountry
-                    || getAdapterPosition() == 5) {
-                ivIsOpen.setVisibility(View.VISIBLE);
-            }*/
-        }
-    }
-
-    private class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
-        String[] names, propeties;
-        Integer[] images;
-
-        public ItemAdapter(String[] names, Integer[] images, String[] propeties) {
-            this.names = names;
-            this.images = images;
-            this.propeties = propeties;
-        }
-
-        @NonNull
-        @Override
-        public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
-            return new ItemHolder(layoutInflater, parent);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
-            holder.bind(names[position], images[position], propeties[position]);
-        }
-
-        @Override
-        public int getItemCount() {
-            return names.length;
-        }
     }
 
 }

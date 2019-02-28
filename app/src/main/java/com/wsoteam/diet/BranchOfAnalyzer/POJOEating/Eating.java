@@ -1,8 +1,8 @@
-package com.wsoteam.diet.POJOsCircleProgress.Eating;
+package com.wsoteam.diet.BranchOfAnalyzer.POJOEating;
 
 import com.orm.SugarRecord;
 
-public class Lunch extends SugarRecord {
+public class Eating extends SugarRecord {
     private String name;
     private String urlOfImages;
 
@@ -17,10 +17,10 @@ public class Lunch extends SugarRecord {
     private int month;
     private int year;
 
-    public Lunch() {
+    public Eating() {
     }
 
-    public Lunch(String name, String urlOfImages, int calories, int carbohydrates, int protein, int fat, int weight, int day, int month, int year) {
+    public Eating(String name, String urlOfImages, int calories, int carbohydrates, int protein, int fat, int weight, int day, int month, int year) {
         this.name = name;
         this.urlOfImages = urlOfImages;
         this.calories = calories;
@@ -31,14 +31,6 @@ public class Lunch extends SugarRecord {
         this.day = day;
         this.month = month;
         this.year = year;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
     }
 
     public String getName() {
@@ -87,6 +79,14 @@ public class Lunch extends SugarRecord {
 
     public void setFat(int fat) {
         this.fat = fat;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     public int getDay() {

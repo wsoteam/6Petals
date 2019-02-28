@@ -1,11 +1,8 @@
 package com.wsoteam.diet.BranchOfAnalyzer;
 
 import android.graphics.drawable.ColorDrawable;
-import android.icu.util.TimeUnit;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
@@ -14,18 +11,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Eating;
+import com.wsoteam.diet.Config;
 import com.wsoteam.diet.POJOFoodItem.FoodItem;
-import com.wsoteam.diet.POJOFoodItem.ListOfFoodItem;
-import com.wsoteam.diet.POJOsCircleProgress.Eating.Breakfast;
-import com.wsoteam.diet.POJOsCircleProgress.Eating.Dinner;
-import com.wsoteam.diet.POJOsCircleProgress.Eating.Lunch;
-import com.wsoteam.diet.POJOsCircleProgress.Eating.Snack;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Breakfast;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Dinner;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Lunch;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Snack;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
@@ -138,7 +134,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
                 if (edtWeight.getText().toString().equals("") || edtWeight.getText().toString().equals(" ")) {
                     Toast.makeText(ActivityDetailOfFood.this, R.string.input_weight_of_eating, Toast.LENGTH_SHORT).show();
                 } else {
-                    createAddNewEatingDialog();
+                    savePortion(getIntent().getStringExtra(Config.TAG_CHOISE_EATING));
                 }
 
             }
@@ -147,7 +143,7 @@ public class ActivityDetailOfFood extends AppCompatActivity {
 
     }
 
-    private void createAddNewEatingDialog() {
+    private void savePortion(String stringExtra) {
         Calendar calendar = Calendar.getInstance();
 
         int kcal = Integer.parseInt(tvCalculateKcal.getText().toString().split(" ")[0]);
@@ -164,55 +160,21 @@ public class ActivityDetailOfFood extends AppCompatActivity {
         String name = foodItem.getName();
         String urlOfImage = foodItem.getUrlOfImages();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        AlertDialog alertDialog = builder.create();
-        View view = getLayoutInflater().inflate(R.layout.alert_dialog_choise_eating_type, null);
-
-        CardView cvChoiseEatingBreakFast = view.findViewById(R.id.cvChoiseEatingBreakFast);
-        CardView cvChoiseEatingLunch = view.findViewById(R.id.cvChoiseEatingLunch);
-        CardView cvChoiseEatingDinner = view.findViewById(R.id.cvChoiseEatingDinner);
-        CardView cvChoiseEatingSnack = view.findViewById(R.id.cvChoiseEatingSnack);
-
-        cvChoiseEatingBreakFast.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        switch (stringExtra) {
+            case Config.INTENT_CHOISE_BREAKFAST:
                 new Breakfast(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
-                alertDialog.cancel();
-                Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_breakfast, Toast.LENGTH_SHORT).show();
-                onBackPressed();
-            }
-        });
-        cvChoiseEatingLunch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case Config.INTENT_CHOISE_LUNCH:
                 new Lunch(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
-                alertDialog.cancel();
-                Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_lunch, Toast.LENGTH_SHORT).show();
-                onBackPressed();
-            }
-        });
-        cvChoiseEatingDinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case Config.INTENT_CHOISE_DINNER:
                 new Dinner(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
-                alertDialog.cancel();
-                Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_dinner, Toast.LENGTH_SHORT).show();
-                onBackPressed();
-            }
-        });
-        cvChoiseEatingSnack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case Config.INTENT_CHOISE_SNACK:
                 new Snack(name, urlOfImage, kcal, carbo, prot, fat, weight, day, month, year).save();
-                alertDialog.cancel();
-                Toast.makeText(ActivityDetailOfFood.this, R.string.saved_in_snack, Toast.LENGTH_SHORT).show();
-                onBackPressed();
-            }
-        });
-
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        alertDialog.setView(view);
-        alertDialog.show();
+                break;
+        }
+        onBackPressed();
     }
 
     private void calculateMainParameters() {

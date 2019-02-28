@@ -22,5 +22,12 @@ public class Config {
     public static final int REWRITE_PROFILE = 1;
     public static final int NOT_REWRITE_PROFILE = 0;
 
+    //Tags for choise where need save food
+    public static final String TAG_CHOISE_EATING = "TAG_CHOISE_EATING";
+    public static final String INTENT_CHOISE_BREAKFAST = "INTENT_CHOISE_BREAKFAST";
+    public static final String INTENT_CHOISE_LUNCH= "INTENT_CHOISE_LUNCH";
+    public static final String INTENT_CHOISE_DINNER= "INTENT_CHOISE_DINNER";
+    public static final String INTENT_CHOISE_SNACK= "INTENT_CHOISE_SNACK";
+
 
 }
