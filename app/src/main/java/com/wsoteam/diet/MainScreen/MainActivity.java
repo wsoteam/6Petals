@@ -24,6 +24,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,6 +33,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -43,11 +46,20 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.wsoteam.diet.BranchEatingDiary.ActivityEatingDiary;
+import com.wsoteam.diet.BranchOfAnalyzer.ActivityListAndSearch;
+import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
+import com.wsoteam.diet.BranchOfDiary.ActivityListOfDiary;
+import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
+import com.wsoteam.diet.BranchOfNews.ActivityListOfNews;
+import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
+import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.BranchProfile.ActivityEditProfile;
 import com.wsoteam.diet.BranchProfile.ActivityProfile;
 import com.wsoteam.diet.Config;
+import com.wsoteam.diet.OtherActivity.ActivityEmpty;
 import com.wsoteam.diet.POJOProfile.Profile;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Breakfast;
 import com.wsoteam.diet.POJOsCircleProgress.Eating.Dinner;
@@ -61,33 +73,24 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.itangqi.waveloadingview.WaveLoadingView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    @BindView(R.id.waveLoadingView) WaveLoadingView waveLoadingView;
-    @BindView(R.id.apCollapsingKcal) ArcProgress apCollapsingKcal;
-    @BindView(R.id.apCollapsingProt) ArcProgress apCollapsingProt;
-    @BindView(R.id.apCollapsingCarbo) ArcProgress apCollapsingCarbo;
-    @BindView(R.id.apCollapsingFat) ArcProgress apCollapsingFat;
-    @BindView(R.id.tvCircleProgressProt) TextView tvCircleProgressProt;
-    @BindView(R.id.tvCircleProgressCarbo) TextView tvCircleProgressCarbo;
-    @BindView(R.id.tvCircleProgressFat) TextView tvCircleProgressFat;
-    @BindView(R.id.ivMainScreenCollapsingCancelWater) ImageView ivMainScreenCollapsingCancelWater;
-    @BindView(R.id.ivCollapsingMainCompleteWater) ImageView ivCollapsingMainCompleteWater;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.collapsingToolbarLayout) CollapsingToolbarLayout collapsingToolbarLayout;
-    @BindView(R.id.mainappbar) AppBarLayout mainappbar;
-    @BindView(R.id.fabAddEating) FloatingActionButton fabAddEating;
-    @BindView(R.id.nav_view_g) NavigationView navViewG;
-    @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
     private AnimatedVectorDrawable animatedVectorDrawable;
-
+    private RewardedVideoAd mRewardedVideoAd;
+    private Toolbar toolbar;
+    private RecyclerView rvMainList;
     private Animation animChangeScale, animRotateCancelWater, animWaterComplete;
 
+    private ArcProgress apCollapsingKcal, apCollapsingProt, apCollapsingCarbo, apCollapsingFat;
+    private FloatingActionButton fabAddEating;
+    private TextView tvCircleProgressProt, tvCircleProgressCarbo, tvCircleProgressFat, tvCircleProgressKcal;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private AppBarLayout appBarLayout;
+
+    private WaveLoadingView waveLoadingView;
     private SoundPool soundPool;
     private int soundIDdBubble;
     private Water water;
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity
 
     private TextView tvLeftNBName;
     private CircleImageView ivLeftNBAvatar;
-
+    private ImageView ivMainScreenCollapsingCancelWater, ivCollapsingMainCompleteWater;
 
     private int COUNT_OF_RUN = 0;
     private final String TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG = "COUNT_OF_RUN";
@@ -105,6 +108,9 @@ public class MainActivity extends AppCompatActivity
     private boolean isFiveStarSend = false;
     private boolean isFullWater;
     private String notAccessibleCountryCode = "UA";
+    private Integer[] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_newsfeed, R.drawable.ic_main_menu_targets,
+            R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary,
+            R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes, R.drawable.ic_main_menu_fitness};
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -160,7 +166,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
                 bindCircleProgressBars(day, month, year, profile);
-                startFillWaterView(day, month, year, profile);
+                fillWaterView(day, month, year, profile);
             }
         });
 
@@ -169,7 +175,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 if (!isFullWater) {
                     soundPool.play(soundIDdBubble, 1, 1, 0, 0, 1);
-                    increaseCountOfWater();
+                    addCountOfWater();
                 }
             }
         });
@@ -193,7 +199,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 soundPool.play(soundIDdBubble, 1, 1, 0, 0, 1);
                 ivMainScreenCollapsingCancelWater.startAnimation(animRotateCancelWater);
-                decreaseCountOfWater();
+                backCountOfWater();
             }
         });
 
@@ -223,7 +229,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
-        ButterKnife.bind(this);
 
         MobileAds.initialize(this, Config.ADMOB_ID);
 
@@ -231,11 +236,28 @@ public class MainActivity extends AppCompatActivity
             isAccessibleCountry = false;
         }
 
+        apCollapsingKcal = findViewById(R.id.apCollapsingKcal);
+        apCollapsingProt = findViewById(R.id.apCollapsingProt);
+        apCollapsingCarbo = findViewById(R.id.apCollapsingCarbo);
+        apCollapsingFat = findViewById(R.id.apCollapsingFat);
+        fabAddEating = findViewById(R.id.fabAddEating);
+
+        tvCircleProgressProt = findViewById(R.id.tvCircleProgressProt);
+        tvCircleProgressCarbo = findViewById(R.id.tvCircleProgressCarbo);
+        tvCircleProgressFat = findViewById(R.id.tvCircleProgressFat);
+        waveLoadingView = findViewById(R.id.waveLoadingView);
+        ivMainScreenCollapsingCancelWater = findViewById(R.id.ivMainScreenCollapsingCancelWater);
+        ivCollapsingMainCompleteWater = findViewById(R.id.ivCollapsingMainCompleteWater);
+
+        collapsingToolbarLayout = findViewById(R.id.collapsingToolbarLayout);
+        appBarLayout = findViewById(R.id.mainappbar);
+
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("");
 
-        toolbar = findViewById(R.id.toolbar);
-        mainappbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
 
@@ -256,19 +278,26 @@ public class MainActivity extends AppCompatActivity
         });
         loadSound();
 
+        rvMainList = findViewById(R.id.rvMainScreen);
+        rvMainList.setLayoutManager(new GridLayoutManager(this, 2));
+        rvMainList.setAdapter(new ItemAdapter(getResources().getStringArray(R.array.names_items_of_main_screen),
+                urlsOfImages, getResources().getStringArray(R.array.properties_items_of_main_screen)));
 
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        navViewG.setNavigationItemSelectedListener(this);
-
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_g);
+        navigationView.setNavigationItemSelectedListener(this);
         animChangeScale = AnimationUtils.loadAnimation(this, R.anim.anim_change_scale);
         animWaterComplete = AnimationUtils.loadAnimation(this, R.anim.anim_water_complete_tick);
+
         animRotateCancelWater = AnimationUtils.loadAnimation(this, R.anim.anim_rotate_cancel_water);
 
-        View view = navViewG.getHeaderView(0);
+        View view = navigationView.getHeaderView(0);
         tvLeftNBName = view.findViewById(R.id.tvLeftNBName);
         ivLeftNBAvatar = view.findViewById(R.id.ivLeftNBAvatar);
 
@@ -333,7 +362,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void increaseCountOfWater() {
+    private void addCountOfWater() {
         double defaultWaterCount = 2000;
 
         if (profile != null) {
@@ -360,7 +389,7 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-        if (waveLoadingView.getProgressValue() >= 100) {
+        if (waveLoadingView.getProgressValue() >= 100){
             waveLoadingView.setCenterTitle("");
             isFullWater = true;
             ivMainScreenCollapsingCancelWater.setVisibility(View.GONE);
@@ -370,7 +399,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void decreaseCountOfWater() {
+    private void backCountOfWater() {
         double defaultWaterCount = 2000;
 
         if (profile != null) {
@@ -396,7 +425,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void startFillWaterView(int day, int month, int year, @Nullable Profile profile) {
+    private void fillWaterView(int day, int month, int year, @Nullable Profile profile) {
         final int DEFAULT_FIRST_STEP = 200;
         final int DEFAULT_FIRST_MAX = 2000;
 
@@ -655,7 +684,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         Intent intent = new Intent(MainActivity.this, ActivityDescription.class);
 
-        /*switch (id) {
+        switch (id) {
             case R.id.menu_nav_core:
                 intent.putExtra(Config.ID_OF_SELECT_MENU, 0);
                 break;
@@ -678,7 +707,7 @@ public class MainActivity extends AppCompatActivity
                 YandexMetrica.reportEvent("Переход на тренировки");
                 isOpenMarket = true;
                 break;
-        }*/
+        }
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -689,6 +718,100 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
         return true;
+    }
+
+    private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView tvTitle, tvProperties;
+        private ImageView ivImage, ivIsOpen;
+        private CardView cardView;
+
+        public ItemHolder(LayoutInflater layoutInflater, ViewGroup viewGroup) {
+            super(layoutInflater.inflate(R.layout.item_list_main_menu, viewGroup, false));
+
+            ivImage = itemView.findViewById(R.id.ivMainMenuImage);
+            ivIsOpen = itemView.findViewById(R.id.ivIsOpen);
+            tvTitle = itemView.findViewById(R.id.tvMainMenuTitle);
+            tvProperties = itemView.findViewById(R.id.tvMainMenuProperties);
+            cardView = itemView.findViewById(R.id.cvParentView);
+            ivIsOpen.setVisibility(View.GONE);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            cardView.startAnimation(animChangeScale);
+            Intent intent = new Intent();
+            switch (getAdapterPosition()) {
+                case 0:
+                    if (isAccessibleCountry) {
+                        intent = new Intent(MainActivity.this, ActivityListOfNews.class);
+                    } else {
+                        intent = new Intent(MainActivity.this, ActivityEmpty.class);
+                    }
+                    break;
+                case 1:
+                    intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
+                    break;
+                case 2:
+                    intent = new Intent(MainActivity.this, ActivityListAndSearch.class);
+                    break;
+                case 3:
+                    intent = new Intent(MainActivity.this, ActivityListOfCalculating.class);
+                    break;
+                case 4:
+                    intent = new Intent(MainActivity.this, ActivityListOfDiary.class);
+                    break;
+                case 5:
+                    intent = new Intent(MainActivity.this, ActivityMonoDiet.class);
+                    break;
+                case 6:
+                    intent = new Intent(MainActivity.this, ActivityGroupsOfRecipes.class);
+                    break;
+                case 7:
+                    intent = new Intent(MainActivity.this, com.wsoteam.diet.BranchOfExercises.Activities.MainActivity.class);
+                    break;
+            }
+            startActivity(intent);
+        }
+
+        public void bind(String name, Integer image, String properties) {
+            tvTitle.setText(name);
+            tvProperties.setText(properties);
+            Glide.with(MainActivity.this).load(image).into(ivImage);
+            /*if (getAdapterPosition() == 4 && isAccessibleCountry
+                    || getAdapterPosition() == 5) {
+                ivIsOpen.setVisibility(View.VISIBLE);
+            }*/
+        }
+    }
+
+    private class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
+        String[] names, propeties;
+        Integer[] images;
+
+        public ItemAdapter(String[] names, Integer[] images, String[] propeties) {
+            this.names = names;
+            this.images = images;
+            this.propeties = propeties;
+        }
+
+        @NonNull
+        @Override
+        public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+            return new ItemHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
+            holder.bind(names[position], images[position], propeties[position]);
+        }
+
+        @Override
+        public int getItemCount() {
+            return names.length;
+        }
     }
 
 }
