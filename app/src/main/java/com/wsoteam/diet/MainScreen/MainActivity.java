@@ -51,7 +51,6 @@ import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
 import com.wsoteam.diet.BranchOfDiary.ActivityListOfDiary;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
-import com.wsoteam.diet.BranchOfNews.ActivityListOfNews;
 import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
 import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.BranchProfile.ActivityEditProfile;
@@ -93,6 +92,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.mainappbar) AppBarLayout mainappbar;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.collapsingToolbarLayout) CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.nav_view_g) NavigationView navViewG;
     private TextView tvLeftNBName;
     private CircleImageView ivLeftNBAvatar;
 
@@ -107,10 +107,9 @@ public class MainActivity extends AppCompatActivity
     private int COUNT_OF_RUN = 0;
     private final String TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG = "COUNT_OF_RUN";
     private SharedPreferences countOfRun;
-    private boolean isAccessibleCountry = true;
     private boolean isFiveStarSend = false;
     private boolean isFullWater;
-    private String notAccessibleCountryCode = "UA";
+
     private Integer[] urlsOfImages = new Integer[]{R.drawable.ic_main_menu_newsfeed, R.drawable.ic_main_menu_targets,
             R.drawable.ic_main_menu_analyzer, R.drawable.ic_main_menu_calculating, R.drawable.ic_main_menu_diary,
             R.drawable.ic_main_menu_diets, R.drawable.ic_main_menu_reciepes, R.drawable.ic_main_menu_fitness};
@@ -148,7 +147,6 @@ public class MainActivity extends AppCompatActivity
 
         if (Profile.count(Profile.class) == 1) {
             profile = Profile.last(Profile.class);
-
             tvLeftNBName.setText(profile.getFirstName() + " " + profile.getLastName());
             tvLeftNBName.setTextSize(17);
             if (!profile.getPhotoUrl().equals("default")) {
@@ -231,17 +229,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
         ButterKnife.bind(this);
-
         MobileAds.initialize(this, Config.ADMOB_ID);
-
-        if (getIntent().getStringExtra("MainActivity").equals(notAccessibleCountryCode)) {
-            isAccessibleCountry = false;
-        }
-
-
         setSupportActionBar(toolbar);
         setTitle("");
-
 
         mainappbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
@@ -252,7 +242,6 @@ public class MainActivity extends AppCompatActivity
                 if (scrollRange == -1) {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
-
                 if (scrollRange + verticalOffset == 0) {
                     collapsingToolbarLayout.setTitle(getString(R.string.main_menu));
                     isShow = true;
@@ -269,18 +258,17 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_g);
-        navigationView.setNavigationItemSelectedListener(this);
+        navViewG.setNavigationItemSelectedListener(this);
         animChangeScale = AnimationUtils.loadAnimation(this, R.anim.anim_change_scale);
         animWaterComplete = AnimationUtils.loadAnimation(this, R.anim.anim_water_complete_tick);
 
         animRotateCancelWater = AnimationUtils.loadAnimation(this, R.anim.anim_rotate_cancel_water);
 
-        View view = navigationView.getHeaderView(0);
+        View view = navViewG.getHeaderView(0);
         tvLeftNBName = view.findViewById(R.id.tvLeftNBName);
         ivLeftNBAvatar = view.findViewById(R.id.ivLeftNBAvatar);
 
-
+        showThankToast();
         additionOneToSharedPreference();
         checkFirstRun();
 
@@ -723,11 +711,8 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent();
             switch (getAdapterPosition()) {
                 case 0:
-                    if (isAccessibleCountry) {
-                        intent = new Intent(MainActivity.this, ActivityListOfNews.class);
-                    } else {
-                        intent = new Intent(MainActivity.this, ActivityEmpty.class);
-                    }
+                    intent = new Intent(MainActivity.this, ActivityEmpty.class);
+
                     break;
                 case 1:
                     intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
