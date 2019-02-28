@@ -42,11 +42,17 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.MobileAds;
+import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
 import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
+import com.wsoteam.diet.BranchOfDiary.ActivityListOfDiary;
+import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
+import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
+import com.wsoteam.diet.BranchOfRecipes.ActivityGroupsOfRecipes;
 import com.wsoteam.diet.BranchProfile.ActivityEditProfile;
 import com.wsoteam.diet.BranchProfile.ActivityProfile;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.MainScreen.AlertDialogs.AlertDialogChoiseEating;
+import com.wsoteam.diet.OtherActivity.ActivitySettings;
 import com.wsoteam.diet.POJOProfile.Profile;
 import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Breakfast;
 import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Dinner;
@@ -635,41 +641,41 @@ public class MainActivity extends AppCompatActivity
         boolean isOpenMarket = false;
 
         int id = item.getItemId();
-        Intent intent = new Intent(MainActivity.this, ActivityDescription.class);
+        Intent intent = new Intent();
 
         switch (id) {
-            case R.id.menu_nav_core:
-                intent.putExtra(Config.ID_OF_SELECT_MENU, 0);
+            case R.id.nav_diary:
+                intent = new Intent(MainActivity.this, ActivityListOfDiary.class);
                 break;
-            case R.id.menu_nav_faq:
-                intent.putExtra(Config.ID_OF_SELECT_MENU, 1);
+            case R.id.nav_diets:
+                intent = new Intent(MainActivity.this, ActivityMonoDiet.class);
                 break;
-            case R.id.menu_nav_exit:
-                intent.putExtra(Config.ID_OF_SELECT_MENU, 2);
+            case R.id.nav_recipes:
+                intent = new Intent(MainActivity.this, ActivityGroupsOfRecipes.class);
                 break;
-            case R.id.menu_nav_contraindications:
-                intent.putExtra(Config.ID_OF_SELECT_MENU, 3);
+            case R.id.nav_notifications:
+                intent = new Intent(MainActivity.this, ActivityListOfNotifications.class);
                 break;
-            case R.id.menu_nav_setting:
-                intent.putExtra(Config.ID_OF_SELECT_MENU, 4);
+            case R.id.nav_fitness:
+                intent = new Intent(MainActivity.this, com.wsoteam.diet.BranchOfExercises.Activities.MainActivity.class);
                 break;
-            case R.id.menu_nav_more:
-                Intent intentForViewMoreApps = new Intent(Intent.ACTION_VIEW);
-                intentForViewMoreApps.setData(Uri.parse("market://details?id=onepic.bkgcom.com.ex"));
-                startActivity(intentForViewMoreApps);
-                YandexMetrica.reportEvent("Переход на тренировки");
-                isOpenMarket = true;
+            case R.id.nav_calculating:
+                intent = new Intent(MainActivity.this, ActivityListOfCalculating.class);
+                break;
+            case R.id.nav_settings:
+                intent = new Intent(MainActivity.this, ActivitySettings.class);
+                break;
+            case R.id.nav_exit:
+
                 break;
         }
-
+        startActivity(intent);
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
 
-        if (!isOpenMarket) {
-            startActivity(intent);
-        }
+
         return true;
     }
 
