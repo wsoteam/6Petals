@@ -25,7 +25,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -46,7 +45,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.wsoteam.diet.BranchEatingDiary.ActivityEatingDiary;
 import com.wsoteam.diet.BranchOfAnalyzer.ActivityListAndSearch;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
@@ -73,33 +71,38 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.itangqi.waveloadingview.WaveLoadingView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private AnimatedVectorDrawable animatedVectorDrawable;
-    private RewardedVideoAd mRewardedVideoAd;
-    private Toolbar toolbar;
-    private RecyclerView rvMainList;
-    private Animation animChangeScale, animRotateCancelWater, animWaterComplete;
-
-    private ArcProgress apCollapsingKcal, apCollapsingProt, apCollapsingCarbo, apCollapsingFat;
-    private FloatingActionButton fabAddEating;
-    private TextView tvCircleProgressProt, tvCircleProgressCarbo, tvCircleProgressFat, tvCircleProgressKcal;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
-    private AppBarLayout appBarLayout;
-
-    private WaveLoadingView waveLoadingView;
-    private SoundPool soundPool;
-    private int soundIDdBubble;
-    private Water water;
-
-    private Profile profile;
-
+    @BindView(R.id.tvCircleProgressProt) TextView tvCircleProgressProt;
+    @BindView(R.id.apCollapsingKcal) ArcProgress apCollapsingKcal;
+    @BindView(R.id.apCollapsingProt) ArcProgress apCollapsingProt;
+    @BindView(R.id.apCollapsingCarbo) ArcProgress apCollapsingCarbo;
+    @BindView(R.id.apCollapsingFat) ArcProgress apCollapsingFat;
+    @BindView(R.id.waveLoadingView) WaveLoadingView waveLoadingView;
+    @BindView(R.id.ivMainScreenCollapsingCancelWater) ImageView ivMainScreenCollapsingCancelWater;
+    @BindView(R.id.ivCollapsingMainCompleteWater) ImageView ivCollapsingMainCompleteWater;
+    @BindView(R.id.fabAddEating) FloatingActionButton fabAddEating;
+    @BindView(R.id.tvCircleProgressCarbo) TextView tvCircleProgressCarbo;
+    @BindView(R.id.tvCircleProgressFat) TextView tvCircleProgressFat;
+    @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
+    @BindView(R.id.mainappbar) AppBarLayout mainappbar;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.collapsingToolbarLayout) CollapsingToolbarLayout collapsingToolbarLayout;
     private TextView tvLeftNBName;
     private CircleImageView ivLeftNBAvatar;
-    private ImageView ivMainScreenCollapsingCancelWater, ivCollapsingMainCompleteWater;
+
+    private AnimatedVectorDrawable animatedVectorDrawable;
+    private Animation animChangeScale, animRotateCancelWater, animWaterComplete;
+    private SoundPool soundPool;
+    private int soundIDdBubble;
+
+    private Water water;
+    private Profile profile;
 
     private int COUNT_OF_RUN = 0;
     private final String TAG_COUNT_OF_RUN_FOR_ALERT_DIALOG = "COUNT_OF_RUN";
@@ -158,8 +161,6 @@ public class MainActivity extends AppCompatActivity
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
-
-        showThankToast();
 
         Handler bindHandler = new Handler(Looper.getMainLooper());
         bindHandler.post(new Runnable() {
@@ -229,6 +230,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+        ButterKnife.bind(this);
 
         MobileAds.initialize(this, Config.ADMOB_ID);
 
@@ -236,28 +238,12 @@ public class MainActivity extends AppCompatActivity
             isAccessibleCountry = false;
         }
 
-        apCollapsingKcal = findViewById(R.id.apCollapsingKcal);
-        apCollapsingProt = findViewById(R.id.apCollapsingProt);
-        apCollapsingCarbo = findViewById(R.id.apCollapsingCarbo);
-        apCollapsingFat = findViewById(R.id.apCollapsingFat);
-        fabAddEating = findViewById(R.id.fabAddEating);
 
-        tvCircleProgressProt = findViewById(R.id.tvCircleProgressProt);
-        tvCircleProgressCarbo = findViewById(R.id.tvCircleProgressCarbo);
-        tvCircleProgressFat = findViewById(R.id.tvCircleProgressFat);
-        waveLoadingView = findViewById(R.id.waveLoadingView);
-        ivMainScreenCollapsingCancelWater = findViewById(R.id.ivMainScreenCollapsingCancelWater);
-        ivCollapsingMainCompleteWater = findViewById(R.id.ivCollapsingMainCompleteWater);
-
-        collapsingToolbarLayout = findViewById(R.id.collapsingToolbarLayout);
-        appBarLayout = findViewById(R.id.mainappbar);
-
-        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("");
 
 
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+        mainappbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
 
@@ -278,13 +264,6 @@ public class MainActivity extends AppCompatActivity
         });
         loadSound();
 
-        rvMainList = findViewById(R.id.rvMainScreen);
-        rvMainList.setLayoutManager(new GridLayoutManager(this, 2));
-        rvMainList.setAdapter(new ItemAdapter(getResources().getStringArray(R.array.names_items_of_main_screen),
-                urlsOfImages, getResources().getStringArray(R.array.properties_items_of_main_screen)));
-
-
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
@@ -389,7 +368,7 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-        if (waveLoadingView.getProgressValue() >= 100){
+        if (waveLoadingView.getProgressValue() >= 100) {
             waveLoadingView.setCenterTitle("");
             isFullWater = true;
             ivMainScreenCollapsingCancelWater.setVisibility(View.GONE);
