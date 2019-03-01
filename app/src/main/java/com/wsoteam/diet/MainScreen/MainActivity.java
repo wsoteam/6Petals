@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,8 +45,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.MobileAds;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Breakfast;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Dinner;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Eating;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Lunch;
+import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Snack;
 import com.wsoteam.diet.BranchOfCalculating.ActivityListOfCalculating;
-import com.wsoteam.diet.BranchOfDescription.ActivityDescription;
 import com.wsoteam.diet.BranchOfDiary.ActivityListOfDiary;
 import com.wsoteam.diet.BranchOfMonoDiets.ActivityMonoDiet;
 import com.wsoteam.diet.BranchOfNotifications.ActivityListOfNotifications;
@@ -52,17 +59,15 @@ import com.wsoteam.diet.BranchProfile.ActivityEditProfile;
 import com.wsoteam.diet.BranchProfile.ActivityProfile;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.MainScreen.AlertDialogs.AlertDialogChoiseEating;
+import com.wsoteam.diet.MainScreen.Controller.EatingAdapter;
 import com.wsoteam.diet.OtherActivity.ActivitySettings;
 import com.wsoteam.diet.POJOProfile.Profile;
-import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Breakfast;
-import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Dinner;
-import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Lunch;
-import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Snack;
 import com.wsoteam.diet.POJOsCircleProgress.Water;
 import com.wsoteam.diet.R;
 import com.yandex.metrica.YandexMetrica;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -89,8 +94,10 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.collapsingToolbarLayout) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.nav_view_g) NavigationView navViewG;
+    @BindView(R.id.rvMainScreen) RecyclerView rvMainScreen;
     private TextView tvLeftNBName;
     private CircleImageView ivLeftNBAvatar;
+    private EatingAdapter eatingAdapter;
 
     private AnimatedVectorDrawable animatedVectorDrawable;
     private Animation animChangeScale, animRotateCancelWater, animWaterComplete;
@@ -195,6 +202,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        new LoadEatingForThisDay().execute();
     }
 
     private void showThankToast() {
@@ -225,6 +233,7 @@ public class MainActivity extends AppCompatActivity
         MobileAds.initialize(this, Config.ADMOB_ID);
         setSupportActionBar(toolbar);
         setTitle("");
+        rvMainScreen.setLayoutManager(new LinearLayoutManager(this));
 
         mainappbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
@@ -245,22 +254,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         loadSound();
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navViewG.setNavigationItemSelectedListener(this);
-        animChangeScale = AnimationUtils.loadAnimation(this, R.anim.anim_change_scale);
-        animWaterComplete = AnimationUtils.loadAnimation(this, R.anim.anim_water_complete_tick);
-
-        animRotateCancelWater = AnimationUtils.loadAnimation(this, R.anim.anim_rotate_cancel_water);
-
-        View view = navViewG.getHeaderView(0);
-        tvLeftNBName = view.findViewById(R.id.tvLeftNBName);
-        ivLeftNBAvatar = view.findViewById(R.id.ivLeftNBAvatar);
-
+        bindDrawer();
         showThankToast();
         additionOneToSharedPreference();
         checkFirstRun();
@@ -280,6 +274,22 @@ public class MainActivity extends AppCompatActivity
                 return true;
             }
         });
+    }
+
+    private void bindDrawer() {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navViewG.setNavigationItemSelectedListener(this);
+        animChangeScale = AnimationUtils.loadAnimation(this, R.anim.anim_change_scale);
+        animWaterComplete = AnimationUtils.loadAnimation(this, R.anim.anim_water_complete_tick);
+        animRotateCancelWater = AnimationUtils.loadAnimation(this, R.anim.anim_rotate_cancel_water);
+
+        View view = navViewG.getHeaderView(0);
+        tvLeftNBName = view.findViewById(R.id.tvLeftNBName);
+        ivLeftNBAvatar = view.findViewById(R.id.ivLeftNBAvatar);
     }
 
     private void showChoisePortionOfWaterAD() {
@@ -677,6 +687,35 @@ public class MainActivity extends AppCompatActivity
 
 
         return true;
+    }
+
+    public class LoadEatingForThisDay extends AsyncTask<String, Void, List<List<Eating>>> {
+        @Override
+        protected List<List<Eating>> doInBackground(String... strings) {
+            List allEatingForThisDay = new ArrayList<>();
+
+            List<Breakfast> breakfasts = Breakfast.listAll(Breakfast.class);
+            List<Lunch> lunches = Lunch.listAll(Lunch.class);
+            List<Dinner> dinners = Dinner.listAll(Dinner.class);
+            List<Snack> snacks = Snack.listAll(Snack.class);
+
+            allEatingForThisDay.add(breakfasts);
+            allEatingForThisDay.add(lunches);
+            allEatingForThisDay.add(dinners);
+            allEatingForThisDay.add(snacks);
+
+            Log.e("LOL", String.valueOf(breakfasts));
+
+            return allEatingForThisDay;
+        }
+
+        @Override
+        protected void onPostExecute(List<List<Eating>> lists) {
+            super.onPostExecute(lists);
+            eatingAdapter = new EatingAdapter(lists, MainActivity.this);
+            rvMainScreen.setAdapter(eatingAdapter);
+            Log.e("LOL", String.valueOf(lists.size()));
+        }
     }
 
 }
