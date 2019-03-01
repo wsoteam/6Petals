@@ -8,15 +8,22 @@ import android.view.ViewGroup;
 
 import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Eating;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InsideAdapter extends RecyclerView.Adapter<InsideViewHolder> {
     List<Eating> oneGroupOfEating;
     Context context;
 
-    public InsideAdapter(List<Eating> oneGroupOfEating, Context context) {
-        this.oneGroupOfEating = oneGroupOfEating;
-        this.context = context;
+    public InsideAdapter(List<Eating> oneGroupOfEating, Context context, boolean isFull) {
+         if (oneGroupOfEating.size() != 0 && !isFull) {
+            this.oneGroupOfEating = new ArrayList<>();
+            this.oneGroupOfEating.add(oneGroupOfEating.get(0));
+            this.context = context;
+        }else{
+             this.oneGroupOfEating = oneGroupOfEating;
+             this.context = context;
+         }
     }
 
     @NonNull
