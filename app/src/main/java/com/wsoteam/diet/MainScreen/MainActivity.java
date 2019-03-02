@@ -203,6 +203,16 @@ public class MainActivity extends AppCompatActivity
         });
 
         new LoadEatingForThisDay().execute();
+
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.add(Calendar.DATE, -1);
+
+        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
+        int month1 = calendar1.get(Calendar.MONTH);
+        int year1 = calendar1.get(Calendar.YEAR);
+
+
+        Log.e("LOL", String.valueOf(day1) + " " + String.valueOf(month1) + " " + String.valueOf(year1));
     }
 
     private void showThankToast() {
