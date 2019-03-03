@@ -94,6 +94,31 @@ public class ActivityAuthenticate extends AppCompatActivity implements View.OnCl
                 });
     }
 
+    private void createAccount(String email, String password) {
+        Log.d(TAG, "createAccount:" + email);
+        if (email.matches("") ||
+                password.matches("")) {
+            Log.d(TAG, "createAccount: fail valid");
+            return;
+        }
+        // [START create_user_with_email]
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+
+                        }
+                    }
+                });
+    }
+
     private void signOut() {
 
         Log.d(TAG, "signOut: ");
@@ -172,12 +197,11 @@ public class ActivityAuthenticate extends AppCompatActivity implements View.OnCl
                 fragment = new FragmentAuthSignIn();
                 fm.beginTransaction().replace(R.id.auth_frame_layout, fragment).addToBackStack("auth_signIn").commit();
                 break;
-            case R.id.auth_signin_btn_signin:
-
-                String email = ((EditText)fragment.getView().findViewById(R.id.auth_signin_et_email)).getText().toString();
-                String pass =  ((EditText)fragment.getView().findViewById(R.id.auth_signin_et_password)).getText().toString();
-                Log.d(TAG, "onClick: " + email + pass);
+            case R.id.auth_signin_btn_signin: {
+                String email = ((EditText) fragment.getView().findViewById(R.id.auth_signin_et_email)).getText().toString();
+                String pass = ((EditText) fragment.getView().findViewById(R.id.auth_signin_et_password)).getText().toString();
                 signIn(email, pass);
+            }
                 break;
             case R.id.auth_signin_btn_signout:
                 signOut();
@@ -186,8 +210,20 @@ public class ActivityAuthenticate extends AppCompatActivity implements View.OnCl
                 signInGoogle();
                 break;
             case R.id.auth_hello_btn_next:
-
+                fragment = new FragmentAuthRegistration();
+                fm.beginTransaction().replace(R.id.auth_frame_layout, fragment).commit();
                 break;
+
+            case R.id.auth_reg_btn_reg: {
+                String email = ((EditText) fragment.getView().findViewById(R.id.auth_reg_et_email)).getText().toString();
+                String pass = ((EditText) fragment.getView().findViewById(R.id.auth_reg_et_pass)).getText().toString();
+                createAccount(email, pass);
+            }
+                break;
+            case R.id.auth_reg_btn_google:
+                signInGoogle();
+                break;
+
                 default:
                     Log.d(TAG, "onClick: switch default");
                     break;

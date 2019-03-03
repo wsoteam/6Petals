@@ -1,5 +1,12 @@
 <resources>
 
+    <!--auth_fragment_registration-->
+    <string name="reg_tv_hou_copmfortable">Как тебе удобней входить в систему?</string>
+    <string name="reg_tv_contract">Условия предоставления услуг</string>
+    <string name="reg_btn_google">Войти через Google</string>
+    <string name="reg_btn_facebook">Войти через Facebook</string>
+    <string name="reg_btn_reg_email">Регистрация по Email</string>
+
     <!--auth_fragment_hello-->
     <string name="reg_tv_hello">Привет!</string>
     <string name="reg_tv_hello_body">Я твой консультант по питанию. Расскажи мне о себе.</string>
