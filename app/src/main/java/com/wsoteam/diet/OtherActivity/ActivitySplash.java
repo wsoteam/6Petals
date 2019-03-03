@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wsoteam.diet.Authenticate.ActivityAuthenticate;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.IPCheck.IPCheckApi;
 import com.wsoteam.diet.IPCheck.IPCheckObject;
@@ -97,7 +98,7 @@ public class ActivitySplash extends AppCompatActivity {
     }
 
     private void checkCountryAndRunNextActivity(){
-        Intent intent = new Intent(ActivitySplash.this, MainActivity.class);
+        Intent intent = new Intent(ActivitySplash.this, ActivityAuthenticate.class);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ip-api.com/")
                 .addConverterFactory(GsonConverterFactory.create())

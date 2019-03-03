@@ -1,5 +1,12 @@
 <resources>
 
+    <!--auth_fragment_first-->
+    <string name="reg_et_hello">Добро пожаловать!</string>
+    <string name="reg_et_have_account">Есть аккаунт?</string>
+    <string name="reg_btn_reg">Регистрация</string>
+    <string name="reg_btn_login">Войти</string>
+    <string name="todo">TODO</string>
+
     <!--test-->
 
     <string name="app_name">Как Похудеть за неделю! Диета - это просто! </string>
@@ -258,7 +265,6 @@
     </string-array>
 
 
-
     <!--Exercises-->
     <string name="navigation_settings">Настройки</string>
     <string name="yandex_id" translatable="false">6a6b1d3c-0ce1-42e4-92d7-04885b2e4387</string>
@@ -353,7 +359,6 @@
         <item>Почти на пределе!! Каждый день вы находите в себе силы на интенсивные тренировки. Когда они не отличаются высокой интенсивностью, вы, о боги, тренируетесь два раза в день (такое бывает?)</item>
         <item>Возможно вы бог... Иначе я не могу объяснить откуда у вас такая сила воли, которая позволяет проводить интенсивные тренировки 2 раза (!!) в день. Однако вы подходите под этот критерий и когда у вас просто тяжелая физическая работа...</item>
     </string-array>
-
 
 
 </resources>
