@@ -28,6 +28,9 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
 
         <meta-data
+            android:name="com.google.android.gms.ads.AD_MANAGER_APP"
+            android:value="true"/>
+        <meta-data
             android:name="DATABASE"
             android:value="diet_database_diary_items2.db" />
         <meta-data

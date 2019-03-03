@@ -1,5 +1,23 @@
 <resources>
 
+    <!--auth_fragment_hello-->
+    <string name="reg_tv_hello">Привет!</string>
+    <string name="reg_tv_hello_body">Я твой консультант по питанию. Расскажи мне о себе.</string>
+    <string name="auth_hello_bth_next">Дальше</string>
+
+    <!--auth_fragment_signin-->
+    <string name="auth_hint_email">Имейл</string>
+    <string name="auth_hint_password">Пароль</string>
+    <string name="auth_signin_btn_signin">Войти</string>
+
+    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="signed_in">Signed In</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="emailpassword_status_fmt">Email User: %1$s </string>
+    <string name="auth_failed">Authentication failed</string>
+    <string name="empty_field">empty_field</string>
+
+
     <!--auth_fragment_first-->
     <string name="reg_et_hello">Добро пожаловать!</string>
     <string name="reg_et_have_account">Есть аккаунт?</string>
