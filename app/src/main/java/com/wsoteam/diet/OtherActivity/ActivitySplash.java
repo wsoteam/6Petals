@@ -66,7 +66,7 @@ public class ActivitySplash extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ObjectHolder objectHolder = new ObjectHolder();
                 objectHolder.bindObjectWithHolder(dataSnapshot.getValue(GlobalObject.class));
-                startActivity(new Intent(ActivitySplash.this, ActivityAuthenticate.class));
+                startActivity(new Intent(ActivitySplash.this, MainActivity.class));
                 finish();
 
             }
