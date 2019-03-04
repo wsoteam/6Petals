@@ -206,7 +206,6 @@ public class MainActivity extends AppCompatActivity
                 decreaseCountOfWater();
             }
         });
-        bindViewPager();
         //new LoadEatingForThisDay().execute();
     }
 
@@ -262,7 +261,7 @@ public class MainActivity extends AppCompatActivity
         showThankToast();
         additionOneToSharedPreference();
         checkFirstRun();
-
+        bindViewPager();
 
         fabAddEating.setOnClickListener(new View.OnClickListener() {
             @Override
