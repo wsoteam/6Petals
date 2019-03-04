@@ -256,6 +256,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+
         loadSound();
         bindDrawer();
         showThankToast();

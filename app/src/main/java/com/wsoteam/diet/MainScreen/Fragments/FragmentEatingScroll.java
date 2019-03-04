@@ -40,6 +40,7 @@ public class FragmentEatingScroll extends Fragment {
     private EatingAdapter eatingAdapter;
     @BindView(R.id.rvMainScreen) RecyclerView rvMainScreen;
     Unbinder unbinder;
+    private List<List<Eating>> allEat;
 
     public static FragmentEatingScroll newInstance(int position) {
         Bundle bundle = new Bundle();
@@ -50,9 +51,18 @@ public class FragmentEatingScroll extends Fragment {
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser){
+            new LoadEatingForThisDay().execute(getChooseDate(getArguments().getInt(TAG_OF_BUNDLE)));
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        new LoadEatingForThisDay().execute(getChooseDate(enterPosition));
+
+
     }
 
     @Nullable
@@ -62,8 +72,10 @@ public class FragmentEatingScroll extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         enterPosition = getArguments().getInt(TAG_OF_BUNDLE);
         rvMainScreen.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         return view;
     }
+
 
     @Override
     public void onDestroyView() {
@@ -112,6 +124,7 @@ public class FragmentEatingScroll extends Fragment {
             super.onPostExecute(lists);
             eatingAdapter = new EatingAdapter(lists, getActivity());
             rvMainScreen.setAdapter(eatingAdapter);
+            allEat = lists;
         }
     }
 }
