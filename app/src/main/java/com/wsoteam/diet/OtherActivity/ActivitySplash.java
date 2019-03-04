@@ -23,8 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wsoteam.diet.Config;
-import com.wsoteam.diet.IPCheck.IPCheckApi;
-import com.wsoteam.diet.IPCheck.IPCheckObject;
 import com.wsoteam.diet.MainScreen.MainActivity;
 import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.GlobalObject;

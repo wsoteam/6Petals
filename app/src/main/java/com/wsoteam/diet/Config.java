@@ -29,5 +29,8 @@ public class Config {
     public static final String INTENT_CHOISE_DINNER= "INTENT_CHOISE_DINNER";
     public static final String INTENT_CHOISE_SNACK= "INTENT_CHOISE_SNACK";
 
+    //MainActivity
+    public static final int COUNT_PAGE = 3650;
+
 
 }

@@ -20,13 +20,14 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,6 +46,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.google.android.gms.ads.MobileAds;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Breakfast;
 import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Dinner;
 import com.wsoteam.diet.BranchOfAnalyzer.POJOEating.Eating;
@@ -60,6 +63,7 @@ import com.wsoteam.diet.BranchProfile.ActivityProfile;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.MainScreen.AlertDialogs.AlertDialogChoiseEating;
 import com.wsoteam.diet.MainScreen.Controller.EatingAdapter;
+import com.wsoteam.diet.MainScreen.Fragments.FragmentEatingScroll;
 import com.wsoteam.diet.OtherActivity.ActivitySettings;
 import com.wsoteam.diet.POJOProfile.Profile;
 import com.wsoteam.diet.POJOsCircleProgress.Water;
@@ -70,6 +74,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,7 +99,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.collapsingToolbarLayout) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.nav_view_g) NavigationView navViewG;
-    @BindView(R.id.rvMainScreen) RecyclerView rvMainScreen;
+    @BindView(R.id.vpEatingTimeLine) ViewPager vpEatingTimeLine;
     private TextView tvLeftNBName;
     private CircleImageView ivLeftNBAvatar;
     private EatingAdapter eatingAdapter;
@@ -201,18 +206,8 @@ public class MainActivity extends AppCompatActivity
                 decreaseCountOfWater();
             }
         });
-
-        new LoadEatingForThisDay().execute();
-
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.add(Calendar.DATE, -1);
-
-        int day1 = calendar1.get(Calendar.DAY_OF_MONTH);
-        int month1 = calendar1.get(Calendar.MONTH);
-        int year1 = calendar1.get(Calendar.YEAR);
-
-
-        Log.e("LOL", String.valueOf(day1) + " " + String.valueOf(month1) + " " + String.valueOf(year1));
+        bindViewPager();
+        //new LoadEatingForThisDay().execute();
     }
 
     private void showThankToast() {
@@ -243,7 +238,6 @@ public class MainActivity extends AppCompatActivity
         MobileAds.initialize(this, Config.ADMOB_ID);
         setSupportActionBar(toolbar);
         setTitle("");
-        rvMainScreen.setLayoutManager(new LinearLayoutManager(this));
 
         mainappbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
@@ -269,6 +263,7 @@ public class MainActivity extends AppCompatActivity
         additionOneToSharedPreference();
         checkFirstRun();
 
+
         fabAddEating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -285,6 +280,22 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
+    private void bindViewPager() {
+        vpEatingTimeLine.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return FragmentEatingScroll.newInstance(position);
+            }
+
+            @Override
+            public int getCount() {
+                return Config.COUNT_PAGE + 1;
+            }
+        });
+        vpEatingTimeLine.setCurrentItem(Config.COUNT_PAGE);
+    }
+
 
     private void bindDrawer() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -658,8 +669,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        boolean isOpenMarket = false;
-
         int id = item.getItemId();
         Intent intent = new Intent();
 
@@ -699,33 +708,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public class LoadEatingForThisDay extends AsyncTask<String, Void, List<List<Eating>>> {
-        @Override
-        protected List<List<Eating>> doInBackground(String... strings) {
-            List allEatingForThisDay = new ArrayList<>();
 
-            List<Breakfast> breakfasts = Breakfast.listAll(Breakfast.class);
-            List<Lunch> lunches = Lunch.listAll(Lunch.class);
-            List<Dinner> dinners = Dinner.listAll(Dinner.class);
-            List<Snack> snacks = Snack.listAll(Snack.class);
-
-            allEatingForThisDay.add(breakfasts);
-            allEatingForThisDay.add(lunches);
-            allEatingForThisDay.add(dinners);
-            allEatingForThisDay.add(snacks);
-
-            Log.e("LOL", String.valueOf(breakfasts));
-
-            return allEatingForThisDay;
-        }
-
-        @Override
-        protected void onPostExecute(List<List<Eating>> lists) {
-            super.onPostExecute(lists);
-            eatingAdapter = new EatingAdapter(lists, MainActivity.this);
-            rvMainScreen.setAdapter(eatingAdapter);
-            Log.e("LOL", String.valueOf(lists.size()));
-        }
-    }
 
 }
