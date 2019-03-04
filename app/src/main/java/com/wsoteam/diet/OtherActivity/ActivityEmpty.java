@@ -66,6 +66,11 @@ public class  ActivityEmpty extends AppCompatActivity {
             public void onRewardedVideoAdFailedToLoad(int i) {
 
             }
+
+            @Override
+            public void onRewardedVideoCompleted() {
+
+            }
         });
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

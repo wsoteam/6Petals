@@ -120,6 +120,11 @@ public class ActivityRequestOfWatchADVideo extends AppCompatActivity {
             public void onRewardedVideoAdFailedToLoad(int i) {
 
             }
+
+            @Override
+            public void onRewardedVideoCompleted() {
+
+            }
         });
 
         fabCloseRequestAd.setOnClickListener(new View.OnClickListener() {

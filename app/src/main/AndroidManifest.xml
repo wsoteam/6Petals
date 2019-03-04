@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.QUICKBOOT_POWERON" />
     <uses-permission android:name="com.android.vending.BILLING" />
 
-
     <application
         android:name=".RunClass.Diet"
         android:allowBackup="true"
@@ -24,6 +23,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Authenticate.ActivityAuthenticate"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.AD_MANAGER_APP"
+            android:value="true"/>
         <meta-data
             android:name="DATABASE"
             android:value="diet_database_diary_items2.db" />
@@ -89,39 +95,28 @@
         <activity
             android:name=".BranchOfNotifications.ActivityDetailNotification"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".BranchOfNotifications.ActivityListOfNotifications"
             android:theme="@style/NotificationListActivity" />
-
         <activity
             android:name=".OtherActivity.ActivityAboutSetingsNotifications"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".BranchOfCalculating.ActivityCalculatorSPK"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".BranchOfNews.ActivityListOfNews"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".BranchOfNews.ActivityDetailPhoto"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
         <activity
             android:name="com.vk.sdk.VKServiceActivity"
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
-
         <activity
             android:name=".BranchOfExercises.Activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityListOfExGroups"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -131,56 +126,44 @@
         <activity
             android:name=".BranchOfExercises.ActivitiesPartOfBody.ActivityExDetail"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".BranchOfExercises.ActivitiesProgramm.ActivityListOfTraining"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".BranchOfExercises.ActivitiesProgramm.ActivityWithTiles"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".BranchOfExercises.ActivitiesArticles.ActivityDetailAcrticles"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
         <activity
             android:name=".BranchOfAnalyzer.ActivityListAndSearch"
             android:theme="@style/NotificationListActivity" />
         <activity
             android:name=".BranchOfAnalyzer.ActivityDetailOfFood"
             android:theme="@style/NotificationListActivity" />
-
         <activity
             android:name=".BranchOfBilling.ActivityPresentation"
             android:theme="@style/NotificationListActivity" />
-
         <activity
             android:name=".BranchOfAnalyzer.ActivityRequestOfWatchADVideo"
             android:theme="@style/NotificationListActivity" />
-
         <activity
             android:name=".BranchEatingDiary.ActivityEatingDiary"
             android:theme="@style/EatingDiaryStyle" />
-
         <activity
             android:name=".BranchProfile.ActivityProfile"
             android:theme="@style/EatingDiaryStyle" />
-
         <activity
             android:name=".BranchProfile.ActivityEditProfile"
             android:theme="@style/EatingDiaryStyle" />
-
         <activity
             android:name=".BranchProfile.ActivityHelp"
             android:theme="@style/AppTheme.NoActionBar" />
-
 
         <receiver
             android:name=".Services.AlarmManagerBR"
             android:enabled="true"
             android:exported="true" />
-
         <receiver android:name=".Services.RestartReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

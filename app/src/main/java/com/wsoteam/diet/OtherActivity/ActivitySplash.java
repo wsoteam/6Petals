@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wsoteam.diet.Authenticate.ActivityAuthenticate;
 import com.wsoteam.diet.Config;
 import com.wsoteam.diet.MainScreen.MainActivity;
 import com.wsoteam.diet.ObjectHolder;
@@ -93,6 +94,35 @@ public class ActivitySplash extends AppCompatActivity {
         }
         return false;
     }
+
+
+    private void checkCountryAndRunNextActivity(){
+        Intent intent = new Intent(ActivitySplash.this, ActivityAuthenticate.class);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ip-api.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        IPCheckApi checkApi = retrofit.create(IPCheckApi.class);
+        Call<IPCheckObject> objectCall = checkApi.getResponse();
+        objectCall.enqueue(new Callback<IPCheckObject>() {
+            @Override
+            public void onResponse(Call<IPCheckObject> call, Response<IPCheckObject> response) {
+                intent.putExtra("MainActivity", response.body().getCountryCode());
+                ivLoading.clearAnimation();
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<IPCheckObject> call, Throwable t) {
+                intent.putExtra("MainActivity", "by");
+                ivLoading.clearAnimation();
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
 
 
 }
