@@ -11,7 +11,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -26,6 +31,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.wsoteam.diet.R;
 
+import java.util.Arrays;
+
 public class ActivityAuthenticate extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG ="ActivityAuthenticate";
@@ -36,6 +43,7 @@ public class ActivityAuthenticate extends AppCompatActivity implements View.OnCl
 
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    CallbackManager callbackManager;
 
 
     @Override
@@ -180,6 +188,27 @@ public class ActivityAuthenticate extends AppCompatActivity implements View.OnCl
                             Log.d(TAG, "signInWithCredential:failure", task.getException());
 
                         }
+
+                    }
+                });
+    }
+
+    //test
+    private void signInFB(){
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        handleFacebookToken(loginResult.getAccessToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
 
                     }
                 });
