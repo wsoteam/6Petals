@@ -179,7 +179,32 @@ public class ActivityAuthenticate extends AppCompatActivity implements View.OnCl
                             // If sign in fails, display a message to the user.
                             Log.d(TAG, "signInWithCredential:failure", task.getException());
 
+<<<<<<< HEAD
                         }
+=======
+    private void startMainActivity(){
+
+        if (!(mAuth.getCurrentUser() == null)) {
+            startActivity(new Intent(this, MainActivity.class));
+        }
+    }
+
+    private void signInFB(){
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        handleFacebookToken(loginResult.getAccessToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+>>>>>>> parent of 8db44d6... test change
 
                     }
                 });
