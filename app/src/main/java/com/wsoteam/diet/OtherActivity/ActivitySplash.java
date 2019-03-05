@@ -40,6 +40,8 @@ public class ActivitySplash extends AppCompatActivity {
     private TextView tvTitle;
     private ImageView ivLoading;
     private Animation animationRotate;
+    private FirebaseUser user;
+    //e
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,15 +68,7 @@ public class ActivitySplash extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ObjectHolder objectHolder = new ObjectHolder();
                 objectHolder.bindObjectWithHolder(dataSnapshot.getValue(GlobalObject.class));
-<<<<<<< HEAD
-<<<<<<< HEAD
                 startActivity(new Intent(ActivitySplash.this, MainActivity.class));
-=======
-                startActivity(new Intent(ActivitySplash.this, ActivityAuthenticate.class));
->>>>>>> parent of 620c287... add main registration fragment  кккк
-=======
-                startActivity(new Intent(ActivitySplash.this, ActivityAuthenticate.class));
->>>>>>> parent of 620c287... add main registration fragment  кккк
                 finish();
 
             }
