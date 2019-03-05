@@ -38,7 +38,7 @@ public class ActivitySplash extends AppCompatActivity {
     private ImageView ivLoading;
     private Animation animationRotate;
     private FirebaseUser user;
-
+    //e
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
