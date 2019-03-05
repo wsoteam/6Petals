@@ -17,10 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,23 +28,24 @@ import com.wsoteam.diet.MainScreen.MainActivity;
 import com.wsoteam.diet.ObjectHolder;
 import com.wsoteam.diet.POJOS.GlobalObject;
 import com.wsoteam.diet.R;
+import com.wsoteam.diet.TestFillDB;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ActivitySplash extends AppCompatActivity {
     private TextView tvTitle;
     private ImageView ivLoading;
     private Animation animationRotate;
-    private FirebaseUser user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
-
-        user = FirebaseAuth.getInstance().getCurrentUser();
 
         tvTitle = findViewById(R.id.tvTitleSplashScreen);
         ivLoading = findViewById(R.id.ivLoadingIcon);
@@ -69,17 +66,8 @@ public class ActivitySplash extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ObjectHolder objectHolder = new ObjectHolder();
                 objectHolder.bindObjectWithHolder(dataSnapshot.getValue(GlobalObject.class));
-
-
-                if (user == null) {
-                    startActivity(new Intent(ActivitySplash.this, ActivityAuthenticate.class));
-                    finish();
-                } else {
-                    startActivity(new Intent(ActivitySplash.this, MainActivity.class));
-                    finish();
-                }
-
-
+                startActivity(new Intent(ActivitySplash.this, MainActivity.class));
+                finish();
 
             }
 
