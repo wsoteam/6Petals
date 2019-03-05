@@ -206,6 +206,7 @@ public class ActivityAuthenticate extends AppCompatActivity implements View.OnCl
         }
     }
 
+    //test
     private void signInFB(){
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
