@@ -178,6 +178,32 @@ public class ActivityAuthenticate extends AppCompatActivity implements View.OnCl
                             Log.d(TAG, "signInWithCredential:failure", task.getException());
 
                         }
+                    }
+                });
+    }
+
+
+    private void startMainActivity(){
+
+        if (!(mAuth.getCurrentUser() == null)) {
+            startActivity(new Intent(this, MainActivity.class));
+        }
+    }
+
+    //test
+    private void signInFB(){
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        handleFacebookToken(loginResult.getAccessToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+
+                        }
 
                     }
                 });
