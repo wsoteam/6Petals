@@ -60,8 +60,6 @@ public class ActivityAuthenticate extends AppCompatActivity implements View.OnCl
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        callbackManager = CallbackManager.Factory.create();
-
     }
 
     private void signIn(String email, String password) {
@@ -225,29 +223,6 @@ public class ActivityAuthenticate extends AppCompatActivity implements View.OnCl
             case R.id.auth_reg_btn_google:
                 signInGoogle();
                 break;
-            case R.id.auth_main_btn_google:
-                signInGoogle();
-                break;
-            case R.id.auth_main_btn_signin:
-            {
-                String email = ((EditText) fragment.getView().findViewById(R.id.auth_main_email)).getText().toString();
-                String pass = ((EditText) fragment.getView().findViewById(R.id.auth_main_pass)).getText().toString();
-                signIn(email, pass);
-            }
-                break;
-            case R.id.auth_main_btn_create:
-            {
-                String email = ((EditText) fragment.getView().findViewById(R.id.auth_main_email)).getText().toString();
-                String pass = ((EditText) fragment.getView().findViewById(R.id.auth_main_pass)).getText().toString();
-                createAccount(email, pass);
-            }
-                break;
-            case R.id.auth_main_btn_facebook: {
-//                callbackManager = CallbackManager.Factory.create();
-                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
-                signInFB();
-            }
-
 
                 default:
                     Log.d(TAG, "onClick: switch default");
