@@ -75,7 +75,7 @@ public class ActivityAuthenticate extends AppCompatActivity implements View.OnCl
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
+        callbackManager = CallbackManager.Factory.create();
 
 
     }
@@ -303,7 +303,7 @@ public class ActivityAuthenticate extends AppCompatActivity implements View.OnCl
             }
                 break;
             case R.id.auth_main_btn_facebook: {
-                callbackManager = CallbackManager.Factory.create();
+//                callbackManager = CallbackManager.Factory.create();
                 LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
                 signInFB();
             }
